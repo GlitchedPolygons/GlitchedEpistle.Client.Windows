@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace GlitchedEpistle.Client.Windows
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
     /// <summary>
     /// Interaction logic for App.xaml
