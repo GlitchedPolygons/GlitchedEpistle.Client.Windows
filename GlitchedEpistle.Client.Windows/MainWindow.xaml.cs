@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GlitchedEpistle.Client.Windows
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
