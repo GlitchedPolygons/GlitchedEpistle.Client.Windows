@@ -5,12 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
-        Title="Glitched Epistle" MinWidth="1280" MinHeight="720" Icon="Images/epistle-icon.png">
+        Title="Glitched Epistle" 
+        Width="800" 
+        MinWidth="800" 
+        Height="450" 
+        MinHeight="450" 
+        SizeChanged="MainWindow_OnSizeChanged"
+        Icon="Images/epistle-icon.png">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="450" MaxWidth="800" Name="ConvosList"/>
-            <ColumnDefinition Width="2*"/>
+            <!-- Left Column -->
+            <ColumnDefinition Width="*" 
+                              MinWidth="300" 
+                              MaxWidth="800" 
+                              Name="LeftColumn"/>
+            <!-- Right Column -->
+            <ColumnDefinition Width="2*" 
+                              Name="RightColumn"/>
         </Grid.ColumnDefinitions>
 
         <!-- Background Image -->
@@ -22,16 +34,13 @@
         <StackPanel Grid.Column="0" Grid.Row="0">
 
             <!-- Profile -->
-            <StackPanel Orientation="Horizontal" Height="175">
+            <StackPanel Name="ProfileStackPanel" Height="175" Orientation="Horizontal">
 
             </StackPanel>
 
             <!-- Convos list -->
-            <ScrollViewer>
-                <StackPanel>
-                    <Button Content="TEST"></Button>
-                    <Button Content="TEST"></Button>
-                    <Button Content="TEST"></Button>
+            <ScrollViewer Name="ConvosScrollViewer" VerticalScrollBarVisibility="Auto">
+                <StackPanel Name="ConvosStackPanel">
                     <Button Content="TEST"></Button>
                     <Button Content="TEST"></Button>
                     <Button Content="TEST"></Button>
@@ -61,6 +70,7 @@
                     <Button Content="TEST"></Button>
                 </StackPanel>
             </ScrollViewer>
+
         </StackPanel>
 
         <!-- Convos list horizontal size handle -->
