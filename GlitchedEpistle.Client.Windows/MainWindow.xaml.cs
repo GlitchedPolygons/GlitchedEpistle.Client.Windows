@@ -20,14 +20,34 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        const double LEFT_COLUMN_MIN_WIDTH = 300;
+        double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
+
         public MainWindow()
         {
             InitializeComponent();
+            LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
         }
 
         private void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
         {
-            ConvosList.IsEnabled = !ConvosList.IsEnabled;
+            double width = LeftColumn.ActualWidth;
+            if (width > 0)
+            {
+                leftColumnWidth = width;
+                LeftColumn.MinWidth = 0;
+                LeftColumn.Width = new GridLength(0);
+            }
+            else
+            {
+                LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
+                LeftColumn.Width = new GridLength(leftColumnWidth);
+            }
+        }
+
+        void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35;
         }
     }
 }
