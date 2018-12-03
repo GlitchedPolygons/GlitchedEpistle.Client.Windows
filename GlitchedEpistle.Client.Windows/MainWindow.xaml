@@ -5,14 +5,87 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
-        Title="Glitched Epistle" Height="700" Width="1050">
+        Title="Glitched Epistle" MinWidth="1280" MinHeight="720" Icon="Images/epistle-icon.png">
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="921*"/>
-            <ColumnDefinition Width="122*"/>
+            <ColumnDefinition Width="*" MinWidth="450" MaxWidth="800" Name="ConvosList"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
+
+        <!-- Background Image -->
         <Grid.Background>
             <ImageBrush ImageSource="Images/glitched-polygons-blue.png" TileMode="Tile" Stretch="UniformToFill"/>
         </Grid.Background>
+
+        <!-- Profile and convos -->
+        <StackPanel Grid.Column="0" Grid.Row="0">
+
+            <!-- Profile -->
+            <StackPanel Orientation="Horizontal" Height="175">
+
+            </StackPanel>
+
+            <!-- Convos list -->
+            <ScrollViewer>
+                <StackPanel>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                    <Button Content="TEST"></Button>
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+
+        <!-- Convos list horizontal size handle -->
+        <GridSplitter Grid.Column="1" Grid.Row="0"
+                      HorizontalAlignment="Left" 
+                      VerticalAlignment="Stretch"
+                      Width="4"
+                      Cursor="SizeWE"
+                      Background="Gray"/>
+
+        <!-- Convos list collapse button -->
+        <Button Grid.Column="1" Grid.Row="0"
+                HorizontalAlignment="Left" 
+                Background="Gray"
+                Content="" 
+                Width="14" 
+                Height="50"
+                Click="ButtonCollapseConvosList_OnClick"/>
+
+        <!-- Active or selected convo -->
+        <StackPanel Grid.Column="1" Grid.Row="0">
+
+        </StackPanel>
     </Grid>
 </Window>
+<!-- Copyright (C) Raphael Beck | Glitched Polygons, 2018 -->
+<!-- www.glitchedpolygons.com -->
+    
