@@ -24,5 +24,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         {
             InitializeComponent();
         }
+
+        private void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
+        {
+            ConvosList.IsEnabled = !ConvosList.IsEnabled;
+        }
     }
 }
