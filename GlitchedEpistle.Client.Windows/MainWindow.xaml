@@ -92,6 +92,20 @@
                 Name="CollapseButton"
                 Click="ButtonCollapseConvosList_OnClick"/>
 
+        <!-- Settings Button -->
+        <Canvas Grid.Column="1" Grid.Row="0">
+            <Button Width="25"
+                    Height="25" 
+                    Canvas.Top="5" 
+                    Canvas.Right="5" 
+                    Click="SettingsButton_OnClick"
+                    BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="Images/settings-icon-white.png"/>
+                </Button.Background>
+            </Button>
+        </Canvas>
+
         <!-- Right Column -->
         <StackPanel Grid.Column="1" Grid.Row="0">
 

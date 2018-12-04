@@ -56,6 +56,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             UpdateCollapseButtonContent(CollapseButton);
         }
 
+        void SettingsButton_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         /// <summary>
         /// Checks whether the left column is collapsed or not
         /// and applies the &lt; or &gt; symbol to the button's content accordingly.
