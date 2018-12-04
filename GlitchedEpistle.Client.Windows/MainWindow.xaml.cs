@@ -28,6 +28,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         {
             InitializeComponent();
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
+            UpdateCollapseButtonContent(CollapseButton);
         }
 
         void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
