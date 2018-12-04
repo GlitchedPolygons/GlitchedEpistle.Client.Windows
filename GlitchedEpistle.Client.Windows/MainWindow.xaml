@@ -30,7 +30,7 @@
             <ImageBrush ImageSource="Images/glitched-polygons-blue.png" TileMode="Tile" Stretch="UniformToFill"/>
         </Grid.Background>
 
-        <!-- Profile and convos -->
+        <!-- Left Column -->
         <StackPanel Grid.Column="0" Grid.Row="0">
 
             <!-- Profile -->
@@ -86,13 +86,16 @@
         <Button Grid.Column="1" Grid.Row="0"
                 HorizontalAlignment="Left" 
                 Background="Gray"
-                Content="" 
+                Content="&lt;" 
                 Width="14" 
                 Height="50"
+                Name="CollapseButton"
                 Click="ButtonCollapseConvosList_OnClick"/>
 
-        <!-- Active or selected convo -->
+        <!-- Right Column -->
         <StackPanel Grid.Column="1" Grid.Row="0">
+
+            <!-- Active or selected convo -->
 
         </StackPanel>
     </Grid>
