@@ -75,6 +75,7 @@
 
         <!-- Convos list horizontal size handle -->
         <GridSplitter Grid.Column="1" Grid.Row="0"
+                      DragStarted="GridSplitter_OnDragStarted"
                       HorizontalAlignment="Left" 
                       VerticalAlignment="Stretch"
                       Width="4"

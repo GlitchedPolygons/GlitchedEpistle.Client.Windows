@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -48,6 +49,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35;
+        }
+
+        void GridSplitter_OnDragStarted(object sender, DragStartedEventArgs e)
+        {
+            LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
         }
     }
 }
