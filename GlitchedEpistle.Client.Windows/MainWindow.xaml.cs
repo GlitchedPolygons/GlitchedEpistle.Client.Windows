@@ -30,30 +30,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
         }
 
-        private void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
-        {
-            double width = LeftColumn.ActualWidth;
-            if (width > 0)
-            {
-                leftColumnWidth = width;
-                LeftColumn.MinWidth = 0;
-                LeftColumn.Width = new GridLength(0);
-            }
-            else
-            {
-                LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
-                LeftColumn.Width = new GridLength(leftColumnWidth);
-            }
-        }
-
         void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35;
         }
 
+        void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
+        {
+            double width = LeftColumn.ActualWidth;
+            if (width > 0)
+            {
+                leftColumnWidth = width;
+            }
+
+            LeftColumn.MinWidth = width > 0 ? 0 : LEFT_COLUMN_MIN_WIDTH;
+            LeftColumn.Width = new GridLength(width > 0 ? 0 : leftColumnWidth);
+
+            UpdateCollapseButtonContent(e.Source as Button);
+        }
+
         void GridSplitter_OnDragStarted(object sender, DragStartedEventArgs e)
         {
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
+            UpdateCollapseButtonContent(CollapseButton);
+        }
+
+        /// <summary>
+        /// Checks whether the left column is collapsed or not
+        /// and applies the &lt; or &gt; symbol to the button's content accordingly.
+        /// </summary>
+        /// <param name="button">The collapse button to update.</param>
+        void UpdateCollapseButtonContent(Button button)
+        {
+            if (button is null)
+                return;
+            
+            button.Content = LeftColumn.MinWidth > 0 ? "<" : ">";
         }
     }
 }

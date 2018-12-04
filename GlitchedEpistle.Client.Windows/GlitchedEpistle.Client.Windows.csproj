@@ -100,5 +100,8 @@
   <ItemGroup>
     <Resource Include="Images\epistle-icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\settings-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
