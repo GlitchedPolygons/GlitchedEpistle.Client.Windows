@@ -27,11 +27,13 @@
 
         <!-- Background Image -->
         <Grid.Background>
-            <ImageBrush ImageSource="Images/glitched-polygons-blue.png" TileMode="Tile" Stretch="UniformToFill"/>
+            <ImageBrush ImageSource="Images/glitched-polygons-blue.png" 
+                        TileMode="Tile" 
+                        Stretch="UniformToFill"/>
         </Grid.Background>
 
         <!-- Left Column -->
-        <StackPanel Grid.Column="0" Grid.Row="0">
+        <StackPanel Grid.Column="0" Grid.Row="0" Background="Black">
 
             <!-- Profile -->
             <StackPanel Name="ProfileStackPanel" Height="175" Orientation="Horizontal">
