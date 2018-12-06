@@ -23,12 +23,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     {
         const double LEFT_COLUMN_MIN_WIDTH = 300;
         double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
+        Settings settings;
 
         public MainWindow()
         {
             InitializeComponent();
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
             UpdateCollapseButtonContent(CollapseButton);
+            Closed += MainWindow_Closed;
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            settings?.Close();
         }
 
         void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -58,7 +65,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         void SettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
+            if (settings == null)
+            {
+                settings = new Settings();
+                settings.Closed += SettingsWindow_OnClosed;
+            }
 
+            settings.Show();
+        }
+
+        void SettingsWindow_OnClosed(object sender, EventArgs e)
+        {
+            settings = null;
         }
 
         /// <summary>
@@ -70,7 +88,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         {
             if (button is null)
                 return;
-            
+
             button.Content = LeftColumn.MinWidth > 0 ? "<" : ">";
         }
     }
