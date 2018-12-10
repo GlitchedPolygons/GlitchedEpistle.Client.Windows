@@ -58,8 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\ISettings.cs" />
-    <Compile Include="Services\SettingsJson.cs" />
+    <Compile Include="Services\Settings\ISettings.cs" />
+    <Compile Include="Services\Settings\SettingsJson.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
