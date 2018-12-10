@@ -21,9 +21,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        const double LEFT_COLUMN_MIN_WIDTH = 300;
-        double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
-        Settings settings;
+        private const double LEFT_COLUMN_MIN_WIDTH = 300;
+        private double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
+        private SettingsWindow settingsWindow;
 
         public MainWindow()
         {
@@ -35,15 +35,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
-            settings?.Close();
+            settingsWindow?.Close();
         }
 
-        void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
+        private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35;
         }
 
-        void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
+        private void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
         {
             double width = LeftColumn.ActualWidth;
             if (width > 0)
@@ -57,26 +57,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             UpdateCollapseButtonContent(e.Source as Button);
         }
 
-        void GridSplitter_OnDragStarted(object sender, DragStartedEventArgs e)
+        private void GridSplitter_OnDragStarted(object sender, DragStartedEventArgs e)
         {
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
             UpdateCollapseButtonContent(CollapseButton);
         }
 
-        void SettingsButton_OnClick(object sender, RoutedEventArgs e)
+        private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (settings == null)
+            if (settingsWindow == null)
             {
-                settings = new Settings();
-                settings.Closed += SettingsWindow_OnClosed;
+                settingsWindow = new SettingsWindow();
+                settingsWindow.Closed += SettingsWindow_OnClosed;
             }
 
-            settings.Show();
+            settingsWindow.Show();
         }
 
-        void SettingsWindow_OnClosed(object sender, EventArgs e)
+        private void SettingsWindow_OnClosed(object sender, EventArgs e)
         {
-            settings = null;
+            settingsWindow = null;
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// and applies the &lt; or &gt; symbol to the button's content accordingly.
         /// </summary>
         /// <param name="button">The collapse button to update.</param>
-        void UpdateCollapseButtonContent(Button button)
+        private void UpdateCollapseButtonContent(Button button)
         {
             if (button is null)
                 return;

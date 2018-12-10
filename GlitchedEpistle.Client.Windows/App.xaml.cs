@@ -13,5 +13,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class App : Application
     {
+        public const string VERSION = "1.0.0";
     }
 }
