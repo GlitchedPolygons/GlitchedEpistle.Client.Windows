@@ -1,4 +1,4 @@
-﻿namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services
+﻿namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 {
     /// <summary>
     /// Service interface for accessing, saving and loading user settings.

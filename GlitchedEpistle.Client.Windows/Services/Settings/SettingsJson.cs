@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
-namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 {
     /// <summary>
     /// Implements the <see cref="ISettings" /> interface for accessing user settings formatted as human-readable JSON.
