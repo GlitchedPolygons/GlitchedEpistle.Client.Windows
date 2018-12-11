@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 {
@@ -14,11 +15,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
     {
         private Dictionary<string, string> settings = new Dictionary<string, string>(16) { { "_version", App.VERSION } };
 
+        /// <summary>
+        /// Absolute settings directory path.
+        /// </summary>
         public string DirectoryPath { get; }
+
+        /// <summary>
+        /// Absolute settings file path.
+        /// </summary>
         public string FilePath { get; }
 
-        public SettingsJson()
+        private readonly ILogger logger;
+
+        public SettingsJson(ILogger logger)
         {
+            this.logger = logger;
+
             DirectoryPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "GlitchedPolygons",
@@ -41,8 +53,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
             }
             catch (Exception e)
             {
-                string error = $"[{DateTime.Now:O}] {e.Message}\n\n";
-                // TODO: write this error to some errors.log file or something
+                logger.LogError(e.Message);
                 return false;
             }
         }
@@ -56,8 +67,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
             }
             catch (Exception e)
             {
-                string error = $"[{DateTime.Now:O}] {e.Message}\n\n";
-                // TODO: write this error to some errors.log file or something
+                logger.LogError(e.Message);
                 return false;
             }
         }
