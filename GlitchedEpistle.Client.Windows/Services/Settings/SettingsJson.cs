@@ -13,7 +13,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
     /// <seealso cref="ISettings" />
     public class SettingsJson : ISettings
     {
-        private Dictionary<string, string> settings = new Dictionary<string, string>(16) { { "_version", App.VERSION } };
+        private Dictionary<string, string> settings = new Dictionary<string, string>(16) { { "version", App.VERSION } };
 
         /// <summary>
         /// Absolute settings directory path.

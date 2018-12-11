@@ -1,12 +1,9 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
-using Newtonsoft.Json;
-using Path = System.IO.Path;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -15,39 +12,39 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        private readonly ILogger logger;
         private readonly ISettings settings;
-        
-        public SettingsWindow(ISettings settings, ILogger logger)
+
+        public SettingsWindow(ISettings settings)
         {
-            this.logger = logger;
             this.settings = settings;
 
             InitializeComponent();
 
             Load();
-            Closed += Settings_Closed;
+            Closed += SettingsWindow_Closed;
         }
 
-        private void Settings_Closed(object sender, EventArgs e)
+        private void SettingsWindow_Closed(object sender, EventArgs e)
         {
             Save();
-            Closed -= Settings_Closed;
+            Closed -= SettingsWindow_Closed;
         }
-        
+
         private void Save()
         {
-
             settings?.Save();
         }
 
         private void Load()
         {
-            //settings = JsonConvert.DeserializeObject<SettingsData>(File.ReadAllText(FilePath));
+            if (settings is null)
+                return;
 
-            //UsernameTextBox.Text = settings.username;
+            settings.Load();
+            UsernameTextBox.Text = settings["username", "username"];
         }
 
+        // Select the text inside the username's textbox on click.
         private void UsernameTextBox_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             var textBox = sender as TextBox;
@@ -72,7 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             // TODO: find a way to bind the textbox content to the variable without this code every time.
             if (sender is TextBox textBox)
             {
-                //settings.username = textBox.Text;
+                settings["username"] = textBox.Text;
             }
             Save();
         }
