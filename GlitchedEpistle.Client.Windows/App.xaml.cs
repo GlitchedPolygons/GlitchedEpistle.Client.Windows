@@ -47,10 +47,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
             if (!windows.TryGetValue(type, out var window) || window == null)
             {
-                var w = container.Resolve<T>();
-                w.Closed += OnWindowClosed;
-                windows[type] = w;
-                return w;
+                window = container.Resolve<T>();
+                window.Closed += OnWindowClosed;
+                windows[type] = window;
             }
 
             return window as T;

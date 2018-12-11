@@ -9,20 +9,12 @@
         Title="Settings"  
         Width="500" MinWidth="290" 
         Height="360" MinHeight="200">
-    <Grid>
-        <Grid.Background>
-            <ImageBrush ImageSource="Images/glitched-polygons-blue.png" 
-                        Stretch="UniformToFill" 
-                        TileMode="Tile"/>
-        </Grid.Background>
+    <Canvas>
+        <Canvas.Background>
+            <ImageBrush ImageSource="Images/glitched-polygons-blue.png" Stretch="UniformToFill" TileMode="Tile"/>
+        </Canvas.Background>
 
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0">
-
+        <StackPanel>
             <Label Content="Username" 
                    Foreground="AliceBlue" 
                    Padding="0 0 0 5"
@@ -35,13 +27,30 @@
                      Name="UsernameTextBox"
                      Text="username" 
                      TextWrapping="Wrap" 
-                     TextChanged="UsernameTextBox_OnTextChanged"
                      MouseDoubleClick="UsernameTextBox_SelectText"
                      GotKeyboardFocus="UsernameTextBox_SelectText"
                      PreviewMouseLeftButtonDown="UsernameTextBox_OnMouseDown"
                      Margin="10 0 10 0"/>
         </StackPanel>
 
+        <StackPanel Orientation="Horizontal" 
+                    Canvas.Bottom="10"
+                    Canvas.Right="10">
 
-    </Grid>
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Width="75"
+                    Content="Cancel"
+                    ToolTip="Closes the window without saving the changes."
+                    Click="CancelButton_OnClick"/>
+
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Width="75"
+                    Margin="10 0 0 0"
+                    Content="Revert"
+                    ToolTip="Resets all user settings back to their default values."
+                    Click="RevertButton_OnClick"/>
+        </StackPanel>
+    </Canvas>
 </Window>

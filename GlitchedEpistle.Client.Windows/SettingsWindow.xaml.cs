@@ -12,6 +12,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class SettingsWindow : Window
     {
+        private bool cancelled = false;
         private readonly ISettings settings;
 
         public SettingsWindow(ISettings settings)
@@ -24,15 +25,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             Closed += SettingsWindow_Closed;
         }
 
-        private void SettingsWindow_Closed(object sender, EventArgs e)
-        {
-            Save();
-            Closed -= SettingsWindow_Closed;
-        }
-
         private void Save()
         {
-            settings?.Save();
+            if (settings is null)
+                return;
+
+            settings["username"] = UsernameTextBox.Text;
+
+            settings.Save();
         }
 
         private void Load()
@@ -41,7 +41,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 return;
 
             settings.Load();
-            UsernameTextBox.Text = settings["username", "username"];
+
+            UsernameTextBox.Text = settings["username", "user"];
         }
 
         // Select the text inside the username's textbox on click.
@@ -64,14 +65,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             textBox?.SelectAll();
         }
 
-        private void UsernameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
         {
-            // TODO: find a way to bind the textbox content to the variable without this code every time.
-            if (sender is TextBox textBox)
+            cancelled = true;
+            Close();
+        }
+
+        private void RevertButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            UsernameTextBox.Text = "user";
+        }
+
+        private void SettingsWindow_Closed(object sender, EventArgs e)
+        {
+            if (!cancelled)
             {
-                settings["username"] = textBox.Text;
+                Save();
             }
-            Save();
+
+            Closed -= SettingsWindow_Closed;
         }
     }
 }

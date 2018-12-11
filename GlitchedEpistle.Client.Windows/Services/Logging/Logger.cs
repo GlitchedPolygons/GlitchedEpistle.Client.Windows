@@ -62,7 +62,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
             }
         }
 
-        private string Timestamp(string msg) => $"[{DateTime.Now:s}] {msg}\n\n";
+        private string Timestamp(string msg) => $"[{DateTime.Now:s}] {msg}\n";
 
         public void LogMessage(string msg)
         {
