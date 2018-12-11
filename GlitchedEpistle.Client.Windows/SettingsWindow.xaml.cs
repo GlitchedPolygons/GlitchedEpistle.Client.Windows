@@ -3,7 +3,8 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using Newtonsoft.Json;
 using Path = System.IO.Path;
 
@@ -14,28 +15,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class SettingsWindow : Window
     {
-        /// <summary>
-        /// Absolute settings directory path.
-        /// </summary>
-        public string DirectoryPath { get; } 
-
-        /// <summary>
-        /// Absolute settings file path.
-        /// </summary>
-        public string FilePath { get; }
+        private readonly ILogger logger;
+        private readonly ISettings settings;
         
-        public SettingsWindow()
+        public SettingsWindow(ISettings settings, ILogger logger)
         {
-            DirectoryPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "GlitchedPolygons",
-                "GlitchedEpistle"
-            );
-
-            FilePath = Path.Combine(
-                DirectoryPath,
-                "Settings.json"
-            );
+            this.logger = logger;
+            this.settings = settings;
 
             InitializeComponent();
 
@@ -48,30 +34,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             Save();
             Closed -= Settings_Closed;
         }
-
-        private void CheckDirectory()
-        {
-            if (!Directory.Exists(DirectoryPath))
-            {
-                Directory.CreateDirectory(DirectoryPath);
-            }
-        }
-
+        
         private void Save()
         {
-            CheckDirectory();
-            //File.WriteAllText(FilePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
+
+            settings?.Save();
         }
 
         private void Load()
         {
-            CheckDirectory();
-
-            if (!File.Exists(FilePath))
-            {
-                return;
-            }
-
             //settings = JsonConvert.DeserializeObject<SettingsData>(File.ReadAllText(FilePath));
 
             //UsernameTextBox.Text = settings.username;

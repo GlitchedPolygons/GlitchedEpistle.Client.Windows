@@ -1,18 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -23,6 +12,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     {
         private const double LEFT_COLUMN_MIN_WIDTH = 300;
         private double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
+
+        private readonly App app;
         private SettingsWindow settingsWindow;
 
         public MainWindow()
@@ -30,6 +21,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             InitializeComponent();
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
             UpdateCollapseButtonContent(CollapseButton);
+            app = Application.Current as App;
             Closed += MainWindow_Closed;
         }
 
@@ -65,18 +57,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (settingsWindow == null)
-            {
-                settingsWindow = new SettingsWindow();
-                settingsWindow.Closed += SettingsWindow_OnClosed;
-            }
-
+            settingsWindow = app.GetWindow<SettingsWindow>(true);
             settingsWindow.Show();
-        }
-
-        private void SettingsWindow_OnClosed(object sender, EventArgs e)
-        {
-            settingsWindow = null;
+            settingsWindow.Activate();
         }
 
         /// <summary>
