@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -15,9 +16,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private readonly App app;
         private SettingsWindow settingsWindow;
+        private readonly ISettings settings;
 
-        public MainWindow()
+        public MainWindow(ISettings settings)
         {
+            this.settings = settings;
+
             InitializeComponent();
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
             UpdateCollapseButtonContent(CollapseButton);
