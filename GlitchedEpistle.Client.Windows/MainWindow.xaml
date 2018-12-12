@@ -55,6 +55,13 @@
                              Background="#FFE5E5E5" 
                              Foreground="#FF08AFE2" />
 
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Create Convo" 
+                            Margin="10" 
+                            Padding="4"
+                            Click="CreateConvoButton_OnClick"/>
+                </StackPanel>
+
             </StackPanel>
 
             <!-- Convos list -->

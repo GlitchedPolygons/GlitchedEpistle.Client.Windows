@@ -106,5 +106,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 progressBar.Foreground = PROGRESS_BAR_COLOR;
             }
         }
+
+        private void CreateConvoButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
