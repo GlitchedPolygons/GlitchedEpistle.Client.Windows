@@ -36,7 +36,24 @@
         <StackPanel Grid.Column="0" Grid.Row="0" Background="Black">
 
             <!-- Profile -->
-            <StackPanel Name="ProfileStackPanel" Height="175" Orientation="Horizontal">
+            <StackPanel Name="ProfileStackPanel" 
+                        Height="175">
+
+                <Label Content="user" 
+                       Foreground="AliceBlue"
+                       Name="UsernameLabel"
+                       HorizontalAlignment="Center" 
+                       FontSize="18"/>
+
+                <ProgressBar Height="4" 
+                             Value="75" 
+                             Name="SubscriptionProgressBar"
+                             ToolTip="Subscription expires the 24th of December, 2018 at 15:30. Click to extend now!"
+                             MouseEnter="SubscriptionProgressBar_OnMouseEnter"
+                             MouseLeave="SubscriptionProgressBar_OnMouseLeave"
+                             MouseDown="SubscriptionProgressBar_OnMouseDown"
+                             Background="#FFE5E5E5" 
+                             Foreground="#FF08AFE2" />
 
             </StackPanel>
 
