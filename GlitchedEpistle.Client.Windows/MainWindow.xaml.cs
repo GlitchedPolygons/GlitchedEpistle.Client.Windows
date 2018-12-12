@@ -2,6 +2,8 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
@@ -15,8 +17,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         private double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
 
         private readonly App app;
-        private SettingsWindow settingsWindow;
         private readonly ISettings settings;
+
+        private static readonly SolidColorBrush PROGRESS_BAR_COLOR = new SolidColorBrush(new Color { R = 8, G = 175, B = 226, A = 255 });
+        private static readonly SolidColorBrush PROGRESS_BAR_COLOR_HOVER = new SolidColorBrush(new Color { R = 100, G = 200, B = 226, A = 255 });
+
+        private SettingsWindow settingsWindow;
 
         public MainWindow(ISettings settings)
         {
@@ -77,6 +83,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 return;
 
             button.Content = LeftColumn.MinWidth > 0 ? "<" : ">";
+        }
+
+        private void SubscriptionProgressBar_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub");
+        }
+
+        private void SubscriptionProgressBar_OnMouseEnter(object sender, MouseEventArgs e)
+        {
+            if (sender is ProgressBar progressBar)
+            {
+                progressBar.Foreground = PROGRESS_BAR_COLOR_HOVER;
+                // TODO: update the tooltip here with the user
+            }
+        }
+
+        private void SubscriptionProgressBar_OnMouseLeave(object sender, MouseEventArgs e)
+        {
+            if (sender is ProgressBar progressBar)
+            {
+                progressBar.Foreground = PROGRESS_BAR_COLOR;
+            }
         }
     }
 }
