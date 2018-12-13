@@ -31,6 +31,20 @@
                      GotKeyboardFocus="UsernameTextBox_SelectText"
                      PreviewMouseLeftButtonDown="UsernameTextBox_OnMouseDown"
                      Margin="10 0 10 0"/>
+
+            <Label Content="Update Frequency (500 ms)"
+                   Name="UpdateFrequencyLabel"
+                   Foreground="AliceBlue" 
+                   Padding="0 0 0 5"
+                   Margin="10 10 0 0"/>
+
+            <Slider Name="UpdateFrequencySlider" 
+                    Margin="10 0 10 0" 
+                    Minimum="200" 
+                    Maximum="5000"
+                    Value="500"
+                    SmallChange="20"
+                    ValueChanged="UpdateFrequencySlider_OnValueChanged" TickFrequency="20" IsSnapToTickEnabled="True" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" 
