@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -31,6 +32,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 return;
 
             settings["username"] = UsernameTextBox.Text;
+            settings["updateFrequency"] = UpdateFrequencySlider.Value.ToString(CultureInfo.InvariantCulture);
 
             settings.Save();
         }
@@ -43,6 +45,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             settings.Load();
 
             UsernameTextBox.Text = settings["username", "user"];
+            UpdateFrequencySlider.Value = settings["updateFrequency", 500.0d];
         }
 
         // Select the text inside the username's textbox on click.
@@ -74,6 +77,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         private void RevertButton_OnClick(object sender, RoutedEventArgs e)
         {
             UsernameTextBox.Text = "user";
+            UpdateFrequencySlider.Value = 500;
         }
 
         private void SettingsWindow_Closed(object sender, EventArgs e)
@@ -84,6 +88,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             }
 
             Closed -= SettingsWindow_Closed;
+        }
+
+        private void UpdateFrequencySlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (sender is Slider slider)
+            {
+                UpdateFrequencyLabel.Content = $"Update Frequency ({slider.Value} ms)";
+            }
         }
     }
 }
