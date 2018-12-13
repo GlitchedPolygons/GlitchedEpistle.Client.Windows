@@ -56,10 +56,18 @@
                              Foreground="#FF08AFE2" />
 
                 <StackPanel Orientation="Horizontal">
+
                     <Button Content="Create Convo" 
                             Margin="10" 
                             Padding="4"
                             Click="CreateConvoButton_OnClick"/>
+
+                    <Button Content="Change Password" 
+                            Margin="0 10" 
+                            Padding="4"
+                            ToolTip="Click here to change the password you use to access Glitched Epistle."
+                            Click="ChangePasswordButton_OnClick"/>
+
                 </StackPanel>
 
             </StackPanel>

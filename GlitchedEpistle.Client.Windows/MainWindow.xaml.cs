@@ -111,5 +111,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         {
             throw new NotImplementedException();
         }
+
+        private void ChangePasswordButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
