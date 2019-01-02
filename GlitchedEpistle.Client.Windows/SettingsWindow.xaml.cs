@@ -33,7 +33,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
             settings["username"] = UsernameTextBox.Text;
             settings["updateFrequency"] = UpdateFrequencySlider.Value.ToString(CultureInfo.InvariantCulture);
-
+            
             settings.Save();
         }
 

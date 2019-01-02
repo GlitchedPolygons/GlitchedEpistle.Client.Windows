@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
@@ -33,6 +33,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             UpdateCollapseButtonContent(CollapseButton);
             app = Application.Current as App;
             Closed += MainWindow_Closed;
+            SettingsWindow_Closed(null,null);
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
@@ -68,8 +69,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
             settingsWindow = app.GetWindow<SettingsWindow>(true);
+            settingsWindow.Closed += SettingsWindow_Closed;
             settingsWindow.Show();
             settingsWindow.Activate();
+        }
+
+        private void SettingsWindow_Closed(object sender, EventArgs e)
+        {
+            if (!settings.Load()) return;
+            UsernameLabel.Content = settings["username"];
         }
 
         /// <summary>
