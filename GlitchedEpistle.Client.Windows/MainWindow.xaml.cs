@@ -60,8 +60,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 double sidebarWidth = Math.Abs(settings["SidebarWidth", LEFT_COLUMN_MIN_WIDTH]);
                 LeftColumn.Width = new GridLength(sidebarWidth < LEFT_COLUMN_MIN_WIDTH ? LEFT_COLUMN_MIN_WIDTH : sidebarWidth > ActualWidth ? ActualWidth : sidebarWidth);
             }
-
-            UpdateCollapseButtonContent(CollapseButton);
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
