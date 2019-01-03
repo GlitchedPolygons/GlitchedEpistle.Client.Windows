@@ -31,8 +31,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             if (settings is null)
                 return;
 
-            settings["username"] = UsernameTextBox.Text;
-            settings["updateFrequency"] = UpdateFrequencySlider.Value.ToString(CultureInfo.InvariantCulture);
+            settings["Username"] = UsernameTextBox.Text;
+            settings["UpdateFrequency"] = UpdateFrequencySlider.Value.ToString(CultureInfo.InvariantCulture);
             
             settings.Save();
         }
@@ -44,8 +44,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
             settings.Load();
 
-            UsernameTextBox.Text = settings["username", "user"];
-            UpdateFrequencySlider.Value = settings["updateFrequency", 500.0d];
+            UsernameTextBox.Text = settings["Username", "user"];
+            UpdateFrequencySlider.Value = settings["UpdateFrequency", 500.0d];
         }
 
         // Select the text inside the username's textbox on click.
