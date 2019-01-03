@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -13,7 +14,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const double LEFT_COLUMN_MIN_WIDTH = 300;
+        private const double LEFT_COLUMN_MIN_WIDTH = 340;
+        private const double MAIN_WINDOW_MIN_WIDTH = 800;
+        private const double MAIN_WINDOW_MIN_HEIGHT = 450;
         private double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
 
         private readonly App app;
@@ -27,18 +30,50 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         public MainWindow(ISettings settings)
         {
             this.settings = settings;
+            app = Application.Current as App;
 
             InitializeComponent();
-            LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
-            UpdateCollapseButtonContent(CollapseButton);
-            app = Application.Current as App;
+
+            // Register events.
+            Loaded += MainWindow_Loaded;
             Closed += MainWindow_Closed;
-            SettingsWindow_Closed(null,null);
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            // Initialize variables and UI elements.
+            MinWidth = MAIN_WINDOW_MIN_WIDTH;
+            MinHeight = MAIN_WINDOW_MIN_HEIGHT;
+            LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
+
+            // Load up the settings on startup.
+            if (settings.Load())
+            {
+                UsernameLabel.Content = settings["Username", "user"];
+
+                Enum.TryParse<WindowState>(settings["WindowState", WindowState.Normal.ToString()], out var windowState);
+                WindowState = windowState;
+
+                Width = Math.Abs(settings["MainWindowWidth", MAIN_WINDOW_MIN_WIDTH]);
+                Height = Math.Abs(settings["MainWindowHeight", MAIN_WINDOW_MIN_HEIGHT]);
+
+                double sidebarWidth = Math.Abs(settings["SidebarWidth", LEFT_COLUMN_MIN_WIDTH]);
+                LeftColumn.Width = new GridLength(sidebarWidth < LEFT_COLUMN_MIN_WIDTH ? LEFT_COLUMN_MIN_WIDTH : sidebarWidth > ActualWidth ? ActualWidth : sidebarWidth);
+            }
+
+            UpdateCollapseButtonContent(CollapseButton);
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
             settingsWindow?.Close();
+
+            var c = CultureInfo.InvariantCulture;
+            settings["WindowState"] = WindowState.ToString();
+            settings["MainWindowWidth"] = ((int)ActualWidth).ToString(c);
+            settings["MainWindowHeight"] = ((int)ActualHeight).ToString(c);
+            settings["SidebarWidth"] = ((int)LeftColumn.ActualWidth).ToString(c);
+            settings.Save();
         }
 
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
@@ -49,15 +84,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         private void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
         {
             double width = LeftColumn.ActualWidth;
-            if (width > 0)
-            {
-                leftColumnWidth = width;
-            }
+            if (width > 0) leftColumnWidth = width;
 
             LeftColumn.MinWidth = width > 0 ? 0 : LEFT_COLUMN_MIN_WIDTH;
             LeftColumn.Width = new GridLength(width > 0 ? 0 : leftColumnWidth);
 
-            UpdateCollapseButtonContent(e.Source as Button);
+            UpdateCollapseButtonContent(sender as Button);
         }
 
         private void GridSplitter_OnDragStarted(object sender, DragStartedEventArgs e)
@@ -76,8 +108,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void SettingsWindow_Closed(object sender, EventArgs e)
         {
-            if (!settings.Load()) return;
-            UsernameLabel.Content = settings["username"];
+            if (settings.Load())
+            {
+                UsernameLabel.Content = settings["Username"];
+            }
         }
 
         /// <summary>
@@ -121,6 +155,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         }
 
         private void ChangePasswordButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void LogoutButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ExportUserButton_OnClick(object sender, RoutedEventArgs e)
         {
             throw new NotImplementedException();
         }
