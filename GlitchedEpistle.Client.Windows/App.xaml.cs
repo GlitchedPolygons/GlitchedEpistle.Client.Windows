@@ -4,6 +4,8 @@ using System.Windows;
 using System.Collections.Generic;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.JwtService;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -21,6 +23,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         {
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<ISettings, SettingsJson>();
+            container.RegisterType<ICompressionUtility, GZipUtility>();
+            container.RegisterType<JwtService>();
 
             Application.Current.MainWindow = container.Resolve<MainWindow>();
             Application.Current.MainWindow?.Show();
