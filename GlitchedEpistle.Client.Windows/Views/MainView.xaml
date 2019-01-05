@@ -1,9 +1,10 @@
-﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.MainWindow"
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Glitched Epistle" 
         Width="800" 
@@ -11,12 +12,21 @@
         Height="450" 
         MinHeight="450" 
         SizeChanged="MainWindow_OnSizeChanged"
-        Icon="Images/epistle-icon.png">
+        Icon="../Images/epistle-icon.png">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
-            <ColumnDefinition Width="*" 
+            <ColumnDefinition Width="{Binding Path=LeftColumnWidth}"
                               MinWidth="350" 
                               MaxWidth="800" 
                               Name="LeftColumn"/>
@@ -27,7 +37,7 @@
 
         <!-- Background Image -->
         <Grid.Background>
-            <ImageBrush ImageSource="Images/glitched-polygons-blue.png" 
+            <ImageBrush ImageSource="../Images/glitched-polygons-blue.png" 
                         TileMode="Tile" 
                         Stretch="UniformToFill"/>
         </Grid.Background>
@@ -39,7 +49,7 @@
             <StackPanel Name="ProfileStackPanel" 
                         Height="175">
 
-                <Label Content="user" 
+                <Label Content="{Binding UsernameLabel}" 
                        Foreground="AliceBlue"
                        Name="UsernameLabel"
                        HorizontalAlignment="Center" 
@@ -60,22 +70,22 @@
                     <Button Content="Create Convo" 
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."
-                            Click="CreateConvoButton_OnClick"/>
+                            Command="{Binding CreateConvoButtonCommand}"/>
 
                     <Button Content="Change Password" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
-                            Click="ChangePasswordButton_OnClick"/>
+                            Command="{Binding ChangePasswordButtonCommand}"/>
 
                     <Button Content="Export User" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
-                            Click="ExportUserButton_OnClick"/>
+                            Command="{Binding ExportUserButtonCommand}"/>
 
                     <Button Content="Logout" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to log out of your Glitched Epistle account."
-                            Click="LogoutButton_OnClick"/>
+                            Command="{Binding LogoutButtonCommand}"/>
                 </WrapPanel>
 
             </StackPanel>
@@ -140,10 +150,10 @@
                     Height="25" 
                     Canvas.Top="5" 
                     Canvas.Right="5" 
-                    Click="SettingsButton_OnClick"
+                    Command="{Binding SettingsButtonCommand}"
                     BorderBrush="{x:Null}">
                 <Button.Background>
-                    <ImageBrush ImageSource="Images/settings-icon-white.png"/>
+                    <ImageBrush ImageSource="../Images/settings-icon-white.png"/>
                 </Button.Background>
             </Button>
         </Canvas>

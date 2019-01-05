@@ -1,17 +1,28 @@
-﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.SettingsWindow"
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.SettingsView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
-        Icon="Images/settings-icon-white.png"
+        Icon="../Images/settings-icon-white.png"
         Title="Settings"  
         Width="500" MinWidth="290" 
         Height="360" MinHeight="200">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding Path=LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding Path=ClosedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Canvas>
         <Canvas.Background>
-            <ImageBrush ImageSource="Images/glitched-polygons-blue.png" Stretch="UniformToFill" TileMode="Tile"/>
+            <ImageBrush ImageSource="../Images/glitched-polygons-blue.png" Stretch="UniformToFill" TileMode="Tile"/>
         </Canvas.Background>
 
         <StackPanel>
@@ -25,7 +36,7 @@
                      Width="250"
                      Height="23" 
                      Name="UsernameTextBox"
-                     Text="username" 
+                     Text="{Binding Path=Username}" 
                      TextWrapping="Wrap" 
                      MouseDoubleClick="UsernameTextBox_SelectText"
                      GotKeyboardFocus="UsernameTextBox_SelectText"
@@ -42,9 +53,11 @@
                     Margin="10 0 10 0" 
                     Minimum="200" 
                     Maximum="5000"
-                    Value="500"
+                    Value="{Binding Path=UpdateFrequency}"
+                    ValueChanged="UpdateFrequencySlider_OnValueChanged" 
                     SmallChange="20"
-                    ValueChanged="UpdateFrequencySlider_OnValueChanged" TickFrequency="20" IsSnapToTickEnabled="True" />
+                    TickFrequency="20" 
+                    IsSnapToTickEnabled="True" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" 
@@ -55,6 +68,7 @@
                     VerticalAlignment="Bottom"
                     Width="75"
                     Content="Cancel"
+                    Command="{Binding Path=CancelButtonCommand}"
                     ToolTip="Closes the window without saving the changes."
                     Click="CancelButton_OnClick"/>
 
@@ -63,8 +77,8 @@
                     Width="75"
                     Margin="10 0 0 0"
                     Content="Revert"
-                    ToolTip="Resets all user settings back to their default values."
-                    Click="RevertButton_OnClick"/>
+                    Command="{Binding Path=RevertButtonCommand}"
+                    ToolTip="Resets all user settings back to their default values."/>
         </StackPanel>
     </Canvas>
 </Window>

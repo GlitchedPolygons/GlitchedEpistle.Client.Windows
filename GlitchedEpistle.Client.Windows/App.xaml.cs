@@ -2,11 +2,13 @@
 using System;
 using System.Windows;
 using System.Collections.Generic;
+using GlitchedPolygons.Services.JwtService;
+using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
-using GlitchedPolygons.Services.CompressionUtility;
-using GlitchedPolygons.Services.JwtService;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -28,7 +30,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
             container.RegisterType<JwtService>();
 
-            Application.Current.MainWindow = container.Resolve<MainWindow>();
+            var mainView = container.Resolve<MainView>();
+            mainView.DataContext = container.Resolve<MainViewModel>();
+            Application.Current.MainWindow = mainView;
             Application.Current.MainWindow?.Show();
         }
 
@@ -46,9 +50,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             }
 
             var type = typeof(T);
-            if (type == typeof(MainWindow))
+            if (type == typeof(MainView))
             {
-                throw new ArgumentException($"{nameof(App)}::{nameof(GetWindow)}: The provided {nameof(Window)} type parameter is of type {nameof(MainWindow)}, which is not allowed (since it's the main window, only the creating class instance should have control over it).", nameof(T));
+                throw new ArgumentException($"{nameof(App)}::{nameof(GetWindow)}: The provided {nameof(Window)} type parameter is of type {nameof(MainView)}, which is not allowed (since it's the main window, only the creating class instance should have control over it).", nameof(T));
             }
 
             if (!windows.TryGetValue(type, out var window) || window == null)
