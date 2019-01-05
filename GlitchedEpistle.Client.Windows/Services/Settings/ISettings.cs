@@ -18,12 +18,12 @@
         bool Load();
 
         /// <summary>
-        /// Gets or sets a user setting with its specified key <c>string</c>.<para> </para>
-        /// If you are trying to get an inexistent setting, <c>null</c> (or <c>string.Empty</c>) should be returned.<para> </para>
+        /// Gets or sets a user setting with its specified key <see langword="string"/>.<para> </para>
+        /// If you are trying to get an inexistent setting, <see langword="null"/> (or <c>string.Empty</c>) should be returned.<para> </para>
         /// If you are trying to set an inexistent setting, the setting shall be created.
         /// </summary>
         /// <param name="key">The setting's name/key.</param>
-        /// <returns>The setting's <c>string</c> value; <c>null</c> (or <c>string.Empty</c>) if the setting doesn't exist.</returns>
+        /// <returns>The setting's <c>string</c> value; <see langword="null"/> (or <c>string.Empty</c>) if the setting doesn't exist.</returns>
         string this[string key] { get; set; }
 
         /// <summary>
