@@ -7,31 +7,28 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 
-namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainView : Window
     {
         private const double LEFT_COLUMN_MIN_WIDTH = 340;
         private const double MAIN_WINDOW_MIN_WIDTH = 800;
         private const double MAIN_WINDOW_MIN_HEIGHT = 450;
         private double leftColumnWidth = LEFT_COLUMN_MIN_WIDTH;
 
-        private readonly App app;
         private readonly ISettings settings;
 
         private static readonly SolidColorBrush PROGRESS_BAR_COLOR = new SolidColorBrush(new Color { R = 8, G = 175, B = 226, A = 255 });
         private static readonly SolidColorBrush PROGRESS_BAR_COLOR_HOVER = new SolidColorBrush(new Color { R = 100, G = 200, B = 226, A = 255 });
 
-        private SettingsWindow settingsWindow;
+        private SettingsView settingsView;
 
-        public MainWindow(ISettings settings)
+        public MainView(ISettings settings)
         {
             this.settings = settings;
-            app = Application.Current as App;
-
             InitializeComponent();
 
             // Register events.
@@ -64,8 +61,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
-            settingsWindow?.Close();
+            settingsView?.Close();
 
+            settings.Load();
             var c = CultureInfo.InvariantCulture;
             settings["WindowState"] = WindowState.ToString();
             settings["MainWindowWidth"] = ((int)ActualWidth).ToString(c);
@@ -94,22 +92,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         {
             LeftColumn.MinWidth = LEFT_COLUMN_MIN_WIDTH;
             UpdateCollapseButtonContent(CollapseButton);
-        }
-
-        private void SettingsButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            settingsWindow = app.GetWindow<SettingsWindow>(true);
-            settingsWindow.Closed += SettingsWindow_Closed;
-            settingsWindow.Show();
-            settingsWindow.Activate();
-        }
-
-        private void SettingsWindow_Closed(object sender, EventArgs e)
-        {
-            if (settings.Load())
-            {
-                UsernameLabel.Content = settings["Username"];
-            }
         }
 
         /// <summary>
