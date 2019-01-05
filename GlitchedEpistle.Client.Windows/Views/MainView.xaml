@@ -3,13 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="Glitched Epistle" 
-        Width="800" 
+        Width="{Binding MainWindowWidth}" 
         MinWidth="800" 
-        Height="450" 
+        Height="{Binding MainWindowHeight}" 
         MinHeight="450" 
         SizeChanged="MainWindow_OnSizeChanged"
         Icon="../Images/epistle-icon.png">
@@ -26,9 +25,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
-            <ColumnDefinition Width="{Binding LeftColumnWidth}"
-                              MinWidth="350" 
-                              MaxWidth="800" 
+            <ColumnDefinition Width="{Binding SidebarWidth}" 
+                              MinWidth="{Binding SidebarMinWidth}" 
+                              MaxWidth="800"
                               Name="LeftColumn"/>
             <!-- Right Column -->
             <ColumnDefinition Width="2*" 
@@ -51,7 +50,6 @@
 
                 <Label Content="{Binding UsernameLabel}" 
                        Foreground="AliceBlue"
-                       Name="UsernameLabel"
                        HorizontalAlignment="Center" 
                        FontSize="18"/>
 

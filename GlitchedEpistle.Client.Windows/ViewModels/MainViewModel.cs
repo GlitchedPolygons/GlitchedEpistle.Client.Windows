@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
+
+using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -10,15 +14,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class MainViewModel : ViewModel
     {
         #region Constants
-        private const double SIDEBAR_MIN_WIDTH = 340;
-        private const double MAIN_WINDOW_MIN_WIDTH = 800;
-        private const double MAIN_WINDOW_MIN_HEIGHT = 450;
-        private readonly ISettings settings;
+        public const double SIDEBAR_MIN_WIDTH = 340;
+        public const double MAIN_WINDOW_MIN_WIDTH = 800;
+        public const double MAIN_WINDOW_MIN_HEIGHT = 450;
         private readonly App app = Application.Current as App;
+
+        // Injections:
+        private readonly ISettings settings;
+        private readonly IEventAggregator eventAggregator;
         #endregion
 
         private SettingsView settingsView;//TODO: this is bad!
-
+        
         #region Commands
         public ICommand LoadedCommand { get; }
         public ICommand ClosedCommand { get; }
@@ -33,13 +40,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string usernameLabel = SettingsViewModel.DEFAULT_USERNAME;
         public string UsernameLabel { get => usernameLabel; set => Set(ref usernameLabel, value); }
 
-        private double leftColumnWidth;
-        public double LeftColumnWidth { get => leftColumnWidth; set => Set(ref leftColumnWidth, value); }
+        private double sidebarWidth = SIDEBAR_MIN_WIDTH;
+        public double SidebarWidth { get => sidebarWidth; set => Set(ref sidebarWidth, value); }
+
+        private double sidebarMinWidth = SIDEBAR_MIN_WIDTH;
+        public double SidebarMinWidth { get => sidebarMinWidth; set => Set(ref sidebarMinWidth, value); }
+
+        private double mainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
+        public double MainWindowWidth { get => mainWindowWidth; set => Set(ref mainWindowWidth, value); }
+
+        private double mainWindowHeight = MAIN_WINDOW_MIN_HEIGHT;
+        public double MainWindowHeight { get => mainWindowHeight; set => Set(ref mainWindowHeight, value); }
+
+        private WindowState windowState = WindowState.Normal;
+        public WindowState WindowState { get => windowState; set => Set(ref windowState, value); }
         #endregion
 
-        public MainViewModel(ISettings settings)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator)
         {
             this.settings = settings;
+            this.eventAggregator = eventAggregator;
 
             LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
@@ -48,16 +68,40 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ChangePasswordButtonCommand = new DelegateCommand(OnClickedChangePassword);
             ExportUserButtonCommand = new DelegateCommand(OnClickedExportUser);
             LogoutButtonCommand = new DelegateCommand(OnClickedLogout);
+
+            // Update the username label on the main window when that setting has changed.
+            eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => UsernameLabel = newUsername);
         }
 
         private void OnLoaded(object commandParam)
         {
+            // Load up the settings on startup.
+            if (settings.Load())
+            {
+                UsernameLabel = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
 
+                Enum.TryParse<WindowState>(settings[nameof(WindowState), WindowState.Normal.ToString()], out var windowState);
+                WindowState = windowState;
+
+                MainWindowWidth = Math.Abs(settings[nameof(MainWindowWidth), MAIN_WINDOW_MIN_WIDTH]);
+                MainWindowHeight = Math.Abs(settings[nameof(MainWindowHeight), MAIN_WINDOW_MIN_HEIGHT]);
+
+                double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
+                SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? MainWindowWidth : w;
+            }
         }
 
         private void OnClosed(object commandParam)
         {
             settingsView?.Close();
+
+            settings.Load();
+            var c = CultureInfo.InvariantCulture;
+            settings[nameof(WindowState)] = WindowState.ToString();
+            settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
+            settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
+            settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
+            settings.Save();
         }
 
         private void OnClickedCreateConvo(object commandParam)
@@ -83,19 +127,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedSettingsIcon(object commandParam)
         {
             settingsView = app.GetWindow<SettingsView>(true);
-            settingsView.DataContext = new SettingsViewModel(settings);
-            settingsView.Closed += SettingsView_Closed;
+            settingsView.DataContext = new SettingsViewModel(settings, eventAggregator);
             settingsView.Show();
             settingsView.Activate();
-        }
-
-        private void SettingsView_Closed(object sender, EventArgs e)
-        {
-            if (settings.Load())
-            {
-                UsernameLabel = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
-            }
-            settingsView = null;
         }
     }
 }
