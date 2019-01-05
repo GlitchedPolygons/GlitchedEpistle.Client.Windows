@@ -9,11 +9,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
     public class MainViewModel : ViewModel
     {
+        #region Constants
+        private const double SIDEBAR_MIN_WIDTH = 340;
+        private const double MAIN_WINDOW_MIN_WIDTH = 800;
+        private const double MAIN_WINDOW_MIN_HEIGHT = 450;
         private readonly ISettings settings;
         private readonly App app = Application.Current as App;
+        #endregion
 
-        private SettingsView settingsView;
+        private SettingsView settingsView;//TODO: this is bad!
 
+        #region Commands
         public ICommand LoadedCommand { get; }
         public ICommand ClosedCommand { get; }
         public ICommand SettingsButtonCommand { get; }
@@ -21,12 +27,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand ChangePasswordButtonCommand { get; }
         public ICommand ExportUserButtonCommand { get; }
         public ICommand LogoutButtonCommand { get; }
+        #endregion
 
+        #region UI Bindings
         private string usernameLabel = SettingsViewModel.DEFAULT_USERNAME;
         public string UsernameLabel { get => usernameLabel; set => Set(ref usernameLabel, value); }
 
         private double leftColumnWidth;
         public double LeftColumnWidth { get => leftColumnWidth; set => Set(ref leftColumnWidth, value); }
+        #endregion
 
         public MainViewModel(ISettings settings)
         {

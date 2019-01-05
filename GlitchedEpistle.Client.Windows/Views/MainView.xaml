@@ -26,7 +26,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
-            <ColumnDefinition Width="{Binding Path=LeftColumnWidth}"
+            <ColumnDefinition Width="{Binding LeftColumnWidth}"
                               MinWidth="350" 
                               MaxWidth="800" 
                               Name="LeftColumn"/>
