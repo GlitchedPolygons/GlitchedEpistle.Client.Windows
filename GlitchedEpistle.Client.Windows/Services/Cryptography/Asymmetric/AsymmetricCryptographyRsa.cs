@@ -5,10 +5,10 @@ using System.Security.Cryptography;
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.Asymmetric
 {
     /// <summary>
-    /// <see cref="IAsymmetricCryptographyRsa"/> implementation for asymmetric RSA encryption/decryption.
+    /// <see cref="IAsymmetricCryptographyRSA"/> implementation for asymmetric RSA encryption/decryption.
     /// </summary>
-    /// <seealso cref="IAsymmetricCryptographyRsa" />
-    public class AsymmetricCryptographyRsa : IAsymmetricCryptographyRsa
+    /// <seealso cref="IAsymmetricCryptographyRSA" />
+    public class AsymmetricCryptographyRSA : IAsymmetricCryptographyRSA
     {
         /// <inheritdoc/>
         public string Encrypt(string text, RSAParameters publicKey)
@@ -35,7 +35,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.
                 rsa.ImportParameters(privateKey);
                 if (rsa.PublicOnly)
                 {
-                    throw new CryptographicException($"{nameof(AsymmetricCryptographyRsa)}::{nameof(Decrypt)}: You've provided a public key instead of a private key... for decryption you need the private key!");
+                    throw new CryptographicException($"{nameof(AsymmetricCryptographyRSA)}::{nameof(Decrypt)}: You've provided a public key instead of a private key... for decryption you need the private key!");
                 }
                 data = rsa.Decrypt(Convert.FromBase64String(encryptedText), false);
             }
@@ -63,7 +63,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.
                 rsa.ImportParameters(privateKey);
                 if (rsa.PublicOnly)
                 {
-                    throw new CryptographicException($"{nameof(AsymmetricCryptographyRsa)}::{nameof(Decrypt)}: You've provided a public key instead of a private key... for decryption you need the private key!");
+                    throw new CryptographicException($"{nameof(AsymmetricCryptographyRSA)}::{nameof(Decrypt)}: You've provided a public key instead of a private key... for decryption you need the private key!");
                 }
                 data = rsa.Decrypt(encryptedData, false);
             }
