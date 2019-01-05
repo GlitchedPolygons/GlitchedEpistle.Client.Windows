@@ -1,16 +1,19 @@
 ﻿using System.Windows.Input;
 using System.Globalization;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
     public class SettingsViewModel : ViewModel
     {
         #region Constants
-        private readonly ISettings settings;
         public const string DEFAULT_USERNAME = "user";
         public const double DEFAULT_UPDATE_FREQUENCY = 500D;
+        private readonly ISettings settings;
+        private readonly IEventAggregator eventAggregator;
         #endregion
 
         #region Variables
@@ -32,9 +35,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public double UpdateFrequency { get => updateFrequency; set => Set(ref updateFrequency, value); }
         #endregion
 
-        public SettingsViewModel(ISettings settings)
+        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator)
         {
             this.settings = settings;
+            this.eventAggregator = eventAggregator;
 
             LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
@@ -60,6 +64,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 settings[nameof(Username)] = Username;
                 settings[nameof(UpdateFrequency)] = UpdateFrequency.ToString(CultureInfo.InvariantCulture);
                 settings.Save();
+
+                eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
             }
         }
 
