@@ -1,4 +1,5 @@
 ﻿using Unity;
+using Prism.Events;
 using System;
 using System.Windows;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         {
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<ISettings, SettingsJson>();
+            container.RegisterType<IEventAggregator, EventAggregator>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
             container.RegisterType<JwtService>();

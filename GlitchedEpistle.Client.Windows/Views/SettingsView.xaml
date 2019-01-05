@@ -13,10 +13,10 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding Path=LoadedCommand}" />
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
         </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding Path=ClosedCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -36,7 +36,7 @@
                      Width="250"
                      Height="23" 
                      Name="UsernameTextBox"
-                     Text="{Binding Path=Username}" 
+                     Text="{Binding Username}" 
                      TextWrapping="Wrap" 
                      MouseDoubleClick="UsernameTextBox_SelectText"
                      GotKeyboardFocus="UsernameTextBox_SelectText"
@@ -53,7 +53,7 @@
                     Margin="10 0 10 0" 
                     Minimum="200" 
                     Maximum="5000"
-                    Value="{Binding Path=UpdateFrequency}"
+                    Value="{Binding UpdateFrequency}"
                     ValueChanged="UpdateFrequencySlider_OnValueChanged" 
                     SmallChange="20"
                     TickFrequency="20" 
@@ -68,16 +68,15 @@
                     VerticalAlignment="Bottom"
                     Width="75"
                     Content="Cancel"
-                    Command="{Binding Path=CancelButtonCommand}"
-                    ToolTip="Closes the window without saving the changes."
-                    Click="CancelButton_OnClick"/>
+                    Command="{Binding CancelButtonCommand}"
+                    ToolTip="Closes the window without saving the changes."/>
 
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
                     Width="75"
                     Margin="10 0 0 0"
                     Content="Revert"
-                    Command="{Binding Path=RevertButtonCommand}"
+                    Command="{Binding RevertButtonCommand}"
                     ToolTip="Resets all user settings back to their default values."/>
         </StackPanel>
     </Canvas>

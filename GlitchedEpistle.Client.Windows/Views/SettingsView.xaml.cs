@@ -49,10 +49,5 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
                 UpdateFrequencyLabel.Content = $"Update Frequency ({slider.Value} ms)";
             }
         }
-
-        private void CancelButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
     }
 }
