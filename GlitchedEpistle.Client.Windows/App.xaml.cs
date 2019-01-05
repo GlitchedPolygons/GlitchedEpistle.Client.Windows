@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Collections.Generic;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.Services.CompressionUtility;
@@ -24,6 +25,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<ISettings, SettingsJson>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
+            container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
             container.RegisterType<JwtService>();
 
             Application.Current.MainWindow = container.Resolve<MainWindow>();

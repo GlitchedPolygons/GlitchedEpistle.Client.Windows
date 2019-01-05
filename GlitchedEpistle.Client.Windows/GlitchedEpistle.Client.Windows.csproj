@@ -129,8 +129,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Services\Cryptography\Asymmetric\AsymmetricCryptographyRSA.cs" />
     <Compile Include="Services\Cryptography\Symmetric\ISymmetricCryptography.cs" />
-    <Compile Include="Services\Cryptography\Asymmetric\IAsymmetricCryptographyRsa.cs" />
+    <Compile Include="Services\Cryptography\Asymmetric\IAsymmetricCryptographyRSA.cs" />
     <Compile Include="Services\Logging\ILogger.cs" />
     <Compile Include="Services\Logging\Logger.cs" />
     <Compile Include="Services\Settings\ISettings.cs" />

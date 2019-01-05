@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.Asymmetric
 {
-    public interface IAsymmetricCryptographyRsa
+    public interface IAsymmetricCryptographyRSA
     {
         /// <summary>
         /// Encrypts the specified text using the provided RSA public key.
