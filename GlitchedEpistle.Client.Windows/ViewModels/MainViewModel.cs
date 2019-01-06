@@ -25,7 +25,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IEventAggregator eventAggregator;
         #endregion
 
-        private SettingsView settingsView;//TODO: this is bad!
+        private SettingsView settingsView;
         
         #region Commands
         public ICommand ClosedCommand { get; }
@@ -81,7 +81,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 MainWindowHeight = Math.Abs(settings[nameof(MainWindowHeight), MAIN_WINDOW_MIN_HEIGHT]);
 
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
-                SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? MainWindowWidth : w;
+                SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? SIDEBAR_MIN_WIDTH : w;
             }
 
             // Update the username label on the main window when that setting has changed.

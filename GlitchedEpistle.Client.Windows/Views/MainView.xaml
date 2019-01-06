@@ -4,26 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:converters="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Converters"
         mc:Ignorable="d"
         Title="Glitched Epistle" 
-        Width="{Binding MainWindowWidth}" 
+        Width="{Binding Path=MainWindowWidth, Mode=TwoWay}" 
         MinWidth="800" 
-        Height="{Binding MainWindowHeight}" 
+        Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
         MinHeight="450" 
         SizeChanged="MainWindow_OnSizeChanged"
         Icon="../Images/epistle-icon.png">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
+            <i:InvokeCommandAction Command="{Binding Path=ClosedCommand}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
+
+    <Window.Resources>
+        <converters:GridLengthConverter x:Key="GridLengthConverter" />
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
-            <ColumnDefinition Width="{Binding SidebarWidth}" 
-                              MinWidth="{Binding SidebarMinWidth}" 
+            <ColumnDefinition Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}" 
+                              MinWidth="{Binding Path=SidebarMinWidth}" 
                               MaxWidth="800"
                               Name="LeftColumn"/>
             <!-- Right Column -->
