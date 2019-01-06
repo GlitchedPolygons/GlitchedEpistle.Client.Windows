@@ -1,6 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
@@ -19,9 +21,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             {
                 UsernameTextBox?.Focus();
                 UsernameTextBox?.SelectAll();
+
+                // Subscribe to the ICloseable.RequestedClose event
+                // to close this view when requested to by the ViewModel.
+                this.MakeCloseable();
             };
         }
-
+        
         // Select the text inside the username's textbox on click.
         private void UsernameTextBox_OnMouseDown(object sender, MouseButtonEventArgs e)
         {

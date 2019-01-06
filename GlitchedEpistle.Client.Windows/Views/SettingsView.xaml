@@ -8,8 +8,11 @@
         mc:Ignorable="d"
         Icon="../Images/settings-icon-white.png"
         Title="Settings"  
-        Width="500" MinWidth="290" 
-        Height="360" MinHeight="200">
+        WindowStartupLocation="CenterScreen"
+        Width="500" 
+        MinWidth="290" 
+        Height="360" 
+        MinHeight="200">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">

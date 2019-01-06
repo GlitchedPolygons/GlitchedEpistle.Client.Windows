@@ -140,7 +140,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 settingsView.DataContext = new SettingsViewModel(settings, eventAggregator);
             }
-
+            
             settingsView.Show();
             settingsView.Activate();
         }

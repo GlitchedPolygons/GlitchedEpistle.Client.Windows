@@ -1,5 +1,8 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows;
+using System.Windows.Input;
 using System.Globalization;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
@@ -7,7 +10,7 @@ using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
-    public class SettingsViewModel : ViewModel
+    public class SettingsViewModel : ViewModel, ICloseable
     {
         #region Constants
         public const string DEFAULT_USERNAME = "user";
@@ -18,6 +21,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #region Variables
         private bool cancelled = false;
+        #endregion
+
+        #region Events        
+        /// <summary>
+        /// Occurs when the <see cref="SettingsView"/> is requested to be closed
+        /// (raise this <see langword="event"/> in this <see langword="class"/> here to request the <see cref="Window"/>'s closure).
+        /// </summary>
+        public event EventHandler<EventArgs> RequestedClose; 
         #endregion
 
         #region Commands
@@ -72,6 +83,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedCancel(object commandParam)
         {
             cancelled = true;
+            RequestedClose?.Invoke(this, EventArgs.Empty);
         }
 
         private void OnClickedRevert(object commandParam)
