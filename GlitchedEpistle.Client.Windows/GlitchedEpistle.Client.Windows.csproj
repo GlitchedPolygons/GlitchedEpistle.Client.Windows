@@ -142,6 +142,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="PubSubEvents\UsernameChangedEvent.cs" />
     <Compile Include="Services\Cryptography\Asymmetric\AsymmetricCryptographyRSA.cs" />
     <Compile Include="Services\Cryptography\Symmetric\ISymmetricCryptography.cs" />
