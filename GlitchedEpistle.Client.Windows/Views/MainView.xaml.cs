@@ -22,11 +22,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Handles the OnSizeChanged event of the MainWindow control (when the user resized the <see cref="Window"/>).
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35;
         }
 
+        /// <summary>
+        /// Handles the OnClick event of the ButtonCollapseConvosList control (collapsing/uncollapsing the sidebar).
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
         {
             double width = LeftColumn.ActualWidth;
@@ -38,6 +48,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             UpdateCollapseButtonContent(sender as Button);
         }
 
+        /// <summary>
+        /// Handles the OnDragStarted event of the GridSplitter control (the one that drives the sidebar's width).
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="DragStartedEventArgs"/> instance containing the event data.</param>
         private void GridSplitter_OnDragStarted(object sender, DragStartedEventArgs e)
         {
             LeftColumn.MinWidth = MainViewModel.SIDEBAR_MIN_WIDTH;
@@ -57,20 +72,36 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             button.Content = LeftColumn.MinWidth > 0 ? "<" : ">";
         }
 
+        /// <summary>
+        /// Handles the OnMouseDown event of the SubscriptionProgressBar control
+        /// (when the user clicks on his remaining time, he should be redirected to the website where he can extend his subscription).
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
         private void SubscriptionProgressBar_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub");
         }
 
+        /// <summary>
+        /// Handles the OnMouseEnter event of the SubscriptionProgressBar control
+        /// (highlight the bar on mouse enter to notify the user that the progress bar is clickable).
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
         private void SubscriptionProgressBar_OnMouseEnter(object sender, MouseEventArgs e)
         {
             if (sender is ProgressBar progressBar)
             {
                 progressBar.Foreground = PROGRESS_BAR_COLOR_HOVER;
-                // TODO: update the tooltip here with the user
             }
         }
 
+        /// <summary>
+        /// Handles the OnMouseLeave event of the SubscriptionProgressBar control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
         private void SubscriptionProgressBar_OnMouseLeave(object sender, MouseEventArgs e)
         {
             if (sender is ProgressBar progressBar)

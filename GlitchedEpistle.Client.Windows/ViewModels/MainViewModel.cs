@@ -12,6 +12,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
+    // TODO: Update the progress bar's tooltip dynamically (showing the user how much time is remaining until account expiration).
     public class MainViewModel : ViewModel
     {
         #region Constants
@@ -26,7 +27,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         private SettingsView settingsView;
-        
+
         #region Commands
         public ICommand ClosedCommand { get; }
         public ICommand SettingsButtonCommand { get; }
@@ -54,6 +55,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private WindowState windowState = WindowState.Normal;
         public WindowState WindowState { get => windowState; set => Set(ref windowState, value); }
+
+        private string progressBarTooltip = "Subscription expires the 24th of December, 2018 at 15:30. Click to extend now!";
+        public string ProgressBarTooltip { get => progressBarTooltip; set => Set(ref progressBarTooltip, value); }
+
+        private double progressBarValue = 75;
+        public double ProgressBarValue { get => progressBarValue; set => Set(ref progressBarValue, value); }
         #endregion
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory)

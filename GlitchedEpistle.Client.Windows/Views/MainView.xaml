@@ -57,9 +57,9 @@
                        FontSize="18"/>
 
                 <ProgressBar Height="4" 
-                             Value="75" 
                              Name="SubscriptionProgressBar"
-                             ToolTip="Subscription expires the 24th of December, 2018 at 15:30. Click to extend now!"
+                             Value="{Binding ProgressBarValue}" 
+                             ToolTip="{Binding ProgressBarTooltip}"
                              MouseEnter="SubscriptionProgressBar_OnMouseEnter"
                              MouseLeave="SubscriptionProgressBar_OnMouseLeave"
                              MouseDown="SubscriptionProgressBar_OnMouseDown"
