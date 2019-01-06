@@ -131,7 +131,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedSettingsIcon(object commandParam)
         {
             settingsView = windowFactory.GetWindow<SettingsView>(true);
-            settingsView.DataContext = new SettingsViewModel(settings, eventAggregator);
+
+            // When opening views that only exist one at a time,
+            // it's important not to recreate the viewmodel everytime,
+            // as that would override any changes made.
+            // Therefore, check if the view already has a data context that isn't null.
+            if (settingsView.DataContext is null)
+            {
+                settingsView.DataContext = new SettingsViewModel(settings, eventAggregator);
+            }
+
             settingsView.Show();
             settingsView.Activate();
         }
