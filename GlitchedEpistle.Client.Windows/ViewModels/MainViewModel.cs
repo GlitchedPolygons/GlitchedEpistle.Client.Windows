@@ -7,6 +7,7 @@ using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -21,6 +22,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         // Injections:
         private readonly ISettings settings;
+        private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -56,10 +58,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public WindowState WindowState { get => windowState; set => Set(ref windowState, value); }
         #endregion
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory)
         {
             this.settings = settings;
             this.eventAggregator = eventAggregator;
+            this.windowFactory = windowFactory;
 
             LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
@@ -126,7 +129,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedSettingsIcon(object commandParam)
         {
-            settingsView = app.GetWindow<SettingsView>(true);
+            settingsView = windowFactory.GetWindow<SettingsView>(true);
             settingsView.DataContext = new SettingsViewModel(settings, eventAggregator);
             settingsView.Show();
             settingsView.Activate();
