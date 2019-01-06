@@ -18,7 +18,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MIN_WIDTH = 340;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
         public const double MAIN_WINDOW_MIN_HEIGHT = 450;
-        private readonly App app = Application.Current as App;
 
         // Injections:
         private readonly ISettings settings;
@@ -29,7 +28,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private SettingsView settingsView;//TODO: this is bad!
         
         #region Commands
-        public ICommand LoadedCommand { get; }
         public ICommand ClosedCommand { get; }
         public ICommand SettingsButtonCommand { get; }
         public ICommand CreateConvoButtonCommand { get; }
