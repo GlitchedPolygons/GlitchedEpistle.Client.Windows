@@ -34,9 +34,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
             container.RegisterType<JwtService>();
 
-            var mainView = container.Resolve<MainView>();
-            mainView.DataContext = container.Resolve<MainViewModel>();
-            Application.Current.MainWindow = mainView;
+            Application.Current.MainWindow = container.Resolve<MainView>();
             Application.Current.MainWindow?.Show();
         }
 

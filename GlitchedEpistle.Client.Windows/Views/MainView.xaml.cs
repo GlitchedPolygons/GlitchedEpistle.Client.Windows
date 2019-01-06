@@ -3,7 +3,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
@@ -19,8 +21,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private SettingsView settingsView;
 
-        public MainView()
+        public MainView(ISettings settings, IEventAggregator eventAggregator)
         {
+            DataContext = new MainViewModel(settings, eventAggregator);
             InitializeComponent();
         }
 
