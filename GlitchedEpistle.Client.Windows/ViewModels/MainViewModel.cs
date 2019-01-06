@@ -64,7 +64,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
 
-            LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
             SettingsButtonCommand = new DelegateCommand(OnClickedSettingsIcon);
             CreateConvoButtonCommand = new DelegateCommand(OnClickedCreateConvo);
@@ -72,12 +71,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ExportUserButtonCommand = new DelegateCommand(OnClickedExportUser);
             LogoutButtonCommand = new DelegateCommand(OnClickedLogout);
 
-            // Update the username label on the main window when that setting has changed.
-            eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => UsernameLabel = newUsername);
-        }
-
-        private void OnLoaded(object commandParam)
-        {
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -92,6 +85,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? MainWindowWidth : w;
             }
+
+            // Update the username label on the main window when that setting has changed.
+            eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => UsernameLabel = newUsername);
         }
 
         private void OnClosed(object commandParam)
