@@ -12,6 +12,7 @@
         Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
         MinHeight="450" 
         SizeChanged="MainWindow_OnSizeChanged"
+        WindowState="{Binding WindowState}"
         Icon="../Images/epistle-icon.png">
 
     <i:Interaction.Triggers>
