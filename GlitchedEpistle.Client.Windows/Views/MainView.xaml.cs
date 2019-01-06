@@ -22,9 +22,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private SettingsView settingsView;
 
-        public MainView(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory)
+        public MainView()
         {
-            DataContext = new MainViewModel(settings, eventAggregator, windowFactory);
             InitializeComponent();
         }
 

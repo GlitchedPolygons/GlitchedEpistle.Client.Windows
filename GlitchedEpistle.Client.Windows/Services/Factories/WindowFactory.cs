@@ -14,6 +14,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
         public T GetWindow<T>(bool ensureSingleWindow) where T : Window
         {
             var app = Application.Current as App;
+            if (app is null) return null;
 
             if (!ensureSingleWindow)
             {
