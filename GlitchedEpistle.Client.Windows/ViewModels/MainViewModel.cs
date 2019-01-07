@@ -26,10 +26,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IEventAggregator eventAggregator;
         #endregion
 
-        private SettingsView settingsView;
-
         #region Commands
         public ICommand ClosedCommand { get; }
+        public ICommand ResetWindowButtonCommand { get; }
         public ICommand SettingsButtonCommand { get; }
         public ICommand CreateConvoButtonCommand { get; }
         public ICommand ChangePasswordButtonCommand { get; }
@@ -63,6 +62,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public double ProgressBarValue { get => progressBarValue; set => Set(ref progressBarValue, value); }
         #endregion
 
+        private SettingsView settingsView;
+
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory)
         {
             this.settings = settings;
@@ -71,6 +72,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             ClosedCommand = new DelegateCommand(OnClosed);
             SettingsButtonCommand = new DelegateCommand(OnClickedSettingsIcon);
+            ResetWindowButtonCommand = new DelegateCommand(OnClickedResetWindowIcon);
             CreateConvoButtonCommand = new DelegateCommand(OnClickedCreateConvo);
             ChangePasswordButtonCommand = new DelegateCommand(OnClickedChangePassword);
             ExportUserButtonCommand = new DelegateCommand(OnClickedExportUser);
@@ -140,9 +142,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 settingsView.DataContext = new SettingsViewModel(settings, eventAggregator);
             }
-            
+
             settingsView.Show();
             settingsView.Activate();
+        }
+
+        private void OnClickedResetWindowIcon(object commandParam)
+        {
+            WindowState = WindowState.Normal;
+            MainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
+            MainWindowHeight = MAIN_WINDOW_MIN_HEIGHT;
+            SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
         }
     }
 }

@@ -153,9 +153,22 @@
                     Canvas.Top="5" 
                     Canvas.Right="5" 
                     Command="{Binding SettingsButtonCommand}"
+                    ToolTip="Open up the settings window."
                     BorderBrush="{x:Null}">
                 <Button.Background>
                     <ImageBrush ImageSource="../Images/settings-icon-white.png"/>
+                </Button.Background>
+            </Button>
+
+            <Button Width="25"
+                    Height="25" 
+                    Canvas.Top="5" 
+                    Canvas.Right="35" 
+                    Command="{Binding ResetWindowButtonCommand}"
+                    ToolTip="Reset the main window's size and layout."
+                    BorderBrush="{x:Null}">
+                <Button.Background>
+                    <ImageBrush ImageSource="../Images/reset-icon-white.png"/>
                 </Button.Background>
             </Button>
         </Canvas>
