@@ -27,7 +27,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
                 this.MakeCloseable();
             };
         }
-        
+
         // Select the text inside the username's textbox on click.
         private void UsernameTextBox_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -47,7 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             var textBox = sender as TextBox;
             textBox?.SelectAll();
         }
-        
+
         private void UpdateFrequencySlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (sender is Slider slider)
