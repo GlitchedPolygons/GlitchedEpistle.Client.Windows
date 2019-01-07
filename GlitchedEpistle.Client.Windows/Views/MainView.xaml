@@ -144,7 +144,7 @@
                 Width="14" 
                 Height="50"
                 Name="CollapseButton"
-                Click="ButtonCollapseConvosList_OnClick"/>
+                Click="CollapseButton_OnClick"/>
 
         <!-- Settings Button -->
         <Canvas Grid.Column="1" Grid.Row="0">
