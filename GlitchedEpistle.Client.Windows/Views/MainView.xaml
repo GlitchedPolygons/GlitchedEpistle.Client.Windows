@@ -165,7 +165,7 @@
                     Canvas.Top="5" 
                     Canvas.Right="35" 
                     Command="{Binding ResetWindowButtonCommand}"
-                    ToolTip="Reset the application's window size and layout."
+                    ToolTip="Reset the main window's size and layout."
                     BorderBrush="{x:Null}">
                 <Button.Background>
                     <ImageBrush ImageSource="../Images/reset-icon-white.png"/>
