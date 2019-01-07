@@ -33,11 +33,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         }
 
         /// <summary>
-        /// Handles the OnClick event of the ButtonCollapseConvosList control (collapsing/uncollapsing the sidebar).
+        /// Handles the OnClick event of the sidebar collapse button.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ButtonCollapseConvosList_OnClick(object sender, RoutedEventArgs e)
+        private void CollapseButton_OnClick(object sender, RoutedEventArgs e)
         {
             double width = LeftColumn.ActualWidth;
             if (width > 0) sidebarWidth = width;
