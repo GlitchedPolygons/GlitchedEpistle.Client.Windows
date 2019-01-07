@@ -145,9 +145,6 @@
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="PubSubEvents\UsernameChangedEvent.cs" />
-    <Compile Include="Services\Cryptography\Asymmetric\AsymmetricCryptographyRSA.cs" />
-    <Compile Include="Services\Cryptography\Symmetric\ISymmetricCryptography.cs" />
-    <Compile Include="Services\Cryptography\Asymmetric\IAsymmetricCryptographyRSA.cs" />
     <Compile Include="Services\Factories\IWindowFactory.cs" />
     <Compile Include="Services\Factories\WindowFactory.cs" />
     <Compile Include="Services\Logging\ILogger.cs" />
@@ -225,6 +222,12 @@
   <ItemGroup>
     <Resource Include="Images\reset-icon-black.png" />
     <Resource Include="Images\reset-icon-white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\GlitchedEpistle.Client\GlitchedEpistle.Client\GlitchedEpistle.Client.csproj">
+      <Project>{d28e645b-4d8e-4f95-887a-b875b2e8fff1}</Project>
+      <Name>GlitchedEpistle.Client</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

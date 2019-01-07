@@ -8,7 +8,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.Asymmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using Unity;
 using Prism.Events;
