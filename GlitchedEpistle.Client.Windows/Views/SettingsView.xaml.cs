@@ -14,18 +14,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public SettingsView()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+        }
 
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
             // Immediately focus the username textbox
             // when the settings window is opened.
-            Loaded += (sender, args) =>
-            {
-                UsernameTextBox?.Focus();
-                UsernameTextBox?.SelectAll();
+            UsernameTextBox?.Focus();
+            UsernameTextBox?.SelectAll();
 
-                // Subscribe to the ICloseable.RequestedClose event
-                // to close this view when requested to by the ViewModel.
-                this.MakeCloseable();
-            };
+            // Subscribe to the ICloseable.RequestedClose event
+            // to close this view when requested to by the ViewModel.
+            this.MakeCloseable();
+
+            Loaded -= OnLoaded;
         }
 
         // Select the text inside the username's textbox on click.

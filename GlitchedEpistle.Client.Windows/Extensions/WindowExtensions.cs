@@ -10,7 +10,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
     public static class WindowExtensions
     {
         /// <summary>
-        /// Makes the <see cref="Window"/> react to the <see cref="ICloseable.RequestedClose"/> <see langword="event"/>. by subscribing <see cref="Window.Close"/> to it.
+        /// Makes the <see cref="Window"/> react to the <see cref="ICloseable.RequestedClose"/> <see langword="event"/> by subscribing <see cref="Window.Close"/> to it.
         /// Only call this ONCE and only FROM THE <see cref="Window"/>'S CONSTRUCTOR! 
         /// </summary>
         /// <param name="window">The <see cref="Window"/> that needs to be closeable through its <see cref="ViewModel"/>.</param>

@@ -135,7 +135,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settingsView = windowFactory.GetWindow<SettingsView>(true);
 
             // When opening views that only exist one at a time,
-            // it's important not to recreate the viewmodel everytime,
+            // it's important not to recreate the viewmodel every time,
             // as that would override any changes made.
             // Therefore, check if the view already has a data context that isn't null.
             if (settingsView.DataContext is null)
