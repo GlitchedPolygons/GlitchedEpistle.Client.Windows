@@ -133,13 +133,11 @@
                       HorizontalAlignment="Left" 
                       VerticalAlignment="Stretch"
                       Width="4"
-                      Cursor="SizeWE"
-                      Background="Gray"/>
+                      Cursor="SizeWE"/>
 
         <!-- Convos list collapse button -->
         <Button Grid.Column="1" Grid.Row="0"
                 HorizontalAlignment="Left" 
-                Background="Gray"
                 Content="&lt;" 
                 Width="14" 
                 Height="50"
@@ -154,9 +152,9 @@
                     Canvas.Right="5" 
                     Command="{Binding SettingsButtonCommand}"
                     ToolTip="Open up the settings window."
-                    BorderBrush="{x:Null}">
+                    >
                 <Button.Background>
-                    <ImageBrush ImageSource="../Images/settings-icon-white.png"/>
+                    <ImageBrush ImageSource="/Images/settings-icon-white.png"/>
                 </Button.Background>
             </Button>
 
@@ -166,9 +164,9 @@
                     Canvas.Right="35" 
                     Command="{Binding ResetWindowButtonCommand}"
                     ToolTip="Reset the main window's size and layout."
-                    BorderBrush="{x:Null}">
+                    >
                 <Button.Background>
-                    <ImageBrush ImageSource="../Images/reset-icon-white.png"/>
+                    <ImageBrush ImageSource="/Images/reset-icon-white.png"/>
                 </Button.Background>
             </Button>
         </Canvas>
