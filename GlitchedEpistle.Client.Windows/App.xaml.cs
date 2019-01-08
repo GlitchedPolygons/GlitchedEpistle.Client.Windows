@@ -1,15 +1,19 @@
-﻿using Unity;
-using Unity.Lifetime;
-using Prism.Events;
+﻿using System;
+using System.IO;
 using System.Windows;
+
 using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
+
+using Unity;
+using Unity.Lifetime;
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -18,7 +22,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// The client version number.
+        /// </summary>
         public const string VERSION = "1.0.0";
+
+        /// <summary>
+        /// The application's root directory where all the user settings, convos, etc... are stored.
+        /// </summary>
+        public static readonly string ROOT_DIRECTORY = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "GlitchedPolygons",
+            "GlitchedEpistle"
+        );
 
         private readonly IUnityContainer container = new UnityContainer();
 
