@@ -14,12 +14,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
     public class SettingsJson : ISettings
     {
         private Dictionary<string, string> settings = new Dictionary<string, string>(16) { { "Version", App.VERSION } };
-
-        /// <summary>
-        /// Absolute settings directory path.
-        /// </summary>
-        public string DirectoryPath { get; }
-
+        
         /// <summary>
         /// Absolute settings file path.
         /// </summary>
@@ -30,15 +25,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         public SettingsJson(ILogger logger)
         {
             this.logger = logger;
-
-            DirectoryPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "GlitchedPolygons",
-                "GlitchedEpistle"
-            );
-
+            
             FilePath = Path.Combine(
-                DirectoryPath,
+                App.ROOT_DIRECTORY,
                 "UserSettings.json"
             );
         }
