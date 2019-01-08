@@ -22,8 +22,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         // Injections:
         private readonly ISettings settings;
-        private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
+        private readonly IWindowFactory windowFactory;
+        private readonly IViewModelFactory viewModelFactory;
         #endregion
 
         #region Commands
@@ -64,11 +65,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private SettingsView settingsView;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
         {
             this.settings = settings;
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
+            this.viewModelFactory = viewModelFactory;
 
             ClosedCommand = new DelegateCommand(OnClosed);
             SettingsButtonCommand = new DelegateCommand(OnClickedSettingsIcon);
@@ -132,7 +134,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedSettingsIcon(object commandParam)
         {
-            settingsView = windowFactory.GetWindow<SettingsView>(true);
+            settingsView = windowFactory.Create<SettingsView>(true);
 
             // When opening views that only exist one at a time,
             // it's important not to recreate the viewmodel every time,
@@ -140,7 +142,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Therefore, check if the view already has a data context that isn't null.
             if (settingsView.DataContext is null)
             {
-                settingsView.DataContext = new SettingsViewModel(settings, eventAggregator);
+                settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
             }
 
             settingsView.Show();

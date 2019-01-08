@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Unity;
+using Unity.Lifetime;
+using Prism.Events;
 using System.Windows;
-using System.Collections.Generic;
-
 using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
@@ -10,8 +10,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using Unity;
-using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -26,13 +24,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
+            container.RegisterType<JwtService>();
             container.RegisterType<ILogger, Logger>();
-            container.RegisterType<ISettings, SettingsJson>();
-            container.RegisterType<IEventAggregator, EventAggregator>();
-            container.RegisterType<IWindowFactory, WindowFactory>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
-            container.RegisterType<JwtService>();
+            container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
 
             var mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
