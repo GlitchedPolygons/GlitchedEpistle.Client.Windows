@@ -14,7 +14,7 @@
         WindowStartupLocation="CenterScreen"
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"
-        Icon="../Images/epistle-icon.png">
+        Icon="/Images/epistle-icon.png">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -40,7 +40,7 @@
 
         <!-- Background Image -->
         <Grid.Background>
-            <ImageBrush ImageSource="../Images/glitched-polygons-blue.png" 
+            <ImageBrush ImageSource="/Images/glitched-polygons-blue.png" 
                         TileMode="Tile" 
                         Stretch="UniformToFill"/>
         </Grid.Background>
