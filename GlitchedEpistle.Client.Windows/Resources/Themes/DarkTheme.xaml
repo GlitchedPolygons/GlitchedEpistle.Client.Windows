@@ -21,6 +21,16 @@
         </Setter>
     </Style>
 
+    <!-- Grid Splitter -->
+    <Style TargetType="GridSplitter">
+        <Setter Property="Background" Value="#262626" />
+    </Style>
+
+    <!-- Labels -->
+    <Style TargetType="Label">
+        <Setter Property="Foreground" Value="AliceBlue" />
+    </Style>
+
     <!-- Button -->
     <Style TargetType="Button">
         <Setter Property="SnapsToDevicePixels" Value="true" />
@@ -80,11 +90,6 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-    </Style>
-
-    <!-- Grid Splitter -->
-    <Style TargetType="GridSplitter">
-        <Setter Property="Background" Value="#262626" />
     </Style>
 
 </ResourceDictionary>

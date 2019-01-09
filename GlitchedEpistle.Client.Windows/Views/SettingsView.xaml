@@ -30,7 +30,6 @@
 
         <StackPanel>
             <Label Content="Username" 
-                   Foreground="AliceBlue" 
                    Padding="0 0 0 5"
                    Margin="10 10 0 0"/>
 
@@ -48,7 +47,6 @@
 
             <Label Content="Update Frequency (500 ms)"
                    Name="UpdateFrequencyLabel"
-                   Foreground="AliceBlue" 
                    Padding="0 0 0 5"
                    Margin="10 10 0 0"/>
 

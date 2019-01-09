@@ -53,7 +53,6 @@
                         Height="175">
 
                 <Label Content="{Binding UsernameLabel}" 
-                       Foreground="AliceBlue"
                        HorizontalAlignment="Center" 
                        FontSize="18"/>
 
@@ -169,6 +168,7 @@
                     <ImageBrush ImageSource="/Images/reset-icon-white.png"/>
                 </Button.Background>
             </Button>
+
         </Canvas>
 
         <!-- Right Column -->
