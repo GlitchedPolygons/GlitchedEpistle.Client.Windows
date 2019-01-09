@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
+using System.Threading;
 using System.Windows;
 
 using GlitchedPolygons.Services.JwtService;
@@ -36,10 +38,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             "GlitchedEpistle"
         );
 
+        /// <summary>
+        /// The singleton app instance (prevent multiple Epistle instances running).
+        /// </summary>
+        private static readonly Mutex SINGLETON = new Mutex(true, Assembly.GetCallingAssembly().GetName().Name);
+
+        /// <summary>
+        /// The IoC container.
+        /// </summary>
         private readonly IUnityContainer container = new UnityContainer();
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
+            // Insta-kill the app if there is already another instance running!
+            if (!SINGLETON.WaitOne(TimeSpan.Zero, true))
+            {
+                Application.Current.Shutdown();
+            }
+
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
