@@ -15,6 +15,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Constants
         public const string DEFAULT_USERNAME = "user";
         public const double DEFAULT_UPDATE_FREQUENCY = 500D;
+
+        // Injections:
         private readonly ISettings settings;
         private readonly IEventAggregator eventAggregator;
         #endregion
@@ -26,7 +28,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Events        
         /// <summary>
         /// Occurs when the <see cref="SettingsView"/> is requested to be closed
-        /// (raise this <see langword="event"/> in this <see langword="class"/> here to request the <see cref="Window"/>'s closure).
+        /// (raise this <see langword="event"/> in this <see langword="class"/> here to request the related <see cref="Window"/>'s closure).
         /// </summary>
         public event EventHandler<EventArgs> RequestedClose; 
         #endregion
@@ -64,6 +66,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
+            // Load up the current settings into the UI on load.
             Username = settings[nameof(Username), DEFAULT_USERNAME];
             UpdateFrequency = settings[nameof(UpdateFrequency), DEFAULT_UPDATE_FREQUENCY];
         }
