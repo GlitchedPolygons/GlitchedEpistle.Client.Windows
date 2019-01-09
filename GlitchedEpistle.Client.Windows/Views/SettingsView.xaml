@@ -25,7 +25,7 @@
 
     <Canvas>
         <Canvas.Background>
-            <ImageBrush ImageSource="../Images/glitched-polygons-blue.png" Stretch="UniformToFill" TileMode="Tile"/>
+            <SolidColorBrush Color="Black"></SolidColorBrush>
         </Canvas.Background>
 
         <StackPanel>
