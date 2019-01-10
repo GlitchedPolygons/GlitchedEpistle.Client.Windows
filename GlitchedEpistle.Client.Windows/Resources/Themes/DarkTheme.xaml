@@ -111,6 +111,7 @@
                         <Border.Background>
                             <SolidColorBrush  Color="{StaticResource ControlNormalColor}" />
                         </Border.Background>
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
