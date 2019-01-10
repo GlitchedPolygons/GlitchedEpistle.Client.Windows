@@ -14,7 +14,7 @@
         WindowStartupLocation="CenterScreen"
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"
-        Icon="/Images/epistle-icon.png">
+        Icon="/Resources/Images/epistle-icon.png">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -26,7 +26,7 @@
         <converters:GridLengthConverter x:Key="GridLengthConverter" />
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="{StaticResource GlitchedPolygons}">
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
             <ColumnDefinition Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}" 
@@ -37,13 +37,6 @@
             <ColumnDefinition Width="2*" 
                               Name="RightColumn"/>
         </Grid.ColumnDefinitions>
-
-        <!-- Background Image -->
-        <Grid.Background>
-            <ImageBrush ImageSource="/Images/glitched-polygons-blue.png" 
-                        TileMode="Tile" 
-                        Stretch="UniformToFill"/>
-        </Grid.Background>
 
         <!-- Left Column -->
         <StackPanel Grid.Column="0" Grid.Row="0" Background="Black">
@@ -68,21 +61,21 @@
 
                 <WrapPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
 
-                    <Button Content="Create Convo" 
+                    <Button Content="Create Convo"
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."
                             Command="{Binding CreateConvoButtonCommand}"/>
-
+                    <Separator/>
                     <Button Content="Change Password" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
                             Command="{Binding ChangePasswordButtonCommand}"/>
-
+                    <Separator/>
                     <Button Content="Export User" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
                             Command="{Binding ExportUserButtonCommand}"/>
-
+                    <Separator/>
                     <Button Content="Logout" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to log out of your Glitched Epistle account."
@@ -95,32 +88,65 @@
             <ScrollViewer Name="ConvosScrollViewer" VerticalScrollBarVisibility="Auto">
                 <StackPanel Name="ConvosStackPanel">
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
+                    <Button Content="TEST"></Button>
+                    <Separator/>
+                    <Button Content="TEST"></Button>
+                    <Separator/>
+                    <Button Content="TEST"></Button>
+                    <Separator/>
                 </StackPanel>
             </ScrollViewer>
 
@@ -136,12 +162,12 @@
 
         <!-- Convos list collapse button -->
         <Button Grid.Column="1" Grid.Row="0"
-                HorizontalAlignment="Left" 
+                HorizontalAlignment="Left"
                 Content="&lt;" 
-                Width="14" 
+                Width="15" 
                 Height="50"
                 Name="CollapseButton"
-                Click="CollapseButton_OnClick"/>
+                Click="CollapseButton_OnClick" />
 
         <!-- Settings Button -->
         <Canvas Grid.Column="1" Grid.Row="0">
@@ -150,10 +176,9 @@
                     Canvas.Top="5" 
                     Canvas.Right="5" 
                     Command="{Binding SettingsButtonCommand}"
-                    ToolTip="Open up the settings window."
-                    >
+                    ToolTip="Open up the settings window.">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Images/settings-icon-white.png"/>
+                    <ImageBrush ImageSource="/Resources/Images/settings-icon-white.png"/>
                 </Button.Background>
             </Button>
 
@@ -162,10 +187,9 @@
                     Canvas.Top="5" 
                     Canvas.Right="35" 
                     Command="{Binding ResetWindowButtonCommand}"
-                    ToolTip="Reset the main window's size and layout."
-                    >
+                    ToolTip="Reset the main window's size and layout.">
                 <Button.Background>
-                    <ImageBrush ImageSource="/Images/reset-icon-white.png"/>
+                    <ImageBrush ImageSource="/Resources/Images/reset-icon-white.png"/>
                 </Button.Background>
             </Button>
 

@@ -8,6 +8,12 @@
     <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
     <Color x:Key="ControlPressedColor">#699bad</Color>
 
+    <!-- Background brush for chatroom -->
+    <ImageBrush x:Key="GlitchedPolygons" 
+                ImageSource="/Resources/Images/glitched-polygons-blue-1440p.png"
+                TileMode="Tile" 
+                Stretch="UniformToFill"/>
+
     <!-- FocusVisual -->
     <Style x:Key="ButtonFocusVisual">
         <Setter Property="Control.Template">
@@ -31,10 +37,14 @@
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 
+    <!-- Separator lines -->
+    <Style TargetType="Separator">
+        <Setter Property="Margin" Value="0.5"/>
+        <Setter Property="Background" Value="Black"/>
+    </Style>
+
     <!-- Button -->
     <Style TargetType="Button">
-        <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="FocusVisualStyle" Value="{StaticResource ButtonFocusVisual}" />
         <Setter Property="Foreground" Value="#FFFFFFFF" />
         <Setter Property="Template">
@@ -83,9 +93,9 @@
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <ContentPresenter Margin="7"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            RecognizesAccessKey="True" />
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True" />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
