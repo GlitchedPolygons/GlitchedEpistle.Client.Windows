@@ -162,12 +162,13 @@
 
         <!-- Convos list collapse button -->
         <Button Grid.Column="1" Grid.Row="0"
+                Style="{StaticResource CollapseButton}"
                 HorizontalAlignment="Left"
                 Content="&lt;" 
                 Width="15" 
                 Height="50"
                 Name="CollapseButton"
-                Click="CollapseButton_OnClick" />
+                Click="CollapseButton_OnClick"/>
 
         <!-- Settings Button -->
         <Canvas Grid.Column="1" Grid.Row="0">
