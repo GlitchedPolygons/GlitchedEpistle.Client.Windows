@@ -2,14 +2,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--Control colors.-->
+    <Color x:Key="WindowBackgroundColor">#101010</Color>
     <Color x:Key="ControlNormalColor">#262626</Color>
     <Color x:Key="ControlMouseOverColor">#4f6066</Color>
     <Color x:Key="DisabledControlColor">#FFF2F2F2</Color>
     <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
     <Color x:Key="ControlPressedColor">#699bad</Color>
 
+    <!-- Background brush for all windows -->
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
+
     <!-- Background brush for chatroom -->
-    <ImageBrush x:Key="GlitchedPolygons" 
+    <ImageBrush x:Key="ChatroomBackgroundBrush" 
                 ImageSource="/Resources/Images/glitched-polygons-blue-1440p.png"
                 TileMode="Tile" 
                 Stretch="UniformToFill"/>

@@ -1,0 +1,18 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserExportDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        mc:Ignorable="d"
+        Title="Export User" Height="300" Width="450">
+    <Canvas Background="{StaticResource WindowBackgroundBrush}">
+        <StackPanel Margin="10">
+            <StackPanel Orientation="Horizontal">
+                <CheckBox Content="Include user settings"/>
+                <CheckBox Content="Include conversations"/>
+            </StackPanel>
+        </StackPanel>
+    </Canvas>
+</Window>
+<!-- TODO: create bindings + styling for checkbox + file picker dialog for export path -->
