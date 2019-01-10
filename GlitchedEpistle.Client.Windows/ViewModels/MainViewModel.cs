@@ -16,7 +16,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class MainViewModel : ViewModel
     {
         #region Constants
-        public const double SIDEBAR_MIN_WIDTH = 340;
+        public const double SIDEBAR_MIN_WIDTH = 345;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
         public const double MAIN_WINDOW_MIN_HEIGHT = 450;
 

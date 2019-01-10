@@ -6,7 +6,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
-        Icon="../Images/settings-icon-white.png"
+        Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"  
         WindowStartupLocation="CenterScreen"
         Width="500" 

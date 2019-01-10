@@ -211,23 +211,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\glitched-polygons-blue.png" />
+    <Resource Include="Resources\Images\epistle-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\epistle-icon.png" />
+    <Resource Include="Resources\Images\settings-icon-black.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\settings-icon-black.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\settings-icon-white.png" />
+    <Resource Include="Resources\Images\settings-icon-white.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\reset-icon-black.png" />
-    <Resource Include="Images\reset-icon-white.png" />
+    <Resource Include="Resources\Images\reset-icon-black.png" />
+    <Resource Include="Resources\Images\reset-icon-white.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\GlitchedEpistle.Client\GlitchedEpistle.Client\GlitchedEpistle.Client.csproj">
@@ -237,6 +234,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="glitched-epistle-icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\glitched-polygons-blue-1080p.png" />
+    <Resource Include="Resources\Images\glitched-polygons-blue-1440p.png" />
+    <Resource Include="Resources\Images\glitched-polygons-blue-2160p.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
