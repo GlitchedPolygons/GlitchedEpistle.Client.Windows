@@ -9,9 +9,9 @@
         Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"  
         WindowStartupLocation="CenterScreen"
-        Width="500" 
+        Width="290" 
         MinWidth="290" 
-        Height="360" 
+        Height="200" 
         MinHeight="200">
 
     <i:Interaction.Triggers>
@@ -23,15 +23,12 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Canvas>
-        <Canvas.Background>
-            <SolidColorBrush Color="Black"></SolidColorBrush>
-        </Canvas.Background>
-
+    <Canvas Background="{StaticResource WindowBackgroundBrush}">
         <StackPanel>
             <Label Content="Username" 
                    Padding="0 0 0 5"
-                   Margin="10 10 0 0"/>
+                   Margin="10 10 0 0"
+                   ToolTip="Your display name. Note that by changing this, the messages you sent using the previous username won't update their sender label."/>
 
             <TextBox HorizontalAlignment="Left" 
                      VerticalAlignment="Top" 
@@ -48,7 +45,8 @@
             <Label Content="Update Frequency (500 ms)"
                    Name="UpdateFrequencyLabel"
                    Padding="0 0 0 5"
-                   Margin="10 10 0 0"/>
+                   Margin="10 10 0 0"
+                   ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?"/>
 
             <Slider Name="UpdateFrequencySlider" 
                     Margin="10 0 10 0" 

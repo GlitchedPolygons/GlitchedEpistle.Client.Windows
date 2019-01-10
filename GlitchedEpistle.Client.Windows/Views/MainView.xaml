@@ -26,7 +26,7 @@
         <converters:GridLengthConverter x:Key="GridLengthConverter" />
     </Window.Resources>
 
-    <Grid Background="{StaticResource GlitchedPolygons}">
+    <Grid Background="{StaticResource ChatroomBackgroundBrush}">
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
             <ColumnDefinition Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}" 
@@ -39,7 +39,7 @@
         </Grid.ColumnDefinitions>
 
         <!-- Left Column -->
-        <StackPanel Grid.Column="0" Grid.Row="0" Background="Black">
+        <StackPanel Grid.Column="0" Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}">
 
             <!-- Profile -->
             <StackPanel Name="ProfileStackPanel" 
