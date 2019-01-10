@@ -112,5 +112,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
                 progressBar.Foreground = PROGRESS_BAR_COLOR;
             }
         }
+
+        private void ResetWindowButton_Click(object sender, RoutedEventArgs e) => CollapseButton.Content = "<";
     }
 }
