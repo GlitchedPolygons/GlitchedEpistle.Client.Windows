@@ -1,11 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
@@ -23,6 +20,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public MainView()
         {
             InitializeComponent();
+            Loaded += MainView_Loaded;
+        }
+
+        private void MainView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Loaded -= MainView_Loaded;
         }
 
         /// <summary>
