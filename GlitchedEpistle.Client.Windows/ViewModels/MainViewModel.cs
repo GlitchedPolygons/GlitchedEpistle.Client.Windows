@@ -64,6 +64,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         private SettingsView settingsView;
+        private UserExportView userExportView;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
         {
@@ -101,6 +102,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClosed(object commandParam)
         {
+            userExportView?.Close();
             settingsView?.Close();
 
             settings.Load();
@@ -124,7 +126,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedExportUser(object commandParam)
         {
-
+            userExportView = windowFactory.Create<UserExportView>(true);
+            if (userExportView.DataContext is null)
+            {
+                userExportView.DataContext = viewModelFactory.Create<UserExportViewModel>();
+            }
+            userExportView.Show();
+            userExportView.Activate();
         }
 
         private void OnClickedLogout(object commandParam)

@@ -1,0 +1,63 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserExportView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d" 
+        Background="{StaticResource WindowBackgroundBrush}"
+        Title="Export User" 
+        ResizeMode="NoResize"
+        Height="250" MinHeight="250" MaxHeight="300"
+        Width="455" MinWidth="455" MaxWidth="455">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closed">
+            <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Canvas Margin="15">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBox Width="370" 
+                         TextWrapping="Wrap" 
+                         UndoLimit="10" 
+                         Name="OutputFilePathTextBox"
+                         Text="{Binding OutputFilePath}" IsReadOnly="True"/>
+                <Button Content="Browse" 
+                        Click="BrowseButton_Click"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 15 0 0">
+                <CheckBox IsChecked="{Binding ExportSettings}" 
+                          Content="Include user settings"/>
+                <CheckBox IsChecked="{Binding ExportConvos}" 
+                          Content="Include conversations"
+                          Margin="10 0 0 0"/>
+                <CheckBox IsChecked="{Binding CompressOutput}"
+                          Content="Compress output file"
+                          Margin="10 0 0 0"/>
+            </StackPanel>
+
+            <TextBlock Margin="0 15 0 0" 
+                       MaxWidth="425"
+                       Text="{Binding ExportLabel}" 
+                       TextWrapping="Wrap" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" 
+                    Canvas.Bottom="0" 
+                    Canvas.Right="0">
+            <Button Content="Cancel" 
+                    Command="{Binding CancelButtonCommand}" Canvas.Right="0" Canvas.Bottom="0"/>
+            <Button Content="Export" 
+                    Margin="10 0 0 0"
+                    Command="{Binding ExportButtonCommand}"/>
+        </StackPanel>
+    </Canvas>
+</Window>

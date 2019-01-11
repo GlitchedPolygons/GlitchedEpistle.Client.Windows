@@ -162,7 +162,6 @@
 
         <!-- Convos list collapse button -->
         <Button Grid.Column="1" Grid.Row="0"
-                Style="{StaticResource CollapseButton}"
                 HorizontalAlignment="Left"
                 Content="&lt;" 
                 Width="15" 
@@ -189,11 +188,8 @@
                     Canvas.Top="5" 
                     Canvas.Right="35" 
                     Command="{Binding ResetWindowButtonCommand}"
-                    ToolTip="Reset the main window's size and layout." Click="ResetWindowButton_Click">
-                <Button.Background>
-                    <ImageBrush ImageSource="/Resources/Images/reset-icon-white.png"/>
-                </Button.Background>
-            </Button>
+                    Style="{StaticResource ResetMainWindowButton}"
+                    ToolTip="Reset the main window's size and layout." Click="ResetWindowButton_Click"/>
 
         </Canvas>
 
