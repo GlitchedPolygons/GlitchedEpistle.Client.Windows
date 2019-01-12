@@ -6,6 +6,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
+        Background="{StaticResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"  
         WindowStartupLocation="CenterScreen"
@@ -23,7 +24,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Canvas Background="{StaticResource WindowBackgroundBrush}">
+    <Canvas>
         <StackPanel>
             <Label Content="Username" 
                    Padding="0 0 0 5"
