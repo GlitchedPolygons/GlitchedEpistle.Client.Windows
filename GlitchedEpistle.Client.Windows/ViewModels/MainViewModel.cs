@@ -29,6 +29,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #region Commands
         public ICommand ClosedCommand { get; }
+        public ICommand HelpButtonCommand { get; }
         public ICommand ResetWindowButtonCommand { get; }
         public ICommand SettingsButtonCommand { get; }
         public ICommand CreateConvoButtonCommand { get; }
@@ -76,6 +77,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ClosedCommand = new DelegateCommand(OnClosed);
             SettingsButtonCommand = new DelegateCommand(OnClickedSettingsIcon);
             ResetWindowButtonCommand = new DelegateCommand(OnClickedResetWindowIcon);
+            HelpButtonCommand = new DelegateCommand(OnClickedHelpIcon);
             CreateConvoButtonCommand = new DelegateCommand(OnClickedCreateConvo);
             ChangePasswordButtonCommand = new DelegateCommand(OnClickedChangePassword);
             ExportUserButtonCommand = new DelegateCommand(OnClickedExportUser);
@@ -136,6 +138,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
 
         private void OnClickedLogout(object commandParam)
+        {
+
+        }
+
+        private void OnClickedHelpIcon(object commandParam)
         {
 
         }
