@@ -248,5 +248,9 @@
     <Resource Include="Resources\Images\glitched-polygons-blue-1440p.png" />
     <Resource Include="Resources\Images\glitched-polygons-blue-2160p.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\help-icon-black.png" />
+    <Resource Include="Resources\Images\help-icon-white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
