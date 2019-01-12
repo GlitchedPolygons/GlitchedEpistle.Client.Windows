@@ -46,6 +46,7 @@
 
             <TextBlock Margin="0 15 0 0" 
                        MaxWidth="425"
+                       Style="{StaticResource TextBlock}"
                        Text="{Binding ExportLabel}" 
                        TextWrapping="Wrap" />
         </StackPanel>
