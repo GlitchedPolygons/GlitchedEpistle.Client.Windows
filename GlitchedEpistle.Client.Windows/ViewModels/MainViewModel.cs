@@ -64,6 +64,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public double ProgressBarValue { get => progressBarValue; set => Set(ref progressBarValue, value); }
         #endregion
 
+        private HelpView helpView;
         private SettingsView settingsView;
         private UserExportView userExportView;
 
@@ -129,10 +130,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedExportUser(object commandParam)
         {
             userExportView = windowFactory.Create<UserExportView>(true);
+
+            // When opening views that only exist one at a time,
+            // it's important not to recreate the viewmodel every time,
+            // as that would override any changes made.
+            // Therefore, check if the view already has a data context that isn't null.
             if (userExportView.DataContext is null)
             {
                 userExportView.DataContext = viewModelFactory.Create<UserExportViewModel>();
             }
+
             userExportView.Show();
             userExportView.Activate();
         }
@@ -144,22 +151,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedHelpIcon(object commandParam)
         {
-
+            helpView = windowFactory.Create<HelpView>(true);
+            if (helpView.DataContext is null)
+            {
+                helpView.DataContext = viewModelFactory.Create<HelpViewModel>();
+            }
+            helpView.Show();
+            helpView.Activate();
         }
 
         private void OnClickedSettingsIcon(object commandParam)
         {
             settingsView = windowFactory.Create<SettingsView>(true);
-
-            // When opening views that only exist one at a time,
-            // it's important not to recreate the viewmodel every time,
-            // as that would override any changes made.
-            // Therefore, check if the view already has a data context that isn't null.
             if (settingsView.DataContext is null)
             {
                 settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
             }
-
             settingsView.Show();
             settingsView.Activate();
         }
