@@ -20,12 +20,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public MainView()
         {
             InitializeComponent();
-            Loaded += MainView_Loaded;
-        }
-
-        private void MainView_Loaded(object sender, RoutedEventArgs e)
-        {
-            Loaded -= MainView_Loaded;
         }
 
         /// <summary>

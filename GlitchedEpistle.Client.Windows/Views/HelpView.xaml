@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Background="{StaticResource WindowBackgroundBrush}"
         Icon="/Resources/Images/help-icon-white.png"
         Title="HelpView" Height="450" Width="800">

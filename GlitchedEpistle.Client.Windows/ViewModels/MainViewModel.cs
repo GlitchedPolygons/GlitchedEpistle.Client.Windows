@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
-
+using System.Globalization;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -39,8 +39,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
-        private string usernameLabel = SettingsViewModel.DEFAULT_USERNAME;
-        public string UsernameLabel { get => usernameLabel; set => Set(ref usernameLabel, value); }
+        private string username = SettingsViewModel.DEFAULT_USERNAME;
+        public string Username { get => username; set => Set(ref username, value); }
+
+        private string userId = string.Empty;
+        public string UserId { get => userId; set => Set(ref userId, value); }
 
         private double sidebarWidth = SIDEBAR_MIN_WIDTH;
         public double SidebarWidth { get => sidebarWidth; set => Set(ref sidebarWidth, value); }
@@ -87,7 +90,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Load up the settings on startup.
             if (settings.Load())
             {
-                UsernameLabel = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
+                Username = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
 
                 Enum.TryParse<WindowState>(settings[nameof(WindowState), WindowState.Normal.ToString()], out var loadedWindowState);
                 WindowState = loadedWindowState;
@@ -99,8 +102,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? SIDEBAR_MIN_WIDTH : w;
             }
 
+            string userId = settings[nameof(UserId)];
+            if (!string.IsNullOrEmpty(userId))
+            {
+
+            }
+
             // Update the username label on the main window when that setting has changed.
-            eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => UsernameLabel = newUsername);
+            eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
         }
 
         private void OnClosed(object commandParam)
