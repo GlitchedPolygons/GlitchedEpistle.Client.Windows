@@ -9,6 +9,7 @@
         Background="{StaticResource WindowBackgroundBrush}"
         Title="Export User" 
         ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
         Height="250" MinHeight="250" MaxHeight="300"
         Width="455" MinWidth="455" MaxWidth="455">
     <i:Interaction.Triggers>

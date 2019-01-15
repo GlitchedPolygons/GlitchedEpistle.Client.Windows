@@ -7,7 +7,7 @@
     <Color x:Key="ControlNormalForegroundColor">AliceBlue</Color>
     <Color x:Key="ControlMouseOverColor">#4f6066</Color>
     <Color x:Key="ControlPressedColor">#699bad</Color>
-    <Color x:Key="DisabledControlColor">#FFF2F2F2</Color>
+    <Color x:Key="DisabledControlColor">#888888</Color>
     <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
 
     <!-- Background brush for all windows -->

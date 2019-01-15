@@ -1,0 +1,33 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.Dialogs.LoginDialogView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.Dialogs"
+        mc:Ignorable="d"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Title="Login" Height="200" Width="250" ResizeMode="NoResize">
+
+    <StackPanel Margin="15">
+        <Label Content="User ID" ToolTip="Your user ID."/>
+        <TextBox Name="UserIdTextBox" Height="23" Width="200" TextChanged="UserIdTextBox_OnTextChanged"/>
+        <Label Content="Password" ToolTip="Your user password."/>
+        <TextBox Name="PasswordTextBox" Height="23" Width="200" TextChanged="PasswordTextBox_OnTextChanged"/>
+        <StackPanel Orientation="Horizontal" Margin="0 15 0 0" HorizontalAlignment="Center">
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Width="93"
+                    Content="Quit"
+                    IsCancel="True"
+                    ToolTip="Cancels the login procedure and thus quits the application." Click="QuitButton_Click"/>
+
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Width="93"
+                    Margin="15 0 0 0"
+                    Content="Login"
+                    Name="LoginButton"
+                    ToolTip="Sends the login credentials to the Glitched Epistle server for authentication." Click="LoginButton_Click" IsEnabled="False"/>
+        </StackPanel>
+    </StackPanel>
+</Window>
