@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.Dialogs
 {
@@ -11,7 +12,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.Dialogs
         public LoginDialogView()
         {
             InitializeComponent();
-            Closing += (sender, args) => Application.Current.Shutdown();
         }
 
         private void QuitButton_Click(object sender, RoutedEventArgs e)
@@ -32,6 +32,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.Dialogs
         private void PasswordTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             LoginButton.IsEnabled = FormReady;
+        }
+
+        private void PasswordTextBox_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                DialogResult = true;
+            }
         }
 
         private bool FormReady => !string.IsNullOrEmpty(UserIdTextBox.Text) && !string.IsNullOrEmpty(PasswordTextBox.Text);

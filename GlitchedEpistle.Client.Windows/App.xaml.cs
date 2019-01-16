@@ -12,7 +12,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
-
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using Unity;
 using Unity.Lifetime;
 using Prism.Events;
@@ -56,15 +56,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 Application.Current.Shutdown();
             }
 
+            // Register transient types:
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, Logger>();
+            container.RegisterType<IUserService, UserService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
+
+            // Register IoC singletons:
             container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
 
+            // Open the main app's window.
             var mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
             Application.Current.MainWindow = mainView;
