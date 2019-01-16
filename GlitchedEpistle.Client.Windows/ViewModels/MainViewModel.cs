@@ -2,13 +2,15 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Globalization;
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using Prism.Events;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.Dialogs;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -23,6 +25,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly ISettings settings;
         private readonly IEventAggregator eventAggregator;
+        private readonly IUserService userService;
         private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
         #endregion
@@ -71,12 +74,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private SettingsView settingsView;
         private UserExportView userExportView;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
         {
             this.settings = settings;
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
+            this.userService = userService;
 
             ClosedCommand = new DelegateCommand(OnClosed);
             SettingsButtonCommand = new DelegateCommand(OnClickedSettingsIcon);
@@ -102,14 +106,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? SIDEBAR_MIN_WIDTH : w;
             }
 
-            string userId = settings[nameof(UserId)];
-            if (!string.IsNullOrEmpty(userId))
-            {
-
-            }
+            LoginOnStart();
 
             // Update the username label on the main window when that setting has changed.
             eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
+        }
+
+        private async void LoginOnStart()
+        {
+            bool loginSuccessful = false;
+            while (!loginSuccessful)
+            {
+                var loginDialog = windowFactory.Create<LoginDialogView>(false);
+                loginDialog.UserIdTextBox.Text = settings[nameof(UserId)];
+                if (string.IsNullOrEmpty(loginDialog.UserIdTextBox.Text))
+                {
+                    loginDialog.UserIdTextBox.SelectAll();
+                    loginDialog.UserIdTextBox.Focus();
+                }
+                else
+                {
+                    loginDialog.PasswordTextBox.SelectAll();
+                    loginDialog.PasswordTextBox.Focus();
+                }
+
+                bool? dialogResult = loginDialog.ShowDialog();
+                if (dialogResult.HasValue && dialogResult.Value is true)
+                {
+                    string jwt = await userService.Login(loginDialog.UserIdTextBox.Text, loginDialog.PasswordTextBox.Text.SHA512());
+                    if (!string.IsNullOrEmpty(jwt))
+                    {
+                        loginSuccessful = true;
+                        settings["Auth"] = jwt;
+                        settings.Save();
+                    }
+                }
+            }
         }
 
         private void OnClosed(object commandParam)
