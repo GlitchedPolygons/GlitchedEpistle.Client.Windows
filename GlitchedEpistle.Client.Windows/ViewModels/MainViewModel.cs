@@ -26,9 +26,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         // Injections:
         private readonly ISettings settings;
-        private readonly IEventAggregator eventAggregator;
         private readonly IUserService userService;
         private readonly IWindowFactory windowFactory;
+        private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
         #endregion
 
