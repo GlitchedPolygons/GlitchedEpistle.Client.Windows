@@ -123,6 +123,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             MainControl = new LoginView { DataContext = viewModelFactory.Create<LoginViewModel>() };
         }
 
+        private void LoadLoginView()
+        {
+            if (settings.Load())
+            {
+                var loginView = new LoginView { DataContext = viewModelFactory.Create<LoginViewModel>(), UserIdTextBox = { Text = settings[nameof(UserId)] } };
+            }
+        }
+
         private void OnClosed(object commandParam)
         {
             userExportView?.Close();
