@@ -177,11 +177,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\UserControls\Convo.xaml.cs">
-      <DependentUpon>Convo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControls\Login.xaml.cs">
-      <DependentUpon>Login.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\LoginView.xaml.cs">
+      <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserExportView.xaml.cs">
       <DependentUpon>UserExportView.xaml</DependentUpon>
@@ -202,11 +199,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\UserControls\Convo.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControls\Login.xaml">
+    <Page Include="Views\UserControls\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
