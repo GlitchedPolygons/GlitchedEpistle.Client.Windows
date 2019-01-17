@@ -21,6 +21,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         public const double SIDEBAR_MIN_WIDTH = 345;
+        public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
         public const double MAIN_WINDOW_MIN_HEIGHT = 450;
 
@@ -55,6 +56,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private double sidebarMinWidth = SIDEBAR_MIN_WIDTH;
         public double SidebarMinWidth { get => sidebarMinWidth; set => Set(ref sidebarMinWidth, value); }
+
+        public double SidebarMaxWidth => SIDEBAR_MAX_WIDTH;
 
         private double mainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
         public double MainWindowWidth { get => mainWindowWidth; set => Set(ref mainWindowWidth, value); }
@@ -108,7 +111,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 MainWindowHeight = Math.Abs(settings[nameof(MainWindowHeight), MAIN_WINDOW_MIN_HEIGHT]);
 
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
-                SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? SIDEBAR_MIN_WIDTH : w;
+                SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
             }
 
             // Update the username label on the main window when that setting has changed.
@@ -119,7 +122,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             MainControl = new Login { DataContext = viewModelFactory.Create<LoginViewModel>() };
         }
-        
+
         private void OnClosed(object commandParam)
         {
             userExportView?.Close();
