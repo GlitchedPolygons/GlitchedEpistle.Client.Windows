@@ -114,6 +114,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Update the username label on the main window when that setting has changed.
             eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
 
+            // Update the main control when login was successful.
+            eventAggregator.GetEvent<LoginSucceededEvent>().Subscribe(OnLoginSuccessful);
+
             MainControl = new Login { DataContext = viewModelFactory.Create<LoginViewModel>() };
         }
         
@@ -129,6 +132,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
             settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
             settings.Save();
+        }
+
+        private void OnLoginSuccessful()
+        {
+            MainControl = null;
         }
 
         private void OnClickedCreateConvo(object commandParam)

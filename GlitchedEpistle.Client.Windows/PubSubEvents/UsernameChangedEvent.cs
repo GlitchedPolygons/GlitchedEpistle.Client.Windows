@@ -1,8 +1,10 @@
 ﻿using Prism.Events;
-
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
 {
-    public class UsernameChangedEvent : PubSubEvent<string>
-    {
-    }
+    /// <summary>
+    /// This <see cref="Prism.Events.PubSubEvent{String}"/> (where <c>TPayload</c> is of type <see langword="string"/>)
+    /// is raised whenever the username setting has been changed and saved (usually when closing the user settings window).
+    /// </summary>
+    /// <seealso cref="Prism.Events.PubSubEvent{String}" />
+    public class UsernameChangedEvent : PubSubEvent<string> { }
 }

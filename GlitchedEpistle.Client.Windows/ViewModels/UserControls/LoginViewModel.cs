@@ -4,7 +4,9 @@ using System.Windows.Input;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -13,6 +15,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Constants
         private readonly ISettings settings;
         private readonly IUserService userService;
+        private readonly IEventAggregator eventAggregator;
         private const double ERROR_MESSAGE_INTERVAL = 7000;
         #endregion
 
@@ -35,10 +38,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt = false;
         private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
-        public LoginViewModel(IUserService userService, ISettings settings)
+        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator)
         {
             this.settings = settings;
             this.userService = userService;
+            this.eventAggregator = eventAggregator;
 
             LoginCommand = new DelegateCommand(OnClickedLogin);
             QuitCommand = new DelegateCommand(OnClickedQuit);
@@ -65,6 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 settings["Auth"] = jwt;
                 settings.Save();
+                eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
             }
             else
             {
