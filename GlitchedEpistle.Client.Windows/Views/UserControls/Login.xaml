@@ -17,6 +17,8 @@
 
         <TextBox Name="UserIdTextBox" 
                  Height="23" 
+                 Margin="5,0,0,0"
+                 MinWidth="250"
                  Text="{Binding UserId}"
                  TextChanged="UserIdTextBox_OnTextChanged"/>
 
@@ -25,10 +27,12 @@
 
         <TextBox Name="PasswordTextBox" 
                  Height="23"
+                 Margin="5,0,0,0"
+                 MinWidth="250"
                  Text="{Binding Password}"
                  TextChanged="PasswordTextBox_OnTextChanged"/>
 
-        <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,15,0,0">
 
             <Button Width="96"
                     Content="Quit"
