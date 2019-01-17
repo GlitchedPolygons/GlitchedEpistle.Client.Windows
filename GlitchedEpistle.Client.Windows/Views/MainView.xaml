@@ -31,7 +31,7 @@
             <!-- Left Column -->
             <ColumnDefinition Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}" 
                               MinWidth="{Binding Path=SidebarMinWidth}" 
-                              MaxWidth="800"
+                              MaxWidth="{Binding Path=SidebarMaxWidth}"
                               Name="LeftColumn"/>
             <!-- Right Column -->
             <ColumnDefinition Width="2*" 
