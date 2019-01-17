@@ -45,7 +45,7 @@
             <StackPanel Name="ProfileStackPanel" 
                         Height="175">
 
-                <Label Content="{Binding UsernameLabel}" 
+                <Label Content="{Binding Username}" 
                        HorizontalAlignment="Center" 
                        FontSize="18"/>
 
