@@ -8,8 +8,20 @@
 
     <StackPanel HorizontalAlignment="Left">
 
-        <Label Content="Welcome to Glitched Epistle." FontWeight="Bold" FontSize="16"/>
-        <Label Content="Please login:" FontSize="14"/>
+        <Label Content="Welcome to Glitched Epistle." 
+               FontWeight="Bold" 
+               FontSize="16"/>
+
+        <TextBlock Text="{Binding ErrorMessage}" 
+                   TextWrapping="Wrap" 
+                   MaxWidth="250" 
+                   Margin="5,0,0,0"
+                   HorizontalAlignment="Left" 
+                   Foreground="Red" 
+                   FontSize="14"/>
+        
+        <Label Content="Please login:" 
+               FontSize="14"/>
 
         <Label Content="User ID" 
                ToolTip="Your user ID."/>
