@@ -203,9 +203,11 @@
         </Canvas>
 
         <!-- Right Column -->
-        <StackPanel Grid.Column="1" Grid.Row="0">
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="15,35,15,15">
 
-            <!-- Active or selected convo -->
+            <ContentControl Content="{Binding MainControl}" 
+                            HorizontalAlignment="Center"
+                            Margin="0"/>
 
         </StackPanel>
     </Grid>
