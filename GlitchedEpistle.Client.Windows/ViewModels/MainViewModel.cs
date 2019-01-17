@@ -116,38 +116,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             MainControl = new Login { DataContext = viewModelFactory.Create<LoginViewModel>() };
         }
-
-        //private async void LoginOnStart()
-        //{
-        //    var loginDialog = windowFactory.Create<LoginDialogView>(false);
-        //    loginDialog.UserIdTextBox.Text = settings[nameof(UserId)];
-        //    if (string.IsNullOrEmpty(loginDialog.UserIdTextBox.Text))
-        //    {
-        //        loginDialog.UserIdTextBox.SelectAll();
-        //        loginDialog.UserIdTextBox.Focus();
-        //    }
-        //    else
-        //    {
-        //        loginDialog.PasswordTextBox.SelectAll();
-        //        loginDialog.PasswordTextBox.Focus();
-        //    }
-
-        //    bool? dialogResult = loginDialog.ShowDialog();
-        //    if (dialogResult.HasValue && dialogResult.Value is true)
-        //    {
-        //        string jwt = await userService.Login(loginDialog.UserIdTextBox.Text, loginDialog.PasswordTextBox.Text.SHA512());
-        //        if (!string.IsNullOrEmpty(jwt))
-        //        {
-        //            settings["Auth"] = jwt;
-        //            settings.Save();
-        //        }
-        //        else
-        //        {
-        //            LoginOnStart();
-        //        }
-        //    }
-        //}
-
+        
         private void OnClosed(object commandParam)
         {
             userExportView?.Close();
