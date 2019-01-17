@@ -6,7 +6,44 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+
+    <StackPanel HorizontalAlignment="Left">
+
+        <Label Content="Welcome to Glitched Epistle." FontWeight="Bold" FontSize="16"/>
+        <Label Content="Please login:" FontSize="14"/>
+
+        <Label Content="User ID" 
+               ToolTip="Your user ID."/>
+
+        <TextBox Name="UserIdTextBox" 
+                 Height="23" 
+                 Text="{Binding UserId}"
+                 TextChanged="UserIdTextBox_OnTextChanged"/>
+
+        <Label Content="Password" 
+               ToolTip="Your user password."/>
+
+        <TextBox Name="PasswordTextBox" 
+                 Height="23"
+                 Text="{Binding Password}"
+                 TextChanged="PasswordTextBox_OnTextChanged"/>
+
+        <StackPanel Orientation="Horizontal" Margin="0 15 0 0">
+
+            <Button Width="96"
+                    Content="Quit"
+                    Command="{Binding QuitCommand}"
+                    ToolTip="Cancels the login procedure and thus quits the application."/>
+
+            <Button Width="96"
+                    Margin="15 0 0 0"
+                    Content="Login"
+                    Name="LoginButton"
+                    Command="{Binding LoginCommand}"
+                    ToolTip="Sends the login credentials to the Glitched Epistle server for authentication."  
+                    IsEnabled="False"/>
+        </StackPanel>
+
+    </StackPanel>
+
 </UserControl>

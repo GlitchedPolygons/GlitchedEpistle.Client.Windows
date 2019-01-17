@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Globalization;
+using System.Windows.Controls;
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
@@ -10,7 +11,8 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.Dialogs;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -68,6 +70,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private double progressBarValue = 75;
         public double ProgressBarValue { get => progressBarValue; set => Set(ref progressBarValue, value); }
+
+        private Control mainControl;
+        public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
         #endregion
 
         private HelpView helpView;
@@ -106,43 +111,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > MainWindowWidth ? SIDEBAR_MIN_WIDTH : w;
             }
 
-            LoginOnStart();
-
             // Update the username label on the main window when that setting has changed.
             eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
+
+            MainControl = new Login { DataContext = viewModelFactory.Create<LoginViewModel>() };
         }
 
-        private async void LoginOnStart()
-        {
-            bool loginSuccessful = false;
-            while (!loginSuccessful)
-            {
-                var loginDialog = windowFactory.Create<LoginDialogView>(false);
-                loginDialog.UserIdTextBox.Text = settings[nameof(UserId)];
-                if (string.IsNullOrEmpty(loginDialog.UserIdTextBox.Text))
-                {
-                    loginDialog.UserIdTextBox.SelectAll();
-                    loginDialog.UserIdTextBox.Focus();
-                }
-                else
-                {
-                    loginDialog.PasswordTextBox.SelectAll();
-                    loginDialog.PasswordTextBox.Focus();
-                }
+        //private async void LoginOnStart()
+        //{
+        //    var loginDialog = windowFactory.Create<LoginDialogView>(false);
+        //    loginDialog.UserIdTextBox.Text = settings[nameof(UserId)];
+        //    if (string.IsNullOrEmpty(loginDialog.UserIdTextBox.Text))
+        //    {
+        //        loginDialog.UserIdTextBox.SelectAll();
+        //        loginDialog.UserIdTextBox.Focus();
+        //    }
+        //    else
+        //    {
+        //        loginDialog.PasswordTextBox.SelectAll();
+        //        loginDialog.PasswordTextBox.Focus();
+        //    }
 
-                bool? dialogResult = loginDialog.ShowDialog();
-                if (dialogResult.HasValue && dialogResult.Value is true)
-                {
-                    string jwt = await userService.Login(loginDialog.UserIdTextBox.Text, loginDialog.PasswordTextBox.Text.SHA512());
-                    if (!string.IsNullOrEmpty(jwt))
-                    {
-                        loginSuccessful = true;
-                        settings["Auth"] = jwt;
-                        settings.Save();
-                    }
-                }
-            }
-        }
+        //    bool? dialogResult = loginDialog.ShowDialog();
+        //    if (dialogResult.HasValue && dialogResult.Value is true)
+        //    {
+        //        string jwt = await userService.Login(loginDialog.UserIdTextBox.Text, loginDialog.PasswordTextBox.Text.SHA512());
+        //        if (!string.IsNullOrEmpty(jwt))
+        //        {
+        //            settings["Auth"] = jwt;
+        //            settings.Save();
+        //        }
+        //        else
+        //        {
+        //            LoginOnStart();
+        //        }
+        //    }
+        //}
 
         private void OnClosed(object commandParam)
         {
