@@ -120,7 +120,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Update the main control when login was successful.
             eventAggregator.GetEvent<LoginSucceededEvent>().Subscribe(OnLoginSuccessful);
 
-            MainControl = new Login { DataContext = viewModelFactory.Create<LoginViewModel>() };
+            MainControl = new LoginView { DataContext = viewModelFactory.Create<LoginViewModel>() };
         }
 
         private void OnClosed(object commandParam)
@@ -171,7 +171,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedLogout(object commandParam)
         {
+            if (MainControl is LoginView)
+            {
+                return;
+            }
 
+            // TODO: erase cached pw hash
+
+            MainControl = new LoginView { DataContext = viewModelFactory.Create<LoginViewModel>() };
         }
 
         private void OnClickedHelpIcon(object commandParam)
