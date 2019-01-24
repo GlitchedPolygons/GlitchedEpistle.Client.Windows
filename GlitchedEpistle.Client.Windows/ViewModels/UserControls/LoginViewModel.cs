@@ -31,6 +31,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private string password = string.Empty;
         public string Password { get => password; set => Set(ref password, value); }
 
+        private string totp = string.Empty;
+        public string Totp { get => totp; set => Set(ref totp, value); }
+
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
         #endregion
@@ -64,7 +67,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             pendingAttempt = true;
-            string jwt = await userService.Login(UserId, Password.SHA512());
+            string jwt = await userService.Login(UserId, Password.SHA512(), Totp);
             if (!string.IsNullOrEmpty(jwt))
             {
                 settings["Auth"] = jwt;
