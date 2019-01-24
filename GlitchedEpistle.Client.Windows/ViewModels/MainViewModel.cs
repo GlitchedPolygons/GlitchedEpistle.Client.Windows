@@ -71,7 +71,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string progressBarTooltip = "Subscription expires the 24th of December, 2018 at 15:30. Click to extend now!";
         public string ProgressBarTooltip { get => progressBarTooltip; set => Set(ref progressBarTooltip, value); }
 
-        private double progressBarValue = 75;
+        private double progressBarValue = 100;
         public double ProgressBarValue { get => progressBarValue; set => Set(ref progressBarValue, value); }
 
         private Control mainControl;

@@ -30,6 +30,7 @@
                  Height="23" 
                  Margin="5,0,0,0"
                  MinWidth="250"
+                 IsReadOnly="True"
                  Text="{Binding UserId}"
                  TextChanged="UserIdTextBox_OnTextChanged"/>
 
