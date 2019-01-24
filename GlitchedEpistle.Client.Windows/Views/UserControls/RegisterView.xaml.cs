@@ -27,17 +27,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void PasswordTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            RegisterButton.IsEnabled = CheckPassword();
         }
 
         private void PasswordTextBox2_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            RegisterButton.IsEnabled = CheckPassword();
         }
 
-        private void UsernameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        private bool CheckPassword() => PasswordTextBox.Text == PasswordTextBox2.Text && PasswordTextBox.Text.Length > 7;
     }
 }
