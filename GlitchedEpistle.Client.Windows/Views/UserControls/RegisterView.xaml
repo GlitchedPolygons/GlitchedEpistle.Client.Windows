@@ -31,8 +31,7 @@
                  Margin="5,0,0,0"
                  MinWidth="250"
                  ToolTip="Your username that will be displayed to other users. This is not the user id! The user id is the unique identifier that's assigned to you after registering, and does not change."
-                 Text="{Binding Username}"
-                 TextChanged="UsernameTextBox_OnTextChanged"/>
+                 Text="{Binding Username}"/>
 
         <Label Content="Password" 
                ToolTip="Your user password."/>
@@ -62,20 +61,18 @@
                     ToolTip="Cancels the registration procedure and quits the application."/>
 
             <Button Width="96"
+                    Content="Import"
+                    Margin="15 0 0 0"
+                    Command="{Binding ImportCommand}"
+                    ToolTip="Imports an account from a previously exported epistle backup file."/>
+
+            <Button Width="96"
                     Margin="15 0 0 0"
                     Content="Register"
-                    Name="LoginButton"
+                    Name="RegisterButton"
                     Command="{Binding RegisterCommand}"
                     ToolTip="Sends your desired login credentials to the Glitched Epistle server for registration."  
                     IsEnabled="False"/>
         </StackPanel>
-
-        <Label Margin="0,20,0,0" 
-               HorizontalAlignment="Center" 
-               Content="I already have an account, let me in please!" 
-               FontSize="9" 
-               Foreground="#FF7ABBF3"/>
-
     </StackPanel>
-
 </UserControl>
