@@ -10,7 +10,7 @@ using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
-    public class LoginViewModel : ViewModel
+    public class RegisterViewModel : ViewModel
     {
         #region Constants
         private readonly ISettings settings;
@@ -20,19 +20,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region Commands
-        public ICommand LoginCommand { get; }
+        public ICommand ImportCommand { get; }
+        public ICommand RegisterCommand { get; }
         public ICommand QuitCommand { get; }
         #endregion
 
         #region UI Bindings
-        private string userId = string.Empty;
-        public string UserId { get => userId; set => Set(ref userId, value); }
+        private string username = string.Empty;
+        public string Username { get => username; set => Set(ref username, value); }
 
         private string password = string.Empty;
         public string Password { get => password; set => Set(ref password, value); }
-
-        private string totp = string.Empty;
-        public string Totp { get => totp; set => Set(ref totp, value); }
 
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
@@ -41,13 +39,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt = false;
         private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
-        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator)
+        public RegisterViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator)
         {
             this.settings = settings;
             this.userService = userService;
             this.eventAggregator = eventAggregator;
 
-            LoginCommand = new DelegateCommand(OnClickedLogin);
+            ImportCommand = new DelegateCommand(OnClickedImport);
+            RegisterCommand = new DelegateCommand(OnClickedRegister);
             QuitCommand = new DelegateCommand(OnClickedQuit);
 
             ErrorMessageTimer.Elapsed += ErrorMessageTimer_Elapsed;
@@ -60,7 +59,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ErrorMessage = null;
         }
 
-        private async void OnClickedLogin(object commandParam)
+        private void OnClickedImport(object commandParam)
+        {
+            // TODO: open file dialog here
+        }
+
+        private void OnClickedRegister(object commandParam)
         {
             if (pendingAttempt)
             {
@@ -69,19 +73,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             pendingAttempt = true;
 
-            string jwt = await userService.Login(UserId, Password.SHA512(), Totp);
-            if (!string.IsNullOrEmpty(jwt))
-            {
-                settings["Auth"] = jwt;
-                settings.Save();
-                eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
-            }
-            else
-            {
-                ErrorMessageTimer.Stop();
-                ErrorMessageTimer.Start();
-                ErrorMessage = "Error! Invalid user id or password.";
-            }
+            // TODO: send registration post request here
+
             pendingAttempt = false;
         }
 

@@ -160,6 +160,7 @@
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\RegisterViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
