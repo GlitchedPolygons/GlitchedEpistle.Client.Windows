@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Globalization;
 using System.Windows.Controls;
+
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
@@ -99,10 +100,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ExportUserButtonCommand = new DelegateCommand(OnClickedExportUser);
             LogoutButtonCommand = new DelegateCommand(OnClickedLogout);
 
+            // Update the username label on the main window when that setting has changed.
+            eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
+
+            // Update the main control when login was successful.
+            eventAggregator.GetEvent<LoginSucceededEvent>().Subscribe(OnLoginSuccessful);
+
             // Load up the settings on startup.
             if (settings.Load())
             {
                 Username = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
+                UserId = settings[nameof(UserId)];
 
                 Enum.TryParse<WindowState>(settings[nameof(WindowState), WindowState.Normal.ToString()], out var loadedWindowState);
                 WindowState = loadedWindowState;
@@ -114,21 +122,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
             }
 
-            // Update the username label on the main window when that setting has changed.
-            eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
-
-            // Update the main control when login was successful.
-            eventAggregator.GetEvent<LoginSucceededEvent>().Subscribe(OnLoginSuccessful);
-
-            MainControl = new LoginView { DataContext = viewModelFactory.Create<LoginViewModel>() };
+            if (string.IsNullOrEmpty(UserId))
+            {
+                ShowRegisterControl();
+            }
+            else
+            {
+                ShowLoginControl();
+            }
         }
 
-        private void LoadLoginView()
+        private void ShowLoginControl()
         {
-            if (settings.Load())
-            {
-                var loginView = new LoginView { DataContext = viewModelFactory.Create<LoginViewModel>(), UserIdTextBox = { Text = settings[nameof(UserId)] } };
-            }
+            var viewModel = viewModelFactory.Create<LoginViewModel>();
+            viewModel.UserId = UserId;
+            MainControl = new LoginView { DataContext = viewModel };
+        }
+
+        private void ShowRegisterControl()
+        {
+            var viewModel = viewModelFactory.Create<RegisterViewModel>();
+            MainControl = new RegisterView {DataContext = viewModel};
         }
 
         private void OnClosed(object commandParam)
@@ -136,6 +150,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             userExportView?.Close();
             settingsView?.Close();
 
+            // Save the window's state before termination.
             settings.Load();
             var c = CultureInfo.InvariantCulture;
             settings[nameof(WindowState)] = WindowState.ToString();
