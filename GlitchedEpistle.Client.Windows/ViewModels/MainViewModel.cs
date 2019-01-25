@@ -199,9 +199,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
+            settings["Auth"] = string.Empty;
             // TODO: erase cached pw hash
 
-            MainControl = new LoginView { DataContext = viewModelFactory.Create<LoginViewModel>() };
+            ShowLoginControl();
         }
 
         private void OnClickedHelpIcon(object commandParam)
