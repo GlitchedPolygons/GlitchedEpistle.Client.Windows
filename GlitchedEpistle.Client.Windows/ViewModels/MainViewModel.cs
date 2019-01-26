@@ -6,6 +6,7 @@ using System.Windows.Controls;
 
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
@@ -106,6 +107,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Update the main control when login was successful.
             eventAggregator.GetEvent<LoginSucceededEvent>().Subscribe(OnLoginSuccessful);
 
+            // Show the 2FA secret QR code + list of backup codes after the registration form has been submitted successfully.
+            eventAggregator.GetEvent<UserCreationSucceededEvent>().Subscribe(OnUserCreationSuccessful);
+
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -163,6 +167,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnLoginSuccessful()
         {
             MainControl = null;
+        }
+
+        private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
+        {
+            //TODO: implement this (show qr code here with list of backup codes)
         }
 
         private void OnClickedCreateConvo(object commandParam)
