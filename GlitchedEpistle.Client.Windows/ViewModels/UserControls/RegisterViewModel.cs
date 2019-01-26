@@ -71,7 +71,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedImport(object commandParam)
         {
-            // TODO: open file dialog here
+            // TODO: open file dialog here and import user data from backup file
         }
 
         private async void OnClickedRegister(object commandParam)
@@ -104,6 +104,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 );
             }
 
+            string pubKeyXml;
             using (var sw = new StringWriter())
             {
                 var pem = new PemWriter(sw);
@@ -111,14 +112,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 pem.Writer.Flush();
 
                 string pubKeyPem = sw.ToString();
+                pubKeyXml = pubKeyPem.PemToXml();
 
                 File.WriteAllText(
                     Path.Combine(KEYS_DIR, "Public.rsa.pem"),
                     pubKeyPem
                 );
-                
-                var user = await userService.CreateUser(Password, pubKeyPem.PemToXml(), "crscrt"); // TODO: fill in secret creation param and then show the 2FA secret + backup codes ONCE on screen! (QR)
             }
+
+            var user = await userService.CreateUser(Password, pubKeyXml, "crscrt"); // TODO: fill in secret creation param and then show the 2FA secret + backup codes ONCE on screen! (QR)
 
             pendingAttempt = false;
         }
