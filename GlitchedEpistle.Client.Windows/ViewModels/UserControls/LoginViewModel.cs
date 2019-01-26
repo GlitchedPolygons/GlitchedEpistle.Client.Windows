@@ -62,7 +62,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private async void OnClickedLogin(object commandParam)
         {
-            if (pendingAttempt)
+            if (pendingAttempt
+                || string.IsNullOrEmpty(UserId)
+                || string.IsNullOrEmpty(Password)
+                || string.IsNullOrEmpty(Totp))
             {
                 return;
             }
@@ -82,6 +85,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ErrorMessageTimer.Start();
                 ErrorMessage = "Error! Invalid user id or password.";
             }
+
             pendingAttempt = false;
         }
 

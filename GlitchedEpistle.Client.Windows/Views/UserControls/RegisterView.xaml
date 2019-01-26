@@ -6,6 +6,11 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding RegisterCommand}"/>
+    </UserControl.InputBindings>
+
     <StackPanel HorizontalAlignment="Left">
 
         <Label Content="Welcome to Glitched Epistle." 
@@ -51,6 +56,8 @@
                  Height="23"
                  Margin="5,0,0,0"
                  MinWidth="250"
+                 ToolTip="Type your password again for safety's sake."
+                 Text="{Binding Password2}"
                  TextChanged="PasswordTextBox2_OnTextChanged"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,15,0,0">

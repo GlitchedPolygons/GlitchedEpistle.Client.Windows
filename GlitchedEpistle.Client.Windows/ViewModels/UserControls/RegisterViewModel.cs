@@ -1,11 +1,17 @@
-﻿using System.Timers;
+﻿using System.IO;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.OpenSsl;
+using Org.BouncyCastle.Security;
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
@@ -17,6 +23,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
         private const double ERROR_MESSAGE_INTERVAL = 7000;
+        private static readonly string KEYS_DIR = Path.Combine(App.ROOT_DIRECTORY, "Keys");
         #endregion
 
         #region Commands
@@ -31,6 +38,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private string password = string.Empty;
         public string Password { get => password; set => Set(ref password, value); }
+
+        private string password2 = string.Empty;
+        public string Password2 { get => password2; set => Set(ref password2, value); }
 
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
@@ -64,16 +74,51 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             // TODO: open file dialog here
         }
 
-        private void OnClickedRegister(object commandParam)
+        private async void OnClickedRegister(object commandParam)
         {
-            if (pendingAttempt)
+            if (pendingAttempt
+                || string.IsNullOrEmpty(Username)
+                || string.IsNullOrEmpty(Password)
+                || Password != Password2)
             {
                 return;
             }
 
             pendingAttempt = true;
 
-            // TODO: send registration post request here
+            Directory.CreateDirectory(KEYS_DIR);
+
+            var keygen = new RsaKeyPairGenerator();
+            keygen.Init(new KeyGenerationParameters(new SecureRandom(), 4096));
+            var keys = keygen.GenerateKeyPair();
+            
+            using (var sw = new StringWriter())
+            {
+                var pem = new PemWriter(sw);
+                pem.WriteObject(keys.Private);
+                pem.Writer.Flush();
+                
+                File.WriteAllText(
+                    Path.Combine(KEYS_DIR, "Private.rsa.pem"),
+                    sw.ToString()
+                );
+            }
+
+            using (var sw = new StringWriter())
+            {
+                var pem = new PemWriter(sw);
+                pem.WriteObject(keys.Public);
+                pem.Writer.Flush();
+
+                string pubKeyPem = sw.ToString();
+
+                File.WriteAllText(
+                    Path.Combine(KEYS_DIR, "Public.rsa.pem"),
+                    pubKeyPem
+                );
+                
+                var user = await userService.CreateUser(Password, pubKeyPem.PemToXml(), "crscrt"); // TODO: fill in secret creation param and then show the 2FA secret + backup codes ONCE on screen! (QR)
+            }
 
             pendingAttempt = false;
         }

@@ -6,6 +6,11 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding LoginCommand}"/>
+    </UserControl.InputBindings>
+
     <StackPanel HorizontalAlignment="Left">
 
         <Label Content="Welcome to Glitched Epistle." 
