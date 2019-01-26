@@ -56,6 +56,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 Application.Current.Shutdown();
             }
 
+            Directory.CreateDirectory(ROOT_DIRECTORY);
+
             // Register transient types:
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, Logger>();
