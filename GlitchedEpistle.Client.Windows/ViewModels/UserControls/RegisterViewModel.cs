@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -91,13 +92,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             var keygen = new RsaKeyPairGenerator();
             keygen.Init(new KeyGenerationParameters(new SecureRandom(), 4096));
             var keys = keygen.GenerateKeyPair();
-            
+
             using (var sw = new StringWriter())
             {
                 var pem = new PemWriter(sw);
                 pem.WriteObject(keys.Private);
                 pem.Writer.Flush();
-                
+
                 File.WriteAllText(
                     Path.Combine(KEYS_DIR, "Private.rsa.pem"),
                     sw.ToString()
@@ -120,7 +121,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 );
             }
 
-            var user = await userService.CreateUser(Password, pubKeyXml, "crscrt"); // TODO: fill in secret creation param and then show the 2FA secret + backup codes ONCE on screen! (QR)
+            var userCreationResponse = await userService.CreateUser(Password, pubKeyXml, "crscrt"); // TODO: pass in correct creation secret
+            eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse);
+            // Handle this event back in the main view model, since it's there where the backup codes + 2FA secret (QR) will be shown.
 
             pendingAttempt = false;
         }

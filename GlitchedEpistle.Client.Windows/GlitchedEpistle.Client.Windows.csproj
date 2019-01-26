@@ -148,6 +148,7 @@
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
+    <Compile Include="PubSubEvents\UserCreationSucceededEvent.cs" />
     <Compile Include="PubSubEvents\UsernameChangedEvent.cs" />
     <Compile Include="Services\Factories\IViewModelFactory.cs" />
     <Compile Include="Services\Factories\IWindowFactory.cs" />
