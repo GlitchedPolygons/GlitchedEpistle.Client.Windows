@@ -30,7 +30,7 @@
                          Name="OutputFilePathTextBox"
                          Text="{Binding OutputFilePath}" IsReadOnly="True"/>
                 <Button Content="Browse" 
-                        Click="BrowseButton_Click"/>
+                        Command="{Binding BrowseButtonCommand}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal"

@@ -4,6 +4,7 @@ using System.Windows.Input;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+using Microsoft.Win32;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -29,6 +30,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Commands
         public ICommand LoadedCommand { get; }
         public ICommand ClosedCommand { get; }
+        public ICommand BrowseButtonCommand { get; }
         public ICommand CancelButtonCommand { get; }
         public ICommand ExportButtonCommand { get; }
         #endregion
@@ -81,6 +83,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
+            BrowseButtonCommand = new DelegateCommand(OnClickedBrowse);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             ExportButtonCommand = new DelegateCommand(OnClickedExport);
         }
@@ -107,6 +110,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClosed(object commandParam)
         {
             // nop
+        }
+
+        private void OnClickedBrowse(object commandParam)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Title = "Epistle backup file path",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                FileName = $"{DateTime.Now:yyyy-MM-dd-HH-mm}-glitched-epistle-backup.dat",
+                DefaultExt = ".dat",
+                AddExtension = true,
+                OverwritePrompt = true,
+                Filter = "Epistle Backup File|*.dat"
+            };
+            dialog.FileOk += FileDialog_FileOk;
+            dialog.ShowDialog();
+        }
+
+        private void FileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (sender is SaveFileDialog dialog)
+            {
+                dialog.FileOk -= FileDialog_FileOk;
+                OutputFilePath = dialog.FileName;
+            }
         }
 
         private void OnClickedCancel(object commandParam)
