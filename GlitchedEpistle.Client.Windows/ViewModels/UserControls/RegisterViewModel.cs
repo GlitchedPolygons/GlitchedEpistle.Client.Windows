@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -9,6 +11,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+using GlitchedPolygons.Services.CompressionUtility;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.OpenSsl;
@@ -22,6 +25,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Constants
         private readonly ISettings settings;
         private readonly IUserService userService;
+        private readonly ICompressionUtility gzip;
         private readonly IEventAggregator eventAggregator;
         private const double ERROR_MESSAGE_INTERVAL = 7000;
         private static readonly string KEYS_DIR = Path.Combine(App.ROOT_DIRECTORY, "Keys");
@@ -50,8 +54,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt = false;
         private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
-        public RegisterViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator)
+        public RegisterViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip)
         {
+            this.gzip = gzip;
             this.settings = settings;
             this.userService = userService;
             this.eventAggregator = eventAggregator;
@@ -121,7 +126,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 );
             }
 
-            var userCreationResponse = await userService.CreateUser(Password, pubKeyXml, "crscrt"); // TODO: pass in correct creation secret
+            string userCreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), new CompressionSettings()));
+
+            var userCreationResponse = await userService.CreateUser(Password, pubKeyXml, userCreationSecret);
             eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse);
             // Handle this event back in the main view model, since it's there where the backup codes + 2FA secret (QR) will be shown.
 
