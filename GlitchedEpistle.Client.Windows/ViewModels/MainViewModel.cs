@@ -199,10 +199,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
 
-            var encoder = new QrEncoder(ErrorCorrectionLevel.M);
+            var encoder = new QrEncoder(ErrorCorrectionLevel.L);
             encoder.TryEncode($"otpauth://totp/GlitchedEpistle:{userCreationResponse.Id}?secret={userCreationResponse.TotpSecret}", out QrCode qrCode);
 
-            var bitmap = new WriteableBitmap(100, 100, 96, 96, PixelFormats.Gray8, null);
+            var bitmap = new WriteableBitmap(120, 120, 96, 96, PixelFormats.Gray8, null);
             var renderer = new WriteableBitmapRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Colors.Black, Colors.White);
             renderer.Draw(bitmap, qrCode.Matrix);
 
