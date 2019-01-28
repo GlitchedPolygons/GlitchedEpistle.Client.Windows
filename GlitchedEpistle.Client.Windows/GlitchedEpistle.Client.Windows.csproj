@@ -153,6 +153,7 @@
     <Compile Include="Extensions\RSAParametersExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
+    <Compile Include="PubSubEvents\UserCreationVerifiedEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationSucceededEvent.cs" />
     <Compile Include="PubSubEvents\UsernameChangedEvent.cs" />
     <Compile Include="Services\Factories\IViewModelFactory.cs" />
@@ -166,9 +167,9 @@
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\UserCreationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\RegistrationSuccessfulViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\UserCreationSuccessfulViewModel.cs" />
     <Compile Include="ViewModels\UserExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -188,11 +189,11 @@
     <Compile Include="Views\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\RegisterView.xaml.cs">
-      <DependentUpon>RegisterView.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\UserCreationView.xaml.cs">
+      <DependentUpon>UserCreationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\RegistrationSuccessfulView.xaml.cs">
-      <DependentUpon>RegistrationSuccessfulView.xaml</DependentUpon>
+    <Compile Include="Views\UserControls\UserCreationSuccessfulView.xaml.cs">
+      <DependentUpon>UserCreationSuccessfulView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserExportView.xaml.cs">
       <DependentUpon>UserExportView.xaml</DependentUpon>
@@ -217,11 +218,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\RegisterView.xaml">
+    <Page Include="Views\UserControls\UserCreationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\RegistrationSuccessfulView.xaml">
+    <Page Include="Views\UserControls\UserCreationSuccessfulView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

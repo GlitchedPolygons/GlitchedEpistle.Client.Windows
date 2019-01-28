@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using System.Diagnostics;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -15,16 +13,18 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
+
+using Prism.Events;
 using Microsoft.Win32;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.OpenSsl;
 using Org.BouncyCastle.Security;
-using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
-    public class RegisterViewModel : ViewModel
+    public class UserCreationViewModel : ViewModel
     {
         #region Constants
         private readonly ILogger logger;
@@ -58,7 +58,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt = false;
         private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
-        public RegisterViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger)
+        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger)
         {
             this.gzip = gzip;
             this.logger = logger;

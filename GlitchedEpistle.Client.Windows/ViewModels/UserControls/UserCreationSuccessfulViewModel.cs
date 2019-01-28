@@ -1,20 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using System.Collections.Generic;
+
 using Prism.Events;
+using Microsoft.Win32;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
-using Microsoft.Win32;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
-    public class RegistrationSuccessfulViewModel : ViewModel
+    public class UserCreationSuccessfulViewModel : ViewModel
     {
         #region Constants
         private readonly User user;
@@ -45,7 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public List<string> BackupCodes { get; set; }
 
-        public RegistrationSuccessfulViewModel(ISettings settings, IUserService userService, IEventAggregator eventAggregator, User user)
+        public UserCreationSuccessfulViewModel(ISettings settings, IUserService userService, IEventAggregator eventAggregator, User user)
         {
             this.user = user;
             this.settings = settings;
@@ -77,16 +79,38 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 OverwritePrompt = true,
                 Filter = "Text File|*.txt"
             };
-            dialog.FileOk += FileDialog_FileOk;
+            dialog.FileOk += ExportFileDialog_FileOk;
             dialog.ShowDialog();
         }
 
-        private void FileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private async void OnClickedVerify(object commandParam)
+        {
+            if (pendingAttempt)
+            {
+                return;
+            }
+
+            pendingAttempt = true;
+            if (await userService.Validate2FA(user.Id, Totp))
+            {
+                eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish();
+            }
+            else
+            {
+                ErrorMessageTimer.Stop();
+                ErrorMessageTimer.Start();
+                ErrorMessage = "Two-Factor authentication failed!";
+                Totp = string.Empty;
+            }
+            pendingAttempt = false;
+        }
+
+        private void ExportFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (sender is SaveFileDialog dialog)
             {
-                dialog.FileOk -= FileDialog_FileOk;
-                if (string.IsNullOrEmpty(dialog.FileName))
+                dialog.FileOk -= ExportFileDialog_FileOk;
+                if (string.IsNullOrEmpty(dialog.FileName) || BackupCodes.Count == 0)
                 {
                     return;
                 }
@@ -103,28 +127,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 File.WriteAllText(dialog.FileName, sb.ToString());
             }
-        }
-
-        private async void OnClickedVerify(object commandParam)
-        {
-            if (pendingAttempt)
-            {
-                return;
-            }
-
-            pendingAttempt = true;
-            if (await userService.Validate2FA(user.Id, Totp))
-            {
-                // TODO: raise success event
-            }
-            else
-            {
-                ErrorMessageTimer.Stop();
-                ErrorMessageTimer.Start();
-                ErrorMessage = "Two-Factor authentication failed!";
-                Totp = string.Empty;
-            }
-            pendingAttempt = false;
         }
     }
 }
