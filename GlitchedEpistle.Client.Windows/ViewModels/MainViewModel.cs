@@ -229,6 +229,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // TODO: erase cached pw hash
 
             ShowLoginControl();
+            UIEnabled = false;
         }
 
         private void OnClickedHelpIcon(object commandParam)
