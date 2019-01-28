@@ -14,7 +14,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private const bool DEFAULT_EXPORT_SETTINGS = true;
         private const bool DEFAULT_EXPORT_CONVOS = false;
         private const bool DEFAULT_COMPRESS_OUTPUT = false;
-        
+
         // Injections:
         private readonly ISettings settings;
         #endregion
@@ -75,6 +75,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
+        private bool exportReady;
+        public bool ExportReady { get => exportReady; set => Set(ref exportReady, value); }
         #endregion
 
         public UserExportViewModel(ISettings settings)
@@ -135,6 +137,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 dialog.FileOk -= FileDialog_FileOk;
                 OutputFilePath = dialog.FileName;
             }
+            ExportReady = !string.IsNullOrEmpty(OutputFilePath);
         }
 
         private void OnClickedCancel(object commandParam)
