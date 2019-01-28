@@ -76,9 +76,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             pendingAttempt = true;
 
-            string jwt = await userService.Login(UserId, Password.SHA512(), Totp);
+            string passwordSHA512 = Password.SHA512();
+            string jwt = await userService.Login(UserId, passwordSHA512, Totp);
             if (!string.IsNullOrEmpty(jwt))
             {
+                user.PasswordSHA512 = passwordSHA512;
                 user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
                 eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
             }
