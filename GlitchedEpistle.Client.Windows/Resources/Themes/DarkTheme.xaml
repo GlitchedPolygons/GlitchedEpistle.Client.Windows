@@ -38,7 +38,13 @@
     </Style>
 
     <!-- TextBox (input field) -->
-    <Style TargetType="TextBox">
+    <Style x:Key="TextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="#404040"></Setter>
+        <Setter Property="Foreground" Value="AliceBlue" />
+    </Style>
+
+    <!-- PasswordBox (input field) -->
+    <Style x:Key="PasswordBox" TargetType="PasswordBox">
         <Setter Property="Background" Value="#404040"></Setter>
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>

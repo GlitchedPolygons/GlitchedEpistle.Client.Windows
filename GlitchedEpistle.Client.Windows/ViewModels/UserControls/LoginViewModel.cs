@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -25,14 +26,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Commands
         public ICommand LoginCommand { get; }
         public ICommand QuitCommand { get; }
+        public ICommand PasswordChangedCommand { get; }
         #endregion
 
         #region UI Bindings
         private string userId = string.Empty;
         public string UserId { get => userId; set => Set(ref userId, value); }
-
-        private string password = string.Empty;
-        public string Password { get => password; set => Set(ref password, value); }
 
         private string totp = string.Empty;
         public string Totp { get => totp; set => Set(ref totp, value); }
@@ -41,6 +40,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
         #endregion
 
+        private string password;
         private bool pendingAttempt = false;
         private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
@@ -53,6 +53,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             LoginCommand = new DelegateCommand(OnClickedLogin);
             QuitCommand = new DelegateCommand(OnClickedQuit);
+            PasswordChangedCommand = new DelegateCommand(OnChangedPassword);
 
             ErrorMessageTimer.Elapsed += ErrorMessageTimer_Elapsed;
             ErrorMessageTimer.Start();
@@ -64,11 +65,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ErrorMessage = null;
         }
 
+        private void OnChangedPassword(object commandParam)
+        {
+            if (commandParam is PasswordBox passwordBox)
+            {
+                password = passwordBox.Password;
+            }
+        }
+
         private async void OnClickedLogin(object commandParam)
         {
             if (pendingAttempt
                 || string.IsNullOrEmpty(UserId)
-                || string.IsNullOrEmpty(Password)
+                || string.IsNullOrEmpty(password)
                 || string.IsNullOrEmpty(Totp))
             {
                 return;
@@ -76,7 +85,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             pendingAttempt = true;
 
-            string passwordSHA512 = Password.SHA512();
+            string passwordSHA512 = password.SHA512();
             string jwt = await userService.Login(UserId, passwordSHA512, Totp);
             if (!string.IsNullOrEmpty(jwt))
             {
@@ -92,11 +101,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             pendingAttempt = false;
+            password = null;
         }
 
         private void OnClickedQuit(object commandParam)
         {
             Application.Current.Shutdown();
+        }
+
+        ~LoginViewModel()
+        {
+            password = null;
         }
     }
 }

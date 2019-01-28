@@ -36,6 +36,7 @@
                      Width="250"
                      Height="23" 
                      Name="UsernameTextBox"
+                     Style="{StaticResource TextBox}"
                      Text="{Binding Username}" 
                      TextWrapping="Wrap" 
                      MouseDoubleClick="UsernameTextBox_SelectText"

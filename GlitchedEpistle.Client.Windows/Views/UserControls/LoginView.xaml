@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
 
     <UserControl.InputBindings>
@@ -24,7 +25,7 @@
                    HorizontalAlignment="Left" 
                    Foreground="Red" 
                    FontSize="14"/>
-        
+
         <Label Content="Please login:" 
                FontSize="14"/>
 
@@ -37,17 +38,24 @@
                  MinWidth="250"
                  IsReadOnly="True"
                  Text="{Binding UserId}"
+                 Style="{StaticResource TextBox}"
                  TextChanged="UserIdTextBox_OnTextChanged"/>
 
         <Label Content="Password" 
                ToolTip="Your user password."/>
 
-        <TextBox Name="PasswordTextBox" 
-                 Height="23"
-                 Margin="5,0,0,0"
-                 MinWidth="250"
-                 Text="{Binding Password}"
-                 TextChanged="PasswordTextBox_OnTextChanged"/>
+        <PasswordBox Name="PasswordBox" 
+                     Height="23"
+                     Margin="5,0,0,0"
+                     MinWidth="250"
+                     Style="{StaticResource PasswordBox}"
+                     PasswordChanged="PasswordTextBox_OnTextChanged">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PasswordChanged">
+                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=PasswordBox}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </PasswordBox>
 
         <Label Content="2FA TOTP" 
                ToolTip="Your user password."/>
@@ -58,6 +66,7 @@
                  MinWidth="250"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
                  Text="{Binding Totp}"
+                 Style="{StaticResource TextBox}"
                  TextChanged="TotpTextBox_OnTextChanged"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,15,0,0">

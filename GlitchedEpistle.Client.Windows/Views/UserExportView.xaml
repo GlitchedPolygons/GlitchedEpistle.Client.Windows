@@ -28,6 +28,7 @@
                          TextWrapping="Wrap" 
                          UndoLimit="10" 
                          Name="OutputFilePathTextBox"
+                         Style="{StaticResource TextBox}"
                          Text="{Binding OutputFilePath}" IsReadOnly="True"/>
                 <Button Content="Browse" 
                         Command="{Binding BrowseButtonCommand}"/>

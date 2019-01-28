@@ -47,6 +47,7 @@
                  MinWidth="250"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
                  Text="{Binding Totp}"
+                 Style="{StaticResource TextBox}"
                  TextChanged="TotpTextBox_OnTextChanged"/>
 
         <StackPanel Orientation="Horizontal" 

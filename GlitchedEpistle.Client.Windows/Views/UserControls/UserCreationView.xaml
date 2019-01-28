@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
 
     <UserControl.InputBindings>
@@ -35,30 +36,41 @@
                  Height="23" 
                  Margin="5,0,0,0"
                  MinWidth="250"
+                 Style="{StaticResource TextBox}"
                  ToolTip="Your username that will be displayed to other users. This is not the user id! The user id is the unique identifier that's assigned to you after registering, and does not change."
                  Text="{Binding Username}"/>
 
         <Label Content="Password" 
                ToolTip="Your user password."/>
 
-        <TextBox Name="PasswordTextBox" 
-                 Height="23"
-                 Margin="5,0,0,0"
-                 MinWidth="250"
-                 Text="{Binding Password}"
-                 ToolTip="Your desired login password."
-                 TextChanged="PasswordTextBox_OnTextChanged"/>
+        <PasswordBox Name="PasswordBox1" 
+                     Height="23"
+                     Margin="5,0,0,0"
+                     MinWidth="250"
+                     Style="{StaticResource PasswordBox}"
+                     ToolTip="Your desired login password.">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PasswordChanged">
+                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand1}" CommandParameter="{Binding ElementName=PasswordBox1}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </PasswordBox>
 
         <Label Content="Retype your password" 
                ToolTip="Type your password again for safety's sake."/>
 
-        <TextBox Name="PasswordTextBox2" 
-                 Height="23"
-                 Margin="5,0,0,0"
-                 MinWidth="250"
-                 ToolTip="Type your password again for safety's sake."
-                 Text="{Binding Password2}"
-                 TextChanged="PasswordTextBox2_OnTextChanged"/>
+        <PasswordBox Name="PasswordBox2" 
+                     Height="23"
+                     Margin="5,0,0,0"
+                     MinWidth="250"
+                     ToolTip="Type your password again for safety's sake."
+                     Style="{StaticResource PasswordBox}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PasswordChanged">
+                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand2}" CommandParameter="{Binding ElementName=PasswordBox2}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </PasswordBox>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5,15,0,0">
 
@@ -74,12 +86,12 @@
                     ToolTip="Imports an account from a previously exported epistle backup file."/>
 
             <Button Width="96"
+                    Name="RegisterButton"
                     Margin="15 0 0 0"
                     Content="Register"
-                    Name="RegisterButton"
                     Command="{Binding RegisterCommand}"
                     ToolTip="Sends your desired login credentials to the Glitched Epistle server for registration."  
-                    IsEnabled="False"/>
+                    IsEnabled="{Binding FormValid}"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
@@ -17,7 +18,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             LoginButton.IsEnabled = FormReady;
         }
 
-        private void PasswordTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        private void PasswordTextBox_OnTextChanged(object sender, RoutedEventArgs e)
         {
             LoginButton.IsEnabled = FormReady;
         }
@@ -27,6 +28,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             LoginButton.IsEnabled = FormReady;
         }
 
-        private bool FormReady => !string.IsNullOrEmpty(UserIdTextBox.Text) && !string.IsNullOrEmpty(PasswordTextBox.Text) && !string.IsNullOrEmpty(TotpTextBox.Text);
+        private bool FormReady => !string.IsNullOrEmpty(UserIdTextBox.Text) && !string.IsNullOrEmpty(PasswordBox.Password) && !string.IsNullOrEmpty(TotpTextBox.Text);
     }
 }
