@@ -50,6 +50,9 @@
     <Reference Include="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.1.0.2\lib\netstandard2.0\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll</HintPath>
     </Reference>
+    <Reference Include="Gma.QrCodeNet.Encoding, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\QrCode.Net.0.4.0.0\lib\net45\Gma.QrCodeNet.Encoding.dll</HintPath>
+    </Reference>
     <Reference Include="JwtService, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GlitchedPolygons.Services.JwtService.1.1.2\lib\netstandard2.0\JwtService.dll</HintPath>
     </Reference>
@@ -165,6 +168,7 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\UserControls\RegisterViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\RegistrationSuccessfulViewModel.cs" />
     <Compile Include="ViewModels\UserExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
@@ -186,6 +190,9 @@
     </Compile>
     <Compile Include="Views\UserControls\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\RegistrationSuccessfulView.xaml.cs">
+      <DependentUpon>RegistrationSuccessfulView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserExportView.xaml.cs">
       <DependentUpon>UserExportView.xaml</DependentUpon>
@@ -211,6 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\RegisterView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\RegistrationSuccessfulView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -5,6 +5,8 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
@@ -19,6 +21,8 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
+using Gma.QrCodeNet.Encoding;
+using Gma.QrCodeNet.Encoding.Windows.Render;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -32,6 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double MAIN_WINDOW_MIN_HEIGHT = 450;
 
         // Injections:
+        private readonly User user;
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IWindowFactory windowFactory;
@@ -86,9 +91,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private Control mainControl;
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
         #endregion
-
-        private User user;
-
+        
         private HelpView helpView;
         private SettingsView settingsView;
         private UserExportView userExportView;
@@ -188,7 +191,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
         {
-            //TODO: implement this (show qr code here with list of backup codes)
+            // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
+
+            var encoder = new QrEncoder(ErrorCorrectionLevel.M);
+            encoder.TryEncode($"otpauth://totp/GlitchedEpistle:{userCreationResponse.Id}?secret={userCreationResponse.TotpSecret}", out QrCode qrCode);
+
+            var bitmap = new WriteableBitmap(100, 100, 96, 96, PixelFormats.Gray8, null);
+            var renderer = new WriteableBitmapRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Colors.Black, Colors.White);
+            renderer.Draw(bitmap, qrCode.Matrix);
+
+            var viewModel = viewModelFactory.Create<RegistrationSuccessfulViewModel>();
+            viewModel.QR = bitmap;
+            viewModel.BackupCodes = userCreationResponse.TotpEmergencyBackupCodes;
+
+            MainControl = new RegistrationSuccessfulView { DataContext = viewModel };
         }
 
         private void OnClickedCreateConvo(object commandParam)
@@ -225,11 +241,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            settings["Auth"] = string.Empty;
-            // TODO: erase cached pw hash
+            user.Token = null;
+            user.PasswordSHA512 = null;
 
-            ShowLoginControl();
             UIEnabled = false;
+            ShowLoginControl();
         }
 
         private void OnClickedHelpIcon(object commandParam)

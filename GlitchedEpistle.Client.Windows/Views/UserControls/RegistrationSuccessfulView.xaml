@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.RegistrationSuccessfulView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+             mc:Ignorable="d">
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding VerifyCommand}"/>
+    </UserControl.InputBindings>
+
+    <StackPanel HorizontalAlignment="Left">
+
+        <TextBlock Text="Please set up your 2FA authenticator app (Authy is recommended) using the following TOTP secret:" 
+                   TextWrapping="Wrap" 
+                   TextAlignment="Left"
+                   MaxWidth="250" 
+                   FontWeight="Bold"  
+                   FontSize="16"
+                   Style="{StaticResource TextBlock}"/>
+
+        <TextBlock Text="{Binding ErrorMessage}" 
+                   TextWrapping="Wrap" 
+                   MaxWidth="250" 
+                   Margin="5,5,0,0"
+                   HorizontalAlignment="Left" 
+                   Foreground="Red" 
+                   FontSize="14"/>
+
+        <Image MaxWidth="100" 
+               MaxHeight="100" 
+               Margin="10"
+               HorizontalAlignment="Center" 
+               Source="{Binding QR}"/>
+
+        <Label Content="Enter your 2FA code for verification:" 
+               FontSize="14"/>
+
+        <Label Content="2FA TOTP" 
+               ToolTip="Your user password."/>
+
+        <TextBox Name="TotpTextBox" 
+                 Height="23"
+                 Margin="5,0,0,0"
+                 MinWidth="250"
+                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
+                 Text="{Binding Totp}"
+                 TextChanged="TotpTextBox_OnTextChanged"/>
+
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Margin="5,15,0,0">
+
+            <Button Width="135"
+                    Content="Export Backup Codes"
+                    Command="{Binding ExportBackupCodesCommand}"
+                    ToolTip="Exports your 2FA emergency backup codes to a text file, which you need to keep safe and SECRET at all costs and away from third parties!"/>
+
+            <Button Width="96"
+                    Margin="15 0 0 0"
+                    Content="Verify"
+                    Name="VerifyButton"
+                    Command="{Binding VerifyCommand}"
+                    ToolTip="Verify your 2FA setup."  
+                    IsEnabled="False"/>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>
