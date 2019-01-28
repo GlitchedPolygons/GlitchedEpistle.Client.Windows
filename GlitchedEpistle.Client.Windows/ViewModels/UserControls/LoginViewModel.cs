@@ -1,7 +1,9 @@
-﻿using System.Timers;
+﻿using System;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
@@ -13,6 +15,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class LoginViewModel : ViewModel
     {
         #region Constants
+        private readonly User user;
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
@@ -41,11 +44,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt = false;
         private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
-        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator)
+        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user)
         {
             this.settings = settings;
             this.userService = userService;
             this.eventAggregator = eventAggregator;
+            this.user = user;
 
             LoginCommand = new DelegateCommand(OnClickedLogin);
             QuitCommand = new DelegateCommand(OnClickedQuit);
@@ -75,8 +79,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             string jwt = await userService.Login(UserId, Password.SHA512(), Totp);
             if (!string.IsNullOrEmpty(jwt))
             {
-                settings["Auth"] = jwt;
-                settings.Save();
+                user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
                 eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
             }
             else

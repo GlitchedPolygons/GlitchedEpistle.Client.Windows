@@ -96,7 +96,9 @@
             </StackPanel>
 
             <!-- Convos list -->
-            <ScrollViewer Name="ConvosScrollViewer" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Name="ConvosScrollViewer" 
+                          VerticalScrollBarVisibility="Auto">
+
                 <StackPanel Name="ConvosStackPanel">
                     <Button Content="TEST"></Button>
                     <Separator/>

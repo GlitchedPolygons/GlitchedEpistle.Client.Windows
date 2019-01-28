@@ -90,18 +90,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 AddExtension = true,
                 Filter = "Epistle Backup File|*.dat;*.dat.gz"
             };
+            dialog.FileOk += FileDialog_FileOk;
             dialog.ShowDialog();
+        }
 
-            if (string.IsNullOrEmpty(dialog.FileName))
+        private void FileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (sender is SaveFileDialog dialog)
             {
-                return;
+                dialog.FileOk -= FileDialog_FileOk;
+                if (string.IsNullOrEmpty(dialog.FileName))
+                {
+                    return;
+                }
+
+                // TODO: see comment on new line
+                // Import user data from backup file here and then reboot the program.
+
+                Application.Current.Shutdown();
+                Process.Start(Application.ResourceAssembly.Location);
             }
-
-            // TODO: see comment on new line
-            // Import user data from backup file here and then reboot the program.
-
-            Application.Current.Shutdown();
-            Process.Start(Application.ResourceAssembly.Location);
         }
 
         private async void OnClickedRegister(object commandParam)
