@@ -29,8 +29,8 @@
                    Foreground="Red" 
                    FontSize="14"/>
 
-        <Image MaxWidth="100" 
-               MaxHeight="100" 
+        <Image Width="120" 
+               Height="120" 
                Margin="10"
                HorizontalAlignment="Center" 
                Source="{Binding QR}"/>
