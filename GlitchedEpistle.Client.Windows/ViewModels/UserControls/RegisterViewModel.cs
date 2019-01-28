@@ -10,6 +10,7 @@ using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
@@ -32,7 +33,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ICompressionUtility gzip;
         private readonly IEventAggregator eventAggregator;
         private const double ERROR_MESSAGE_INTERVAL = 7000;
-        private static readonly string KEYS_DIR = Path.Combine(App.ROOT_DIRECTORY, "Keys");
         #endregion
 
         #region Commands
@@ -113,10 +113,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 return;
             }
-            
+
             pendingAttempt = true;
 
-            Directory.CreateDirectory(KEYS_DIR);
+            Directory.CreateDirectory(Paths.KEYS_DIRECTORY);
 
             var keygen = new RsaKeyPairGenerator();
             keygen.Init(new KeyGenerationParameters(new SecureRandom(), 4096));
@@ -128,10 +128,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 pem.WriteObject(keys.Private);
                 pem.Writer.Flush();
 
-                File.WriteAllText(
-                    Path.Combine(KEYS_DIR, "Private.rsa.pem"),
-                    sw.ToString()
-                );
+                File.WriteAllText(Paths.PRIVATE_KEY_PATH, sw.ToString());
             }
 
             string pubKeyXml;
@@ -144,10 +141,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 string pubKeyPem = sw.ToString();
                 pubKeyXml = pubKeyPem.PemToXml();
 
-                File.WriteAllText(
-                    Path.Combine(KEYS_DIR, "Public.rsa.pem"),
-                    pubKeyPem
-                );
+                File.WriteAllText(Paths.PUBLIC_KEY_PATH, pubKeyPem);
             }
 
             string userCreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), new CompressionSettings()));

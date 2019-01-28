@@ -27,6 +27,7 @@
     </Window.Resources>
 
     <Grid Background="{StaticResource ChatroomBackgroundBrush}">
+
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
             <ColumnDefinition Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}" 
@@ -39,7 +40,10 @@
         </Grid.ColumnDefinitions>
 
         <!-- Left Column -->
-        <StackPanel Grid.Column="0" Grid.Row="0" Background="{StaticResource WindowBackgroundBrush}">
+        <StackPanel Grid.Row="0"  
+                    Grid.Column="0" 
+                    IsEnabled="{Binding UIEnabled}"
+                    Background="{StaticResource WindowBackgroundBrush}">
 
             <!-- Profile -->
             <StackPanel Name="ProfileStackPanel" 
