@@ -5,7 +5,7 @@ using System.Text;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
@@ -17,6 +17,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class RegistrationSuccessfulViewModel : ViewModel
     {
         #region Constants
+        private readonly User user;
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
@@ -44,8 +45,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public List<string> BackupCodes { get; set; }
 
-        public RegistrationSuccessfulViewModel(ISettings settings, IUserService userService, IEventAggregator eventAggregator)
+        public RegistrationSuccessfulViewModel(ISettings settings, IUserService userService, IEventAggregator eventAggregator, User user)
         {
+            this.user = user;
             this.settings = settings;
             this.userService = userService;
             this.eventAggregator = eventAggregator;
@@ -90,8 +92,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
 
                 var sb = new StringBuilder(512);
-                sb.AppendLine("Glitched Epistle 2FA Backup Codes");
-                sb.AppendLine($"Export timestamp: {DateTime.UtcNow:s} (UTC)\n\n");
+                sb.AppendLine("Glitched Epistle 2FA Backup Codes\n");
+                sb.AppendLine($"User: {user.Id}");
+                sb.AppendLine($"Export timestamp: {DateTime.UtcNow:s} (UTC)\n");
 
                 for (int i = 0; i < BackupCodes.Count; i++)
                 {
@@ -102,7 +105,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        private void OnClickedVerify(object commandParam)
+        private async void OnClickedVerify(object commandParam)
         {
             if (pendingAttempt)
             {
@@ -110,6 +113,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             pendingAttempt = true;
+            if (await userService.Validate2FA(user.Id, Totp))
+            {
+                // TODO: raise success event
+            }
+            else
+            {
+                ErrorMessageTimer.Stop();
+                ErrorMessageTimer.Start();
+                ErrorMessage = "Two-Factor authentication failed!";
+                Totp = string.Empty;
+            }
+            pendingAttempt = false;
         }
     }
 }
