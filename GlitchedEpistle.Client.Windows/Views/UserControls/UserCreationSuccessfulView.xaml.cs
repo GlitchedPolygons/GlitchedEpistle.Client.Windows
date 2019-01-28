@@ -5,9 +5,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
     /// <summary>
     /// Interaction logic for RegistrationSuccessfulView.xaml
     /// </summary>
-    public partial class RegistrationSuccessfulView : UserControl
+    public partial class UserCreationSuccessfulView : UserControl
     {
-        public RegistrationSuccessfulView()
+        public UserCreationSuccessfulView()
         {
             InitializeComponent();
         }

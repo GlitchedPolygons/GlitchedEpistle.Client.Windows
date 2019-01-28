@@ -123,6 +123,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Show the 2FA secret QR code + list of backup codes after the registration form has been submitted successfully.
             eventAggregator.GetEvent<UserCreationSucceededEvent>().Subscribe(OnUserCreationSuccessful);
 
+            // After a successful user creation, show the login screen.
+            eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(OnUserCreationVerified);
+
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -164,8 +167,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void ShowRegisterControl()
         {
-            var viewModel = viewModelFactory.Create<RegisterViewModel>();
-            MainControl = new RegisterView { DataContext = viewModel };
+            var viewModel = viewModelFactory.Create<UserCreationViewModel>();
+            MainControl = new UserCreationView { DataContext = viewModel };
         }
 
         private void OnClosed(object commandParam)
@@ -191,6 +194,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
         {
+            settings[nameof(UserId)] = UserId = user.Id = userCreationResponse.Id;
+            settings.Save();
+
             // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
 
             var encoder = new QrEncoder(ErrorCorrectionLevel.M);
@@ -200,11 +206,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             var renderer = new WriteableBitmapRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Colors.Black, Colors.White);
             renderer.Draw(bitmap, qrCode.Matrix);
 
-            var viewModel = viewModelFactory.Create<RegistrationSuccessfulViewModel>();
+            var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
             viewModel.QR = bitmap;
             viewModel.BackupCodes = userCreationResponse.TotpEmergencyBackupCodes;
 
-            MainControl = new RegistrationSuccessfulView { DataContext = viewModel };
+            MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
+        }
+
+        private void OnUserCreationVerified()
+        {
+            ShowLoginControl();
         }
 
         private void OnClickedCreateConvo(object commandParam)
