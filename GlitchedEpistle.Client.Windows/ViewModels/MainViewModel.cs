@@ -2,14 +2,18 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Globalization;
+using System.IO;
+using System.Security.Cryptography;
 using System.Windows.Controls;
-
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
@@ -47,6 +51,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
+        private bool uiEnabled;
+        public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
+
         private string username = SettingsViewModel.DEFAULT_USERNAME;
         public string Username { get => username; set => Set(ref username, value); }
 
@@ -80,12 +87,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
         #endregion
 
+        private User user;
+
         private HelpView helpView;
         private SettingsView settingsView;
         private UserExportView userExportView;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user)
         {
+            this.user = user;
             this.settings = settings;
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
@@ -114,7 +124,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             if (settings.Load())
             {
                 Username = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
-                UserId = settings[nameof(UserId)];
+                UserId = user.Id = settings[nameof(UserId)];
 
                 Enum.TryParse<WindowState>(settings[nameof(WindowState), WindowState.Normal.ToString()], out var loadedWindowState);
                 WindowState = loadedWindowState;
@@ -124,6 +134,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
+
+                if (File.Exists(Paths.PRIVATE_KEY_PATH))
+                {
+                    string keyXml = File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml();
+                    user.PrivateKey = RSAParametersExtensions.FromXml(keyXml);
+                }
             }
 
             if (string.IsNullOrEmpty(UserId))
@@ -146,7 +162,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void ShowRegisterControl()
         {
             var viewModel = viewModelFactory.Create<RegisterViewModel>();
-            MainControl = new RegisterView {DataContext = viewModel};
+            MainControl = new RegisterView { DataContext = viewModel };
         }
 
         private void OnClosed(object commandParam)
@@ -167,6 +183,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnLoginSuccessful()
         {
             MainControl = null;
+            UIEnabled = true;
         }
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)

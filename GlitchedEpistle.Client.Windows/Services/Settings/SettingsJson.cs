@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
@@ -14,7 +15,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
     public class SettingsJson : ISettings
     {
         private Dictionary<string, string> settings = new Dictionary<string, string>(16) { { "Version", App.VERSION } };
-        
+
         /// <summary>
         /// Absolute settings file path.
         /// </summary>
@@ -25,11 +26,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         public SettingsJson(ILogger logger)
         {
             this.logger = logger;
-            
-            FilePath = Path.Combine(
-                App.ROOT_DIRECTORY,
-                "UserSettings.json"
-            );
+
+            FilePath = Path.Combine(Paths.ROOT_DIRECTORY, "UserSettings.json");
         }
 
         public bool Save()

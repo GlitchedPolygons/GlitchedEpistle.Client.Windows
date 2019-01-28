@@ -1,18 +1,21 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
-using System.Threading;
 using System.Windows;
+using System.Threading;
+using System.Reflection;
 
 using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
+
 using Unity;
 using Unity.Lifetime;
 using Prism.Events;
@@ -28,16 +31,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// The client version number.
         /// </summary>
         public const string VERSION = "1.0.0";
-
-        /// <summary>
-        /// The application's root directory where all the user settings, convos, etc... are stored.
-        /// </summary>
-        public static readonly string ROOT_DIRECTORY = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "GlitchedPolygons",
-            "GlitchedEpistle"
-        );
-
+        
         /// <summary>
         /// The singleton app instance (prevent multiple Epistle instances running).
         /// </summary>
@@ -56,7 +50,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 Application.Current.Shutdown();
             }
 
-            Directory.CreateDirectory(ROOT_DIRECTORY);
+            Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
 
             // Register transient types:
             container.RegisterType<JwtService>();
@@ -66,6 +60,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
 
             // Register IoC singletons:
+            container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.
             container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
