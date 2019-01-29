@@ -193,6 +193,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             logger.LogMessage($"Created user {userCreationResponse.Id}.");
             // Handle this event back in the main view model, since it's there where the backup codes + 2FA secret (QR) will be shown.
 
+            settings[nameof(Username)] = Username;
+            settings.Save();
+
             pendingAttempt = false;
             password1 = password2 = null;
         }

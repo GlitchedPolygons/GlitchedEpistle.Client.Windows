@@ -7,11 +7,6 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
 
-    <UserControl.InputBindings>
-        <KeyBinding Key="Enter" 
-                    Command="{Binding LoginCommand}"/>
-    </UserControl.InputBindings>
-
     <StackPanel HorizontalAlignment="Left">
 
         <Label Content="Welcome to Glitched Epistle." 

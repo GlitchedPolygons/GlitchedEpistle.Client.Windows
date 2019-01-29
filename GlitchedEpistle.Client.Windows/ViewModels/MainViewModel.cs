@@ -1,15 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Globalization;
-using System.IO;
-using System.Security.Cryptography;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Globalization;
 using System.Windows.Media.Imaging;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
-using Prism.Events;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
@@ -21,8 +16,12 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
-using Gma.QrCodeNet.Encoding;
-using Gma.QrCodeNet.Encoding.Windows.Render;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
+
+using ZXing;
+using ZXing.Common;
+using Prism.Events;
+using ZXing.Rendering;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -33,7 +32,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MIN_WIDTH = 345;
         public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
-        public const double MAIN_WINDOW_MIN_HEIGHT = 450;
+        public const double MAIN_WINDOW_MIN_HEIGHT = 480;
 
         // Injections:
         private readonly User user;
@@ -91,7 +90,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private Control mainControl;
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
         #endregion
-        
+
         private HelpView helpView;
         private SettingsView settingsView;
         private UserExportView userExportView;
@@ -175,6 +174,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             userExportView?.Close();
             settingsView?.Close();
+            helpView?.Close();
 
             // Save the window's state before termination.
             settings.Load();
@@ -190,29 +190,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             MainControl = null;
             UIEnabled = true;
+            settings.Load();
+            Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
         }
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
         {
+            settings.Load();
+            Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
             settings[nameof(UserId)] = UserId = user.Id = userCreationResponse.Id;
             settings.Save();
 
             // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
-
-            var encoder = new QrEncoder(ErrorCorrectionLevel.L);
-            encoder.TryEncode($"otpauth://totp/GlitchedEpistle:{userCreationResponse.Id}?secret={userCreationResponse.TotpSecret}", out QrCode qrCode);
-
-            var bitmap = new WriteableBitmap(120, 120, 96, 96, PixelFormats.Gray8, null);
-            var renderer = new WriteableBitmapRenderer(new FixedModuleSize(2, QuietZoneModules.Two), Colors.Black, Colors.White);
-            renderer.Draw(bitmap, qrCode.Matrix);
+            IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap>
+            {
+                Format = BarcodeFormat.QR_CODE,
+                Renderer = new WriteableBitmapRenderer(),
+                Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 },
+            };
 
             var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
-            viewModel.QR = bitmap;
+            viewModel.QR = qrWriter.Write($"otpauth://totp/GlitchedEpistle:{userCreationResponse.Id}?secret={userCreationResponse.TotpSecret}");
             viewModel.BackupCodes = userCreationResponse.TotpEmergencyBackupCodes;
 
             MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
         }
-
+        
         private void OnUserCreationVerified()
         {
             ShowLoginControl();
