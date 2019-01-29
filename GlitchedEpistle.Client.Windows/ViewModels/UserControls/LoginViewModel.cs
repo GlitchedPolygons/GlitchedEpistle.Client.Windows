@@ -46,13 +46,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user)
         {
+            this.user = user;
             this.settings = settings;
             this.userService = userService;
             this.eventAggregator = eventAggregator;
-            this.user = user;
 
-            LoginCommand = new DelegateCommand(OnClickedLogin);
             QuitCommand = new DelegateCommand(OnClickedQuit);
+            LoginCommand = new DelegateCommand(OnClickedLogin);
             PasswordChangedCommand = new DelegateCommand(OnChangedPassword);
 
             ErrorMessageTimer.Elapsed += ErrorMessageTimer_Elapsed;
