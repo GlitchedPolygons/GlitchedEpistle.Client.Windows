@@ -605,5 +605,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\animated-matrix-code.gif" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\trash-icon-black.png" />
+    <Resource Include="Resources\Images\trash-icon-white.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
