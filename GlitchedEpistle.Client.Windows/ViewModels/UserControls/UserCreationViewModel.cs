@@ -5,23 +5,22 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Diagnostics;
-using System.Security;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
-using GlitchedPolygons.Services.CompressionUtility;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using Prism.Events;
 using Microsoft.Win32;
-using Org.BouncyCastle.Crypto;
-using Org.BouncyCastle.Crypto.Generators;
-using Org.BouncyCastle.OpenSsl;
-using Org.BouncyCastle.Security;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -32,6 +31,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly ICompressionUtility gzip;
+        private readonly IAsymmetricKeygen keygen;
         private readonly IEventAggregator eventAggregator;
         private const double ERROR_MESSAGE_INTERVAL = 7000;
         #endregion
@@ -45,6 +45,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region UI Bindings
+        public bool uiEnabled = true;
+        public bool UIEnabled { get => uiEnabled; private set => Set(ref uiEnabled, value); }
+
         public bool formValid;
         public bool FormValid { get => formValid; private set => Set(ref formValid, value); }
 
@@ -60,10 +63,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
-        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger)
+        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen)
         {
             this.gzip = gzip;
             this.logger = logger;
+            this.keygen = keygen;
             this.settings = settings;
             this.userService = userService;
             this.eventAggregator = eventAggregator;
@@ -157,45 +161,36 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             pendingAttempt = true;
+            UIEnabled = false;
 
-            Directory.CreateDirectory(Paths.KEYS_DIRECTORY);
+            var loadingScreen = new GeneratingKeyView {Topmost = true};
+            loadingScreen.Show();
 
-            var keygen = new RsaKeyPairGenerator();
-            keygen.Init(new KeyGenerationParameters(new SecureRandom(), 4096));
-            var keys = keygen.GenerateKeyPair();
-
-            using (var sw = new StringWriter())
+            bool keyGenerationSuccessful = await keygen.GenerateKeyPair(Paths.KEYS_DIRECTORY);
+            if (keyGenerationSuccessful)
             {
-                var pem = new PemWriter(sw);
-                pem.WriteObject(keys.Private);
-                pem.Writer.Flush();
+                var userCreationResponse = await userService.CreateUser(
+                    passwordHash: password1.SHA512(),
+                    publicKeyXml: File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
+                    creationSecret: Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), new CompressionSettings())));
 
-                File.WriteAllText(Paths.PRIVATE_KEY_PATH, sw.ToString());
+                // Handle this event back in the main view model,
+                // since it's there where the backup codes + 2FA secret (QR) will be shown.
+                eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse);
+                logger.LogMessage($"Created user {userCreationResponse.Id}.");
+
+                settings[nameof(Username)] = Username;
+                settings.Save();
+            }
+            else
+            {
+                string errorMsg = "There was an unexpected error whilst generating the RSA key pair (during user creation process).";
+                logger.LogError(errorMsg);
+                ErrorMessage = errorMsg;
             }
 
-            string pubKeyXml;
-            using (var sw = new StringWriter())
-            {
-                var pem = new PemWriter(sw);
-                pem.WriteObject(keys.Public);
-                pem.Writer.Flush();
-
-                string pubKeyPem = sw.ToString();
-                pubKeyXml = pubKeyPem.PemToXml();
-
-                File.WriteAllText(Paths.PUBLIC_KEY_PATH, pubKeyPem);
-            }
-
-            string userCreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), new CompressionSettings()));
-
-            var userCreationResponse = await userService.CreateUser(password1.SHA512(), pubKeyXml, userCreationSecret);
-            eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse);
-            logger.LogMessage($"Created user {userCreationResponse.Id}.");
-            // Handle this event back in the main view model, since it's there where the backup codes + 2FA secret (QR) will be shown.
-
-            settings[nameof(Username)] = Username;
-            settings.Save();
-
+            UIEnabled = true;
+            loadingScreen.Close();
             pendingAttempt = false;
             password1 = password2 = null;
         }

@@ -57,6 +57,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
+            container.RegisterType<IAsymmetricKeygen, RSA4096Keygen>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
 
             // Register IoC singletons:
