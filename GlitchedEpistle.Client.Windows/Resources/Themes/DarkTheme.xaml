@@ -21,6 +21,7 @@
 
     <ImageBrush x:Key="HelpIcon" ImageSource="/Resources/Images/help-icon-white.png"/>
     <ImageBrush x:Key="ResetIcon" ImageSource="/Resources/Images/reset-icon-white.png"/>
+    <ImageBrush x:Key="TrashIcon" ImageSource="/Resources/Images/trash-icon-white.png"/>
     <ImageBrush x:Key="SettingsIcon" ImageSource="/Resources/Images/settings-icon-white.png"/>
 
     <!-- Grid Splitter -->
@@ -186,6 +187,12 @@
     <!-- Settings Button -->
     <Style x:Key="SettingsButton" TargetType="Button">
         <Setter Property="Background" Value="{StaticResource SettingsIcon}"/>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+    </Style>
+
+    <!-- Trash Button -->
+    <Style x:Key="TrashButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource TrashIcon}"/>
         <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
 

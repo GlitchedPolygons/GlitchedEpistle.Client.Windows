@@ -36,6 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Commands
         public ICommand LoadedCommand { get; }
         public ICommand ClosedCommand { get; }
+        public ICommand DeleteButtonCommand { get; }
         public ICommand CancelButtonCommand { get; }
         public ICommand RevertButtonCommand { get; }
         #endregion
@@ -55,6 +56,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
+            DeleteButtonCommand = new DelegateCommand(OnClickedDelete);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
         }
@@ -93,6 +95,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             Username = DEFAULT_USERNAME;
             UpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
+        }
+
+        private void OnClickedDelete(object commandParam)
+        {
+
         }
     }
 }
