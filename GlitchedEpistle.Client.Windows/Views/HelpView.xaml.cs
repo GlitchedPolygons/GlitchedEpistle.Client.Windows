@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Interaction logic for HelpView.xaml
     /// </summary>
-    public partial class Login : UserControl
+    public partial class HelpView : Window
     {
-        public Login()
+        public HelpView()
         {
             InitializeComponent();
         }

@@ -7,12 +7,12 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GlitchedEpistle.Client.Windows")]
+[assembly: AssemblyTitle("Glitched Epistle")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Glitched Polygons")]
 [assembly: AssemblyProduct("GlitchedEpistle.Client.Windows")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright © 2019 - Glitched Polygons")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
