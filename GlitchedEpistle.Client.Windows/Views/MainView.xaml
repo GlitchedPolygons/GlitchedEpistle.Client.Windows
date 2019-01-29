@@ -10,11 +10,11 @@
         Width="{Binding Path=MainWindowWidth, Mode=TwoWay}" 
         MinWidth="800" 
         Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
-        MinHeight="450" 
+        MinHeight="480" 
         WindowStartupLocation="CenterScreen"
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"
-        Icon="../Images/epistle-icon.png">
+        Icon="/Resources/Images/epistle-icon.png">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -26,36 +26,39 @@
         <converters:GridLengthConverter x:Key="GridLengthConverter" />
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="{StaticResource ChatroomBackgroundBrush}">
+
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
             <ColumnDefinition Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}" 
                               MinWidth="{Binding Path=SidebarMinWidth}" 
-                              MaxWidth="800"
+                              MaxWidth="{Binding Path=SidebarMaxWidth}"
                               Name="LeftColumn"/>
             <!-- Right Column -->
             <ColumnDefinition Width="2*" 
                               Name="RightColumn"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Background Image -->
-        <Grid.Background>
-            <ImageBrush ImageSource="../Images/glitched-polygons-blue.png" 
-                        TileMode="Tile" 
-                        Stretch="UniformToFill"/>
-        </Grid.Background>
-
         <!-- Left Column -->
-        <StackPanel Grid.Column="0" Grid.Row="0" Background="Black">
+        <StackPanel Grid.Row="0"  
+                    Grid.Column="0" 
+                    IsEnabled="{Binding UIEnabled}"
+                    Background="{StaticResource WindowBackgroundBrush}">
 
             <!-- Profile -->
             <StackPanel Name="ProfileStackPanel" 
                         Height="175">
 
-                <Label Content="{Binding UsernameLabel}" 
-                       Foreground="AliceBlue"
+                <Label Content="{Binding Username}" 
                        HorizontalAlignment="Center" 
-                       FontSize="18"/>
+                       FontSize="18" 
+                       Padding="0,5,0,0"/>
+
+                <Label Content="{Binding UserId}"
+                       HorizontalAlignment="Center"
+                       FontSize="11"
+                       Padding="0,0,0,5" 
+                       Foreground="Gray" FontStyle="Italic"/>
 
                 <ProgressBar Height="4" 
                              Name="SubscriptionProgressBar"
@@ -69,21 +72,21 @@
 
                 <WrapPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
 
-                    <Button Content="Create Convo" 
+                    <Button Content="Create Convo"
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."
                             Command="{Binding CreateConvoButtonCommand}"/>
-
+                    <Separator/>
                     <Button Content="Change Password" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
                             Command="{Binding ChangePasswordButtonCommand}"/>
-
+                    <Separator/>
                     <Button Content="Export User" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
                             Command="{Binding ExportUserButtonCommand}"/>
-
+                    <Separator/>
                     <Button Content="Logout" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to log out of your Glitched Epistle account."
@@ -93,35 +96,70 @@
             </StackPanel>
 
             <!-- Convos list -->
-            <ScrollViewer Name="ConvosScrollViewer" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer Name="ConvosScrollViewer" 
+                          VerticalScrollBarVisibility="Auto">
+
                 <StackPanel Name="ConvosStackPanel">
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
                     <Button Content="TEST"></Button>
+                    <Separator/>
+                    <Button Content="TEST"></Button>
+                    <Separator/>
+                    <Button Content="TEST"></Button>
+                    <Separator/>
+                    <Button Content="TEST"></Button>
+                    <Separator/>
                 </StackPanel>
             </ScrollViewer>
 
@@ -133,50 +171,56 @@
                       HorizontalAlignment="Left" 
                       VerticalAlignment="Stretch"
                       Width="4"
-                      Cursor="SizeWE"
-                      Background="Gray"/>
+                      Cursor="SizeWE"/>
 
         <!-- Convos list collapse button -->
         <Button Grid.Column="1" Grid.Row="0"
-                HorizontalAlignment="Left" 
-                Background="Gray"
+                Style="{StaticResource CollapseButton}"
+                HorizontalAlignment="Left"
                 Content="&lt;" 
-                Width="14" 
+                Width="15" 
                 Height="50"
                 Name="CollapseButton"
                 Click="CollapseButton_OnClick"/>
 
-        <!-- Settings Button -->
         <Canvas Grid.Column="1" Grid.Row="0">
+            <!-- Help Button -->
             <Button Width="25"
                     Height="25" 
                     Canvas.Top="5" 
                     Canvas.Right="5" 
-                    Command="{Binding SettingsButtonCommand}"
-                    ToolTip="Open up the settings window."
-                    BorderBrush="{x:Null}">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/settings-icon-white.png"/>
-                </Button.Background>
+                    Style="{StaticResource HelpButton}"
+                    Command="{Binding HelpButtonCommand}"
+                    ToolTip="Open up the tutorial window.">
             </Button>
 
+            <!-- Settings Button -->
             <Button Width="25"
                     Height="25" 
                     Canvas.Top="5" 
                     Canvas.Right="35" 
-                    Command="{Binding ResetWindowButtonCommand}"
-                    ToolTip="Reset the main window's size and layout."
-                    BorderBrush="{x:Null}">
-                <Button.Background>
-                    <ImageBrush ImageSource="../Images/reset-icon-white.png"/>
-                </Button.Background>
+                    Style="{StaticResource SettingsButton}"
+                    Command="{Binding SettingsButtonCommand}"
+                    ToolTip="Open up the settings window.">
             </Button>
+
+            <!-- Reset Window Button -->
+            <Button Width="25"
+                    Height="25" 
+                    Canvas.Top="5" 
+                    Canvas.Right="65" 
+                    Command="{Binding ResetWindowButtonCommand}"
+                    Style="{StaticResource ResetMainWindowButton}"
+                    ToolTip="Reset the main window's size and layout." Click="ResetWindowButton_Click"/>
+
         </Canvas>
 
         <!-- Right Column -->
-        <StackPanel Grid.Column="1" Grid.Row="0">
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="15,35,15,15">
 
-            <!-- Active or selected convo -->
+            <ContentControl Content="{Binding MainControl}" 
+                            HorizontalAlignment="Center"
+                            Margin="0"/>
 
         </StackPanel>
     </Grid>

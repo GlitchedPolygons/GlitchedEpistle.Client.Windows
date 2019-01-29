@@ -29,7 +29,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35;
+            ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35.0d;
         }
 
         /// <summary>
@@ -109,5 +109,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
                 progressBar.Foreground = PROGRESS_BAR_COLOR;
             }
         }
+
+        private void ResetWindowButton_Click(object sender, RoutedEventArgs e) => CollapseButton.Content = "<";
     }
 }

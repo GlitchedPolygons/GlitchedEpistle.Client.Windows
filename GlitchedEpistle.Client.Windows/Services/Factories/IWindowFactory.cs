@@ -14,6 +14,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
         /// <typeparam name="T">The type of <see cref="Window"/> you want to get.</typeparam>
         /// <param name="ensureSingleWindow">If set to <see langword="true"/>, only one active <see cref="Window"/> of the provided type <c>T</c> can exist at one time.</param>
         /// <returns>The retrieved <see cref="Window"/> instance, ready to be shown (via <see cref="Window.Show"/>).</returns>
-        T GetWindow<T>(bool ensureSingleWindow) where T : Window;
+        T Create<T>(bool ensureSingleWindow) where T : Window;
     }
 }

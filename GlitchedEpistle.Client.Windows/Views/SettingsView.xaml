@@ -6,12 +6,13 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
-        Icon="../Images/settings-icon-white.png"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"  
         WindowStartupLocation="CenterScreen"
-        Width="500" 
+        Width="290" 
         MinWidth="290" 
-        Height="360" 
+        Height="200" 
         MinHeight="200">
 
     <i:Interaction.Triggers>
@@ -24,21 +25,18 @@
     </i:Interaction.Triggers>
 
     <Canvas>
-        <Canvas.Background>
-            <ImageBrush ImageSource="../Images/glitched-polygons-blue.png" Stretch="UniformToFill" TileMode="Tile"/>
-        </Canvas.Background>
-
         <StackPanel>
             <Label Content="Username" 
-                   Foreground="AliceBlue" 
                    Padding="0 0 0 5"
-                   Margin="10 10 0 0"/>
+                   Margin="10 10 0 0"
+                   ToolTip="Your display name. Note that by changing this, the messages you sent using the previous username won't update their sender label."/>
 
             <TextBox HorizontalAlignment="Left" 
                      VerticalAlignment="Top" 
                      Width="250"
                      Height="23" 
                      Name="UsernameTextBox"
+                     Style="{StaticResource TextBox}"
                      Text="{Binding Username}" 
                      TextWrapping="Wrap" 
                      MouseDoubleClick="UsernameTextBox_SelectText"
@@ -48,9 +46,9 @@
 
             <Label Content="Update Frequency (500 ms)"
                    Name="UpdateFrequencyLabel"
-                   Foreground="AliceBlue" 
                    Padding="0 0 0 5"
-                   Margin="10 10 0 0"/>
+                   Margin="10 10 0 0"
+                   ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?"/>
 
             <Slider Name="UpdateFrequencySlider" 
                     Margin="10 0 10 0" 

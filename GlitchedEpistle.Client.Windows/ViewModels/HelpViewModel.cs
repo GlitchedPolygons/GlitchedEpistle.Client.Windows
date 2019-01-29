@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Cryptography.Asymmetric
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
-    public interface ISymmetricCryptography
+    public class HelpViewModel : ViewModel
     {
-
     }
 }

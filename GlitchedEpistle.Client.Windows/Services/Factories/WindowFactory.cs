@@ -11,7 +11,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
         private readonly Dictionary<Type, Window> windows = new Dictionary<Type, Window>(4);
         
         /// <inheritdoc/>
-        public T GetWindow<T>(bool ensureSingleWindow) where T : Window
+        public T Create<T>(bool ensureSingleWindow) where T : Window
         {
             var app = Application.Current as App;
             if (app is null) return null;
@@ -24,7 +24,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
             var type = typeof(T);
             if (type == typeof(MainView))
             {
-                throw new ArgumentException($"{nameof(App)}::{nameof(GetWindow)}: The provided {nameof(Window)} type parameter is of type {nameof(MainView)}, which is not allowed (since it's the main window, only the creating class instance should have control over it).", nameof(T));
+                throw new ArgumentException($"{nameof(App)}::{nameof(Create)}: The provided {nameof(Window)} type parameter is of type {nameof(MainView)}, which is not allowed (since it's the main window, only the creating class instance should have control over it).", nameof(T));
             }
 
             if (!windows.TryGetValue(type, out var window) || window == null)
