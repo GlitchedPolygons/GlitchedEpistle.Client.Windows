@@ -47,6 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 
         public bool Load()
         {
+            if (!File.Exists(FilePath)) return false;
             try
             {
                 settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.VERSION } };

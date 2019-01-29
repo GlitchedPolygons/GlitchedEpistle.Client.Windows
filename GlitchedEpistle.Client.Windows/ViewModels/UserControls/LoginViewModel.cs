@@ -97,11 +97,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 ErrorMessageTimer.Stop();
                 ErrorMessageTimer.Start();
-                ErrorMessage = "Error! Invalid user id or password.";
+                ErrorMessage = "Error! Invalid user id, password or 2FA."; // TODO: display lockout message (when login failed >5 times).
             }
 
             pendingAttempt = false;
-            password = null;
         }
 
         private void OnClickedQuit(object commandParam)

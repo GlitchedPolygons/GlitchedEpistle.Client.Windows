@@ -6,32 +6,32 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
-    <UserControl.InputBindings>
-        <KeyBinding Key="Enter" 
-                    Command="{Binding VerifyCommand}"/>
-    </UserControl.InputBindings>
-
     <StackPanel HorizontalAlignment="Left">
 
-        <TextBlock Text="Please set up your 2FA authenticator app (Authy is recommended) using the following TOTP secret:" 
+        <TextBlock Text="Please set up your 2FA authenticator app." 
                    TextWrapping="Wrap" 
-                   TextAlignment="Left"
+                   TextAlignment="Center"
                    MaxWidth="250" 
                    FontWeight="Bold"  
                    FontSize="16"
                    Style="{StaticResource TextBlock}"/>
 
+        <Label Content="(Authy is recommended)" 
+               HorizontalAlignment="Center"/>
+
         <TextBlock Text="{Binding ErrorMessage}" 
                    TextWrapping="Wrap" 
                    MaxWidth="250" 
-                   Margin="5,5,0,0"
-                   HorizontalAlignment="Left" 
+                   Margin="5"
+                   HorizontalAlignment="Center" 
                    Foreground="Red" 
-                   FontSize="14"/>
+                   FontSize="13"/>
 
-        <Image Width="120" 
-               Height="120" 
-               Margin="10"
+        <Image MinWidth="150"
+               MinHeight="150"
+               MaxWidth="175" 
+               MaxHeight="175"
+               Margin="0"
                HorizontalAlignment="Center" 
                Source="{Binding QR}"/>
 
