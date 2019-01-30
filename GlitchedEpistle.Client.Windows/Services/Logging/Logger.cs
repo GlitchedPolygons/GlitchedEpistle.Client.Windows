@@ -1,8 +1,14 @@
 ﻿using System;
 using System.IO;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
 {
+    /// <summary>
+    /// Logger <see langword="class"/> for logging messages, warnings and errors to the log files located inside the application's user directory.
+    /// Implements the <see cref="GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger" /> interface.
+    /// </summary>
+    /// <seealso cref="GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger" />
     public class Logger : ILogger
     {
         /// <summary>
