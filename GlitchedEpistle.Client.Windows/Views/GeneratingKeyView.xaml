@@ -29,6 +29,11 @@
                    FontSize="28"
                    Foreground="AliceBlue"
                    Content="Please wait, and don't terminate Epistle!"/>
+            <Label HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"
+                   FontSize="14"
+                   Foreground="AliceBlue"
+                   Content="Depending on your hardware, this might take up to a few minutes, so just relax!"/>
         </StackPanel>
     </Grid>
 </Window>
