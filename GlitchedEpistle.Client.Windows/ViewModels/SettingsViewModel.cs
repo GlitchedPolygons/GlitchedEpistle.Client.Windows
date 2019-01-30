@@ -1,11 +1,15 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Globalization;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -30,12 +34,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         /// Occurs when the <see cref="SettingsView"/> is requested to be closed
         /// (raise this <see langword="event"/> in this <see langword="class"/> here to request the related <see cref="Window"/>'s closure).
         /// </summary>
-        public event EventHandler<EventArgs> RequestedClose; 
+        public event EventHandler<EventArgs> RequestedClose;
         #endregion
 
         #region Commands
         public ICommand LoadedCommand { get; }
         public ICommand ClosedCommand { get; }
+        public ICommand DeleteButtonCommand { get; }
         public ICommand CancelButtonCommand { get; }
         public ICommand RevertButtonCommand { get; }
         #endregion
@@ -55,6 +60,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
+            DeleteButtonCommand = new DelegateCommand(OnClickedDelete);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
         }
@@ -93,6 +99,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             Username = DEFAULT_USERNAME;
             UpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
+        }
+
+        private void OnClickedDelete(object commandParam)
+        {
+            var dialog = new ConfirmResetView();
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult is true)
+            {
+                // Handle this event inside the MainViewModel to prevent
+                // user settings being saved out on application shutdown.
+                eventAggregator.GetEvent<ResetConfirmedEvent>().Publish();
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
+
 using Microsoft.Win32;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels

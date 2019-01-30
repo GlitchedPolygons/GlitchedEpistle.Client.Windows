@@ -3,8 +3,9 @@ using System.IO;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 {
