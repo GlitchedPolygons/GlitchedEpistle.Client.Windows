@@ -3,25 +3,26 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Globalization;
 using System.Windows.Media.Imaging;
+using System.Globalization;
+
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 
 using ZXing;
 using ZXing.Common;
-using Prism.Events;
 using ZXing.Rendering;
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -95,6 +96,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private SettingsView settingsView;
         private UserExportView userExportView;
 
+        private bool reset = false;
+
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user)
         {
             this.user = user;
@@ -124,6 +127,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // After a successful user creation, show the login screen.
             eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(OnUserCreationVerified);
+
+            // If the user agreed to delete all of his data on the local machine, respect his will
+            // and get rid of everything (even preventing new settings to be written out on app shutdown too).
+            eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(OnConfirmedTotalReset);
 
             // Load up the settings on startup.
             if (settings.Load())
@@ -175,6 +182,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             userExportView?.Close();
             settingsView?.Close();
             helpView?.Close();
+
+            // Don't save out anything if the app's been reset.
+            if (reset)
+            {
+                var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
+                if (dir.Exists)
+                {
+                    dir.DeleteRecursively();
+                }
+                Application.Current.Shutdown();
+                return;
+            }
 
             // Save the window's state before termination.
             settings.Load();
@@ -290,6 +309,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             MainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
             MainWindowHeight = MAIN_WINDOW_MIN_HEIGHT;
             SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
+        }
+
+        private void OnConfirmedTotalReset()
+        {
+            reset = true;
+            Application.Current.Shutdown();
         }
     }
 }

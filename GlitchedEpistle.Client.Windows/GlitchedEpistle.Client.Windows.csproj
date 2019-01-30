@@ -456,8 +456,8 @@
     <Compile Include="Constants\Paths.cs" />
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
-    <Compile Include="Extensions\RSAParametersExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
+    <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationVerifiedEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationSucceededEvent.cs" />
@@ -466,9 +466,7 @@
     <Compile Include="Services\Factories\IWindowFactory.cs" />
     <Compile Include="Services\Factories\ViewModelFactory.cs" />
     <Compile Include="Services\Factories\WindowFactory.cs" />
-    <Compile Include="Services\Logging\ILogger.cs" />
     <Compile Include="Services\Logging\Logger.cs" />
-    <Compile Include="Services\Settings\ISettings.cs" />
     <Compile Include="Services\Settings\SettingsJson.cs" />
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
@@ -479,6 +477,9 @@
     <Compile Include="ViewModels\UserExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\ConfirmResetView.xaml.cs">
+      <DependentUpon>ConfirmResetView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GeneratingKeyView.xaml.cs">
       <DependentUpon>GeneratingKeyView.xaml</DependentUpon>
     </Compile>
@@ -508,6 +509,10 @@
       <DependentUpon>UserExportView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Themes\DarkTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmResetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
