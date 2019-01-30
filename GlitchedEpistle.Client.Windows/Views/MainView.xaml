@@ -7,13 +7,13 @@
         xmlns:converters="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Converters"
         mc:Ignorable="d"
         Title="Glitched Epistle" 
-        Width="{Binding Path=MainWindowWidth, Mode=TwoWay}" 
         MinWidth="800" 
-        Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
+        Width="{Binding Path=MainWindowWidth, Mode=TwoWay}" 
         MinHeight="480" 
-        WindowStartupLocation="CenterScreen"
+        Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"
+        WindowStartupLocation="CenterScreen"
         Icon="/Resources/Images/epistle-icon.png">
 
     <i:Interaction.Triggers>
