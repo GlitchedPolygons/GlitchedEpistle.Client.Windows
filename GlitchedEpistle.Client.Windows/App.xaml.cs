@@ -1,21 +1,30 @@
-﻿using System;
+﻿// System namespaces
+using System;
 using System.IO;
 using System.Windows;
 using System.Threading;
 using System.Reflection;
 
+// Shared code namespaces
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
+
+// Glitched Polygons NuGet packages
 using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.CompressionUtility;
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
+
+// Windows client namespaces
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 
+// Third party namespaces
 using Unity;
 using Unity.Lifetime;
 using Prism.Events;

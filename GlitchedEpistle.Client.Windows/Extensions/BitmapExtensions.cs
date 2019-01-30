@@ -4,13 +4,21 @@ using System.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using System.Windows.Media.Imaging;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
 {
+    /// <summary>
+    /// Class that holds extension methods for <see cref="Bitmap"/>s.
+    /// </summary>
     public static class BitmapExtensions
     {
+        /// <summary>
+        /// Converts a <see cref="Bitmap"/> to <see cref="BitmapSource"/>.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="Bitmap"/> to convert to <see cref="BitmapSource"/>.</param>
+        /// <returns>Converted <see cref="BitmapSource"/>.</returns>
         public static BitmapSource ToBitmapSource(this Bitmap bitmap)
         {
             if (Application.Current.Dispatcher == null)

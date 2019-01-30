@@ -58,7 +58,7 @@
     <!-- Separator lines -->
     <Style TargetType="Separator">
         <Setter Property="Margin" Value="0.5"/>
-        <Setter Property="Background" Value="Black"/>
+        <Setter Property="Background" Value="AliceBlue"/>
     </Style>
 
     <!-- Default Button -->

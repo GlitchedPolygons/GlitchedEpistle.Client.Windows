@@ -1,0 +1,59 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmResetView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        mc:Ignorable="d"
+        Background="{StaticResource WindowBackgroundBrush}"
+        ResizeMode="NoResize"
+        Title="Confirm your reset" 
+        WindowStartupLocation="CenterScreen"
+        Height="420" 
+        Width="600">
+    <StackPanel Margin="15">
+        <TextBlock Style="{StaticResource TextBlock}"  
+                   TextWrapping="Wrap"  
+                   TextAlignment="Center"
+                   Text="The button you just clicked is for erasing all of your application's user data on this machine irreversibly." 
+                   FontWeight="Bold"/>
+        <Separator Width="550" 
+                   Height="25"  
+                   Margin="0"/>
+        <TextBlock Style="{StaticResource TextBlock}" 
+                   TextWrapping="Wrap" 
+                   Margin="0,5,0,0"
+                   Text="Are you sure that you want to do this? Please make sure to export a backup of your account first, just in case!"/>
+        <TextBlock Style="{StaticResource TextBlock}" 
+                   TextWrapping="Wrap" 
+                   Margin="0,5,0,0"
+                   Text="Unless you have a backup of your user account that you can import during the registration process, your data (and any active subscription) is lost!"/>
+        <TextBlock Style="{StaticResource TextBlock}"  
+                   TextWrapping="Wrap" 
+                   Margin="0,5,0,0"
+                   Text="Please note that after confirming the deletion, Epistle will be terminated automatically."/>
+        <TextBlock Style="{StaticResource TextBlock}"  
+                   TextWrapping="Wrap" 
+                   Margin="0,5,0,0"
+                   Text="If you restart the program afterwards, you will be prompted to create a new user account."/>
+        <StackPanel Width="300" 
+                    Margin="0,50,0,0">
+            <Label Content="Please confirm the DELETION of your user data."/>
+            <Label Content="Type DELETE! into the text box below to proceed..."/>
+            <TextBox Style="{StaticResource TextBox}" 
+                     TextChanged="TextBox_TextChanged"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Margin="0,10,0,0" 
+                        Click="CancelButton_Click">
+                    Cancel
+                </Button>
+                <Button Margin="10,10,0,0" 
+                        IsEnabled="False" 
+                        Name="ConfirmButton" 
+                        Click="ConfirmButton_Click">
+                    Confirm deletion &amp; quit
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>
