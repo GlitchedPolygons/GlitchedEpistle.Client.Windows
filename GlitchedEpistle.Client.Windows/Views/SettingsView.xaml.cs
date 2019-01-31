@@ -58,5 +58,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
                 UpdateFrequencyLabel.Content = $"Update Frequency ({slider.Value} ms)";
             }
         }
+
+        private void CouponTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                RedeemCouponButton.IsEnabled = !string.IsNullOrEmpty(textBox.Text);
+            }
+        }
     }
 }

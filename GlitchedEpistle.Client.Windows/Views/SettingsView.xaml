@@ -10,10 +10,9 @@
         Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"  
         WindowStartupLocation="CenterScreen"
-        Width="290" 
-        MinWidth="290" 
-        Height="200" 
-        MinHeight="200">
+        ResizeMode="NoResize"
+        Width="275" 
+        Height="243">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -24,11 +23,10 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Canvas>
+    <Canvas Margin="10">
         <StackPanel>
             <Label Content="Username" 
                    Padding="0 0 0 5"
-                   Margin="10 10 0 0"
                    ToolTip="Your display name. Note that by changing this, the messages you sent using the previous username won't update their sender label."/>
 
             <TextBox HorizontalAlignment="Left" 
@@ -41,17 +39,15 @@
                      TextWrapping="Wrap" 
                      MouseDoubleClick="UsernameTextBox_SelectText"
                      GotKeyboardFocus="UsernameTextBox_SelectText"
-                     PreviewMouseLeftButtonDown="UsernameTextBox_OnMouseDown"
-                     Margin="10 0 10 0"/>
+                     PreviewMouseLeftButtonDown="UsernameTextBox_OnMouseDown"/>
 
             <Label Content="Update Frequency (500 ms)"
                    Name="UpdateFrequencyLabel"
                    Padding="0 0 0 5"
-                   Margin="10 10 0 0"
+                   Margin="0,10,0,0"
                    ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?"/>
 
             <Slider Name="UpdateFrequencySlider" 
-                    Margin="10 0 10 0" 
                     Minimum="200" 
                     Maximum="5000"
                     Value="{Binding UpdateFrequency}"
@@ -59,11 +55,37 @@
                     SmallChange="20"
                     TickFrequency="20" 
                     IsSnapToTickEnabled="True" />
+
+
+            <Label Content="Extend your Glitched Epistle membership now!"
+                   Margin="0,10,0,0"
+                   Padding="0,0,0,5"
+                   ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?"/>
+
+            <StackPanel Orientation="Horizontal">
+                <TextBox Name="CouponTextBox" 
+                         Width="192"
+                         FontSize="10"
+                         MaxLength="42"
+                         TextWrapping="Wrap"
+                         TextAlignment="Left"
+                         Text="{Binding CouponCode}"
+                         Style="{StaticResource TextBox}" 
+                         VerticalContentAlignment="Center"
+                         TextChanged="CouponTextBox_OnTextChanged"
+                         ToolTip="Enter your Epistle coupon here to extend your subscription."/>
+                <Button Name="RedeemCouponButton" 
+                        Margin="0"
+                        HorizontalAlignment="Right"
+                        Command="{Binding RedeemButtonCommand}">
+                    Redeem
+                </Button>
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" 
-                    Canvas.Bottom="10"
-                    Canvas.Right="10">
+                    Canvas.Bottom="0"
+                    Canvas.Right="0">
 
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Bottom"
@@ -84,8 +106,8 @@
 
         <Button Width="25"
                 Height="25" 
-                Canvas.Left="10" 
-                Canvas.Bottom="10" 
+                Canvas.Left="0" 
+                Canvas.Bottom="0" 
                 Style="{StaticResource TrashButton}"
                 Command="{Binding DeleteButtonCommand}"
                 ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this.">

@@ -40,13 +40,13 @@
 
     <!-- TextBox (input field) -->
     <Style x:Key="TextBox" TargetType="TextBox">
-        <Setter Property="Background" Value="#404040"></Setter>
+        <Setter Property="Background" Value="#404040"/>
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 
     <!-- PasswordBox (input field) -->
     <Style x:Key="PasswordBox" TargetType="PasswordBox">
-        <Setter Property="Background" Value="#404040"></Setter>
+        <Setter Property="Background" Value="#404040"/>
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 
@@ -207,14 +207,14 @@
 
     <!-- Trash Button -->
     <Style x:Key="TrashButton" TargetType="Button">
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource TrashIcon}"/>
-        <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
 
     <!-- Help Button -->
     <Style x:Key="HelpButton" TargetType="Button">
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource HelpIcon}"/>
-        <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
 
 </ResourceDictionary>
