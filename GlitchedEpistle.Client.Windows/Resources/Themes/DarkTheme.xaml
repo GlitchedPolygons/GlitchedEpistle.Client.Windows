@@ -180,14 +180,29 @@
 
     <!-- Reset Button -->
     <Style x:Key="ResetMainWindowButton" TargetType="Button">
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource ResetIcon}"/>
-        <Setter Property="BorderThickness" Value="0"></Setter>
     </Style>
 
     <!-- Settings Button -->
     <Style x:Key="SettingsButton" TargetType="Button">
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource SettingsIcon}"/>
-        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.3"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Opacity" Value="1.0"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Trash Button -->
