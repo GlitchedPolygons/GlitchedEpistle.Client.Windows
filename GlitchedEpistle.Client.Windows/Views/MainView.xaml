@@ -199,6 +199,7 @@
                     Height="25" 
                     Canvas.Top="5" 
                     Canvas.Right="35" 
+                    IsEnabled="{Binding UIEnabled}"
                     Style="{StaticResource SettingsButton}"
                     Command="{Binding SettingsButtonCommand}"
                     ToolTip="Open up the settings window.">
