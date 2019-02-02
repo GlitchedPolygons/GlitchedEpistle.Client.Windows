@@ -223,27 +223,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 authRefreshTimer.Start();
             }
         }
-
-        private async void RefreshAuthTokenTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            // If there is no current token,
-            // instantly interrupt everything and prompt the user to log in.
-            if (user.Token is null || string.IsNullOrEmpty(user.Token.Item2))
-            {
-                Logout();
-                return;
-            }
-
-            var newToken = await userService.RefreshAuthToken(user.Id, user.Token.Item2);
-            if (string.IsNullOrEmpty(newToken))
-            {
-                Logout();
-                return;
-            }
-
-            user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, newToken);
-        }
-
+        
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
         {
             settings.Load();
@@ -343,6 +323,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             reset = true;
             Application.Current.Shutdown();
         }
+
+        #region Timer elapsed events
+
+        private async void RefreshAuthTokenTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // If there is no current token,
+            // instantly interrupt everything and prompt the user to log in.
+            if (user.Token is null || string.IsNullOrEmpty(user.Token.Item2))
+            {
+                Logout();
+                return;
+            }
+
+            var newToken = await userService.RefreshAuthToken(user.Id, user.Token.Item2);
+            if (string.IsNullOrEmpty(newToken))
+            {
+                Logout();
+                return;
+            }
+
+            user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, newToken);
+        }
+
+        #endregion
 
         private void Logout()
         {
