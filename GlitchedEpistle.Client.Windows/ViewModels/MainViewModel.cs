@@ -29,7 +29,6 @@ using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
-    // TODO: Update the progress bar's tooltip dynamically (showing the user how much time is remaining until account expiration).
     public class MainViewModel : ViewModel
     {
         #region Constants
@@ -232,12 +231,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private async void UpdateUserExp()
         {
+            DateTime utcNow = DateTime.UtcNow;
             DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
             if (!exp.HasValue)
             {
                 return;
             }
             user.ExpirationUTC = exp.Value;
+            bool expired = utcNow > user.ExpirationUTC;
+            ProgressBarValue = expired ? 0 : (user.ExpirationUTC - utcNow).TotalHours * 100.0d / 720.0d;
+            ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
         }
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
