@@ -10,9 +10,8 @@
         Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"  
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize"
-        Width="275" 
-        Height="243">
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -23,8 +22,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <Canvas Margin="10">
-        <StackPanel>
+    <StackPanel Margin="10">
             <Label Content="Username" 
                    Padding="0 0 0 5"
                    ToolTip="Your display name. Note that by changing this, the messages you sent using the previous username won't update their sender label."/>
@@ -81,36 +79,34 @@
                     Redeem
                 </Button>
             </StackPanel>
-        </StackPanel>
 
-        <StackPanel Orientation="Horizontal" 
-                    Canvas.Bottom="0"
-                    Canvas.Right="0">
+            <StackPanel Orientation="Horizontal" 
+                        HorizontalAlignment="Right" 
+                        Margin="0,10,0,0">
 
-            <Button HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Width="75"
-                    Content="Cancel"
-                    Command="{Binding CancelButtonCommand}"
-                    ToolTip="Closes the window without saving the changes."/>
+                <Button Width="25"
+                        Height="25" 
+                        Margin="0,0,65,0"
+                        Style="{StaticResource TrashButton}"
+                        Command="{Binding DeleteButtonCommand}"
+                        ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this.">
+                </Button>
 
-            <Button HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Width="75"
-                    Margin="10 0 0 0"
-                    Content="Revert"
-                    Command="{Binding RevertButtonCommand}"
-                    ToolTip="Resets all user settings back to their default values."/>
+                <Button HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Width="75"
+                        Content="Cancel"
+                        Command="{Binding CancelButtonCommand}"
+                        ToolTip="Closes the window without saving the changes."/>
 
-        </StackPanel>
+                <Button HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Width="75"
+                        Margin="10 0 0 0"
+                        Content="Revert"
+                        Command="{Binding RevertButtonCommand}"
+                        ToolTip="Resets all user settings back to their default values."/>
 
-        <Button Width="25"
-                Height="25" 
-                Canvas.Left="0" 
-                Canvas.Bottom="0" 
-                Style="{StaticResource TrashButton}"
-                Command="{Binding DeleteButtonCommand}"
-                ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this.">
-        </Button>
-    </Canvas>
+            </StackPanel>
+    </StackPanel>
 </Window>

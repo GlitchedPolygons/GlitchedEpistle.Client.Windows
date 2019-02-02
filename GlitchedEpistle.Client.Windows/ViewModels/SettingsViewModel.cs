@@ -132,6 +132,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 dialogViewModel.Title = "Success!";
                 dialogViewModel.Text = $"Your coupon \"{CouponCode}\" has been redeemed successfully; your Glitched Epistle membership has thus been extended. Thanks for choosing this service!";
+                eventAggregator.GetEvent<CouponRedeemedEvent>().Publish();
                 logger.LogMessage($"Successfully redeemed Glitched Epistle coupon {CouponCode}");
             }
             else
