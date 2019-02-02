@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -22,6 +23,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
+
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -34,6 +36,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
         public const double MAIN_WINDOW_MIN_HEIGHT = 480;
+
+        private readonly Timer authRefreshTimer = new Timer(TimeSpan.FromMinutes(15).TotalMilliseconds) { AutoReset = true };
 
         // Injections:
         private readonly User user;
@@ -162,6 +166,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ShowLoginControl();
             }
+
+            authRefreshTimer.Elapsed += RefreshAuthTokenTimer_Elapsed;
         }
 
         private void ShowLoginControl()
@@ -211,6 +217,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UIEnabled = true;
             settings.Load();
             Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
+
+            if (!authRefreshTimer.Enabled)
+            {
+                authRefreshTimer.Start();
+            }
+        }
+
+        private async void RefreshAuthTokenTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            // If there is no current token,
+            // instantly interrupt everything and prompt the user to log in.
+            if (user.Token is null || string.IsNullOrEmpty(user.Token.Item2))
+            {
+                Logout();
+                return;
+            }
+
+            var newToken = await userService.RefreshAuthToken(user.Id, user.Token.Item2);
+            if (string.IsNullOrEmpty(newToken))
+            {
+                Logout();
+                return;
+            }
+
+            user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, newToken);
         }
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
@@ -234,7 +265,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
         }
-        
+
         private void OnUserCreationVerified()
         {
             ShowLoginControl();
@@ -274,11 +305,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            user.Token = null;
-            user.PasswordSHA512 = null;
-
-            UIEnabled = false;
-            ShowLoginControl();
+            Logout();
         }
 
         private void OnClickedHelpIcon(object commandParam)
@@ -315,6 +342,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             reset = true;
             Application.Current.Shutdown();
+        }
+
+        private void Logout()
+        {
+            user.Token = null;
+            user.PasswordSHA512 = null;
+
+            UIEnabled = false;
+            ShowLoginControl();
+
+            authRefreshTimer?.Stop();
         }
     }
 }
