@@ -7,6 +7,7 @@ using System.Reflection;
 
 // Shared code namespaces
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
@@ -65,6 +66,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<IUserService, UserService>();
+            container.RegisterType<ICouponService, CouponService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricKeygen, RSA4096Keygen>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
