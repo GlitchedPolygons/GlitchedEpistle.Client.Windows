@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterScreen"
         Icon="/Resources/Images/help-icon-white.png"
+        MaxWidth="{Binding MaxWidth}"
         Title="{Binding Title}" 
         Background="{StaticResource WindowBackgroundBrush}">
 
@@ -15,13 +17,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
         <StackPanel>
             <TextBlock TextWrapping="Wrap" 
                        Text="{Binding Text}"
                        Style="{StaticResource TextBlock}"/>
+
             <Button Content="{Binding OkButtonText}" 
                     HorizontalAlignment="Right" 
-                    Margin="0,15,0,0"/>
+                    Margin="0,15,0,0" 
+                    Command="{Binding OkButtonCommand}"/>
         </StackPanel>
     </Grid>
 </Window>

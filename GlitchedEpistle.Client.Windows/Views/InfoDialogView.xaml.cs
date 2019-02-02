@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
@@ -11,6 +12,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public InfoDialogView()
         {
             InitializeComponent();
+            Loaded += InfoDialogView_Loaded;
+        }
+
+        private void InfoDialogView_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.MakeCloseable();
+            Loaded -= InfoDialogView_Loaded;
         }
     }
 }

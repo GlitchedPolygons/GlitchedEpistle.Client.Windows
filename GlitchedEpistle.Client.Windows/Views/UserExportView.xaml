@@ -13,9 +13,6 @@
         Height="250" MinHeight="250" MaxHeight="300"
         Width="455" MinWidth="455" MaxWidth="455">
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
-        </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
         </i:EventTrigger>

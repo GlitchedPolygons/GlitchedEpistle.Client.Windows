@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
@@ -19,6 +18,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= OnLoaded;
+
             // Immediately focus the username textbox
             // when the settings window is opened.
             UsernameTextBox?.Focus();
@@ -28,7 +29,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             // to close this view when requested to by the ViewModel.
             this.MakeCloseable();
 
-            Loaded -= OnLoaded;
+            RedeemCouponButton.IsEnabled = !string.IsNullOrEmpty(CouponTextBox.Text);
         }
 
         // Select the text inside the username's textbox on click.
