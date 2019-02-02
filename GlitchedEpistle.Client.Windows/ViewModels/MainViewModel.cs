@@ -211,7 +211,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings.Save();
         }
 
-        private void OnLoginSuccessful()
+        private async void OnLoginSuccessful()
         {
             MainControl = null;
             UIEnabled = true;
@@ -222,6 +222,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 authRefreshTimer.Start();
             }
+
+            user.ExpirationUTC = (await userService.GetUserExpirationUTC(user.Id)).Value;
         }
         
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
