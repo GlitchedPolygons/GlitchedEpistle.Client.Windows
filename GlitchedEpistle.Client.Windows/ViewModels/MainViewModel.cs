@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Globalization;
+using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -136,6 +137,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // and get rid of everything (even preventing new settings to be written out on app shutdown too).
             eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(OnConfirmedTotalReset);
 
+            // When the user redeemed a coupon, update the account's remaining time bar in main menu.
+            eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(UpdateUserExp);
+
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -211,7 +215,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings.Save();
         }
 
-        private async void OnLoginSuccessful()
+        private void OnLoginSuccessful()
         {
             MainControl = null;
             UIEnabled = true;
@@ -223,9 +227,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 authRefreshTimer.Start();
             }
 
-            user.ExpirationUTC = (await userService.GetUserExpirationUTC(user.Id)).Value;
+            UpdateUserExp();
         }
-        
+
+        private async void UpdateUserExp()
+        {
+            DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
+            if (!exp.HasValue)
+            {
+                return;
+            }
+            user.ExpirationUTC = exp.Value;
+        }
+
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
         {
             settings.Load();
