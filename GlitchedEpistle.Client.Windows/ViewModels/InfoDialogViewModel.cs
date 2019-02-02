@@ -23,6 +23,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string okButtonText = "Okay";
         public string OkButtonText { get => okButtonText; set => Set(ref okButtonText, value); }
+
+        private double maxWidth = 420;
+        public double MaxWidth { get => maxWidth; set => Set(ref maxWidth, value); }
         #endregion
 
         #region Commands

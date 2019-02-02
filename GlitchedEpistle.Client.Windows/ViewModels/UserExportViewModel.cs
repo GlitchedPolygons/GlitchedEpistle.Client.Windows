@@ -29,7 +29,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region Commands
-        public ICommand LoadedCommand { get; }
         public ICommand ClosedCommand { get; }
         public ICommand BrowseButtonCommand { get; }
         public ICommand CancelButtonCommand { get; }
@@ -84,11 +83,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             this.settings = settings;
 
-            LoadedCommand = new DelegateCommand(OnLoaded);
             ClosedCommand = new DelegateCommand(OnClosed);
             BrowseButtonCommand = new DelegateCommand(OnClickedBrowse);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             ExportButtonCommand = new DelegateCommand(OnClickedExport);
+
+            settings.Load();
+            UpdateExportLabel();
         }
 
         private void UpdateExportLabel()
@@ -102,12 +103,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 ExportLabel = $"Everything including your convos will be {verb}. Please note that this might take a while and end up using a lot of space!";
             else if (!exportSettings && exportConvos)
                 ExportLabel = $"Your user credentials and convos will be {verb} without the user settings.";
-        }
-
-        private void OnLoaded(object commandParam)
-        {
-            settings.Load();
-            UpdateExportLabel();
         }
 
         private void OnClosed(object commandParam)

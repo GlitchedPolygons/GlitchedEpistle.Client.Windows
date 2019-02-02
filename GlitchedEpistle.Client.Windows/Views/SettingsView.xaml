@@ -14,9 +14,6 @@
         ResizeMode="NoResize">
 
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding LoadedCommand}" />
-        </i:EventTrigger>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
         </i:EventTrigger>
@@ -67,15 +64,15 @@
                          MaxLength="42"
                          TextWrapping="Wrap"
                          TextAlignment="Left"
-                         Text="{Binding CouponCode}"
                          Style="{StaticResource TextBox}" 
                          VerticalContentAlignment="Center"
                          TextChanged="CouponTextBox_OnTextChanged"
                          ToolTip="Enter your Epistle coupon here to extend your subscription."/>
-                <Button Name="RedeemCouponButton" 
-                        Margin="0"
+                <Button Margin="0"
+                        Name="RedeemCouponButton" 
                         HorizontalAlignment="Right"
-                        Command="{Binding RedeemButtonCommand}">
+                        Command="{Binding RedeemButtonCommand}" 
+                        CommandParameter="{Binding Text, ElementName=CouponTextBox}">
                     Redeem
                 </Button>
             </StackPanel>
