@@ -77,6 +77,12 @@
                 </Button>
             </StackPanel>
 
+        <Button Content="Export User Account (Backup)" 
+                Padding="6 4 6 4"
+                Margin="0,10,0,0"
+                ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
+                Command="{Binding ExportUserButtonCommand}"/>
+
             <StackPanel Orientation="Horizontal" 
                         HorizontalAlignment="Right" 
                         Margin="0,10,0,0">
