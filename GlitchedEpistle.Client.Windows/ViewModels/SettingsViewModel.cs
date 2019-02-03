@@ -28,6 +28,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly ISettings settings;
         private readonly ICouponService couponService;
         private readonly IEventAggregator eventAggregator;
+        private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
         #endregion
 
@@ -49,6 +50,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand CancelButtonCommand { get; }
         public ICommand RevertButtonCommand { get; }
         public ICommand RedeemButtonCommand { get; }
+        public ICommand ExportUserButtonCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -59,13 +61,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public double UpdateFrequency { get => updateFrequency; set => Set(ref updateFrequency, value); }
         #endregion
 
-        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger)
+        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory)
         {
             this.user = user;
             this.logger = logger;
             this.settings = settings;
             this.couponService = couponService;
             this.eventAggregator = eventAggregator;
+            this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
             
             ClosedCommand = new DelegateCommand(OnClosed);
@@ -73,6 +76,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
             RedeemButtonCommand = new DelegateCommand(OnClickedRedeem);
+            ExportUserButtonCommand = new DelegateCommand(OnClickedExport);
 
             if (!settings.Load())
             {
@@ -95,7 +99,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
             }
         }
-
+        
         private void OnClickedCancel(object commandParam)
         {
             cancelled = true;
@@ -137,6 +141,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             var dialogView = new InfoDialogView { DataContext = dialogViewModel };
             dialogView.ShowDialog();
+        }
+
+        private void OnClickedExport(object commandParam)
+        {
+            var userExportView = windowFactory.Create<UserExportView>(true);
+            
+            if (userExportView.DataContext is null)
+            {
+                userExportView.DataContext = viewModelFactory.Create<UserExportViewModel>();
+            }
+
+            userExportView.Show();
+            userExportView.Activate();
         }
 
         private void OnClickedDelete(object commandParam)
