@@ -54,8 +54,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand ResetWindowButtonCommand { get; }
         public ICommand SettingsButtonCommand { get; }
         public ICommand CreateConvoButtonCommand { get; }
+        public ICommand JoinConvoButtonCommand { get; }
         public ICommand ChangePasswordButtonCommand { get; }
-        public ICommand ExportUserButtonCommand { get; }
         public ICommand LogoutButtonCommand { get; }
         #endregion
 
@@ -117,7 +117,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             HelpButtonCommand = new DelegateCommand(OnClickedHelpIcon);
             CreateConvoButtonCommand = new DelegateCommand(OnClickedCreateConvo);
             ChangePasswordButtonCommand = new DelegateCommand(OnClickedChangePassword);
-            ExportUserButtonCommand = new DelegateCommand(OnClickedExportUser);
+            JoinConvoButtonCommand = new DelegateCommand(OnClickedJoinConvo);
             LogoutButtonCommand = new DelegateCommand(OnClickedLogout);
 
             // Update the username label on the main window when that setting has changed.
@@ -280,21 +280,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         }
 
-        private void OnClickedExportUser(object commandParam)
+        private void OnClickedJoinConvo(object commandParam)
         {
-            userExportView = windowFactory.Create<UserExportView>(true);
-
-            // When opening views that only exist one at a time,
-            // it's important not to recreate the viewmodel every time,
-            // as that would override any changes made.
-            // Therefore, check if the view already has a data context that isn't null.
-            if (userExportView.DataContext is null)
-            {
-                userExportView.DataContext = viewModelFactory.Create<UserExportViewModel>();
-            }
-
-            userExportView.Show();
-            userExportView.Activate();
+            // TODO: implement join convo dialog
         }
 
         private void OnClickedLogout(object commandParam)
@@ -321,10 +309,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedSettingsIcon(object commandParam)
         {
             settingsView = windowFactory.Create<SettingsView>(true);
+
+            // When opening views that only exist one at a time,
+            // it's important not to recreate the viewmodel every time,
+            // as that would override any changes made.
+            // Therefore, check if the view already has a data context that isn't null.
             if (settingsView.DataContext is null)
             {
                 settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
             }
+
             settingsView.Show();
             settingsView.Activate();
         }

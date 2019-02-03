@@ -70,22 +70,24 @@
                              Background="#FFE5E5E5" 
                              Foreground="#FF08AFE2" />
 
-                <WrapPanel Orientation="Horizontal" Margin="10" HorizontalAlignment="Center">
+                <WrapPanel Margin="10"  
+                           Orientation="Horizontal" 
+                           HorizontalAlignment="Center">
 
                     <Button Content="Create Convo"
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."
                             Command="{Binding CreateConvoButtonCommand}"/>
                     <Separator/>
+                    <Button Content="Join Convo" 
+                            Padding="6 4 6 4"
+                            ToolTip="Click here to join an existing conversation."
+                            Command="{Binding JoinConvoButtonCommand}"/>
+                    <Separator/>
                     <Button Content="Change Password" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
                             Command="{Binding ChangePasswordButtonCommand}"/>
-                    <Separator/>
-                    <Button Content="Export User" 
-                            Padding="6 4 6 4"
-                            ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
-                            Command="{Binding ExportUserButtonCommand}"/>
                     <Separator/>
                     <Button Content="Logout" 
                             Padding="6 4 6 4"
