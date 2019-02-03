@@ -186,6 +186,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             MainControl = new UserCreationView { DataContext = viewModel };
         }
 
+        private void ShowExpiredControl()
+        {
+            // TODO: implement this
+        }
+
         private void OnClosed(object commandParam)
         {
             userExportView?.Close();
@@ -231,16 +236,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private async void UpdateUserExp()
         {
+            // Gather user expiration UTC from server.
             DateTime utcNow = DateTime.UtcNow;
             DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
+
             if (!exp.HasValue)
             {
                 return;
             }
+
+            // Update the UI accordingly (blue progress bar + tooltip).
             user.ExpirationUTC = exp.Value;
             bool expired = utcNow > user.ExpirationUTC;
             ProgressBarValue = expired ? 0 : (user.ExpirationUTC - utcNow).TotalHours * 100.0d / 720.0d;
             ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
+
+            // Schedule expiration dialog / extension prompt
+            if (expired)
+            {
+                ShowExpiredControl();
+            }
+            else
+            {
+                // TODO: schedule here!
+            }
         }
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
