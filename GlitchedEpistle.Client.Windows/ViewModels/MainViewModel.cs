@@ -96,11 +96,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
         #endregion
 
-        private HelpView helpView;
-        private SettingsView settingsView;
-        private UserExportView userExportView;
-
         private bool reset = false;
+        private Timer expirationTimer;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user)
         {
@@ -188,15 +185,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void ShowExpiredControl()
         {
-            // TODO: implement this
+            var viewModel = viewModelFactory.Create<ExpiredViewModel>();
+            MainControl = new ExpiredView { DataContext = viewModel };
+        }
+
+        private void ShowExpirationReminderControl()
+        {
+            var viewModel = viewModelFactory.Create<ExpirationReminderViewModel>();
+            MainControl = new ExpirationReminderView { DataContext = viewModel };
         }
 
         private void OnClosed(object commandParam)
         {
-            userExportView?.Close();
-            settingsView?.Close();
-            helpView?.Close();
-
             // Don't save out anything if the app's been reset.
             if (reset)
             {
@@ -217,6 +217,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
             settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
             settings.Save();
+
+            Application.Current.Shutdown();
         }
 
         private void OnLoginSuccessful()
@@ -258,7 +260,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
             else
             {
-                // TODO: schedule here!
+                TimeSpan remainingTime = user.ExpirationUTC - utcNow;
+
+                expirationTimer?.Stop();
+                expirationTimer = new Timer(remainingTime.TotalMilliseconds);
+                expirationTimer.Elapsed += (_, __) => ShowExpiredControl();
+
+                if (remainingTime < TimeSpan.FromDays(3))
+                {
+                    ShowExpirationReminderControl();
+                }
             }
         }
 
@@ -316,7 +327,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedHelpIcon(object commandParam)
         {
-            helpView = windowFactory.Create<HelpView>(true);
+            var helpView = windowFactory.Create<HelpView>(true);
             if (helpView.DataContext is null)
             {
                 helpView.DataContext = viewModelFactory.Create<HelpViewModel>();
@@ -327,7 +338,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedSettingsIcon(object commandParam)
         {
-            settingsView = windowFactory.Create<SettingsView>(true);
+            var settingsView = windowFactory.Create<SettingsView>(true);
 
             // When opening views that only exist one at a time,
             // it's important not to recreate the viewmodel every time,
