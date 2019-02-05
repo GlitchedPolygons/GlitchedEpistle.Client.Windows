@@ -473,6 +473,9 @@
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\CouponRedeemedSuccessfullyViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ExpiredViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ExpirationReminderViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationSuccessfulViewModel.cs" />
@@ -500,6 +503,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\CouponRedeemedSuccessfullyView.xaml.cs">
+      <DependentUpon>CouponRedeemedSuccessfullyView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ExpirationReminderView.xaml.cs">
+      <DependentUpon>ExpirationReminderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ExpiredView.xaml.cs">
+      <DependentUpon>ExpiredView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -540,6 +552,18 @@
     <Page Include="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\CouponRedeemedSuccessfullyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ExpirationReminderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ExpiredView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\LoginView.xaml">
       <SubType>Designer</SubType>

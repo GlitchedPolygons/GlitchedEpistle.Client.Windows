@@ -96,11 +96,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
         #endregion
 
-        private HelpView helpView;
-        private SettingsView settingsView;
-        private UserExportView userExportView;
-
         private bool reset = false;
+        private Timer expirationTimer;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user)
         {
@@ -137,7 +134,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(OnConfirmedTotalReset);
 
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
-            eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(UpdateUserExp);
+            eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
 
             // Load up the settings on startup.
             if (settings.Load())
@@ -186,12 +183,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             MainControl = new UserCreationView { DataContext = viewModel };
         }
 
+        private void ShowExpiredControl()
+        {
+            var viewModel = viewModelFactory.Create<ExpiredViewModel>();
+            MainControl = new ExpiredView { DataContext = viewModel };
+        }
+
+        private void ShowExpirationReminderControl()
+        {
+            var viewModel = viewModelFactory.Create<ExpirationReminderViewModel>();
+            MainControl = new ExpirationReminderView { DataContext = viewModel };
+        }
+
+        private void ShowCouponRedeemedSuccessfullyControl()
+        {
+            var viewModel = viewModelFactory.Create<CouponRedeemedSuccessfullyViewModel>();
+            MainControl = new CouponRedeemedSuccessfullyView { DataContext = viewModel };
+        }
+
         private void OnClosed(object commandParam)
         {
-            userExportView?.Close();
-            settingsView?.Close();
-            helpView?.Close();
-
             // Don't save out anything if the app's been reset.
             if (reset)
             {
@@ -212,6 +223,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
             settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
             settings.Save();
+
+            Application.Current.Shutdown();
         }
 
         private void OnLoginSuccessful()
@@ -229,18 +242,51 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UpdateUserExp();
         }
 
+        private void OnCouponRedeemedSuccessfully()
+        {
+            UpdateUserExp();
+            ShowCouponRedeemedSuccessfullyControl();
+        }
+
         private async void UpdateUserExp()
         {
+            // Gather user expiration UTC from server.
             DateTime utcNow = DateTime.UtcNow;
             DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
+
             if (!exp.HasValue)
             {
                 return;
             }
+
+            // Update the UI accordingly (blue progress bar + tooltip).
             user.ExpirationUTC = exp.Value;
             bool expired = utcNow > user.ExpirationUTC;
             ProgressBarValue = expired ? 0 : (user.ExpirationUTC - utcNow).TotalHours * 100.0d / 720.0d;
             ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
+
+            // Schedule expiration dialog / extension prompt
+            if (expired)
+            {
+                ShowExpiredControl();
+            }
+            else
+            {
+                TimeSpan remainingTime = user.ExpirationUTC - utcNow;
+
+                expirationTimer?.Stop();
+                expirationTimer = new Timer(remainingTime.TotalMilliseconds);
+                expirationTimer.Elapsed += (_, __) => ShowExpiredControl();
+
+                if (remainingTime < TimeSpan.FromDays(5))
+                {
+                    ShowExpirationReminderControl();
+                }
+            }
+
+            // When the user account is expired,
+            // the UI should be inactive (and inoperable).
+            UIEnabled = !expired;
         }
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
@@ -272,12 +318,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedCreateConvo(object commandParam)
         {
-
+            // TODO: implement create convo dialog
         }
 
         private void OnClickedChangePassword(object commandParam)
         {
-
+            // TODO: implement change pw dialog
         }
 
         private void OnClickedJoinConvo(object commandParam)
@@ -297,7 +343,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedHelpIcon(object commandParam)
         {
-            helpView = windowFactory.Create<HelpView>(true);
+            var helpView = windowFactory.Create<HelpView>(true);
             if (helpView.DataContext is null)
             {
                 helpView.DataContext = viewModelFactory.Create<HelpViewModel>();
@@ -308,7 +354,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedSettingsIcon(object commandParam)
         {
-            settingsView = windowFactory.Create<SettingsView>(true);
+            var settingsView = windowFactory.Create<SettingsView>(true);
 
             // When opening views that only exist one at a time,
             // it's important not to recreate the viewmodel every time,
