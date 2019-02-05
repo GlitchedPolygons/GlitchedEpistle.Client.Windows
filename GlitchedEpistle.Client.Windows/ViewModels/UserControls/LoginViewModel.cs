@@ -35,9 +35,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private string userId = string.Empty;
         public string UserId { get => userId; set => Set(ref userId, value); }
 
-        private string totp = string.Empty;
-        public string Totp { get => totp; set => Set(ref totp, value); }
-
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
         #endregion
@@ -77,17 +74,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private async void OnClickedLogin(object commandParam)
         {
+            string totp = commandParam as string;
+
             if (pendingAttempt
                 || string.IsNullOrEmpty(UserId)
                 || string.IsNullOrEmpty(password)
-                || string.IsNullOrEmpty(Totp))
+                || string.IsNullOrEmpty(totp))
             {
                 return;
             }
 
             pendingAttempt = true;
 
-            string jwt = await userService.Login(UserId, password.SHA512(), Totp);
+            string jwt = await userService.Login(UserId, password.SHA512(), totp);
             if (!string.IsNullOrEmpty(jwt))
             {
                 user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
