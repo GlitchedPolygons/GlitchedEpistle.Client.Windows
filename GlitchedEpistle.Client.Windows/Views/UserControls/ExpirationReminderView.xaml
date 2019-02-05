@@ -4,9 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             mc:Ignorable="d">
+    <StackPanel Width="420">
+        <Label Content="Hey, your account is about to expire!" 
+               FontWeight="Bold" 
+               FontSize="16"/>
+        <Label Content="Gosh darn, if only there was a way to extend it..."/>
+        <Separator Margin="10" Opacity="0.5"/>
+        <TextBlock Text="{Binding ReminderText}" 
+                   TextWrapping="Wrap" 
+                   Margin="5"
+                   Style="{StaticResource TextBlock}"/>
+        <Button Content="Extend Glitched Epistle account now!" 
+                Command="{Binding ExtendButtonCommand}"/>
+    </StackPanel>
 </UserControl>
