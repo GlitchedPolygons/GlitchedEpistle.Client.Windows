@@ -32,6 +32,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.viewModelFactory = viewModelFactory;
 
             ExtendButtonCommand = new DelegateCommand(OnClickedExtend);
+
+            ReminderText = "";
         }
 
         private void OnClickedExtend(object commandParam)
