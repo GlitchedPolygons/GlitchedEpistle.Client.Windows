@@ -60,7 +60,6 @@
                  Margin="5,0,0,0"
                  MinWidth="250"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                 Text="{Binding Totp}"
                  Style="{StaticResource TextBox}"
                  TextChanged="TotpTextBox_OnTextChanged"/>
 
@@ -76,10 +75,15 @@
                     Content="Login"
                     Name="LoginButton"
                     Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding Text, ElementName=TotpTextBox }"
                     ToolTip="Sends the login credentials to the Glitched Epistle server for authentication."  
                     IsEnabled="False"/>
         </StackPanel>
-
     </StackPanel>
 
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding LoginCommand}"
+                    CommandParameter="{Binding Text, ElementName=TotpTextBox}"/>
+    </UserControl.InputBindings>
 </UserControl>
