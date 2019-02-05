@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
-    <StackPanel Width="420">
+    <StackPanel Width="320">
         <Label Content="Hey, your account is about to expire!" 
                FontWeight="Bold" 
                FontSize="16"/>
@@ -15,7 +15,13 @@
                    TextWrapping="Wrap" 
                    Margin="5"
                    Style="{StaticResource TextBlock}"/>
-        <Button Content="Extend Glitched Epistle account now!" 
-                Command="{Binding ExtendButtonCommand}"/>
+        <Button Content="Buy a 1-month Glitched Epistle access code now!"
+                ToolTip="Click here to be redirected to the official website where Epistle 1-month (30 days) tokens can be acquired."
+                Margin="0,10,0,0"
+                Command="{Binding BuyButtonCommand}"/>
+        <Button Content="I already have a code that I want to redeem"
+                ToolTip="Click here to extend your Epistle membership and enjoy more encrypted communication. You will be redirected to the settings page, where you can redeem your access code."
+                Margin="0,10,0,0"
+                Command="{Binding RedeemButtonCommand}"/>
     </StackPanel>
 </UserControl>

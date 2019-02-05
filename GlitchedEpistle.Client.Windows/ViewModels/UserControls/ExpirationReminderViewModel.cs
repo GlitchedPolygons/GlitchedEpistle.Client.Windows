@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Diagnostics;
+using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
@@ -9,15 +11,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 {
     public class ExpirationReminderViewModel : ViewModel
     {
-        #region Constants
-        // Injections:
-        private readonly User user;
-        private readonly IWindowFactory windowFactory;
-        private readonly IViewModelFactory viewModelFactory;
-        #endregion
-
         #region Commands
-        public ICommand ExtendButtonCommand { get; }
+        public ICommand RedeemButtonCommand { get; }
+        public ICommand BuyButtonCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -27,24 +23,39 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public ExpirationReminderViewModel(User user, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
         {
-            this.user = user;
-            this.windowFactory = windowFactory;
-            this.viewModelFactory = viewModelFactory;
+            BuyButtonCommand = new DelegateCommand(_ => Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub"));
+            RedeemButtonCommand = new DelegateCommand(_ =>
+            {
+                var settingsView = windowFactory.Create<SettingsView>(true);
+                if (settingsView.DataContext is null)
+                {
+                    settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
+                }
+                settingsView.Show();
+                settingsView.Activate();
+            });
 
-            ExtendButtonCommand = new DelegateCommand(OnClickedExtend);
-
-            ReminderText = "";
+            ReminderText = $"Your Epistle membership ends {(user.ExpirationUTC - DateTime.UtcNow).TotalDays} day(s) from now; the {user.ExpirationUTC.Day}. of {GetMonthName(user.ExpirationUTC.Month)}, {user.ExpirationUTC.Year} at {user.ExpirationUTC:HH:mm} (UTC).";
         }
 
-        private void OnClickedExtend(object commandParam)
+        private string GetMonthName(int month)
         {
-            var settingsView = windowFactory.Create<SettingsView>(true);
-            if (settingsView.DataContext is null)
+            switch (Math.Abs(month))
             {
-                settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
+                default: return null;
+                case 1: return "January";
+                case 2: return "February";
+                case 3: return "March";
+                case 4: return "April";
+                case 5: return "May";
+                case 6: return "June";
+                case 7: return "July";
+                case 8: return "August";
+                case 9: return "September";
+                case 10: return "October";
+                case 11: return "November";
+                case 12: return "December";
             }
-            settingsView.Show();
-            settingsView.Activate();
         }
     }
 }

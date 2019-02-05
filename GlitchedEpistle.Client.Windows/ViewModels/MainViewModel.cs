@@ -134,7 +134,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(OnConfirmedTotalReset);
 
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
-            eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(UpdateUserExp);
+            eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
 
             // Load up the settings on startup.
             if (settings.Load())
@@ -195,6 +195,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             MainControl = new ExpirationReminderView { DataContext = viewModel };
         }
 
+        private void ShowCouponRedeemedSuccessfullyControl()
+        {
+            var viewModel = viewModelFactory.Create<CouponRedeemedSuccessfullyViewModel>();
+            MainControl = new CouponRedeemedSuccessfullyView { DataContext = viewModel };
+        }
+
         private void OnClosed(object commandParam)
         {
             // Don't save out anything if the app's been reset.
@@ -236,6 +242,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UpdateUserExp();
         }
 
+        private void OnCouponRedeemedSuccessfully()
+        {
+            UpdateUserExp();
+            ShowCouponRedeemedSuccessfullyControl();
+        }
+
         private async void UpdateUserExp()
         {
             // Gather user expiration UTC from server.
@@ -266,11 +278,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 expirationTimer = new Timer(remainingTime.TotalMilliseconds);
                 expirationTimer.Elapsed += (_, __) => ShowExpiredControl();
 
-                if (remainingTime < TimeSpan.FromDays(3))
+                if (remainingTime < TimeSpan.FromDays(5))
                 {
                     ShowExpirationReminderControl();
                 }
             }
+
+            // When the user account is expired,
+            // the UI should be inactive (and inoperable).
+            UIEnabled = !expired;
         }
 
         private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
@@ -302,12 +318,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedCreateConvo(object commandParam)
         {
-
+            // TODO: implement create convo dialog
         }
 
         private void OnClickedChangePassword(object commandParam)
         {
-
+            // TODO: implement change pw dialog
         }
 
         private void OnClickedJoinConvo(object commandParam)
