@@ -22,7 +22,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
-        private const double ERROR_MESSAGE_INTERVAL = 7000;
+        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL_MS) { AutoReset = true };
+        private const double ERROR_MESSAGE_INTERVAL_MS = 7000;
         #endregion
 
         #region Commands
@@ -40,8 +41,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         private string password;
+        private int failedAttempts = 0;
         private bool pendingAttempt = false;
-        private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
         public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user)
         {
@@ -54,14 +55,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             LoginCommand = new DelegateCommand(OnClickedLogin);
             PasswordChangedCommand = new DelegateCommand(OnChangedPassword);
 
-            ErrorMessageTimer.Elapsed += ErrorMessageTimer_Elapsed;
-            ErrorMessageTimer.Start();
-        }
-
-        private void ErrorMessageTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (ErrorMessage != null)
-                ErrorMessage = null;
+            errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
+            errorMessageTimer.Start();
         }
 
         private void OnChangedPassword(object commandParam)
@@ -89,14 +84,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             string jwt = await userService.Login(UserId, password.SHA512(), totp);
             if (!string.IsNullOrEmpty(jwt))
             {
+                failedAttempts = 0;
                 user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
                 eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
             }
             else
             {
-                ErrorMessageTimer.Stop();
-                ErrorMessageTimer.Start();
-                ErrorMessage = "Error! Invalid user id, password or 2FA."; // TODO: display lockout message (when login failed >5 times).
+                failedAttempts++;
+                errorMessageTimer.Stop();
+                errorMessageTimer.Start();
+                ErrorMessage = "Error! Invalid user id, password or 2FA.";
+                if (failedAttempts > 3) ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
             }
 
             pendingAttempt = false;
