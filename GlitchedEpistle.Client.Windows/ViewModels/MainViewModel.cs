@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Globalization;
-using System.Threading.Tasks;
 
+using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
@@ -20,7 +19,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.Services.MethodQ;
+
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
@@ -325,15 +324,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             // TODO: implement create convo dialog
         }
-
-        private void OnClickedChangePassword(object commandParam)
-        {
-            // TODO: implement change pw dialog
-        }
-
+        
         private void OnClickedJoinConvo(object commandParam)
         {
             // TODO: implement join convo dialog
+        }
+
+        private void OnClickedChangePassword(object commandParam)
+        {
+            var changePasswordView = windowFactory.Create<ChangePasswordView>(true);
+            if (changePasswordView.DataContext is null)
+            {
+                changePasswordView.DataContext = viewModelFactory.Create<ChangePasswordViewModel>();
+            }
+            changePasswordView.Show();
+            changePasswordView.Activate();
         }
 
         private void OnClickedLogout(object commandParam)
