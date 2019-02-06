@@ -33,6 +33,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ICompressionUtility gzip;
         private readonly IAsymmetricKeygen keygen;
         private readonly IEventAggregator eventAggregator;
+        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
         private const double ERROR_MESSAGE_INTERVAL = 7000;
         #endregion
 
@@ -60,9 +61,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private bool pendingAttempt = false;
         private string password1, password2;
-
-        private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
-
+        
         public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen)
         {
             this.gzip = gzip;
@@ -78,20 +77,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             RegisterCommand = new DelegateCommand(OnClickedRegister);
             QuitCommand = new DelegateCommand(OnClickedQuit);
 
-            ErrorMessageTimer.Elapsed += ErrorMessageTimer_Elapsed;
-            ErrorMessageTimer.Start();
+            errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
+            errorMessageTimer.Start();
         }
 
         ~UserCreationViewModel()
         {
             password1 = null;
             password2 = null;
-        }
-
-        private void ErrorMessageTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (ErrorMessage != null)
-                ErrorMessage = null;
         }
 
         private void OnChangedPassword1(object commandParam)

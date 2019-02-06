@@ -23,6 +23,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
+        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
         private const double ERROR_MESSAGE_INTERVAL = 7000;
         #endregion
 
@@ -43,7 +44,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         private bool pendingAttempt = false;
-        private Timer ErrorMessageTimer { get; } = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
         public List<string> BackupCodes { get; set; }
 
@@ -57,14 +57,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             VerifyCommand = new DelegateCommand(OnClickedVerify);
             ExportBackupCodesCommand = new DelegateCommand(OnClickedExport);
 
-            ErrorMessageTimer.Elapsed += ErrorMessageTimer_Elapsed;
-            ErrorMessageTimer.Start();
-        }
-
-        private void ErrorMessageTimer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (ErrorMessage != null)
-                ErrorMessage = null;
+            errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
+            errorMessageTimer.Start();
         }
 
         private void OnClickedExport(object commandParam)
@@ -97,8 +91,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
             else
             {
-                ErrorMessageTimer.Stop();
-                ErrorMessageTimer.Start();
+                errorMessageTimer.Stop();
+                errorMessageTimer.Start();
                 ErrorMessage = "Two-Factor authentication failed!";
                 Totp = string.Empty;
             }
