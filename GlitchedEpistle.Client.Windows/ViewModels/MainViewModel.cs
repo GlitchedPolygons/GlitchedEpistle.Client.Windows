@@ -227,17 +227,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
             else
             {
-                if (scheduledExpirationDialog.HasValue)
-                {
-                    methodQ.Cancel(scheduledExpirationDialog.Value);
-                }
-
-                scheduledExpirationDialog = methodQ.Schedule(ShowExpiredControl, user.ExpirationUTC);
-
                 TimeSpan remainingTime = user.ExpirationUTC - utcNow;
                 if (remainingTime < TimeSpan.FromDays(5))
                 {
                     ShowExpirationReminderControl();
+
+                    if (scheduledExpirationDialog.HasValue)
+                    {
+                        methodQ.Cancel(scheduledExpirationDialog.Value);
+                    }
+
+                    scheduledExpirationDialog = methodQ.Schedule(ShowExpiredControl, user.ExpirationUTC);
                 }
             }
 

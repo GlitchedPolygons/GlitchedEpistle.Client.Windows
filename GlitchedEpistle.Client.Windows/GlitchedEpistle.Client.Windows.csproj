@@ -472,6 +472,7 @@
     <Compile Include="Services\Factories\WindowFactory.cs" />
     <Compile Include="Services\Logging\Logger.cs" />
     <Compile Include="Services\Settings\SettingsJson.cs" />
+    <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
@@ -485,6 +486,9 @@
     <Compile Include="ViewModels\UserExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\ChangePasswordView.xaml.cs">
+      <DependentUpon>ChangePasswordView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfirmResetView.xaml.cs">
       <DependentUpon>ConfirmResetView.xaml</DependentUpon>
     </Compile>
@@ -531,6 +535,10 @@
     <Page Include="Resources\Themes\DarkTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChangePasswordView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConfirmResetView.xaml">
       <SubType>Designer</SubType>
