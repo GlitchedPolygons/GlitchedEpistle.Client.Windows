@@ -53,18 +53,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             QuitCommand = new DelegateCommand(OnClickedQuit);
             LoginCommand = new DelegateCommand(OnClickedLogin);
-            PasswordChangedCommand = new DelegateCommand(OnChangedPassword);
+            PasswordChangedCommand = new DelegateCommand(o => password = (o as PasswordBox)?.Password);
 
             errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
             errorMessageTimer.Start();
-        }
-
-        private void OnChangedPassword(object commandParam)
-        {
-            if (commandParam is PasswordBox passwordBox)
-            {
-                password = passwordBox.Password;
-            }
         }
 
         private async void OnClickedLogin(object commandParam)

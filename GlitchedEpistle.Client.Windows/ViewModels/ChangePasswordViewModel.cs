@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Timers;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -24,26 +25,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region Commands
+        public ICommand ClosedCommand { get; }
         public ICommand CancelCommand { get; }
         public ICommand SubmitCommand { get; }
+        public ICommand OldPasswordChangedCommand { get; }
+        public ICommand NewPasswordChangedCommand { get; }
+        public ICommand NewPassword2ChangedCommand { get; }
         #endregion
 
         #region UI Bindings
-        private string oldPw = string.Empty;
-        public string OldPassword { get => oldPw; set => Set(ref oldPw, value); }
-
-        private string newPw = string.Empty;
-        public string NewPassword { get => newPw; set => Set(ref newPw, value); }
-
-        private string newPw2 = string.Empty;
-        public string NewPassword2 { get => newPw2; set => Set(ref newPw2, value); }
-
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
 
         private string successMessage = string.Empty;
         public string SuccessMessage { get => successMessage; set => Set(ref successMessage, value); }
         #endregion
+
+        private string oldPw = string.Empty;
+        private string newPw = string.Empty;
+        private string newPw2 = string.Empty;
 
         public ChangePasswordViewModel(IUserService userService, User user)
         {
@@ -52,6 +52,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             SubmitCommand = new DelegateCommand(SubmitChangePassword);
             CancelCommand = new DelegateCommand(o => RequestedClose?.Invoke(null, EventArgs.Empty));
+            ClosedCommand = new DelegateCommand(o => oldPw = newPw = newPw2 = null);
+            OldPasswordChangedCommand = new DelegateCommand(pw => oldPw = (pw as PasswordBox)?.Password);
+            NewPasswordChangedCommand = new DelegateCommand(pw => newPw = (pw as PasswordBox)?.Password);
+            NewPassword2ChangedCommand = new DelegateCommand(pw => newPw2 = (pw as PasswordBox)?.Password);
 
             messageTimer.Elapsed += (_, __) => { ErrorMessage = null; SuccessMessage = null; };
             messageTimer.Start();
@@ -84,21 +88,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            if (string.IsNullOrEmpty(OldPassword) || string.IsNullOrEmpty(NewPassword) || NewPassword != NewPassword2)
+            if (string.IsNullOrEmpty(oldPw) || string.IsNullOrEmpty(newPw) || newPw != newPw2)
             {
                 ResetMessages();
                 ErrorMessage = "The old password is wrong or the new ones don't match.";
                 return;
             }
 
-            if (NewPassword.Length < 7)
+            if (newPw.Length < 7)
             {
                 ResetMessages();
                 ErrorMessage = "Your password is too weak; make sure that it has at least >7 characters!";
                 return;
             }
 
-            bool success = await userService.ChangeUserPassword(user.Id, user.Token.Item2, OldPassword.SHA512(), NewPassword.SHA512());
+            bool success = await userService.ChangeUserPassword(user.Id, user.Token.Item2, oldPw.SHA512(), newPw.SHA512());
 
             if (success)
             {
@@ -110,6 +114,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 ResetMessages();
                 ErrorMessage = "An unknown error occurred whilst trying to change your password.";
             }
+
+            oldPw = newPw = newPw2 = totp = null;
         }
     }
 }
