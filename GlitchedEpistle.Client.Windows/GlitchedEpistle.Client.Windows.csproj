@@ -463,9 +463,11 @@
     <Compile Include="PubSubEvents\CouponRedeemedEvent.cs" />
     <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
+    <Compile Include="PubSubEvents\JoinedConvoEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationVerifiedEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationSucceededEvent.cs" />
     <Compile Include="PubSubEvents\UsernameChangedEvent.cs" />
+    <Compile Include="Services\Convos\ConvoProvider.cs" />
     <Compile Include="Services\Factories\IViewModelFactory.cs" />
     <Compile Include="Services\Factories\IWindowFactory.cs" />
     <Compile Include="Services\Factories\ViewModelFactory.cs" />
@@ -477,6 +479,7 @@
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ConvosListViewModel.cs" />
     <Compile Include="ViewModels\UserControls\CouponRedeemedSuccessfullyViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ExpiredViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ExpirationReminderViewModel.cs" />
@@ -510,6 +513,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\ConvosListView.xaml.cs">
+      <DependentUpon>ConvosListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\CouponRedeemedSuccessfullyView.xaml.cs">
       <DependentUpon>CouponRedeemedSuccessfullyView.xaml</DependentUpon>
@@ -563,6 +569,10 @@
     <Page Include="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\ConvosListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\CouponRedeemedSuccessfullyView.xaml">
       <SubType>Designer</SubType>

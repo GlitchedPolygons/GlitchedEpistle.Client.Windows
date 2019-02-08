@@ -7,7 +7,6 @@ using System.Windows.Media.Imaging;
 using System.Globalization;
 
 using GlitchedPolygons.Services.MethodQ;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
@@ -19,6 +18,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 
 using ZXing;
 using ZXing.Common;
@@ -93,6 +93,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private Control mainControl;
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
+
+        private Control convosListControl;
+        public Control ConvosListControl { get => convosListControl; set => Set(ref convosListControl, value); }
         #endregion
 
         private bool reset = false;
@@ -166,6 +169,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ShowLoginControl();
             }
+
+            ConvosListControl = new ConvosListView { DataContext = viewModelFactory.Create<ConvosListViewModel>() };
         }
 
         #region MainControl
@@ -324,7 +329,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             // TODO: implement create convo dialog
         }
-        
+
         private void OnClickedJoinConvo(object commandParam)
         {
             // TODO: implement join convo dialog

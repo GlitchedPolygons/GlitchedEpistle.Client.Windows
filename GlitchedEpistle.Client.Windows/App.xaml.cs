@@ -7,6 +7,7 @@ using System.Reflection;
 
 // Shared code namespaces
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
@@ -21,6 +22,7 @@ using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
@@ -79,7 +81,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
-
+            container.RegisterType<IConvoProvider, ConvoProvider>(new ContainerControlledLifetimeManager());
+            
             // Open the main app's window.
             var mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
