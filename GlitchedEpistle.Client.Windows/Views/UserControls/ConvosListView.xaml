@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ConvosListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+             mc:Ignorable="d">
+
+    <ScrollViewer Name="ConvosScrollViewer" 
+                  VerticalScrollBarVisibility="Auto">
+
+        <StackPanel Name="ConvosStackPanel">
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+            <Button Content="TEST"></Button>
+            <Separator/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

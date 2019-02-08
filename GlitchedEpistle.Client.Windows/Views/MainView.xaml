@@ -98,72 +98,7 @@
             </StackPanel>
 
             <!-- Convos list -->
-            <ScrollViewer Name="ConvosScrollViewer" 
-                          VerticalScrollBarVisibility="Auto">
-
-                <StackPanel Name="ConvosStackPanel">
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                </StackPanel>
-            </ScrollViewer>
+            <ContentControl Name="ConvosListControl" Content="{Binding ConvosListControl}"/>
 
         </StackPanel>
 
