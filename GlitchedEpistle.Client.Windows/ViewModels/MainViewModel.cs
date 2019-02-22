@@ -99,7 +99,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         private bool reset = false;
-        private int? scheduledAuthRefresh = null, scheduledExpirationDialog = null;
+        private ulong? scheduledAuthRefresh = null, scheduledExpirationDialog = null;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ)
         {
