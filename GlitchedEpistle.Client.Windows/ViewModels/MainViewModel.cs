@@ -153,14 +153,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
-
-                if (File.Exists(Paths.PRIVATE_KEY_PATH))
-                {
-                    string keyXml = File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml();
-                    user.PrivateKey = RSAParametersExtensions.FromXml(keyXml);
-                }
             }
-
+            
             if (string.IsNullOrEmpty(UserId))
             {
                 ShowRegisterControl();
@@ -290,6 +284,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             UpdateUserExp();
+
+            // Load the user's RSA keys into the User instance.
+            if (!File.Exists(Paths.PUBLIC_KEY_PATH))
+                throw new FileNotFoundException("No public key found on disk!");
+
+            user.PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml();
+            user.PublicKey = RSAParametersExtensions.FromXml(user.PublicKeyXml);
+
+            if (!File.Exists(Paths.PRIVATE_KEY_PATH))
+                throw new FileNotFoundException("No private key found on disk!");
+
+            user.PrivateKey = RSAParametersExtensions.FromXml(File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml());
         }
 
         private void OnCouponRedeemedSuccessfully()

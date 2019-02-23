@@ -15,6 +15,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 
 // Glitched Polygons NuGet packages
+using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.CompressionUtility;
 
@@ -26,7 +27,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.Services.MethodQ;
 
 // Third party namespaces
 using Unity;
