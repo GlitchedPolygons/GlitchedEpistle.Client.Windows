@@ -111,14 +111,67 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
 
+            #region Button click commands
+
+            ResetWindowButtonCommand = new DelegateCommand(_ =>
+            {
+                WindowState = WindowState.Normal;
+                MainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
+                MainWindowHeight = MAIN_WINDOW_MIN_HEIGHT;
+                SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
+            });
+
+            SettingsButtonCommand = new DelegateCommand(_ =>
+            {
+                // When opening views that only exist one at a time,
+                // it's important not to recreate the viewmodel every time,
+                // as that would override any changes made.
+                // Therefore, check if the view already has a data context that isn't null.
+                var settingsView = windowFactory.Create<SettingsView>(true);
+                if (settingsView.DataContext is null)
+                    settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
+                settingsView.Show();
+                settingsView.Activate();
+            });
+
+            HelpButtonCommand = new DelegateCommand(_ =>
+            {
+                var helpView = windowFactory.Create<HelpView>(true);
+                if (helpView.DataContext is null)
+                    helpView.DataContext = viewModelFactory.Create<HelpViewModel>();
+                helpView.Show();
+                helpView.Activate();
+            });
+
+            CreateConvoButtonCommand = new DelegateCommand(_ =>
+            {
+                // TODO: create convo dialog here
+            });
+
+            JoinConvoButtonCommand = new DelegateCommand(_ =>
+            {
+                // TODO: join convo dialog here
+            });
+
+            ChangePasswordButtonCommand = new DelegateCommand(_ =>
+            {
+                var changePasswordView = windowFactory.Create<ChangePasswordView>(true);
+                if (changePasswordView.DataContext is null)
+                    changePasswordView.DataContext = viewModelFactory.Create<ChangePasswordViewModel>();
+                changePasswordView.Show();
+                changePasswordView.Activate();
+            });
+
+            LogoutButtonCommand = new DelegateCommand(_ =>
+            {
+                if (MainControl is LoginView)
+                    return;
+                Logout();
+            });
+
+            #endregion
+
             ClosedCommand = new DelegateCommand(OnClosed);
-            SettingsButtonCommand = new DelegateCommand(OnClickedSettingsIcon);
-            ResetWindowButtonCommand = new DelegateCommand(OnClickedResetWindowIcon);
-            HelpButtonCommand = new DelegateCommand(OnClickedHelpIcon);
-            CreateConvoButtonCommand = new DelegateCommand(OnClickedCreateConvo);
-            ChangePasswordButtonCommand = new DelegateCommand(OnClickedChangePassword);
-            JoinConvoButtonCommand = new DelegateCommand(OnClickedJoinConvo);
-            LogoutButtonCommand = new DelegateCommand(OnClickedLogout);
 
             // Update the username label on the main window when that setting has changed.
             eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
@@ -130,11 +183,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             eventAggregator.GetEvent<UserCreationSucceededEvent>().Subscribe(OnUserCreationSuccessful);
 
             // After a successful user creation, show the login screen.
-            eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(OnUserCreationVerified);
+            eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(ShowLoginControl);
 
             // If the user agreed to delete all of his data on the local machine, respect his will
             // and get rid of everything (even preventing new settings to be written out on app shutdown too).
-            eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(OnConfirmedTotalReset);
+            eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(() => { reset = true; Application.Current.Shutdown(); });
 
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
             eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
@@ -154,7 +207,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
             }
-            
+
             if (string.IsNullOrEmpty(UserId))
             {
                 ShowRegisterControl();
@@ -202,6 +255,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #endregion
 
+        private void OnClosed(object commandParam)
+        {
+            // Don't save out anything if the app's been reset.
+            if (reset)
+            {
+                var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
+                if (dir.Exists)
+                {
+                    dir.DeleteRecursively();
+                }
+                Application.Current.Shutdown();
+                return;
+            }
+
+            // Save the window's state before termination.
+            settings.Load();
+            var c = CultureInfo.InvariantCulture;
+            settings[nameof(WindowState)] = WindowState.ToString();
+            settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
+            settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
+            settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
+            settings.Save();
+
+            Application.Current.Shutdown();
+        }
+
         private async void UpdateUserExp()
         {
             // Gather user expiration UTC from server.
@@ -243,32 +322,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // When the user account is expired,
             // the UI should be inactive (and inoperable).
             UIEnabled = !expired;
-        }
-
-        private void OnClosed(object commandParam)
-        {
-            // Don't save out anything if the app's been reset.
-            if (reset)
-            {
-                var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
-                if (dir.Exists)
-                {
-                    dir.DeleteRecursively();
-                }
-                Application.Current.Shutdown();
-                return;
-            }
-
-            // Save the window's state before termination.
-            settings.Load();
-            var c = CultureInfo.InvariantCulture;
-            settings[nameof(WindowState)] = WindowState.ToString();
-            settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
-            settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
-            settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
-            settings.Save();
-
-            Application.Current.Shutdown();
         }
 
         private void OnLoginSuccessful()
@@ -324,84 +377,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             viewModel.BackupCodes = userCreationResponse.TotpEmergencyBackupCodes;
 
             MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
-        }
-
-        private void OnUserCreationVerified()
-        {
-            ShowLoginControl();
-        }
-
-        private void OnClickedCreateConvo(object commandParam)
-        {
-            // TODO: implement create convo dialog
-        }
-
-        private void OnClickedJoinConvo(object commandParam)
-        {
-            // TODO: implement join convo dialog
-        }
-
-        private void OnClickedChangePassword(object commandParam)
-        {
-            var changePasswordView = windowFactory.Create<ChangePasswordView>(true);
-            if (changePasswordView.DataContext is null)
-            {
-                changePasswordView.DataContext = viewModelFactory.Create<ChangePasswordViewModel>();
-            }
-            changePasswordView.Show();
-            changePasswordView.Activate();
-        }
-
-        private void OnClickedLogout(object commandParam)
-        {
-            if (MainControl is LoginView)
-            {
-                return;
-            }
-
-            Logout();
-        }
-
-        private void OnClickedSettingsIcon(object commandParam)
-        {
-            var settingsView = windowFactory.Create<SettingsView>(true);
-
-            // When opening views that only exist one at a time,
-            // it's important not to recreate the viewmodel every time,
-            // as that would override any changes made.
-            // Therefore, check if the view already has a data context that isn't null.
-            if (settingsView.DataContext is null)
-            {
-                settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
-            }
-
-            settingsView.Show();
-            settingsView.Activate();
-        }
-
-        private void OnClickedHelpIcon(object commandParam)
-        {
-            var helpView = windowFactory.Create<HelpView>(true);
-            if (helpView.DataContext is null)
-            {
-                helpView.DataContext = viewModelFactory.Create<HelpViewModel>();
-            }
-            helpView.Show();
-            helpView.Activate();
-        }
-
-        private void OnClickedResetWindowIcon(object commandParam)
-        {
-            WindowState = WindowState.Normal;
-            MainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
-            MainWindowHeight = MAIN_WINDOW_MIN_HEIGHT;
-            SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
-        }
-
-        private void OnConfirmedTotalReset()
-        {
-            reset = true;
-            Application.Current.Shutdown();
         }
 
         private async void OnRefreshAuth()
