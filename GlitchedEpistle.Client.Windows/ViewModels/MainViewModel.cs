@@ -19,7 +19,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
-
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
@@ -38,6 +38,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         // Injections:
         private readonly User user;
+        private readonly ILogger logger;
         private readonly IMethodQ methodQ;
         private readonly ISettings settings;
         private readonly IUserService userService;
@@ -101,9 +102,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool reset = false;
         private ulong? scheduledAuthRefresh = null, scheduledExpirationDialog = null;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger)
         {
             this.user = user;
+            this.logger = logger;
             this.methodQ = methodQ;
             this.settings = settings;
             this.userService = userService;
@@ -340,13 +342,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Load the user's RSA keys into the User instance.
             if (!File.Exists(Paths.PUBLIC_KEY_PATH))
+            {
+                logger.LogError("Login was successful but no public key was found on disk! Did you delete/modify that key file manually?");
                 throw new FileNotFoundException("No public key found on disk!");
+            }
 
             user.PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml();
             user.PublicKey = RSAParametersExtensions.FromXml(user.PublicKeyXml);
 
             if (!File.Exists(Paths.PRIVATE_KEY_PATH))
+            {
+                logger.LogError("Login was successful but no private key was found on disk! Did you delete/modify that key file manually?");
                 throw new FileNotFoundException("No private key found on disk!");
+            }
 
             user.PrivateKey = RSAParametersExtensions.FromXml(File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml());
         }
