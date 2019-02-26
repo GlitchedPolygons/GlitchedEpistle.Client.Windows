@@ -1,11 +1,19 @@
 ﻿using System;
+using System.IO;
+using System.IO.Compression;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 
 using Microsoft.Win32;
+using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -17,7 +25,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private const bool DEFAULT_COMPRESS_OUTPUT = false;
 
         // Injections:
+        private readonly User user;
         private readonly ISettings settings;
+        private readonly ICompressionUtility gzip;
         #endregion
 
         #region Events        
@@ -79,8 +89,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public bool ExportReady { get => exportReady; set => Set(ref exportReady, value); }
         #endregion
 
-        public UserExportViewModel(ISettings settings)
+        public UserExportViewModel(ISettings settings, User user, ICompressionUtility gzip)
         {
+            this.user = user;
+            this.gzip = gzip;
             this.settings = settings;
 
             ClosedCommand = new DelegateCommand(OnClosed);
@@ -143,7 +155,47 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedExport(object commandParam)
         {
-            // TODO: implement this!
+            object userSettings = null;
+            if (ExportSettings)
+            {
+                userSettings = new
+                {
+                    // TODO: gather settings here
+                };
+            }
+
+            object userConvos = null;
+            if (ExportConvos)
+            {
+                userConvos = new
+                {
+                    // TODO: gather convos here (maybe use Parallel.For or something multi-threaded...)
+                };
+            }
+
+            object output = new
+            {
+                User = new
+                {
+                    UserId = user.Id,
+                    Username = settings["Username"],
+                    PublicKeyXml = user.PublicKeyXml,
+                    PrivateKeyXml = user.PrivateKey.ToXmlString()
+                },
+                UserSettings = userSettings,
+                UserConvos = userConvos
+            };
+
+            byte[] bytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(output));
+            byte[] gzippedBytes = CompressOutput ? gzip.Compress(bytes, new CompressionSettings { CompressionLevel = CompressionLevel.Fastest }) : Array.Empty<byte>();
+
+            File.WriteAllBytes(
+               path: CompressOutput ? OutputFilePath + ".gz" : OutputFilePath, 
+               bytes: CompressOutput ? gzippedBytes : bytes
+            );
+
+            for (int i = 0; i < bytes.Length; i++) bytes[i] = 0;
+            for (int i = 0; i < gzippedBytes.Length; i++) gzippedBytes[i] = 0;
         }
     }
 }
