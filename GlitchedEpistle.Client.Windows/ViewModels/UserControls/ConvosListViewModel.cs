@@ -40,6 +40,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             DeleteConvoCommand = new DelegateCommand(OnDeleteConvo);
 
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
+            eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(OnCreatedConvoSuccessfully);
         }
 
         private void OnJoinedConvo(Convo convo)
@@ -91,6 +92,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             if (Directory.Exists(path))
                 Directory.Delete(path, true);
+        }
+
+        private void OnCreatedConvoSuccessfully(string convoId)
+        {
+            var convo = convoProvider[convoId];
+            if (convo != null)
+            {
+                // TODO: add convo entry to list
+            }
         }
     }
 }

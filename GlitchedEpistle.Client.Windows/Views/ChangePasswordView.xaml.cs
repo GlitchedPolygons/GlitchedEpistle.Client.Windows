@@ -11,6 +11,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public ChangePasswordView()
         {
             InitializeComponent();
+            this.Loaded += ChangePasswordView_Loaded;
+        }
+
+        private void ChangePasswordView_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= ChangePasswordView_Loaded;
             this.MakeCloseable();
         }
     }
