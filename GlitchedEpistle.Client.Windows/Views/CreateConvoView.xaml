@@ -19,7 +19,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <StackPanel Margin="10" MinWidth="320">
+    <StackPanel Margin="10" MinWidth="320" IsEnabled="{Binding CanSubmit}">
 
         <Label Content="Create a new conversation" 
                FontWeight="Bold" 
