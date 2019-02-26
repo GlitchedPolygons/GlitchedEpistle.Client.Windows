@@ -62,6 +62,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string successMessage = string.Empty;
         public string SuccessMessage { get => successMessage; set => Set(ref successMessage, value); }
+
+        private bool canSubmit = true;
+        public bool CanSubmit { get => canSubmit; set => Set(ref canSubmit, value); }
         #endregion
 
         private string pw = string.Empty;
@@ -174,12 +177,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     scheduledActions.RemoveAt(0);
 
                 ResetMessages();
-                SuccessMessage = $"The convo {Name} has been created successfully under the id {id}. This window will close automatically in 5 seconds.";
-                scheduledActions.Add(methodQ.Schedule(() => SuccessMessage = $"The convo {Name} has been created successfully under the id {id}. This window will close automatically in 4 seconds.", DateTime.UtcNow.AddSeconds(1)));
-                scheduledActions.Add(methodQ.Schedule(() => SuccessMessage = $"The convo {Name} has been created successfully under the id {id}. This window will close automatically in 3 seconds.", DateTime.UtcNow.AddSeconds(2)));
-                scheduledActions.Add(methodQ.Schedule(() => SuccessMessage = $"The convo {Name} has been created successfully under the id {id}. This window will close automatically in 2 seconds.", DateTime.UtcNow.AddSeconds(3)));
-                scheduledActions.Add(methodQ.Schedule(() => SuccessMessage = $"The convo {Name} has been created successfully under the id {id}. This window will close automatically in 1 second.", DateTime.UtcNow.AddSeconds(4)));
-                methodQ.Schedule(() => RequestedClose?.Invoke(null, EventArgs.Empty), DateTime.UtcNow.AddSeconds(5));
+                CanSubmit = false;
+                SuccessMessage = $"The convo {Name} has been created successfully under the id {id}. You can close this window now.";
             }
             else
             {
