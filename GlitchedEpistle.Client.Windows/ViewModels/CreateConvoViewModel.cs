@@ -1,20 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+
 using Prism.Events;
-using GlitchedPolygons.Services.MethodQ;
 using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
