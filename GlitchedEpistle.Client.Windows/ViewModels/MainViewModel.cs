@@ -19,6 +19,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using ZXing;
 using ZXing.Common;
@@ -42,6 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IMethodQ methodQ;
         private readonly ISettings settings;
         private readonly IUserService userService;
+        private readonly IConvoProvider convoProvider;
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
@@ -102,13 +104,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool reset = false;
         private ulong? scheduledAuthRefresh = null, scheduledExpirationDialog = null;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider)
         {
             this.user = user;
             this.logger = logger;
             this.methodQ = methodQ;
             this.settings = settings;
             this.userService = userService;
+            this.convoProvider = convoProvider;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
@@ -147,7 +150,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             CreateConvoButtonCommand = new DelegateCommand(_ =>
             {
-                // TODO: create convo dialog here
+                var createConvoView = windowFactory.Create<CreateConvoView>(true);
+                if (createConvoView.DataContext is null)
+                    createConvoView.DataContext = viewModelFactory.Create<CreateConvoViewModel>();
+                createConvoView.Show();
+                createConvoView.Activate();
             });
 
             JoinConvoButtonCommand = new DelegateCommand(_ =>
@@ -193,7 +200,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
             eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
-
+            
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -386,7 +393,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
         }
-
+        
         private async void OnRefreshAuth()
         {
             // If there is no current token,

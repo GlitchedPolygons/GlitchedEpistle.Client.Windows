@@ -69,6 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<IUserService, UserService>();
+            container.RegisterType<IConvoService, ConvoService>();
             container.RegisterType<ICouponService, CouponService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricKeygen, RSA4096Keygen>();

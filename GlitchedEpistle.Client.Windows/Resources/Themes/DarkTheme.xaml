@@ -217,5 +217,37 @@
         <Setter Property="Background" Value="{StaticResource HelpIcon}"/>
     </Style>
 
+    <!-- Date Picker -->
+    <Style TargetType="DatePicker">
+        <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="Background" Value="#404040" />
+        <Setter Property="BorderBrush" Value="#BFF0F8FF"/>
+    </Style>
+    <Style TargetType="{x:Type DatePickerTextBox}">
+        <Setter Property="Background" Value="#404040"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate x:Name="dptext" TargetType="{x:Type DatePickerTextBox}">
+                    <Grid>
+                        <Grid x:Name="WatermarkContent" 
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                                          Margin="0" 
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="Gray" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
 </ResourceDictionary>
     
