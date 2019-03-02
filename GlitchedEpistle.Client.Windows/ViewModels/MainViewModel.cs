@@ -7,9 +7,12 @@ using System.Windows.Media.Imaging;
 using System.Globalization;
 
 using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
@@ -18,13 +21,10 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
+
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
-
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -36,6 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
         public const double MAIN_WINDOW_MIN_HEIGHT = 480;
+        private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
 
         // Injections:
         private readonly User user;
@@ -47,7 +48,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
-        private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
         #endregion
 
         #region Commands
