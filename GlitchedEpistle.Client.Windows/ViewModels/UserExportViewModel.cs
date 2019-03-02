@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -19,7 +20,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class UserExportViewModel : ViewModel, ICloseable
     {
         #region Constants
-
+        private readonly ISymmetricCryptography aes;
         #endregion
 
         #region Events        
@@ -48,8 +49,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public string ExportLabel { get => exportLabel; set => Set(ref exportLabel, value); }
         #endregion
 
-        public UserExportViewModel()
+        public UserExportViewModel(ISymmetricCryptography aes)
         {
+            this.aes = aes;
             ClosedCommand = new DelegateCommand(OnClosed);
 
             // On clicked "Browse"
@@ -109,7 +111,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     return;
                 }
 
-                // TODO: encrypt using pw
+                byte[] encryptedBytes = await Task.Run(() => aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw));
+                File.WriteAllBytes(OutputFilePath, encryptedBytes);
 
                 Enabled = false;
                 OutputFilePath = null;
