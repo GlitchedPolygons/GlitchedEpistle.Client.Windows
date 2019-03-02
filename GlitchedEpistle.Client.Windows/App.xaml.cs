@@ -7,11 +7,12 @@ using System.Reflection;
 
 // Shared code namespaces
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 
@@ -74,8 +75,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<ICouponService, CouponService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricKeygen, RSA4096Keygen>();
-            container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
             container.RegisterType<ISymmetricCryptography, SymmetricCryptography>();
+            container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
+            container.RegisterType<IMessageCryptography, MessageCryptography>();
 
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.
