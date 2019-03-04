@@ -480,6 +480,7 @@
     <Compile Include="ViewModels\CreateConvoViewModel.cs" />
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
+    <Compile Include="ViewModels\ImportUserFromBackupViewModel.cs" />
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ConvosListViewModel.cs" />
@@ -506,6 +507,9 @@
     </Compile>
     <Compile Include="Views\HelpView.xaml.cs">
       <DependentUpon>HelpView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportUserFromBackupView.xaml.cs">
+      <DependentUpon>ImportUserFromBackupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InfoDialogView.xaml.cs">
       <DependentUpon>InfoDialogView.xaml</DependentUpon>
@@ -565,6 +569,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HelpView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportUserFromBackupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
