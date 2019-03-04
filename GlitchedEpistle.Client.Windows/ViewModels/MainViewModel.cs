@@ -200,7 +200,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
             eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
-            
+
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -266,7 +266,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClosed(object commandParam)
         {
-            // Don't save out anything if the app's been reset.
+            // Don't save out anything and delete
+            // epistle root directory if the app's been reset.
             if (reset)
             {
                 var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
@@ -275,19 +276,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     dir.DeleteRecursively();
                 }
                 Application.Current.Shutdown();
-                return;
             }
+            else
+            {
+                // Save the window's state before termination.
+                settings.Load();
+                var c = CultureInfo.InvariantCulture;
+                settings[nameof(WindowState)] = WindowState.ToString();
+                settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
+                settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
+                settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
+                settings.Save();
 
-            // Save the window's state before termination.
-            settings.Load();
-            var c = CultureInfo.InvariantCulture;
-            settings[nameof(WindowState)] = WindowState.ToString();
-            settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
-            settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
-            settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
-            settings.Save();
-
-            Application.Current.Shutdown();
+                Application.Current.Shutdown();
+            }
         }
 
         private async void UpdateUserExp()
@@ -393,7 +395,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
         }
-        
+
         private async void OnRefreshAuth()
         {
             // If there is no current token,

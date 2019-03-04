@@ -162,6 +162,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             bool? dialogResult = dialog.ShowDialog();
             if (dialogResult.HasValue && dialogResult is true)
             {
+                cancelled = true;
+
                 // Handle this event inside the MainViewModel to prevent
                 // user settings being saved out on application shutdown.
                 eventAggregator.GetEvent<ResetConfirmedEvent>().Publish();

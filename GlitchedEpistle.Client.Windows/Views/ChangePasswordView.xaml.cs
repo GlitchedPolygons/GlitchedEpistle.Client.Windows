@@ -18,6 +18,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             this.Loaded -= ChangePasswordView_Loaded;
             this.MakeCloseable();
+            OldPasswordBox.Focus();
         }
     }
 }

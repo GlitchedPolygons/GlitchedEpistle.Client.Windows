@@ -16,7 +16,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            this.Loaded -= OnLoaded;
             this.MakeCloseable();
+            PasswordBox.Focus();
         }
     }
 }

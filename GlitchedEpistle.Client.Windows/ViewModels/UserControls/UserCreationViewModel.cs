@@ -85,7 +85,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 dialog.FileOk += (sender, e) =>
                 {
-                    if (sender is SaveFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
+                    if (sender is OpenFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
                     {
                         var view = windowFactory.Create<ImportUserFromBackupView>(true);
                         if (view.DataContext is null)
@@ -95,6 +95,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                             view.DataContext = viewModel;
                         }
                         view.ShowDialog();
+                        view.Activate();
                     }
                 };
 
