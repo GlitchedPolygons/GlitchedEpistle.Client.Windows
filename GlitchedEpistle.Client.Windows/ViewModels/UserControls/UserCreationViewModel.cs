@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text;
 using System.Timers;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -18,6 +17,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 
 using Prism.Events;
 using Microsoft.Win32;
@@ -56,7 +56,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt = false;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen)
+        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory)
         {
             PasswordChangedCommand1 = new DelegateCommand(commandParam =>
             {
@@ -80,23 +80,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
                     DefaultExt = ".dat",
                     AddExtension = true,
-                    Filter = "Epistle Backup File|*.dat;*.dat.gz"
+                    Filter = "Epistle Backup File|*.dat"
                 };
 
                 dialog.FileOk += (sender, e) =>
                 {
-                    if (sender is SaveFileDialog _dialog)
+                    if (sender is SaveFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
                     {
-                        if (string.IsNullOrEmpty(dialog.FileName))
-                        {
-                            return;
-                        }
+                        var viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
+                        viewModel.BackupFilePath = _dialog.FileName;
 
-                        // TODO: see comment on new line
-                        // Import user data from backup file here and then reboot the program.
-
-                        Application.Current.Shutdown();
-                        Process.Start(Application.ResourceAssembly.Location);
+                        var view = new ImportUserFromBackupView { DataContext = viewModel };
+                        view.ShowDialog();
                     }
                 };
 
@@ -162,6 +157,5 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         private void ValidateForm() => FormValid = !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(password1) && !string.IsNullOrEmpty(password2) && password1 == password2 && password1.Length > 7;
-        
     }
 }

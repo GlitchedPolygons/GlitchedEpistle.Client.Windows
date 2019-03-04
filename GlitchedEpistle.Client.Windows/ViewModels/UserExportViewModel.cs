@@ -7,11 +7,10 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 
 using Microsoft.Win32;
 
