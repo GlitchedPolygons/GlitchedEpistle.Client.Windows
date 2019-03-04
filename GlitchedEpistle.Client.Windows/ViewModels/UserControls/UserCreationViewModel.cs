@@ -56,7 +56,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt = false;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory)
+        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory)
         {
             PasswordChangedCommand1 = new DelegateCommand(commandParam =>
             {
@@ -87,10 +87,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     if (sender is SaveFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
                     {
-                        var viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
-                        viewModel.BackupFilePath = _dialog.FileName;
-
-                        var view = new ImportUserFromBackupView { DataContext = viewModel };
+                        var view = windowFactory.Create<ImportUserFromBackupView>(true);
+                        if (view.DataContext is null)
+                        {
+                            var viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
+                            viewModel.BackupFilePath = _dialog.FileName;
+                            view.DataContext = viewModel;
+                        }
                         view.ShowDialog();
                     }
                 };
