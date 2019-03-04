@@ -72,7 +72,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         if (!string.IsNullOrEmpty(pw))
                         {
                             path = Path.GetTempFileName();
-                            File.WriteAllBytes(path, await Task.Run(() => aes.DecryptWithPassword(File.ReadAllBytes(BackupFilePath), pw)));
+                            byte[] decr = await Task.Run(() => aes.DecryptWithPassword(File.ReadAllBytes(BackupFilePath), pw));
+                            if (decr == null || decr.Length == 0)
+                            {
+                                errorMessageTimer.Stop(); errorMessageTimer.Start();
+                                ErrorMessage = "Import procedure failed: couldn't decrypt backup file. Wrong password?";
+                                return;
+                            }
+                            File.WriteAllBytes(path, decr);
                         }
 
                         // Epistle folder needs to be empty before a backup can be imported.
@@ -92,6 +99,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     }
                     catch (Exception e)
                     {
+                        errorMessageTimer.Stop(); errorMessageTimer.Start();
                         logger.LogError($"{nameof(ImportUserFromBackupViewModel)}::{nameof(ImportCommand)}: User account import from backup procedure failed; thrown exception: {e.Message}");
                         ErrorMessage = "Import procedure failed: perhaps double check that password (if the backup has one) and make sure that you selected the right file...";
                     }
@@ -105,6 +113,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 }
                 else
                 {
+                    errorMessageTimer.Stop(); errorMessageTimer.Start();
                     ErrorMessage = "No backup file path specified; nothing to import!";
                 }
             });
