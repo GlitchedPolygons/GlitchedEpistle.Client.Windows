@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Left">
+    <StackPanel HorizontalAlignment="Left" MaxWidth="280">
 
         <TextBlock Text="Please set up your 2FA authenticator app." 
                    TextWrapping="Wrap" 
