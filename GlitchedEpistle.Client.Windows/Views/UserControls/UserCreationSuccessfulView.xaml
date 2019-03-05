@@ -36,19 +36,16 @@
                HorizontalAlignment="Center" 
                Source="{Binding QR}"/>
 
-        <TextBlock Style="{StaticResource TextBlock}" 
-                   Margin="5,5,5,2"
-                   FontSize="9"
-                   MaxWidth="200"
-                   TextWrapping="Wrap" 
-                   Text="2FA secret (please back this up somewhere safe)"/>
+        <Label Content="2FA secret (please back this up somewhere safe)" 
+               ToolTip="This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you'll need it if you happen to lose your 2FA device."/>
         
         <TextBox Style="{StaticResource TextBox}" 
                  Name="SecretTextBox"
                  Padding="1"
-                 FontSize="10"
-                 MaxWidth="200" 
+                 Margin="5,0,0,0"
+                 Height="23"
                  IsReadOnly="True" 
+                 ToolTip="This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you'll need it if you happen to lose your 2FA device."
                  MouseDoubleClick="SecretTextBox_SelectText"
                  GotKeyboardFocus="SecretTextBox_SelectText"
                  PreviewMouseLeftButtonDown="SecretTextBox_OnPreviewMouseLeftButtonDown"
@@ -63,7 +60,6 @@
         <TextBox Name="TotpTextBox" 
                  Height="23"
                  Margin="5,0,0,0"
-                 MinWidth="250"
                  ToolTip="Your 2-Factor authentication token (from Google Authenticator, Authy or a similar app)"
                  Text="{Binding Totp}"
                  Style="{StaticResource TextBox}"
