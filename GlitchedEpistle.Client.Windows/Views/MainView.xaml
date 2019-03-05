@@ -9,7 +9,7 @@
         Title="Glitched Epistle" 
         MinWidth="800" 
         Width="{Binding Path=MainWindowWidth, Mode=TwoWay}" 
-        MinHeight="480" 
+        MinHeight="530" 
         Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"

@@ -35,7 +35,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MIN_WIDTH = 345;
         public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
-        public const double MAIN_WINDOW_MIN_HEIGHT = 480;
+        public const double MAIN_WINDOW_MIN_HEIGHT = 530;
         private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
 
         // Injections:
@@ -390,6 +390,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             };
 
             var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
+            viewModel.Secret = userCreationResponse.TotpSecret;
             viewModel.QR = qrWriter.Write($"otpauth://totp/GlitchedEpistle:{userCreationResponse.Id}?secret={userCreationResponse.TotpSecret}");
             viewModel.BackupCodes = userCreationResponse.TotpEmergencyBackupCodes;
 

@@ -93,8 +93,4 @@
 
         </StackPanel>
     </StackPanel>
-    <UserControl.InputBindings>
-        <KeyBinding Key="Enter" 
-                    Command="{Binding RegisterCommand}"/>
-    </UserControl.InputBindings>
 </UserControl>

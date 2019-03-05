@@ -16,7 +16,8 @@
                    FontSize="16"
                    Style="{StaticResource TextBlock}"/>
 
-        <Label Content="(Authy is recommended)" 
+        <Label Content="(Google Authenticator is recommended)" 
+               FontSize="11"
                HorizontalAlignment="Center"/>
 
         <TextBlock Text="{Binding ErrorMessage}" 
@@ -35,6 +36,24 @@
                HorizontalAlignment="Center" 
                Source="{Binding QR}"/>
 
+        <TextBlock Style="{StaticResource TextBlock}" 
+                   Margin="5,5,5,2"
+                   FontSize="9"
+                   MaxWidth="200"
+                   TextWrapping="Wrap" 
+                   Text="2FA secret (please back this up somewhere safe)"/>
+        
+        <TextBox Style="{StaticResource TextBox}" 
+                 Name="SecretTextBox"
+                 Padding="1"
+                 FontSize="10"
+                 MaxWidth="200" 
+                 IsReadOnly="True" 
+                 MouseDoubleClick="SecretTextBox_SelectText"
+                 GotKeyboardFocus="SecretTextBox_SelectText"
+                 PreviewMouseLeftButtonDown="SecretTextBox_OnPreviewMouseLeftButtonDown"
+                 Text="{Binding Secret}"/>
+
         <Label Content="Enter your 2FA code for verification:" 
                FontSize="14"/>
 
@@ -45,7 +64,7 @@
                  Height="23"
                  Margin="5,0,0,0"
                  MinWidth="250"
-                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
+                 ToolTip="Your 2-Factor authentication token (from Google Authenticator, Authy or a similar app)"
                  Text="{Binding Totp}"
                  Style="{StaticResource TextBox}"
                  TextChanged="TotpTextBox_OnTextChanged"/>
