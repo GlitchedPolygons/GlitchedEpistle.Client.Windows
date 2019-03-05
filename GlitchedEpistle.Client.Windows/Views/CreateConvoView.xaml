@@ -133,4 +133,9 @@
                     CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}"/>
         </StackPanel>
     </StackPanel>
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding SubmitCommand}"
+                    CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}"/>
+    </Window.InputBindings>
 </Window>
