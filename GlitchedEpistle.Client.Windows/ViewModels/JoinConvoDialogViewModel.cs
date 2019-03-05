@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -17,6 +18,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly IConvoService convoService;
         private readonly IConvoProvider convoProvider;
+        private readonly IEventAggregator eventAggregator;
         #endregion
 
         #region Events
@@ -36,10 +38,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public string ConvoId { get => convoId; set => Set(ref convoId, value); }
         #endregion
 
-        public JoinConvoDialogViewModel(IConvoService convoService, IConvoProvider convoProvider)
+        public JoinConvoDialogViewModel(IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator)
         {
             this.convoService = convoService;
             this.convoProvider = convoProvider;
+            this.eventAggregator = eventAggregator;
 
             JoinCommand = new DelegateCommand(OnClickedJoinConvo);
             CancelCommand = new DelegateCommand(_ => RequestedClose?.Invoke(null, EventArgs.Empty));
