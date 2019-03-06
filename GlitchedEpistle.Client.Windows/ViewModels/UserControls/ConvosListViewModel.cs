@@ -47,7 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void UpdateList() => Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos) : new ObservableCollection<Convo>();
 
-        private void OnOpenConvo(object commandParam)//TODO: binding inside convolist view xaml
+        private void OnOpenConvo(object commandParam)
         {
             var convo = commandParam as Convo;
             if (convo is null)
