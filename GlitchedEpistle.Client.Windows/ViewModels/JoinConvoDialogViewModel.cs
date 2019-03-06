@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Timers;
 using System.Windows.Input;
@@ -8,7 +9,9 @@ using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using Newtonsoft.Json;
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -75,27 +78,35 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     return;
                 }
 
-                var convo = convoProvider[ConvoId];
-                if (convo is null)
+                var convo = new Convo
                 {
-                    var metadata = await convoService.GetConvoMetadata(ConvoId, pw, user.Id, user.Token.Item2);
-                    if (metadata != null)
-                    {
-                        convo = new Convo
-                        {
-                            Id = metadata.Id,
-                            Name = metadata.Name,
-                            Expires = metadata.Expires,
-                            CreatorId = metadata.CreatorId,
-                            Description = metadata.Description,
-                            CreationTimestamp = metadata.CreationTimestamp,
-                            BannedUsers = metadata.BannedUsers.Split(',').ToList(),
-                            Participants = metadata.Participants.Split(',').ToList(),
-                            PasswordSHA512 = pw
-                        };
-                        convoProvider.Convos.Add(convo);
-                    }
+                    Id = ConvoId,
+                    PasswordSHA512 = pw
+                };
+
+                var metadata = await convoService.GetConvoMetadata(ConvoId, pw, user.Id, user.Token.Item2);
+                if (metadata != null)
+                {
+                    convo.Name = metadata.Name;
+                    convo.Expires = metadata.Expires;
+                    convo.CreatorId = metadata.CreatorId;
+                    convo.Description = metadata.Description;
+                    convo.CreationTimestamp = metadata.CreationTimestamp;
+                    convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
+                    convo.Participants = metadata.Participants.Split(',').ToList();
                 }
+
+                var _convo = convoProvider[convo.Id];
+                if (_convo != null)
+                {
+                    convoProvider.Convos.Remove(_convo);
+                }
+
+                convoProvider.Convos.Add(convo);
+
+                // Create (or update) the convo metadata file + ensure existence of its messages directory.
+                Directory.CreateDirectory(Path.Combine(Paths.CONVOS_DIRECTORY, ConvoId));
+                File.WriteAllText(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id + ".json"), JsonConvert.SerializeObject(convo, Formatting.Indented));
 
                 eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
             }
