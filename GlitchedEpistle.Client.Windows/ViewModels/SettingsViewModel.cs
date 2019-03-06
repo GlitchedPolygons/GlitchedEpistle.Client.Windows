@@ -76,7 +76,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
             RedeemButtonCommand = new DelegateCommand(OnClickedRedeem);
-            ExportUserButtonCommand = new DelegateCommand(OnClickedExport);
+            ExportUserButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<UserExportView, UserExportViewModel>(true, true));
 
             if (!settings.Load())
             {
@@ -141,19 +141,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             var dialogView = new InfoDialogView { DataContext = dialogViewModel };
             dialogView.ShowDialog();
-        }
-
-        private void OnClickedExport(object commandParam)
-        {
-            var userExportView = windowFactory.Create<UserExportView>(true);
-            
-            if (userExportView.DataContext is null)
-            {
-                userExportView.DataContext = viewModelFactory.Create<UserExportViewModel>();
-            }
-
-            userExportView.Show();
-            userExportView.Activate();
         }
 
         private void OnClickedDelete(object commandParam)

@@ -24,16 +24,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ExpirationReminderViewModel(User user, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
         {
             BuyButtonCommand = new DelegateCommand(_ => Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub"));
-            RedeemButtonCommand = new DelegateCommand(_ =>
-            {
-                var settingsView = windowFactory.Create<SettingsView>(true);
-                if (settingsView.DataContext is null)
-                {
-                    settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
-                }
-                settingsView.Show();
-                settingsView.Activate();
-            });
+            RedeemButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<SettingsView, SettingsViewModel>(true, true));
 
             ReminderText = $"Your Epistle membership ends {(user.ExpirationUTC - DateTime.UtcNow).TotalDays} day(s) from now; the {user.ExpirationUTC.Day}. of {GetMonthName(user.ExpirationUTC.Month)}, {user.ExpirationUTC.Year} at {user.ExpirationUTC:HH:mm} (UTC).";
         }
