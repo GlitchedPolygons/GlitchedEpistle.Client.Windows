@@ -156,6 +156,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
             eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
 
+            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
+
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -370,6 +372,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, newToken);
+        }
+
+        private void OnJoinedConvo(Convo convo)
+        {
+            // TODO: open the convo control here and assign it to maincontrol
         }
 
         private void Logout()
