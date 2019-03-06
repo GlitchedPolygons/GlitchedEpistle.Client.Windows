@@ -5,14 +5,14 @@ using System.Timers;
 using System.Windows.Input;
 using System.Windows.Controls;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using Prism.Events;
+using Newtonsoft.Json;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using Newtonsoft.Json;
-using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -53,7 +53,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.eventAggregator = eventAggregator;
 
             JoinCommand = new DelegateCommand(OnClickedJoinConvo);
-            CancelCommand = new DelegateCommand(_ => RequestedClose?.Invoke(null, EventArgs.Empty));
+            CancelCommand = new DelegateCommand(_ => RequestedClose?.Invoke(this, EventArgs.Empty));
 
             messageTimer.Elapsed += (_, __) => ErrorMessage = null;
             messageTimer.Start();
