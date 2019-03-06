@@ -126,57 +126,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
             });
 
-            SettingsButtonCommand = new DelegateCommand(_ =>
-            {
-                // When opening views that only exist one at a time,
-                // it's important not to recreate the viewmodel every time,
-                // as that would override any changes made.
-                // Therefore, check if the view already has a data context that isn't null.
-                var settingsView = windowFactory.Create<SettingsView>(true);
-                if (settingsView.DataContext is null)
-                    settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
-                settingsView.Show();
-                settingsView.Activate();
-            });
-
-            HelpButtonCommand = new DelegateCommand(_ =>
-            {
-                var helpView = windowFactory.Create<HelpView>(true);
-                if (helpView.DataContext is null)
-                    helpView.DataContext = viewModelFactory.Create<HelpViewModel>();
-                helpView.Show();
-                helpView.Activate();
-            });
-
-            CreateConvoButtonCommand = new DelegateCommand(_ =>
-            {
-                var createConvoView = windowFactory.Create<CreateConvoView>(true);
-                if (createConvoView.DataContext is null)
-                    createConvoView.DataContext = viewModelFactory.Create<CreateConvoViewModel>();
-                createConvoView.Show();
-                createConvoView.Activate();
-            });
-
-            JoinConvoButtonCommand = new DelegateCommand(_ =>
-            {
-                // TODO: join convo dialog here
-            });
-
-            ChangePasswordButtonCommand = new DelegateCommand(_ =>
-            {
-                var changePasswordView = windowFactory.Create<ChangePasswordView>(true);
-                if (changePasswordView.DataContext is null)
-                    changePasswordView.DataContext = viewModelFactory.Create<ChangePasswordViewModel>();
-                changePasswordView.Show();
-                changePasswordView.Activate();
-            });
-
-            LogoutButtonCommand = new DelegateCommand(_ =>
-            {
-                if (MainControl is LoginView)
-                    return;
-                Logout();
-            });
+            SettingsButtonCommand = new DelegateCommand(_ => OpenWindow<SettingsView, SettingsViewModel>(true, true));
+            HelpButtonCommand = new DelegateCommand(_ => OpenWindow<HelpView, HelpViewModel>(false, true));
+            CreateConvoButtonCommand = new DelegateCommand(_ => OpenWindow<CreateConvoView, CreateConvoViewModel>(true, true));
+            JoinConvoButtonCommand = new DelegateCommand(_ => OpenWindow<JoinConvoDialogView, JoinConvoDialogViewModel>(true, true));
+            ChangePasswordButtonCommand = new DelegateCommand(_ => OpenWindow<ChangePasswordView, ChangePasswordViewModel>(true, true));
+            LogoutButtonCommand = new DelegateCommand(_ => Logout());
 
             #endregion
 
@@ -263,6 +218,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
 
         #endregion
+
+        private void OpenWindow<TView, TViewModel>(bool dialog, bool ensureSingleInstance) where TView : Window where TViewModel : ViewModel
+        {
+            // When opening views that only exist one at a time,
+            // it's important not to recreate the viewmodel every time,
+            // as that would override any changes made.
+            // Therefore, check if the view already has a data context that isn't null.
+
+            var view = windowFactory.Create<TView>(ensureSingleInstance);
+
+            if (view.DataContext is null)
+                view.DataContext = viewModelFactory.Create<TViewModel>();
+
+            if (dialog)
+                view.ShowDialog();
+            else
+                view.Show();
+
+            view.Activate();
+        }
 
         private void OnClosed(object commandParam)
         {
@@ -419,6 +394,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void Logout()
         {
+            if (MainControl is LoginView)
+                return;
+
             user.Token = null;
             user.PasswordSHA512 = null;
 
