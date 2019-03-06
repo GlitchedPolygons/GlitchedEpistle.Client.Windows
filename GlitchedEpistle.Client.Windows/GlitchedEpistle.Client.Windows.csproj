@@ -482,6 +482,7 @@
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\ImportUserFromBackupViewModel.cs" />
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
+    <Compile Include="ViewModels\JoinConvoDialogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ConvosListViewModel.cs" />
     <Compile Include="ViewModels\UserControls\CouponRedeemedSuccessfullyViewModel.cs" />
@@ -513,6 +514,9 @@
     </Compile>
     <Compile Include="Views\InfoDialogView.xaml.cs">
       <DependentUpon>InfoDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JoinConvoDialogView.xaml.cs">
+      <DependentUpon>JoinConvoDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -577,6 +581,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InfoDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JoinConvoDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
