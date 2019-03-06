@@ -11,15 +11,18 @@
              ScrollViewer.VerticalScrollBarVisibility="Visible">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal" Margin="0" Height="Auto"/>
+                <WrapPanel Margin="0" 
+                           Height="Auto"
+                           Orientation="Horizontal"/>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Button Margin="1" Content="{Binding Name}" Height="53" Background="{Binding Color}" HorizontalAlignment="Right" Width="79" 
-                        Command="{Binding DataContext.ShowProductCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
-                        CommandParameter="{Binding}">
-                </Button>
+                <Button Height="46"
+                        Content="{Binding Name}" 
+                        ToolTip="{Binding Description}"
+                        Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
+                        CommandParameter="{Binding}"/>
             </DataTemplate>
         </ListBox.ItemTemplate>
     </ListBox>
