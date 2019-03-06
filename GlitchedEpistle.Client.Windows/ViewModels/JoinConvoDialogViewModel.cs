@@ -109,6 +109,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 File.WriteAllText(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id + ".json"), JsonConvert.SerializeObject(convo, Formatting.Indented));
 
                 eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
+                RequestedClose?.Invoke(this, EventArgs.Empty);
             }
         }
     }
