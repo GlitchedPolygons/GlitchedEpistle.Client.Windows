@@ -6,70 +6,21 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
-    <ScrollViewer Name="ConvosScrollViewer" 
-                  VerticalScrollBarVisibility="Auto">
-
-        <StackPanel Name="ConvosStackPanel">
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-            <Button Content="TEST"></Button>
-            <Separator/>
-        </StackPanel>
-    </ScrollViewer>
+    <ListBox ItemsSource="{Binding Convos}" 
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+             ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" Margin="0" Height="Auto"/>
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Button Margin="1" Content="{Binding Name}" Height="53" Background="{Binding Color}" HorizontalAlignment="Right" Width="79" 
+                        Command="{Binding DataContext.ShowProductCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
+                        CommandParameter="{Binding}">
+                </Button>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
 </UserControl>

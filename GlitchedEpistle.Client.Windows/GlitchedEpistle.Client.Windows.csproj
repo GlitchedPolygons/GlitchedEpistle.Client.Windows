@@ -694,5 +694,11 @@
     <Resource Include="Resources\Images\trash-icon-black.png" />
     <Resource Include="Resources\Images\trash-icon-white.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\clipboard-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\green-tick.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

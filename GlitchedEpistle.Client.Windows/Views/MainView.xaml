@@ -54,11 +54,29 @@
                        FontSize="18" 
                        Padding="0,5,0,0"/>
 
-                <Label Content="{Binding UserId}"
-                       HorizontalAlignment="Center"
-                       FontSize="11"
-                       Padding="0,0,0,5" 
-                       Foreground="Gray" FontStyle="Italic"/>
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+
+                    <Label Content="{Binding UserId}"
+                           FontSize="11"
+                           Padding="0,0,0,5" 
+                           Foreground="Gray" 
+                           FontStyle="Italic"/>
+
+                    <Button Width="15" 
+                            Height="15"
+                            Margin="4,0,0,4"
+                            ToolTip="Copy user id to clipboard"
+                            Command="{Binding CopyUserIdToClipboardCommand}"
+                            Style="{StaticResource CopyToClipboardButton}"/>
+
+                    <Image Source="/Resources/Images/green-tick.png" 
+                           Width="15" 
+                           Height="15"
+                           Margin="1,0,0,4" 
+                           Visibility="{Binding ClipboardTickVisibility}"/>
+                </StackPanel>
 
                 <ProgressBar Height="4" 
                              Name="SubscriptionProgressBar"

@@ -33,34 +33,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
         {
             this.windowFactory = windowFactory;
-            this.viewModelFactory = viewModelFactory;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
+            this.viewModelFactory = viewModelFactory;
 
-            Convos = new ObservableCollection<Convo>(convoProvider.Convos);
+            UpdateList();
 
             OpenConvoCommand = new DelegateCommand(OnOpenConvo);
 
-            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
-            eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(OnCreatedConvoSuccessfully);
+            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => UpdateList());
+            eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(_ => UpdateList());
         }
 
-        private void UpdateList()
-        {
-            Convos = new ObservableCollection<Convo>(convoProvider.Convos);
-        }
+        private void UpdateList() => Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos) : new ObservableCollection<Convo>();
 
-        private void OnJoinedConvo(Convo convo)
-        {
-            UpdateList();
-        }
-
-        private void OnCreatedConvoSuccessfully(string convoId)
-        {
-            UpdateList();
-        }
-
-        private void OnOpenConvo(object commandParam)//TODO: raise this via binding inside convolist view xaml
+        private void OnOpenConvo(object commandParam)//TODO: binding inside convolist view xaml
         {
             var convo = commandParam as Convo;
             if (convo is null)
@@ -69,7 +56,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             var view = windowFactory.Create<JoinConvoDialogView>(true);
-            var viewModel= viewModelFactory.Create<JoinConvoDialogViewModel>();
+            var viewModel = viewModelFactory.Create<JoinConvoDialogViewModel>();
             viewModel.ConvoId = convo.Id;
 
             if (view.DataContext is null)
