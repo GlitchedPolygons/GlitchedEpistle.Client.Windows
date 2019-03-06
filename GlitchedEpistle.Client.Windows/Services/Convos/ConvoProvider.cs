@@ -16,7 +16,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
 {
     public class ConvoProvider : IConvoProvider
     {
-        private readonly List<Convo> convos = null;
+        private readonly List<Convo> convos = new List<Convo>(4);
         public ICollection<Convo> Convos => convos;
 
         public ConvoProvider()

@@ -22,6 +22,7 @@
     <ImageBrush x:Key="HelpIcon" ImageSource="/Resources/Images/help-icon-white.png"/>
     <ImageBrush x:Key="ResetIcon" ImageSource="/Resources/Images/reset-icon-white.png"/>
     <ImageBrush x:Key="TrashIcon" ImageSource="/Resources/Images/trash-icon-white.png"/>
+    <ImageBrush x:Key="ClipboardIcon" ImageSource="/Resources/Images/clipboard-icon.png"/>
     <ImageBrush x:Key="SettingsIcon" ImageSource="/Resources/Images/settings-icon-white.png"/>
 
     <!-- Grid Splitter -->
@@ -182,6 +183,27 @@
     <Style x:Key="ResetMainWindowButton" TargetType="Button">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource ResetIcon}"/>
+    </Style>
+
+    <!-- Clipboard Button -->
+    <Style x:Key="CopyToClipboardButton" TargetType="Button">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="{StaticResource ClipboardIcon}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Border" Background="{TemplateBinding Background}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="0.3"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="True">
+                <Setter Property="Opacity" Value="1.0"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Settings Button -->

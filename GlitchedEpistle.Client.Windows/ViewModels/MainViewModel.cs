@@ -36,6 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
         public const double MAIN_WINDOW_MIN_HEIGHT = 530;
+        private const int CLIPBOARD_COPY_CONFIRMATION_TICK_DURATION = 3;
         private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
 
         // Injections:
@@ -59,6 +60,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand JoinConvoButtonCommand { get; }
         public ICommand ChangePasswordButtonCommand { get; }
         public ICommand LogoutButtonCommand { get; }
+        public ICommand CopyUserIdToClipboardCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -94,6 +96,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private double progressBarValue = 100;
         public double ProgressBarValue { get => progressBarValue; set => Set(ref progressBarValue, value); }
 
+        private Visibility clipboardTickVisibility = Visibility.Hidden;
+        public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
+
         private Control mainControl;
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
 
@@ -102,7 +107,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         private bool reset = false;
-        private ulong? scheduledAuthRefresh = null, scheduledExpirationDialog = null;
+        private ulong? scheduledAuthRefresh = null, scheduledExpirationDialog = null, scheduledHideGreenTickIcon = null;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider)
         {
@@ -132,6 +137,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             JoinConvoButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<JoinConvoDialogView, JoinConvoDialogViewModel>(true, true));
             ChangePasswordButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<ChangePasswordView, ChangePasswordViewModel>(true, true));
             LogoutButtonCommand = new DelegateCommand(_ => Logout());
+            CopyUserIdToClipboardCommand = new DelegateCommand(_ =>
+            {
+                Clipboard.SetText(UserId);
+                ClipboardTickVisibility = Visibility.Visible;
+
+                if (scheduledHideGreenTickIcon.HasValue)
+                    methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+
+                scheduledHideGreenTickIcon = methodQ.Schedule(() =>
+                {
+                    ClipboardTickVisibility = Visibility.Hidden;
+                    scheduledHideGreenTickIcon = null;
+                }, DateTime.UtcNow.AddSeconds(CLIPBOARD_COPY_CONFIRMATION_TICK_DURATION));
+            });
 
             #endregion
 
@@ -220,7 +239,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
 
         #endregion
-        
+
         private void OnClosed(object commandParam)
         {
             // Don't save out anything and delete
@@ -252,9 +271,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private async void UpdateUserExp()
         {
             // Gather user expiration UTC from server.
-            DateTime utcNow = DateTime.UtcNow;
             DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
-
             if (!exp.HasValue)
             {
                 return;
@@ -262,6 +279,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Update the UI accordingly (blue progress bar + tooltip).
             user.ExpirationUTC = exp.Value;
+            DateTime utcNow = DateTime.UtcNow;
             bool expired = utcNow > user.ExpirationUTC;
             ProgressBarValue = expired ? 0 : (user.ExpirationUTC - utcNow).TotalHours * 100.0d / 720.0d;
             ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
