@@ -394,7 +394,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            // TODO: open the convo control here and assign it to maincontrol
+            var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
+            viewModel.ActiveConvo = convo;
+            MainControl = new ActiveConvoView { DataContext = viewModel };
         }
 
         private void Logout()
