@@ -86,8 +86,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IMethodQ, MethodQ>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConvoProvider, ConvoProvider>(new ContainerControlledLifetimeManager());
             
             // Open the main app's window.

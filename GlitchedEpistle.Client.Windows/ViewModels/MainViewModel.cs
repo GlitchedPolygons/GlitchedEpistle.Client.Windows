@@ -126,11 +126,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
             });
 
-            SettingsButtonCommand = new DelegateCommand(_ => OpenWindow<SettingsView, SettingsViewModel>(true, true));
-            HelpButtonCommand = new DelegateCommand(_ => OpenWindow<HelpView, HelpViewModel>(false, true));
-            CreateConvoButtonCommand = new DelegateCommand(_ => OpenWindow<CreateConvoView, CreateConvoViewModel>(true, true));
-            JoinConvoButtonCommand = new DelegateCommand(_ => OpenWindow<JoinConvoDialogView, JoinConvoDialogViewModel>(true, true));
-            ChangePasswordButtonCommand = new DelegateCommand(_ => OpenWindow<ChangePasswordView, ChangePasswordViewModel>(true, true));
+            SettingsButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<SettingsView, SettingsViewModel>(true, true));
+            HelpButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<HelpView, HelpViewModel>(false, true));
+            CreateConvoButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<CreateConvoView, CreateConvoViewModel>(true, true));
+            JoinConvoButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<JoinConvoDialogView, JoinConvoDialogViewModel>(true, true));
+            ChangePasswordButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<ChangePasswordView, ChangePasswordViewModel>(true, true));
             LogoutButtonCommand = new DelegateCommand(_ => Logout());
 
             #endregion
@@ -218,27 +218,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
 
         #endregion
-
-        private void OpenWindow<TView, TViewModel>(bool dialog, bool ensureSingleInstance) where TView : Window where TViewModel : ViewModel
-        {
-            // When opening views that only exist one at a time,
-            // it's important not to recreate the viewmodel every time,
-            // as that would override any changes made.
-            // Therefore, check if the view already has a data context that isn't null.
-
-            var view = windowFactory.Create<TView>(ensureSingleInstance);
-
-            if (view.DataContext is null)
-                view.DataContext = viewModelFactory.Create<TViewModel>();
-
-            if (dialog)
-                view.ShowDialog();
-            else
-                view.Show();
-
-            view.Activate();
-        }
-
+        
         private void OnClosed(object commandParam)
         {
             // Don't save out anything and delete
