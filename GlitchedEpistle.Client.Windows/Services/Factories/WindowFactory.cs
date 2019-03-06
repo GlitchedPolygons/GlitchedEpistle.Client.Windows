@@ -71,11 +71,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
                 view.DataContext = viewModelFactory.Create<TViewModel>();
 
             if (dialog)
+            {
                 view.ShowDialog();
+            }
             else
+            {
                 view.Show();
+                view.Activate();
+            }
 
-            view.Activate();
             return view.DataContext as TViewModel;
         }
 

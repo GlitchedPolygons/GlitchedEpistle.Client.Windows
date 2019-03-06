@@ -1,13 +1,13 @@
-﻿using System.IO;
-using System.Windows.Input;
-using System.Collections.Generic;
+﻿using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -15,92 +15,67 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         // Injections:
+        private readonly IWindowFactory windowFactory;
+        private readonly IViewModelFactory viewModelFactory;
         private readonly IConvoProvider convoProvider;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
         #region Commands
         public ICommand OpenConvoCommand { get; }
-        public ICommand DeleteConvoCommand { get; }
         #endregion
 
         #region UI Bindings
-        private ICollection<Convo> convos;
-        public ICollection<Convo> Convos { get => convos; set => Set(ref convos, value); }
+        private ObservableCollection<Convo> convos;
+        public ObservableCollection<Convo> Convos { get => convos; set => Set(ref convos, value); }
         #endregion
 
-        public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator)
+        public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
         {
+            this.windowFactory = windowFactory;
+            this.viewModelFactory = viewModelFactory;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
 
-            Convos = convoProvider.Convos;
+            Convos = new ObservableCollection<Convo>(convoProvider.Convos);
 
             OpenConvoCommand = new DelegateCommand(OnOpenConvo);
-            DeleteConvoCommand = new DelegateCommand(OnDeleteConvo);
 
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
             eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(OnCreatedConvoSuccessfully);
         }
 
+        private void UpdateList()
+        {
+            Convos = new ObservableCollection<Convo>(convoProvider.Convos);
+        }
+
         private void OnJoinedConvo(Convo convo)
         {
-            if (convo is null 
-                || string.IsNullOrEmpty(convo.Id) 
-                || convoProvider[convo.Id] != null)
-            {
-                return;
-            }
-
-            convoProvider.Convos.Add(convo);
-            Convos = convoProvider.Convos;
-        }
-
-        private void OnOpenConvo(object commandParam)
-        {
-            var convo = commandParam as Convo;
-            if (convo is null)
-            {
-                return;
-            }
-
-            // TODO: ask for password and then dispatch OnOpenedConvo event via aggregator.
-        }
-
-        // This deletes the convo data from the device but does NOT make the user leave the convo!
-        private void OnDeleteConvo(object commandParam)
-        {
-            var convo = commandParam as Convo;
-            if (convo is null)
-            {
-                return;
-            }
-
-            // TODO:
-            // show confirmation dialog here ("are you sure?").
-            // Remember to explain that it will delete the convo data
-            // from device but not make user leave!
-            // (That needs to be done manually inside the open convo).
-            
-            convoProvider.Convos.Remove(convo);
-            Convos = convoProvider.Convos;
-
-            string path = Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id);
-
-            if (File.Exists(path))
-                File.Delete(path);
-
-            if (Directory.Exists(path))
-                Directory.Delete(path, true);
+            UpdateList();
         }
 
         private void OnCreatedConvoSuccessfully(string convoId)
         {
-            var convo = convoProvider[convoId];
-            if (convo != null)
+            UpdateList();
+        }
+
+        private void OnOpenConvo(object commandParam)//TODO: raise this via binding inside convolist view xaml
+        {
+            var convo = commandParam as Convo;
+            if (convo is null)
             {
-                // TODO: add convo entry to list
+                return;
             }
+
+            var view = windowFactory.Create<JoinConvoDialogView>(true);
+            var viewModel= viewModelFactory.Create<JoinConvoDialogViewModel>();
+            viewModel.ConvoId = convo.Id;
+
+            if (view.DataContext is null)
+                view.DataContext = viewModel;
+
+            view.ShowDialog();
         }
     }
 }
