@@ -96,17 +96,26 @@
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."
                             Command="{Binding CreateConvoButtonCommand}"/>
-                    <Separator/>
+                    <Rectangle Width="1" 
+                               Opacity="0.5"
+                               VerticalAlignment="Stretch" 
+                               Stroke="{StaticResource SeparatorColorBrush}" />
                     <Button Content="Join Convo" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to join an existing conversation."
                             Command="{Binding JoinConvoButtonCommand}"/>
-                    <Separator/>
+                    <Rectangle Width="1" 
+                               Opacity="0.5"
+                               VerticalAlignment="Stretch" 
+                               Stroke="{StaticResource SeparatorColorBrush}" />
                     <Button Content="Change Password" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
                             Command="{Binding ChangePasswordButtonCommand}"/>
-                    <Separator/>
+                    <Rectangle Width="1" 
+                               Opacity="0.5"
+                               VerticalAlignment="Stretch" 
+                               Stroke="{StaticResource SeparatorColorBrush}" />
                     <Button Content="Logout" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to log out of your Glitched Epistle account."
@@ -171,13 +180,14 @@
         </Canvas>
 
         <!-- Right Column -->
-        <StackPanel Grid.Column="1" Grid.Row="0" Margin="5,35,0,0">
-
-            <ContentControl Content="{Binding MainControl}" 
-                            HorizontalAlignment="Center"
-                            Margin="0"/>
-
-        </StackPanel>
+        <ContentControl Content="{Binding MainControl}" 
+                        HorizontalAlignment="Stretch" 
+                        HorizontalContentAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Grid.Row="0" 
+                        Grid.Column="1" 
+                        Margin="5,35,0,0"/>
     </Grid>
 </Window>
 <!-- Copyright (C) Raphael Beck | Glitched Polygons, 2018 -->
