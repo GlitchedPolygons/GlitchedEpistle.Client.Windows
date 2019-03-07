@@ -50,11 +50,13 @@
         </StackPanel>
 
         <Grid Grid.Row="2" HorizontalAlignment="Stretch">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="80"/>
                 <ColumnDefinition Width="0.5"/>
             </Grid.ColumnDefinitions>
+
             <TextBox Grid.Column="0" 
                      Name="TextBox" 
                      FontSize="14"
@@ -64,11 +66,10 @@
                      HorizontalContentAlignment="Stretch"
                      HorizontalScrollBarVisibility="Disabled"
                      VerticalScrollBarVisibility="Auto" 
-                     Text="{Binding Text}" 
                      Style="{StaticResource TextBox}"/>
 
-            <Grid Grid.Column="1"  
-                  MinWidth="80">
+            <Grid Grid.Column="1" MinWidth="80">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1"/>
                     <RowDefinition Height="*"/>
@@ -85,7 +86,7 @@
                 <Button Grid.Row="1" 
                         BorderThickness="0" 
                         Content="Attach"
-                        Command="{Binding AttachmentButtonCommand}"/>
+                        Command="{Binding AttachCommand}"/>
 
                 <Rectangle Grid.Row="2" 
                            Opacity="0.65"
@@ -95,7 +96,8 @@
                 <Button Grid.Row="3" 
                         BorderThickness="0"
                         Content="Send"
-                        Command="{Binding SendButtonCommand}"/>
+                        Command="{Binding SendCommand}"
+                        CommandParameter="{Binding ElementName=TextBox, Path=Text}"/>
 
                 <Rectangle Grid.Row="4" 
                            Opacity="0.65"
@@ -110,4 +112,11 @@
                        Stroke="{StaticResource SeparatorColorBrush}" />
         </Grid>
     </Grid>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding SendCommand}"
+                    CommandParameter="{Binding ElementName=TextBox, Path=Text}"/>
+    </UserControl.InputBindings>
+
 </UserControl>
