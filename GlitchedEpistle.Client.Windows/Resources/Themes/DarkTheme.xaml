@@ -58,12 +58,6 @@
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 
-    <!-- Separator lines -->
-    <Style TargetType="Separator">
-        <Setter Property="Margin" Value="0.5"/>
-        <Setter Property="Background" Value="AliceBlue"/>
-    </Style>
-
     <!-- Default Button -->
     <Style TargetType="Button">
         <Setter Property="Template">
