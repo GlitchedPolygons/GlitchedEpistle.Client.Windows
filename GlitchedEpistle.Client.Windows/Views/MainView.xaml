@@ -168,11 +168,10 @@
                     Command="{Binding ResetWindowButtonCommand}"
                     Style="{StaticResource ResetMainWindowButton}"
                     ToolTip="Reset the main window's size and layout." Click="ResetWindowButton_Click"/>
-
         </Canvas>
 
         <!-- Right Column -->
-        <StackPanel Grid.Column="1" Grid.Row="0" Margin="15,35,15,15">
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="5,35,0,0">
 
             <ContentControl Content="{Binding MainControl}" 
                             HorizontalAlignment="Center"

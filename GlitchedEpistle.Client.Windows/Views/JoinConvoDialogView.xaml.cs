@@ -18,6 +18,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             this.Loaded -= OnLoaded;
             this.MakeCloseable();
+
+            if (string.IsNullOrEmpty(ConvoIdTextBox.Text))
+            {
+                ConvoIdTextBox.Focus();
+            }
+            else
+            {
+                ConvoPasswordBox.Focus();
+            }
         }
     }
 }

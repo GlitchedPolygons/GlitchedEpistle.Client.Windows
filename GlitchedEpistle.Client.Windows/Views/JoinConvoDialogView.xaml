@@ -28,6 +28,7 @@
         <Label Content="Convo ID"/>
         <TextBox Height="23" 
                  Margin="5,0,0,0"
+                 Name="ConvoIdTextBox"
                  ToolTip="The conversation's unique identifier."
                  Text="{Binding ConvoId}"
                  Style="{StaticResource TextBox}"/>

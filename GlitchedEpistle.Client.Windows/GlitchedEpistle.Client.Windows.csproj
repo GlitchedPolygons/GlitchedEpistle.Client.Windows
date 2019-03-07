@@ -484,6 +484,7 @@
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
     <Compile Include="ViewModels\JoinConvoDialogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ActiveConvoViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ConvosListViewModel.cs" />
     <Compile Include="ViewModels\UserControls\CouponRedeemedSuccessfullyViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ExpiredViewModel.cs" />
@@ -527,6 +528,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\ActiveConvoView.xaml.cs">
+      <DependentUpon>ActiveConvoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\ConvosListView.xaml.cs">
       <DependentUpon>ConvosListView.xaml</DependentUpon>
@@ -593,6 +597,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\SettingsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\ActiveConvoView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
