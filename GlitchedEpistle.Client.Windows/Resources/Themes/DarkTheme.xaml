@@ -19,6 +19,8 @@
                 TileMode="Tile" 
                 Stretch="UniformToFill"/>
 
+    <SolidColorBrush x:Key="SeparatorColorBrush" Color="AliceBlue"/>
+
     <ImageBrush x:Key="HelpIcon" ImageSource="/Resources/Images/help-icon-white.png"/>
     <ImageBrush x:Key="ResetIcon" ImageSource="/Resources/Images/reset-icon-white.png"/>
     <ImageBrush x:Key="TrashIcon" ImageSource="/Resources/Images/trash-icon-white.png"/>
