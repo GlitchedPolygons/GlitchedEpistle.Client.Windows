@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
-    <ListBox ItemsSource="{Binding Convos}" 
+    <ListBox ItemsSource="{Binding Convos}"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
              ScrollViewer.VerticalScrollBarVisibility="Visible">
         <ListBox.ItemsPanel>
