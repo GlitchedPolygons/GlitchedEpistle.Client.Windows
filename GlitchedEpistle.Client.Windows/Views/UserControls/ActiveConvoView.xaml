@@ -4,9 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
-             mc:Ignorable="d" 
-             MinWidth="800" 
-             MinHeight="450">
+             mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -14,15 +12,46 @@
             <RowDefinition Height="*" MaxHeight="200"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" 
-               FontSize="24" 
-               VerticalAlignment="Center" 
-               Content="devtalk"/>
+        <StackPanel Grid.Row="0" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center">
+
+            <Label FontSize="24" 
+                   Padding="0"
+                   VerticalAlignment="Center"
+                   Content="{Binding Path=ActiveConvo.Name}"/>
+
+            <Rectangle Width="1" 
+                       Margin="15,0,15,0" 
+                       VerticalAlignment="Stretch" 
+                       Stroke="{StaticResource SeparatorColorBrush}" />
+
+            <Label Content="{Binding Path=ActiveConvo.Id}"
+                   FontSize="12" 
+                   Padding="0,0,0,0" 
+                   Foreground="Gray" 
+                   VerticalAlignment="Center"
+                   FontStyle="Italic"/>
+
+            <Button Width="15" 
+                    Height="15"
+                    Margin="4,0,0,0"
+                    ToolTip="Copy user id to clipboard"
+                    Command="{Binding CopyConvoIdToClipboardCommand}"
+                    Style="{StaticResource CopyToClipboardButton}"/>
+
+            <Image Source="/Resources/Images/green-tick.png" 
+                   Width="15" 
+                   Height="15"
+                   Margin="1,0,0,0" 
+                   Visibility="{Binding ClipboardTickVisibility}"/>
+        </StackPanel>
 
         <TextBox Name="TextBox" 
                  Grid.Row="2" 
                  FontSize="14"
                  TextWrapping="Wrap" 
-                 Text="test text lorem ipsum dolor suckmi dry" Style="{StaticResource TextBox}"/>
-</Grid>
+                 Text="lorem ipsum dolor sit yolo swag test text" Style="{StaticResource TextBox}"/>
+    </Grid>
 </UserControl>

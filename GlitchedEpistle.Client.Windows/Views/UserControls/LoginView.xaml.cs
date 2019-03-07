@@ -11,6 +11,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         public LoginView()
         {
             InitializeComponent();
+            PasswordBox.Focus();
         }
 
         private void UserIdTextBox_OnTextChanged(object sender, TextChangedEventArgs e)

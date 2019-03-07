@@ -36,7 +36,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
         public const double MAIN_WINDOW_MIN_HEIGHT = 530;
-        private const int CLIPBOARD_COPY_CONFIRMATION_TICK_DURATION = 3;
         private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
 
         // Injections:
@@ -149,7 +148,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     ClipboardTickVisibility = Visibility.Hidden;
                     scheduledHideGreenTickIcon = null;
-                }, DateTime.UtcNow.AddSeconds(CLIPBOARD_COPY_CONFIRMATION_TICK_DURATION));
+                }, DateTime.UtcNow.AddSeconds(3));
             });
 
             #endregion
