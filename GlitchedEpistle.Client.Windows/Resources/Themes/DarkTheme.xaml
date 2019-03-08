@@ -211,7 +211,7 @@
         <Setter Property="Background" Value="{StaticResource SettingsIcon}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="Border" Background="{TemplateBinding Background}"/>
                 </ControlTemplate>
             </Setter.Value>
@@ -222,6 +222,8 @@
             </Trigger>
             <Trigger Property="IsEnabled" Value="True">
                 <Setter Property="Opacity" Value="1.0"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
             </Trigger>
         </Style.Triggers>
     </Style>
