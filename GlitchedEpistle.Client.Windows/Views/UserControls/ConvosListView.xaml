@@ -6,21 +6,22 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
-    <ListBox ItemsSource="{Binding Convos}" Style="{StaticResource ConvosListBox}"
+    <ListBox ItemsSource="{Binding Convos}" 
+             Style="{StaticResource ConvosListBox}"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
              ScrollViewer.VerticalScrollBarVisibility="Visible">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <WrapPanel Margin="0" 
+                <StackPanel Margin="0" 
                            Height="Auto"
-                           Orientation="Horizontal"/>
+                           Orientation="Vertical"/>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Button Height="46"
-                        Content="{Binding Name}" 
+                <Button Content="{Binding Name}"
                         ToolTip="{Binding Description}"
+                        Style="{StaticResource ConvoListBoxEntryButton}"
                         Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
                         CommandParameter="{Binding}"/>
             </DataTemplate>
