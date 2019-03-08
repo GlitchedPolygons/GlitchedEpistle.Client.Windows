@@ -12,7 +12,7 @@
 
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
-    <SolidColorBrush x:Key="ScrollBarThumbColor">#ADABAB</SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollBarThumbColor">#757575</SolidColorBrush>
     <SolidColorBrush x:Key="ScrollBarThumbOnHoverColor">#77B8C6</SolidColorBrush>
     <SolidColorBrush x:Key="ScrollBarThumbOnDragColor" Color="#FF9ED4E0"></SolidColorBrush>
 
@@ -268,6 +268,12 @@
                 <Setter Property="Background" Value="Gray" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <!-- Convos ListBox -->
+    <Style x:Key="ConvosListBox" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderBrush" Value="#54DBDBDB"/>
+        <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
     </Style>
 
     <!-- ScrollBar -->
