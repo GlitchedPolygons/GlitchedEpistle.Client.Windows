@@ -124,6 +124,11 @@
 
             </StackPanel>
 
+            <Rectangle Opacity="0.5"
+                       Height="1"
+                       HorizontalAlignment="Stretch" 
+                       Stroke="{StaticResource SeparatorColorBrush}"/>
+
             <!-- Convos list -->
             <ContentControl Name="ConvosListControl" Content="{Binding ConvosListControl}"/>
 

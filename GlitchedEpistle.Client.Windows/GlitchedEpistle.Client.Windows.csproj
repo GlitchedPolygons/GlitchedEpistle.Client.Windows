@@ -708,5 +708,16 @@
   <ItemGroup>
     <Resource Include="Resources\Images\green-tick.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\help-icon-selected.png" />
+    <Resource Include="Resources\Images\reset-icon-selected.png" />
+    <Resource Include="Resources\Images\settings-icon-selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\trash-icon-selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\clipboard-icon-selected.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

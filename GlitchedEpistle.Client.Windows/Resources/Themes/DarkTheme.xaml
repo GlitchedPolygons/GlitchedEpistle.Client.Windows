@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--Control colors.-->
+    <!-- Control colors -->
     <Color x:Key="WindowBackgroundColor">#101010</Color>
     <Color x:Key="ControlNormalColor">#353535</Color>
     <Color x:Key="ControlNormalForegroundColor">AliceBlue</Color>
@@ -12,6 +12,8 @@
 
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
+
+    <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor">#757575</SolidColorBrush>
     <SolidColorBrush x:Key="ScrollBarThumbOnHoverColor">#77B8C6</SolidColorBrush>
     <SolidColorBrush x:Key="ScrollBarThumbOnDragColor" Color="#FF9ED4E0"></SolidColorBrush>
@@ -25,10 +27,15 @@
     <SolidColorBrush x:Key="SeparatorColorBrush" Color="AliceBlue"/>
 
     <ImageBrush x:Key="HelpIcon" ImageSource="/Resources/Images/help-icon-white.png"/>
+    <ImageBrush x:Key="HelpIconSelected" ImageSource="/Resources/Images/help-icon-selected.png"/>
     <ImageBrush x:Key="ResetIcon" ImageSource="/Resources/Images/reset-icon-white.png"/>
+    <ImageBrush x:Key="ResetIconSelected" ImageSource="/Resources/Images/reset-icon-selected.png"/>
     <ImageBrush x:Key="TrashIcon" ImageSource="/Resources/Images/trash-icon-white.png"/>
+    <ImageBrush x:Key="TrashIconSelected" ImageSource="/Resources/Images/trash-icon-selected.png"/>
     <ImageBrush x:Key="ClipboardIcon" ImageSource="/Resources/Images/clipboard-icon.png"/>
+    <ImageBrush x:Key="ClipboardIconSelected" ImageSource="/Resources/Images/clipboard-icon-selected.png"/>
     <ImageBrush x:Key="SettingsIcon" ImageSource="/Resources/Images/settings-icon-white.png"/>
+    <ImageBrush x:Key="SettingsIconSelected" ImageSource="/Resources/Images/settings-icon-selected.png"/>
 
     <!-- Grid Splitter -->
     <Style TargetType="GridSplitter">
@@ -180,64 +187,152 @@
 
     <!-- Reset Button -->
     <Style x:Key="ResetMainWindowButton" TargetType="Button">
-        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource ResetIcon}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          SnapsToDevicePixels="True" 
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.3"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Opacity" Value="1.0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ResetIconSelected}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Clipboard Button -->
     <Style x:Key="CopyToClipboardButton" TargetType="Button">
-        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource ClipboardIcon}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Background="{TemplateBinding Background}"/>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          SnapsToDevicePixels="True" 
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.3"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Opacity" Value="1.0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource ClipboardIconSelected}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.3"/>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="True">
-                <Setter Property="Opacity" Value="1.0"/>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <!-- Settings Button -->
     <Style x:Key="SettingsButton" TargetType="Button">
-        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource SettingsIcon}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="Border" Background="{TemplateBinding Background}"/>
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          SnapsToDevicePixels="True" 
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.3"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Opacity" Value="1.0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource SettingsIconSelected}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.3"/>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="True">
-                <Setter Property="Opacity" Value="1.0"/>
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <!-- Trash Button -->
     <Style x:Key="TrashButton" TargetType="Button">
-        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource TrashIcon}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          SnapsToDevicePixels="True" 
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.3"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Opacity" Value="1.0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource TrashIconSelected}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Help Button -->
     <Style x:Key="HelpButton" TargetType="Button">
-        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource HelpIcon}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                          SnapsToDevicePixels="True" 
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.3"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="Opacity" Value="1.0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource HelpIconSelected}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- Date Picker -->
@@ -274,7 +369,7 @@
 
     <!-- Convos ListBox -->
     <Style x:Key="ConvosListBox" TargetType="{x:Type ListBox}">
-        <Setter Property="BorderBrush" Value="#54DBDBDB"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="False">
