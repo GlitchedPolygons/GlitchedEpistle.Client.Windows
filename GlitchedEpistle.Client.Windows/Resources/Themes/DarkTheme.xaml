@@ -274,6 +274,27 @@
     <Style x:Key="ConvosListBox" TargetType="{x:Type ListBox}">
         <Setter Property="BorderBrush" Value="#54DBDBDB"/>
         <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Convos List Entry (Button) -->
+    <Style x:Key="ConvoListBoxEntryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="2048"/>
+        <Setter Property="Margin" Value="8,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="0">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!-- ScrollBar -->
