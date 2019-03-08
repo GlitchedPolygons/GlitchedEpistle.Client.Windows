@@ -13,8 +13,8 @@
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
                 <StackPanel Margin="0" 
-                           Height="Auto"
-                           Orientation="Vertical"/>
+                            Height="Auto"
+                            Orientation="Vertical"/>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>

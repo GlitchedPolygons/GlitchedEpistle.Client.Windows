@@ -92,8 +92,7 @@
                         Margin="0,0,65,0"
                         Style="{StaticResource TrashButton}"
                         Command="{Binding DeleteButtonCommand}"
-                        ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this.">
-                </Button>
+                        ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this."/>
 
                 <Button HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
