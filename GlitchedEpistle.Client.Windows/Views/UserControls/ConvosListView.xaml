@@ -21,10 +21,17 @@
             <DataTemplate>
                 <Button Content="{Binding Name}"
                         ToolTip="{Binding Description}" 
-                        Style="{StaticResource ConvoListBoxEntryButton}"
                         Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
                         CommandParameter="{Binding}"/>
             </DataTemplate>
         </ListBox.ItemTemplate>
+        <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="0,0,0,2"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
+        </ListBox.ItemContainerStyle>
     </ListBox>
 </UserControl>
