@@ -18,6 +18,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             Loaded -= OnLoaded;
             this.MakeCloseable();
+
+            Name.Focus();
+            Name.SelectAll();
         }
     }
 }
