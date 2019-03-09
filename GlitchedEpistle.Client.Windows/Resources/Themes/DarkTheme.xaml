@@ -14,9 +14,9 @@
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
 
     <!-- ScrollBar colors -->
-    <SolidColorBrush x:Key="ScrollBarThumbColor">#757575</SolidColorBrush>
-    <SolidColorBrush x:Key="ScrollBarThumbOnHoverColor">#77B8C6</SolidColorBrush>
-    <SolidColorBrush x:Key="ScrollBarThumbOnDragColor" Color="#FF9ED4E0"></SolidColorBrush>
+    <SolidColorBrush x:Key="ScrollBarThumbColor" Color="#757575"/>
+    <SolidColorBrush x:Key="ScrollBarThumbOnHoverColor" Color="#77B8C6"/>
+    <SolidColorBrush x:Key="ScrollBarThumbOnDragColor" Color="#FF9ED4E0"/>
 
     <!-- Background brush for chatroom -->
     <ImageBrush x:Key="ChatroomBackgroundBrush" 
@@ -394,6 +394,17 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- Messages ListBox -->
+    <Style x:Key="MessagesListBox" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Visibility" Value="Hidden"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- ScrollBar -->

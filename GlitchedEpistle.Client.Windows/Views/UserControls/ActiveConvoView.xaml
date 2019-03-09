@@ -49,6 +49,25 @@
                    Visibility="{Binding ClipboardTickVisibility}"/>
         </StackPanel>
 
+        <ListBox Grid.Row="1" 
+                 ItemsSource="{Binding Messages}"
+                 Style="{StaticResource MessagesListBox}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Margin="0" 
+                                Height="Auto"
+                                Orientation="Vertical"/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:MessageView Content="{Binding Text}" ToolTip="{Binding ToolTip}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
         <Grid Grid.Row="2" HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
