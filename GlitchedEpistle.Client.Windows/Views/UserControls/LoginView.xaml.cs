@@ -11,6 +11,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         public LoginView()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
             PasswordBox.Focus();
         }
 

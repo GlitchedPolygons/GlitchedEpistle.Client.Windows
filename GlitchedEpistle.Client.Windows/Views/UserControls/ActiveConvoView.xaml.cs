@@ -17,6 +17,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             TextBox.Focus();
+            TextBox.SelectAll();
         }
     }
 }
