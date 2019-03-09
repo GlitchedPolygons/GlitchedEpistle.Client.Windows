@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
-    public class HelpViewModel : ViewModel
+    public class MessageViewModel : ViewModel
     {
         #region Constants
         // Injections:
@@ -18,7 +18,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region UI Bindings
         #endregion
 
-        public HelpViewModel()
+        public MessageViewModel()
         {
             
         }

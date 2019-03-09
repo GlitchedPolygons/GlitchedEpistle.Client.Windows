@@ -12,6 +12,7 @@
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
 
+        <!-- Header -->
         <StackPanel Grid.Row="0"
                     Margin="0"
                     Orientation="Horizontal" 
@@ -26,7 +27,7 @@
             <Rectangle Width="1" 
                        Margin="15,0,15,0" 
                        VerticalAlignment="Stretch" 
-                       Stroke="{StaticResource SeparatorColorBrush}" />
+                       Stroke="{StaticResource SeparatorColorBrush}"/>
 
             <Label Content="{Binding Path=ActiveConvo.Id}"
                    FontSize="12" 
@@ -49,6 +50,7 @@
                    Visibility="{Binding ClipboardTickVisibility}"/>
         </StackPanel>
 
+        <!-- Chatroom -->
         <ListBox Grid.Row="1" 
                  ItemsSource="{Binding Messages}"
                  Style="{StaticResource MessagesListBox}"
@@ -68,6 +70,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
+        <!-- TextBox + Send Buttons -->
         <Grid Grid.Row="2" HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
@@ -104,18 +107,18 @@
 
                 <Button Grid.Row="1" 
                         BorderThickness="0" 
-                        Content="Attach"
-                        Command="{Binding AttachCommand}"/>
+                        Content="Send File"
+                        Command="{Binding SendFileCommand}"/>
 
-                <Rectangle Grid.Row="2" 
+                <Rectangle Grid.Row="2"
                            Opacity="0.65"
                            HorizontalAlignment="Stretch" 
                            Stroke="{StaticResource SeparatorColorBrush}" />
 
                 <Button Grid.Row="3" 
                         BorderThickness="0"
-                        Content="Send"
-                        Command="{Binding SendCommand}"
+                        Content="Send Text"
+                        Command="{Binding SendTextCommand}"
                         CommandParameter="{Binding ElementName=TextBox, Path=Text}"/>
 
                 <Rectangle Grid.Row="4" 
