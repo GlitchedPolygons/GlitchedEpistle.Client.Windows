@@ -22,10 +22,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             if (string.IsNullOrEmpty(ConvoIdTextBox.Text))
             {
                 ConvoIdTextBox.Focus();
+                ConvoIdTextBox.SelectAll();
             }
             else
             {
                 ConvoPasswordBox.Focus();
+                ConvoPasswordBox.SelectAll();
             }
         }
     }
