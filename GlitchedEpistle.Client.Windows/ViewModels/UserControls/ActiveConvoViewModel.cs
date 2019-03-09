@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
+
+using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-using GlitchedPolygons.Services.MethodQ;
+
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
@@ -25,8 +27,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region Commands
-        public ICommand SendCommand { get; }
-        public ICommand AttachCommand { get; }
+        public ICommand SendTextCommand { get; }
+        public ICommand SendFileCommand { get; }
         public ICommand CopyConvoIdToClipboardCommand { get; }
         #endregion
 
@@ -47,12 +49,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
 
-            SendCommand = new DelegateCommand(OnSend);
-            AttachCommand = new DelegateCommand(OnClickedAttach);
+            SendTextCommand = new DelegateCommand(OnSendText);
+            SendFileCommand = new DelegateCommand(OnSendFile);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
         }
 
-        private void OnSend(object commandParam)
+        private void OnSendText(object commandParam)
         {
             string text = commandParam as string;
             if (string.IsNullOrEmpty(text)) return;
@@ -61,7 +63,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             throw new NotImplementedException();
         }
 
-        private void OnClickedAttach(object commandParam)
+        private void OnSendFile(object commandParam)
         {
             // TODO: Open file dialog here and then encode, encrypt and package message and prepare for submission
             throw new NotImplementedException();
@@ -75,11 +77,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             if (scheduledHideGreenTickIcon.HasValue)
                 methodQ.Cancel(scheduledHideGreenTickIcon.Value);
 
-            scheduledHideGreenTickIcon = methodQ.Schedule(() =>
-            {
-                ClipboardTickVisibility = Visibility.Hidden;
-                scheduledHideGreenTickIcon = null;
-            }, DateTime.UtcNow.AddSeconds(3));
+            scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
+        }
+
+        private void HideGreenTick()
+        {
+            ClipboardTickVisibility = Visibility.Hidden;
+            scheduledHideGreenTickIcon = null;
         }
     }
 }
