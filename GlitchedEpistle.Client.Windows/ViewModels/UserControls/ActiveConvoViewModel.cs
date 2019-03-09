@@ -8,10 +8,15 @@ using System.Windows.Input;
 
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-
+using Newtonsoft.Json;
 using Prism.Events;
+using Newtonsoft.Json.Linq;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -21,8 +26,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         // Injections:
         private readonly User user;
         private readonly IMethodQ methodQ;
+        private readonly ISettings settings;
+        private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IConvoProvider convoProvider;
+        private readonly IMessageCryptography crypto;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -33,6 +41,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region UI Bindings
+        private string text;
+        public string Text { get => text; set => Set(ref text, value); }
+
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
         #endregion
@@ -41,10 +52,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private ulong? scheduledHideGreenTickIcon = null;
 
-        public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ)
+        public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings)
         {
             this.user = user;
+            this.crypto = crypto;
             this.methodQ = methodQ;
+            this.settings = settings;
+            this.userService = userService;
             this.convoService = convoService;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
@@ -52,15 +66,59 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
+
+            settings.Load();
         }
 
-        private void OnSendText(object commandParam)
+        private async Task<List<Tuple<string, string>>> GetKeys()
         {
-            string text = commandParam as string;
-            if (string.IsNullOrEmpty(text)) return;
+            var stringBuilder = new StringBuilder(100);
+            int participantsCount = ActiveConvo.Participants.Count;
+            for (int i = 0; i < participantsCount; i++)
+            {
+                stringBuilder.Append(ActiveConvo.Participants[i]);
+                if (i < participantsCount - 1)
+                {
+                    stringBuilder.Append(',');
+                }
+            }
+            return await userService.GetUserPublicKeyXml(user.Id, stringBuilder.ToString(), user.Token.Item2);
+        }
 
-            // TODO: Encrypt text here and prepare message body
-            throw new NotImplementedException();
+        private async void OnSendText(object commandParam)
+        {
+            if (string.IsNullOrEmpty(Text))
+            {
+                return;
+            }
+
+            string username = settings["Username"];
+
+            JObject json = new JObject();
+            JObject messageJson = new JObject { ["u"] = user.Id, ["n"] = username, ["t"] = Text };
+            foreach (Tuple<string, string> key in await GetKeys())
+            {
+                if (!string.IsNullOrEmpty(key.Item1) && !string.IsNullOrEmpty(key.Item2))
+                {
+                    json[key.Item1] = crypto.EncryptMessage(messageJson.ToString(Formatting.None), RSAParametersExtensions.FromXml(key.Item2));
+                }
+            }
+
+            bool success = await convoService.PostMessage(
+                userId: user.Id,
+                senderName: username,
+                auth: user.Token.Item2,
+                convoId: ActiveConvo.Id,
+                convoPasswordHash: ActiveConvo.PasswordSHA512,
+                messageBodiesJson: json.ToString(Formatting.None)
+            );
+
+            if (!success)
+            {
+                //TODO: display error message dialog here - user needs to know his message couldn't be posted successfully to the convo!
+            }
+
+            Text = null;
         }
 
         private void OnSendFile(object commandParam)
