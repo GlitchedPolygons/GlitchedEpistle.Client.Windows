@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 
 using Prism.Events;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -50,8 +52,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
 
-        private ObservableCollection<Message> messages;
-        public ObservableCollection<Message> Messages { get => messages; set => Set(ref messages, value); }
+        private ObservableCollection<MessageViewModel> messages;
+        public ObservableCollection<MessageViewModel> Messages { get => messages; set => Set(ref messages, value); }
         #endregion
 
         public Convo ActiveConvo { get; set; }
@@ -83,6 +85,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 methodQ?.Cancel(scheduledUpdateRoutine.Value);
         }
 
+        private void HideGreenTick()
+        {
+            ClipboardTickVisibility = Visibility.Hidden;
+            scheduledHideGreenTickIcon = null;
+        }
+
         private async Task<List<Tuple<string, string>>> GetKeys()
         {
             var stringBuilder = new StringBuilder(100);
@@ -98,6 +106,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return await userService.GetUserPublicKeyXml(user.Id, stringBuilder.ToString(), user.Token.Item2);
         }
 
+        private async Task<bool> SubmitMessage(JObject messageBodyJson)
+        {
+            JObject messageBodiesJson = new JObject();
+            string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
+
+            foreach (Tuple<string, string> key in await GetKeys())
+            {
+                if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
+                {
+                    continue;
+                }
+
+                messageBodiesJson[key.Item1] = crypto.EncryptMessage(messageBodyJsonString, RSAParametersExtensions.FromXml(key.Item2));
+            }
+
+            return await convoService.PostMessage(
+                userId: user.Id,
+                auth: user.Token.Item2,
+                senderName: settings["Username"],
+                convoId: ActiveConvo.Id,
+                convoPasswordHash: ActiveConvo.PasswordSHA512,
+                messageBodiesJson: messageBodiesJson.ToString(Formatting.None)
+            );
+        }
+
         private void PullNewestMessages()
         {
             // TODO: get newest msgs here
@@ -110,46 +143,53 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            string username = settings["Username"];
+            JObject messageBodyJson = new JObject { ["t"] = Text };
 
-            JObject json = new JObject();
-            JObject messageJson = new JObject { ["u"] = user.Id, ["n"] = username, ["t"] = Text };
-            foreach (Tuple<string, string> key in await GetKeys())
+            if (!await SubmitMessage(messageBodyJson))
             {
-                if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
-                {
-                    continue;
-                }
-
-                json[key.Item1] = crypto.EncryptMessage(messageJson.ToString(Formatting.None), RSAParametersExtensions.FromXml(key.Item2));
-            }
-
-            bool success = await convoService.PostMessage(
-                userId: user.Id,
-                senderName: username,
-                auth: user.Token.Item2,
-                convoId: ActiveConvo.Id,
-                convoPasswordHash: ActiveConvo.PasswordSHA512,
-                messageBodiesJson: json.ToString(Formatting.None)
-            );
-
-            // TODO: add message to chatroom here
-
-            if (!success)
-            {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epi", Title = "Message upload failed" } };
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                 errorView.ShowDialog();
             }
             else
             {
                 Text = null;
+
+                // TODO: add message to chatroom here
             }
         }
 
         private void OnSendFile(object commandParam)
         {
-            // TODO: Open file dialog here and then encode, encrypt and package message and prepare for submission
-            throw new NotImplementedException();
+            var dialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = "Epistle - Select the file you want to send",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            };
+
+            dialog.FileOk += async (sender, e) =>
+            {
+                if (sender is OpenFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
+                {
+                    var messageBodyJson = new JObject
+                    {
+                        ["fn"] = Path.GetFileName(_dialog.FileName),
+                        ["f"] = Convert.ToBase64String(File.ReadAllBytes(_dialog.FileName))
+                    };
+
+                    if (!await SubmitMessage(messageBodyJson))
+                    {
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                        errorView.ShowDialog();
+                    }
+                    else
+                    {
+                        // TODO: add message to chatroom here
+                    }
+                }
+            };
+
+            dialog.ShowDialog();
         }
 
         private void OnClickedCopyConvoIdToClipboard(object commandParam)
@@ -161,12 +201,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 methodQ.Cancel(scheduledHideGreenTickIcon.Value);
 
             scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
-        }
-
-        private void HideGreenTick()
-        {
-            ClipboardTickVisibility = Visibility.Hidden;
-            scheduledHideGreenTickIcon = null;
         }
     }
 }
