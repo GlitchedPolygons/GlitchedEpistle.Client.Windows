@@ -14,6 +14,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using Newtonsoft.Json;
 using Prism.Events;
 using Newtonsoft.Json.Linq;
@@ -98,10 +99,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             JObject messageJson = new JObject { ["u"] = user.Id, ["n"] = username, ["t"] = Text };
             foreach (Tuple<string, string> key in await GetKeys())
             {
-                if (!string.IsNullOrEmpty(key.Item1) && !string.IsNullOrEmpty(key.Item2))
+                if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
                 {
-                    json[key.Item1] = crypto.EncryptMessage(messageJson.ToString(Formatting.None), RSAParametersExtensions.FromXml(key.Item2));
+                    continue;
                 }
+
+                json[key.Item1] = crypto.EncryptMessage(messageJson.ToString(Formatting.None), RSAParametersExtensions.FromXml(key.Item2));
             }
 
             bool success = await convoService.PostMessage(
@@ -113,12 +116,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 messageBodiesJson: json.ToString(Formatting.None)
             );
 
+            // TODO: add message to chatroom here
+
             if (!success)
             {
-                //TODO: display error message dialog here - user needs to know his message couldn't be posted successfully to the convo!
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel() { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epi", Title = "Message upload failed" } };
+                errorView.ShowDialog();
             }
-
-            Text = null;
+            else
+            {
+                Text = null;
+            }
         }
 
         private void OnSendFile(object commandParam)
