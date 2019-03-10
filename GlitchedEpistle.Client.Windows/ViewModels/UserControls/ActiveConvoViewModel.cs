@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,10 +14,11 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using Newtonsoft.Json;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+
 using Prism.Events;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
@@ -47,11 +49,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
+
+        private ObservableCollection<Message> messages;
+        public ObservableCollection<Message> Messages { get => messages; set => Set(ref messages, value); }
         #endregion
 
         public Convo ActiveConvo { get; set; }
-
-        private ulong? scheduledHideGreenTickIcon = null;
+        private ulong? scheduledHideGreenTickIcon = null, scheduledUpdateRoutine = null;
 
         public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings)
         {
@@ -69,6 +73,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
             settings.Load();
+
+            scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, TimeSpan.FromMilliseconds(500));
+        }
+
+        ~ActiveConvoViewModel()
+        {
+            if (scheduledUpdateRoutine.HasValue)
+                methodQ?.Cancel(scheduledUpdateRoutine.Value);
         }
 
         private async Task<List<Tuple<string, string>>> GetKeys()
@@ -84,6 +96,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
             }
             return await userService.GetUserPublicKeyXml(user.Id, stringBuilder.ToString(), user.Token.Item2);
+        }
+
+        private void PullNewestMessages()
+        {
+            // TODO: get newest msgs here
         }
 
         private async void OnSendText(object commandParam)
@@ -120,7 +137,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             if (!success)
             {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel() { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epi", Title = "Message upload failed" } };
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epi", Title = "Message upload failed" } };
                 errorView.ShowDialog();
             }
             else
