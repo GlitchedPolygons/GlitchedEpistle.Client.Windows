@@ -28,6 +28,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class ActiveConvoViewModel : ViewModel
     {
         #region Constants
+        public const long MAX_FILE_SIZE_MB = 20;
+
         // Injections:
         private readonly User user;
         private readonly IMethodQ methodQ;
@@ -109,7 +111,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private async Task<bool> SubmitMessage(JObject messageBodyJson)
         {
             JObject messageBodiesJson = new JObject();
-            string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
 
             foreach (Tuple<string, string> key in await GetKeys())
             {
@@ -118,7 +119,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     continue;
                 }
 
-                messageBodiesJson[key.Item1] = crypto.EncryptMessage(messageBodyJsonString, RSAParametersExtensions.FromXml(key.Item2));
+                messageBodiesJson[key.Item1] = crypto.EncryptMessage(
+                    messageJson: messageBodyJson.ToString(Formatting.None),
+                    recipientPublicRsaKey: RSAParametersExtensions.FromXml(key.Item2)
+                );
             }
 
             return await convoService.PostMessage(
@@ -143,18 +147,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            JObject messageBodyJson = new JObject { ["t"] = Text };
+            JObject messageBodyJson = new JObject { ["text"] = Text };
 
-            if (!await SubmitMessage(messageBodyJson))
-            {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                errorView.ShowDialog();
-            }
-            else
+            if (await SubmitMessage(messageBodyJson))
             {
                 Text = null;
 
                 // TODO: add message to chatroom here
+            }
+            else
+            {
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                errorView.ShowDialog();
             }
         }
 
@@ -171,20 +175,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (sender is OpenFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
                 {
-                    var messageBodyJson = new JObject
-                    {
-                        ["fn"] = Path.GetFileName(_dialog.FileName),
-                        ["f"] = Convert.ToBase64String(File.ReadAllBytes(_dialog.FileName))
-                    };
+                    byte[] file = File.ReadAllBytes(_dialog.FileName);
 
-                    if (!await SubmitMessage(messageBodyJson))
+                    if (file.LongLength * 1000000L < MAX_FILE_SIZE_MB)
                     {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                        errorView.ShowDialog();
+                        var messageBodyJson = new JObject
+                        {
+                            ["fileName"] = Path.GetFileName(_dialog.FileName),
+                            ["fileBase64"] = Convert.ToBase64String(file)
+                        };
+
+                        if (await SubmitMessage(messageBodyJson))
+                        {
+                            // TODO: add message to chatroom here
+                        }
+                        else
+                        {
+                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                            errorView.ShowDialog();
+                        }
                     }
                     else
                     {
-                        // TODO: add message to chatroom here
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
+                        errorView.ShowDialog();
                     }
                 }
             };
