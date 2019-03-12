@@ -7,6 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Canvas>
-            
+        <Label Content="{Binding Text}"></Label>
+        <Label Content="{Binding SenderName}"></Label>
     </Canvas>
 </UserControl>
