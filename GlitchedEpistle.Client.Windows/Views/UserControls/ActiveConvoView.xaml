@@ -65,7 +65,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <local:MessageView Content="{Binding Text}" ToolTip="{Binding ToolTip}"/>
+                    <local:MessageView/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -84,6 +84,7 @@
                      FontSize="14"
                      MinWidth="200"
                      TextWrapping="Wrap"
+                     Text="{Binding Text}"
                      HorizontalAlignment="Stretch"
                      HorizontalContentAlignment="Stretch"
                      HorizontalScrollBarVisibility="Disabled"
@@ -118,8 +119,7 @@
                 <Button Grid.Row="3" 
                         BorderThickness="0"
                         Content="Send Text"
-                        Command="{Binding SendTextCommand}"
-                        CommandParameter="{Binding ElementName=TextBox, Path=Text}"/>
+                        Command="{Binding SendTextCommand}"/>
 
                 <Rectangle Grid.Row="4" 
                            Opacity="0.65"

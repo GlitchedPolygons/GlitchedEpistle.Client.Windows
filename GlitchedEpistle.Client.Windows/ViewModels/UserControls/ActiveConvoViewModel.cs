@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -17,6 +16,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 
 using Prism.Events;
 using Microsoft.Win32;
@@ -125,6 +125,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 );
             }
 
+            JToken self = messageBodiesJson[user.Id];
+            if (self != null)
+            {
+                File.WriteAllText(
+                    path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, DateTime.UtcNow.ToString("yyyyMMddHHmmssff")), 
+                    contents: self.ToString()
+                );
+            }
+
             return await convoService.PostMessage(
                 userId: user.Id,
                 auth: user.Token.Item2,
@@ -153,7 +162,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 Text = null;
 
-                // TODO: add message to chatroom here
+                Messages.Add(new MessageViewModel
+                {
+                    Text = Text,
+                    SenderId = user.Id,
+                    SenderName = settings["Username"],
+                    Timestamp = DateTime.Now.ToString("dd.MM.yyyy HH:mm"),
+                    FileName = null,
+                    FileBytes = null
+                });
             }
             else
             {
@@ -187,7 +204,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                         if (await SubmitMessage(messageBodyJson))
                         {
-                            // TODO: add message to chatroom here
+                            Messages.Add(new MessageViewModel
+                            {
+                                Text = null,
+                                SenderId = user.Id,
+                                SenderName = settings["Username"],
+                                FileName = messageBodyJson["fileName"].Value<string>(),
+                                Timestamp = DateTime.Now.ToString("dd.MM.yyyy HH:mm"),
+                                FileBytes = file
+                            });
                         }
                         else
                         {
