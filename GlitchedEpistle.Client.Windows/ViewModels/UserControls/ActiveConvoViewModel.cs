@@ -32,7 +32,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
 
-        public const long MAX_FILE_SIZE_B = 20971520;
+        public const long MAX_FILE_SIZE_BYTES = 20971520;
         public const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
 
         // Injections:
@@ -294,7 +294,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     byte[] file = File.ReadAllBytes(_dialog.FileName);
 
-                    if (file.LongLength < MAX_FILE_SIZE_B)
+                    if (file.LongLength < MAX_FILE_SIZE_BYTES)
                     {
                         var messageBodyJson = new JObject
                         {
