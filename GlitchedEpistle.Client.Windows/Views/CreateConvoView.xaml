@@ -46,7 +46,7 @@
         <Label Content="Name"
                ToolTip="Give your convo a meaningful and unique name!"/>
 
-        <TextBox Name="Name" 
+        <TextBox Name="NameTextBox" 
                  Height="23"
                  Margin="5,0,0,0"
                  Text="{Binding Name}"
