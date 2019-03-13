@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
                         convosBag.Add(convo);
                     }
                 });
-                convos = convosBag.ToList();
+                convos = convosBag.ToList().OrderBy(c => c.Name).ToList();
             }
         }
 
