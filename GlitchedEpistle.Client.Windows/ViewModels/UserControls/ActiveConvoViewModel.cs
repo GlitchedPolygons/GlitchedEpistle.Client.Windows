@@ -59,7 +59,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region UI Bindings
 
         private string text;
-
         public string Text
         {
             get => text;
@@ -67,7 +66,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
-
         public Visibility ClipboardTickVisibility
         {
             get => clipboardTickVisibility;
@@ -75,7 +73,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         private ObservableCollection<MessageViewModel> messages = new ObservableCollection<MessageViewModel>();
-
         public ObservableCollection<MessageViewModel> Messages
         {
             get => messages;
