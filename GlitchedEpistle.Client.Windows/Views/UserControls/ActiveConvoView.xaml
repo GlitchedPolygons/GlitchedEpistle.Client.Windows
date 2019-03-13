@@ -52,6 +52,7 @@
 
         <!-- Chatroom -->
         <ListBox Grid.Row="1" 
+                 Name="MessagesListBox"
                  ItemsSource="{Binding Messages}"
                  Style="{StaticResource MessagesListBox}"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 

@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             UpdateList();
 
-            OpenConvoCommand = new DelegateCommand(OnOpenConvo);
+            OpenConvoCommand = new DelegateCommand(OnClickedOnConvo);
 
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => UpdateList());
             eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(_ => UpdateList());
@@ -47,7 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void UpdateList() => Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos) : new ObservableCollection<Convo>();
 
-        private void OnOpenConvo(object commandParam)
+        private void OnClickedOnConvo(object commandParam)
         {
             var convo = commandParam as Convo;
             if (convo is null)

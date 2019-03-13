@@ -32,7 +32,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
 
-        public const long MAX_FILE_SIZE_B = 200000;
+        public const long MAX_FILE_SIZE_B = 20971520;
         public const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
 
         // Injections:
