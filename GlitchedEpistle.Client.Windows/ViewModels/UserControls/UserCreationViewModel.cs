@@ -29,6 +29,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         private const double ERROR_MESSAGE_INTERVAL = 7000;
+        private readonly CompressionSettings compressionSettings = new CompressionSettings();
         private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
         #endregion
 
@@ -127,7 +128,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     {
                         PasswordHash = password1.SHA512(),
                         PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
-                        CreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), new CompressionSettings()))
+                        CreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), compressionSettings))
                     });
 
                     // Handle this event back in the main view model,

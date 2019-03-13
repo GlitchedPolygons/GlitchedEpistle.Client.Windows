@@ -43,9 +43,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         ~MessageViewModel()
         {
             Text = FileName = null;
-            for (int i = 0; i < FileBytes.Length; i++)
+            if (FileBytes != null)
             {
-                FileBytes[i] = 0;
+                for (int i = 0; i < FileBytes.Length; i++)
+                {
+                    FileBytes[i] = 0;
+                }
             }
         }
     }

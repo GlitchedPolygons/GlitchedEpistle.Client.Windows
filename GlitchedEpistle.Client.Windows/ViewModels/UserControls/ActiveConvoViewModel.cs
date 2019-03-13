@@ -78,6 +78,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
             settings.Load();
+            
+            messages = new ObservableCollection<MessageViewModel>();
+            // TODO: load messages from disk into collection here
 
             scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, TimeSpan.FromMilliseconds(500));
         }
@@ -135,18 +138,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 );
             }
 
-            var dto = new PostMessageParamsDto
-            {
-                UserId = user.Id,
-                Auth = user.Token.Item2,
-                SenderName = settings["Username"],
-                ConvoPasswordHash = ActiveConvo.PasswordSHA512,
-                MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
-            };
-            
             return await convoService.PostMessage(
                 convoId: ActiveConvo.Id,
-                messageDto: dto
+                messageDto: new PostMessageParamsDto
+                {
+                    UserId = user.Id,
+                    Auth = user.Token.Item2,
+                    SenderName = settings["Username"],
+                    ConvoPasswordHash = ActiveConvo.PasswordSHA512,
+                    MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
+                }
             );
         }
 
