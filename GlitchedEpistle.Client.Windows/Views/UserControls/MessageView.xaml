@@ -6,8 +6,11 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Canvas>
-        <Label Content="{Binding Text}"></Label>
-        <Label Content="{Binding SenderName}"></Label>
-    </Canvas>
+    <StackPanel>
+        <Label Content="{Binding SenderId}"/>
+        <Label Content="{Binding SenderName}"/>
+        <Label Content="{Binding FileName}"/>
+        <Label Content="{Binding Timestamp}"/>
+        <Label Content="{Binding Text}"/>
+    </StackPanel>
 </UserControl>

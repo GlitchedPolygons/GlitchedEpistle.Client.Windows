@@ -145,10 +145,11 @@
         <!-- Convos list collapse button -->
         <Button Grid.Column="1" Grid.Row="0"
                 Style="{StaticResource CollapseButton}"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
                 Content="&lt;" 
                 Width="15" 
-                Height="50"
+                Height="52.5"
                 Name="CollapseButton"
                 Click="CollapseButton_OnClick"/>
 
