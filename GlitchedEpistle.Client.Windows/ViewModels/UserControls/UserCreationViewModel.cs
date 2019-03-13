@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
@@ -122,10 +123,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 bool keyGenerationSuccessful = await keygen.GenerateKeyPair(Paths.KEYS_DIRECTORY);
                 if (keyGenerationSuccessful)
                 {
-                    var userCreationResponse = await userService.CreateUser(
-                        passwordHash: password1.SHA512(),
-                        publicKeyXml: File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
-                        creationSecret: Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), new CompressionSettings())));
+                    var userCreationResponse = await userService.CreateUser(new UserCreationDto
+                    {
+                        PasswordHash = password1.SHA512(),
+                        PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
+                        CreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), new CompressionSettings()))
+                    });
 
                     // Handle this event back in the main view model,
                     // since it's there where the backup codes + 2FA secret (QR) will be shown.
