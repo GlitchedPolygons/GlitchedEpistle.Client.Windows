@@ -10,6 +10,7 @@ using System.Windows.Input;
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
@@ -134,13 +135,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 );
             }
 
+            var dto = new PostMessageParamsDto
+            {
+                UserId = user.Id,
+                Auth = user.Token.Item2,
+                SenderName = settings["Username"],
+                ConvoPasswordHash = ActiveConvo.PasswordSHA512,
+                MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
+            };
+            
             return await convoService.PostMessage(
-                userId: user.Id,
-                auth: user.Token.Item2,
-                senderName: settings["Username"],
                 convoId: ActiveConvo.Id,
-                convoPasswordHash: ActiveConvo.PasswordSHA512,
-                messageBodiesJson: messageBodiesJson.ToString(Formatting.None)
+                messageDto: dto
             );
         }
 
