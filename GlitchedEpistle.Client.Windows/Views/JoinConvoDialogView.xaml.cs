@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
@@ -11,11 +13,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public JoinConvoDialogView()
         {
             InitializeComponent();
+            ConvoIdTextBox.Focus();
+            ConvoIdTextBox.SelectAll();
             Loaded += OnLoaded;
             ConvoIdTextBox.TextChanged += ConvoIdTextBox_TextChanged;
         }
 
-        private void ConvoIdTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        private void ConvoIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(ConvoIdTextBox.Text))
             {
@@ -31,9 +35,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= OnLoaded;
             this.MakeCloseable();
-            ConvoIdTextBox_TextChanged(null, null);
+            this.Loaded -= OnLoaded;
         }
     }
 }

@@ -2,10 +2,12 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+
 using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+
 using Microsoft.Win32;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
