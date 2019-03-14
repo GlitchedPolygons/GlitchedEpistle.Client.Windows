@@ -20,7 +20,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         public const string DEFAULT_USERNAME = "user";
-        public const double DEFAULT_UPDATE_FREQUENCY = 500D;
 
         // Injections:
         private readonly User user;
@@ -56,9 +55,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region UI Bindings
         private string username = DEFAULT_USERNAME;
         public string Username { get => username; set => Set(ref username, value); }
-
-        private double updateFrequency = DEFAULT_UPDATE_FREQUENCY;
-        public double UpdateFrequency { get => updateFrequency; set => Set(ref updateFrequency, value); }
         #endregion
 
         public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory)
@@ -85,7 +81,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Load up the current settings into the UI on load.
             Username = settings[nameof(Username), DEFAULT_USERNAME];
-            UpdateFrequency = settings[nameof(UpdateFrequency), DEFAULT_UPDATE_FREQUENCY];
         }
 
         private void OnClosed(object commandParam)
@@ -93,7 +88,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             if (!cancelled)
             {
                 settings[nameof(Username)] = Username;
-                settings[nameof(UpdateFrequency)] = UpdateFrequency.ToString(CultureInfo.InvariantCulture);
                 settings.Save();
 
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
@@ -109,7 +103,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedRevert(object commandParam)
         {
             Username = DEFAULT_USERNAME;
-            UpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
         }
 
         private async void OnClickedRedeem(object commandParam)
