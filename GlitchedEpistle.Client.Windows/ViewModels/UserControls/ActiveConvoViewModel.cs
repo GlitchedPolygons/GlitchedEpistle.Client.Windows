@@ -249,7 +249,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            var messageViewModel = new MessageViewModel
+            var messageViewModel = new MessageViewModel(methodQ)
             {
                 SenderId = message.SenderId,
                 SenderName = message.SenderName,

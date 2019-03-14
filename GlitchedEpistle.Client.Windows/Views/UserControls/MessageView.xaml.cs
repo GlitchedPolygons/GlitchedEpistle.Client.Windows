@@ -24,5 +24,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         {
             InitializeComponent();
         }
+
+        // Select the text inside the textbox on click.
+        private void TextBox_OnMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            if (textBox == null || textBox.IsKeyboardFocusWithin)
+            {
+                return;
+            }
+
+            e.Handled = true;
+            textBox.Focus();
+        }
+
+        private void TextBox_SelectText(object sender, RoutedEventArgs e)
+        {
+            var textBox = sender as TextBox;
+            textBox?.SelectAll();
+        }
     }
 }
