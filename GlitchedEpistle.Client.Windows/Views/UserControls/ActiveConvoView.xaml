@@ -113,7 +113,7 @@
                     <KeyBinding Key="Enter" 
                                 Modifiers="Shift"
                                 Command="{Binding SendTextCommand}"
-                                CommandParameter="{Binding ElementName=TextBox, Path=Text}"/>
+                                CommandParameter="{Binding ElementName=TextBox}"/>
                 </TextBox.InputBindings>
             </TextBox>
 
@@ -146,7 +146,7 @@
                         BorderThickness="0"
                         Content="Send Text"
                         Command="{Binding SendTextCommand}"
-                        CommandParameter="{Binding ElementName=TextBox, Path=Text}"/>
+                        CommandParameter="{Binding ElementName=TextBox}"/>
 
                 <Rectangle Grid.Row="4" 
                            Opacity="0.65"
@@ -161,11 +161,5 @@
                        Stroke="{StaticResource SeparatorColorBrush}" />
         </Grid>
     </Grid>
-
-    <UserControl.InputBindings>
-        <KeyBinding Key="Enter" 
-                    Command="{Binding SendCommand}"
-                    CommandParameter="{Binding ElementName=TextBox, Path=Text}"/>
-    </UserControl.InputBindings>
 
 </UserControl>

@@ -61,7 +61,7 @@
                  Text="{Binding Text}" 
                  Style="{StaticResource MessageLabelTextBox}"/>
         
-        <Separator Margin="0,8,0,0" />
+        <Separator Margin="0,8,0,0" SnapsToDevicePixels="True" />
 
     </StackPanel>
 </UserControl>

@@ -48,7 +48,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
             get
             {
                 if (convos is null || convos.Count == 0)
+                {
                     return null;
+                }
 
                 foreach (var convo in convos)
                 {
