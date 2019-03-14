@@ -15,7 +15,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region Commands
-        public ICommand DownloadFileCommand { get; }
+        public ICommand DownloadAttachmentCommand { get; }
         public ICommand CopyUserIdToClipboardCommand { get; }
         #endregion
 
@@ -32,11 +32,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private string fileName = string.Empty;
         public string FileName { get => fileName; set => Set(ref fileName, value); }
 
+        public string FileSizeMB => $"({FileBytes.GetFileSizeString()})";
+
         private string timestamp = string.Empty;
         public string Timestamp { get => timestamp; set => Set(ref timestamp, value); }
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
+
+        public Visibility AttachmentButtonVisibility => !string.IsNullOrEmpty(FileName) && FileBytes != null && FileBytes.Length > 0 ? Visibility.Visible : Visibility.Hidden;
         #endregion
 
         public byte[] FileBytes { get; set; }
@@ -80,7 +84,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }, DateTime.UtcNow.AddSeconds(3));
             });
 
-            DownloadFileCommand = new DelegateCommand(_ =>
+            DownloadAttachmentCommand = new DelegateCommand(_ =>
             {
                 // TODO: open savefile dialog here 
             });
