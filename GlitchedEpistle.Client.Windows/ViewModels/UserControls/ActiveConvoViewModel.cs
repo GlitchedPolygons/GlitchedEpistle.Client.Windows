@@ -34,6 +34,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public const long MAX_FILE_SIZE_BYTES = 20971520;
         public const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
+        public static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(555);
 
         // Injections:
         private readonly User user;
@@ -85,7 +86,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Convo ActiveConvo
         {
             get => activeConvo;
-            set { activeConvo = value; LoadLocalMessages(); }
+            set
+            {
+                Messages = null;
+                activeConvo = value;
+                LoadLocalMessages();
+                PullNewestMessages();
+            }
         }
 
         private ulong? scheduledHideGreenTickIcon = null, scheduledUpdateRoutine = null;
@@ -106,7 +113,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendFileCommand = new DelegateCommand(OnSendFile);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
-            scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, TimeSpan.FromMilliseconds(500));
+            //scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
 
             settings.Load();
         }
@@ -202,12 +209,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             };
 
             AddMessageToView(message);
-
-            File.WriteAllText
-            (
-                contents: JsonConvert.SerializeObject(message),
-                path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, DateTime.UtcNow.ToString("yyyyMMddHHmmssff"))
-            );
+            WriteMessageToDisk(message);
 
             return await convoService.PostMessage
             (
@@ -223,6 +225,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             );
         }
 
+        private void WriteMessageToDisk(Message message)
+        {
+            File.WriteAllText(
+                contents: JsonConvert.SerializeObject(message),
+                path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.Timestamp.ToString("yyyyMMddHHmmssff"))
+            );
+        }
+
         private void AddMessageToView(Message message)
         {
             if (message is null)
@@ -234,6 +244,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 SenderId = message.SenderId,
                 SenderName = message.SenderName,
+                TimestampDateTime = message.Timestamp,
                 Timestamp = message.Timestamp.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
             };
 
@@ -251,9 +262,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             Messages.Add(messageViewModel);
         }
 
-        private void PullNewestMessages()
+        private async void PullNewestMessages()
         {
-            // TODO: get newest msgs here
+            if (ActiveConvo is null || user is null)
+            {
+                return;
+            }
+
+            //int i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
+            //if (i < 0)
+            //{
+            //    return;
+            //}
+            int i = 0;
+
+            var retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, i);
+            if (retrievedMessages is null || retrievedMessages.Length == 0)
+            {
+                return;
+            }
+
+            // Add the retrieved messages only to the chatroom if it does not contain them yet (mistakes are always possible; safe is safe).
+            foreach (var message in retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.Timestamp).ToList())
+            {
+                AddMessageToView(message);
+                WriteMessageToDisk(message);
+            }
         }
 
         private async void OnSendText(object commandParam)
@@ -263,7 +297,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            JObject messageBodyJson = new JObject { ["text"] = Text };
+            JObject messageBodyJson = new JObject
+            {
+                ["text"] = Text
+            };
 
             if (await SubmitMessage(messageBodyJson))
             {
@@ -301,7 +338,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                         if (!await SubmitMessage(messageBodyJson))
                         {
-                            var errorView = new InfoDialogView {DataContext = new InfoDialogViewModel {OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed"}};
+                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                             errorView.ShowDialog();
                         }
                     }

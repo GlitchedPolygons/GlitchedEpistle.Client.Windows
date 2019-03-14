@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
@@ -31,6 +33,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         public byte[] FileBytes { get; set; }
+        public DateTime TimestampDateTime { get; set; }
+
+        private string id = null;
+        /// <summary>
+        /// Gets the message's unique identifier, which is <para> </para>
+        /// md5( <see cref="SenderId"/> + <see cref="Timestamp"/> )
+        /// </summary>
+        public string Id
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    id = (SenderId + TimestampDateTime.ToString("u")).MD5();
+                }
+                return id;
+            }
+        }
 
         public MessageViewModel()
         {
