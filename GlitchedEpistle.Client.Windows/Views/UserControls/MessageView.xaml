@@ -6,11 +6,62 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
     <StackPanel>
-        <Label Content="{Binding SenderId}" />
-        <Label Content="{Binding SenderName}" />
+        <StackPanel Orientation="Horizontal" 
+                    VerticalAlignment="Center">
+            
+            <!--{Binding SenderName}-->
+            <Label Content="{Binding SenderName}" />
+            
+            <!-- Separator wall -->
+            <Rectangle Width="1" 
+                       Opacity="0.47"
+                       Margin="0,3,0,3"
+                       VerticalAlignment="Stretch" 
+                       Stroke="{StaticResource SeparatorColorBrush}" />
+            
+            <!--{Binding SenderId}-->
+            <Label Content="{Binding SenderId}" 
+                   FontSize="11"
+                   Margin="0,1,0,0"
+                   Foreground="Gray" 
+                   FontStyle="Italic" />
+
+            <!-- Copy UserId to clipboard button -->
+            <Button Width="15" 
+                    Height="15"
+                    Margin="0"
+                    ToolTip="Copy user id to clipboard"
+                    Command="{Binding CopyUserIdToClipboardCommand}"
+                    Style="{StaticResource CopyToClipboardButton}"/>
+
+            <!-- Copied to clipboard confirmation tick -->
+            <Image Source="/Resources/Images/green-tick.png" 
+                   Width="15" 
+                   Height="15"
+                   Margin="1,0,0,0" 
+                   Visibility="{Binding ClipboardTickVisibility}"/>
+        </StackPanel>
+
+        <!--{Binding Timestamp}-->
+        <Label Margin="0" 
+               Padding="4,2" 
+               Content="{Binding Timestamp}" />
+        
+        <!--{Binding FileName}-->
         <Label Content="{Binding FileName}" />
-        <Label Content="{Binding Timestamp}" />
-        <Label Content="{Binding Text}" />
-        <Separator />
+        
+        <!--{Binding Text}-->
+        <TextBox IsReadOnly="True" 
+                 UndoLimit="1" 
+                 AllowDrop="False" 
+                 TextWrapping="Wrap"
+                 MouseDoubleClick="TextBox_SelectText"
+                 GotKeyboardFocus="TextBox_SelectText"
+                 PreviewMouseLeftButtonDown="TextBox_OnMouseDown"
+                 Text="{Binding Text}" 
+                 Style="{StaticResource MessageLabelTextBox}"/>
+        
+        <Separator Margin="0,8,0,0" />
+
     </StackPanel>
 </UserControl>

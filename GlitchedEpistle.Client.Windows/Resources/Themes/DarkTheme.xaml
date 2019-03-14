@@ -51,9 +51,16 @@
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 
+    <!-- Message View Text (label) -->
+    <Style x:Key="MessageLabelTextBox" TargetType="TextBox">
+        <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+
     <!-- TextBox (input field) -->
     <Style x:Key="TextBox" TargetType="TextBox">
-        <Setter Property="Background" Value="#404040"/>
+        <Setter Property="Background" Value="#404040" />
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 

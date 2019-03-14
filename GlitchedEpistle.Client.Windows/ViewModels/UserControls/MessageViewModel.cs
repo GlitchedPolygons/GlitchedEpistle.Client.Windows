@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.Services.MethodQ;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -9,10 +11,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         // Injections:
+        private readonly IMethodQ methodQ;
         #endregion
 
         #region Commands
         public ICommand DownloadFileCommand { get; }
+        public ICommand CopyUserIdToClipboardCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -30,10 +34,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private string timestamp = string.Empty;
         public string Timestamp { get => timestamp; set => Set(ref timestamp, value); }
+
+        private Visibility clipboardTickVisibility = Visibility.Hidden;
+        public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
         #endregion
 
         public byte[] FileBytes { get; set; }
         public DateTime TimestampDateTime { get; set; }
+
+        private ulong? scheduledHideGreenTickIcon = null;
 
         private string id = null;
         /// <summary>
@@ -52,8 +61,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        public MessageViewModel()
+        public MessageViewModel(IMethodQ methodQ)
         {
+            this.methodQ = methodQ;
+
+            CopyUserIdToClipboardCommand = new DelegateCommand(_ =>
+            {
+                Clipboard.SetText(SenderId);
+                ClipboardTickVisibility = Visibility.Visible;
+
+                if (scheduledHideGreenTickIcon.HasValue)
+                    methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+
+                scheduledHideGreenTickIcon = methodQ.Schedule(() =>
+                {
+                    ClipboardTickVisibility = Visibility.Hidden;
+                    scheduledHideGreenTickIcon = null;
+                }, DateTime.UtcNow.AddSeconds(3));
+            });
+
             DownloadFileCommand = new DelegateCommand(_ =>
             {
                 // TODO: open savefile dialog here 

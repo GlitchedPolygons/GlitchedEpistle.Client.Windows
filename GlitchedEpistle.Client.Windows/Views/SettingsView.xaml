@@ -28,6 +28,7 @@
                      VerticalAlignment="Top" 
                      Width="250"
                      Height="23" 
+                     MaxLength="25"
                      Name="UsernameTextBox"
                      Style="{StaticResource TextBox}"
                      Text="{Binding Username}" 
