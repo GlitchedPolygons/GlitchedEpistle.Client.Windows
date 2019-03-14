@@ -7,22 +7,22 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 
 using Prism.Events;
-
 using Microsoft.Win32;
 
 using Newtonsoft.Json;
@@ -34,9 +34,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
 
-        public const long MAX_FILE_SIZE_BYTES = 20971520;
-        public const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
-        public static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(555);
+        private const long MAX_FILE_SIZE_BYTES = 20971520;
+        private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
+        private static readonly char[] MSG_TRIM_CHARS = {'\n', '\r', '\t'};
+        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(555);
 
         // Injections:
         private readonly User user;
@@ -60,14 +61,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region UI Bindings
-
-        private string text;
-        public string Text
-        {
-            get => text;
-            set => Set(ref text, value);
-        }
-
+        
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility
         {
@@ -212,8 +206,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 SenderId = user.Id,
                 SenderName = username,
-                Body = messageBody.ToString(),
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.UtcNow,
+                Body = messageBody.ToString()
             };
 
             AddMessageToView(message);
@@ -300,21 +294,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private async void OnSendText(object commandParam)
         {
-            string _text = commandParam as string ?? Text;
-
-            if (string.IsNullOrEmpty(_text))
+            var textBox = commandParam as TextBox;
+            if (textBox is null)
             {
                 return;
             }
 
+            string messageText = textBox.Text;
+            if (string.IsNullOrEmpty(messageText))
+            {
+                return;
+            }
+
+            messageText = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS);
             JObject messageBodyJson = new JObject
             {
-                ["text"] = _text
+                ["text"] = messageText
             };
 
             if (await SubmitMessage(messageBodyJson))
             {
-                Text = _text = null;
+                textBox.Clear();
                 messageBodyJson["text"] = null;
                 messageBodyJson = null;
             }
