@@ -86,15 +86,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelCommand = new DelegateCommand(OnClickedCancel);
             PasswordChangedCommand = new DelegateCommand(pwBox => pw = (pwBox as PasswordBox)?.Password);
             Password2ChangedCommand = new DelegateCommand(pwBox => pw2 = (pwBox as PasswordBox)?.Password);
-            ClosedCommand = new DelegateCommand(o => { for (int i = 0; i < scheduledActions.Count; i++) methodQ?.Cancel(scheduledActions[i]); });
+            ClosedCommand = new DelegateCommand(o => CancelAllScheduledActions());
 
             scheduledActions.Add(methodQ.Schedule(ResetMessages, TimeSpan.FromSeconds(7)));
         }
 
         ~CreateConvoViewModel()
         {
+            CancelAllScheduledActions();
+        }
+
+        private void CancelAllScheduledActions()
+        {
             for (int i = 0; i < scheduledActions.Count; i++)
+            {
                 methodQ?.Cancel(scheduledActions[i]);
+            }
         }
 
         private void OnClickedCancel(object commandParam)
@@ -142,7 +149,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 Name = Name,
                 Description = Description,
-                Expires = ExpirationUTC,
+                ExpirationUTC = ExpirationUTC,
                 PasswordSHA512 = pw.SHA512()
             };
 
@@ -155,10 +162,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     Id = id,
                     CreatorId = user.Id,
-                    CreationTimestamp = DateTime.UtcNow,
+                    CreationTimestampUTC = DateTime.UtcNow,
                     Name = Name,
                     Description = Description,
-                    Expires = ExpirationUTC,
+                    ExpirationUTC = ExpirationUTC,
                     Participants = new List<string> { user.Id }
                 };
 

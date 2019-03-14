@@ -47,14 +47,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         public byte[] FileBytes { get; set; }
-        public DateTime TimestampDateTime { get; set; }
+        public DateTime TimestampDateTimeUTC { get; set; }
 
         private ulong? scheduledHideGreenTickIcon = null;
 
         private string id = null;
         /// <summary>
         /// Gets the message's unique identifier, which is <para> </para>
-        /// md5( <see cref="SenderId"/> + <see cref="Timestamp"/> )
+        /// md5( <see cref="SenderId"/> + UTC timestamp )
         /// </summary>
         public string Id
         {
@@ -62,7 +62,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (string.IsNullOrEmpty(id))
                 {
-                    id = (SenderId + TimestampDateTime.ToString("u")).MD5();
+                    id = (SenderId + TimestampDateTimeUTC.ToString("u")).MD5();
                 }
                 return id;
             }

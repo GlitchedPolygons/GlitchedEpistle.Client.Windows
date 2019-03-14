@@ -206,7 +206,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 SenderId = user.Id,
                 SenderName = username,
-                Timestamp = DateTime.UtcNow,
+                TimestampUTC = DateTime.UtcNow,
                 Body = messageBody.ToString()
             };
 
@@ -221,6 +221,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     UserId = user.Id,
                     SenderName = username,
                     Auth = user.Token.Item2,
+                    TimestampUTC = message.TimestampUTC,
                     ConvoPasswordHash = ActiveConvo.PasswordSHA512,
                     MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
                 }
@@ -232,7 +233,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             File.WriteAllText
             (
                 contents: JsonConvert.SerializeObject(message),
-                path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.Timestamp.ToString("yyyyMMddHHmmssff"))
+                path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssff"))
             );
         }
 
@@ -247,8 +248,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 SenderId = message.SenderId,
                 SenderName = message.SenderName,
-                TimestampDateTime = message.Timestamp,
-                Timestamp = message.Timestamp.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
+                TimestampDateTimeUTC = message.TimestampUTC,
+                Timestamp = message.TimestampUTC.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
             };
 
             var json = JToken.Parse(crypto.DecryptMessage(message.Body, user.PrivateKey));
@@ -285,7 +286,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             // Add the retrieved messages only to the chatroom if it does not contain them yet (mistakes are always possible; safe is safe).
-            foreach (var message in retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.Timestamp).ToList())
+            foreach (var message in retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampUTC).ToList())
             {
                 AddMessageToView(message);
                 WriteMessageToDisk(message);
