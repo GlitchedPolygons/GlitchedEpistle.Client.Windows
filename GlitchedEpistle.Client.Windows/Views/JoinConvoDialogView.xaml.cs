@@ -12,13 +12,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             InitializeComponent();
             Loaded += OnLoaded;
+            ConvoIdTextBox.TextChanged += ConvoIdTextBox_TextChanged;
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        private void ConvoIdTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            this.Loaded -= OnLoaded;
-            this.MakeCloseable();
-
             if (string.IsNullOrEmpty(ConvoIdTextBox.Text))
             {
                 ConvoIdTextBox.Focus();
@@ -29,6 +27,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
                 ConvoPasswordBox.Focus();
                 ConvoPasswordBox.SelectAll();
             }
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            this.Loaded -= OnLoaded;
+            this.MakeCloseable();
+            ConvoIdTextBox_TextChanged(null, null);
         }
     }
 }
