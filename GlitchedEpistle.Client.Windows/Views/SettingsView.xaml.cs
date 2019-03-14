@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
@@ -50,14 +51,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             var textBox = sender as TextBox;
             textBox?.SelectAll();
-        }
-
-        private void UpdateFrequencySlider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (sender is Slider slider)
-            {
-                UpdateFrequencyLabel.Content = $"Update Frequency ({slider.Value} ms)";
-            }
         }
 
         private void CouponTextBox_OnTextChanged(object sender, TextChangedEventArgs e)

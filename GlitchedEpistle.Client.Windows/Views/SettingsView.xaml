@@ -37,24 +37,8 @@
                      GotKeyboardFocus="UsernameTextBox_SelectText"
                      PreviewMouseLeftButtonDown="UsernameTextBox_OnMouseDown"/>
 
-            <Label Content="Update Frequency (500 ms)"
-                   Name="UpdateFrequencyLabel"
-                   Padding="0 0 0 5"
-                   Margin="0,10,0,0"
-                   ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?"/>
-
-            <Slider Name="UpdateFrequencySlider" 
-                    Minimum="200" 
-                    Maximum="5000"
-                    Value="{Binding UpdateFrequency}"
-                    ValueChanged="UpdateFrequencySlider_OnValueChanged" 
-                    SmallChange="20"
-                    TickFrequency="20" 
-                    IsSnapToTickEnabled="True" />
-
-
             <Label Content="Extend your Glitched Epistle membership now!"
-                   Margin="0,10,0,0"
+                   Margin="0,8,0,0"
                    Padding="0,0,0,5"
                    ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?"/>
 

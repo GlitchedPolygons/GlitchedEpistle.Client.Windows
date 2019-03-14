@@ -49,12 +49,12 @@
 
         <!-- Attachment -->
         <WrapPanel  Orientation="Horizontal" 
-                    Margin="0,4,0,-15"
+                    Margin="5,4,0,-15"
                     Visibility="{Binding AttachmentButtonVisibility}">
 
             <Label Content="Attachment:" 
+                   Margin="0" 
                    Padding="0"
-                   Margin="5,0,0,0" 
                    VerticalAlignment="Center"/>
 
             <Label Content="{Binding FileSizeMB}" 
@@ -62,7 +62,7 @@
                    VerticalAlignment="Center" />
 
             <Button Content="{Binding FileName}" 
-                    MaxWidth="250"
+                    MaxWidth="420"
                     FontWeight="Bold"
                     HorizontalAlignment="Left"
                     HorizontalContentAlignment="Stretch"
@@ -75,7 +75,7 @@
                  UndoLimit="1" 
                  IsReadOnly="True" 
                  AllowDrop="False" 
-                 Margin="0,0,0,8"
+                 Margin="2.5,0,0,8"
                  TextWrapping="Wrap"
                  MouseDoubleClick="TextBox_SelectText"
                  GotKeyboardFocus="TextBox_SelectText"
