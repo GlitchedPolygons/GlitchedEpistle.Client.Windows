@@ -278,12 +278,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            //int i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
-            //if (i < 0)
-            //{
-            //    return;
-            //}
-            int i = 0;
+            int i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
+            if (i < 0)
+            {
+                return;
+            }
 
             var retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, i);
             if (retrievedMessages is null || retrievedMessages.Length == 0)
