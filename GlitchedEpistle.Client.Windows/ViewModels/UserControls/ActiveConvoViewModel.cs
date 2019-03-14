@@ -22,7 +22,9 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 
 using Prism.Events;
+
 using Microsoft.Win32;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -127,27 +129,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void LoadLocalMessages()
         {
             if (ActiveConvo is null || string.IsNullOrEmpty(ActiveConvo.Id))
+            {
                 return;
+            }
 
             string dir = Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id);
-            if (Directory.Exists(dir))
+            if (!Directory.Exists(dir))
             {
-                foreach (string file in Directory.GetFiles(dir).OrderBy(f => f))
-                {
-                    try
-                    {
-                        var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
-                        if (message is null)
-                        {
-                            continue;
-                        }
+                return;
+            }
 
-                        AddMessageToView(message);
-                    }
-                    catch (Exception e)
+            foreach (string file in Directory.GetFiles(dir).OrderBy(f => f))
+            {
+                try
+                {
+                    var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
+                    if (message is null)
                     {
-                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
+                        continue;
                     }
+
+                    AddMessageToView(message);
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
                 }
             }
         }
@@ -185,11 +191,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     continue;
                 }
 
-                messageBodiesJson[key.Item1] = crypto.EncryptMessage
+                string encryptedMessage = crypto.EncryptMessage
                 (
                     messageJson: messageBodyJson.ToString(Formatting.None),
                     recipientPublicRsaKey: RSAParametersExtensions.FromXml(key.Item2)
                 );
+
+                messageBodiesJson[key.Item1] = encryptedMessage;
             }
 
             JToken messageBody = messageBodiesJson[user.Id];
@@ -227,7 +235,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void WriteMessageToDisk(Message message)
         {
-            File.WriteAllText(
+            File.WriteAllText
+            (
                 contents: JsonConvert.SerializeObject(message),
                 path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.Timestamp.ToString("yyyyMMddHHmmssff"))
             );
@@ -308,7 +317,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
             else
             {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                var errorView = new InfoDialogView {DataContext = new InfoDialogViewModel {OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed"}};
                 errorView.ShowDialog();
             }
         }
@@ -338,13 +347,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                         if (!await SubmitMessage(messageBodyJson))
                         {
-                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                            var errorView = new InfoDialogView {DataContext = new InfoDialogViewModel {OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed"}};
                             errorView.ShowDialog();
                         }
                     }
                     else
                     {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
+                        var errorView = new InfoDialogView {DataContext = new InfoDialogViewModel {OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed"}};
                         errorView.ShowDialog();
                     }
                 }
