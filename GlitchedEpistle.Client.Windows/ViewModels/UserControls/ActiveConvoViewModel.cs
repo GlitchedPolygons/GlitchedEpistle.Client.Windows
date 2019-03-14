@@ -88,7 +88,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
-                Messages = null;
+                Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;
                 LoadLocalMessages();
                 PullNewestMessages();
