@@ -31,9 +31,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
             if (files.Length > 0)
             {
                 var convosBag = new ConcurrentBag<Convo>();
-                Parallel.For(0, files.Length, i =>
+                Parallel.ForEach(files, file =>
                 {
-                    var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
+                    var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(file.FullName));
                     if (convo != null)
                     {
                         convosBag.Add(convo);
