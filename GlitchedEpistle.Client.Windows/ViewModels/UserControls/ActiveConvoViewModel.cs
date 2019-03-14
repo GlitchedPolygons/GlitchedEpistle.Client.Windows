@@ -300,23 +300,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private async void OnSendText(object commandParam)
         {
-            if (string.IsNullOrEmpty(Text))
+            string _text = commandParam as string ?? Text;
+
+            if (string.IsNullOrEmpty(_text))
             {
                 return;
             }
 
             JObject messageBodyJson = new JObject
             {
-                ["text"] = Text
+                ["text"] = _text
             };
 
             if (await SubmitMessage(messageBodyJson))
             {
-                Text = null;
+                Text = _text = null;
+                messageBodyJson["text"] = null;
+                messageBodyJson = null;
             }
             else
             {
-                var errorView = new InfoDialogView {DataContext = new InfoDialogViewModel {OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed"}};
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                 errorView.ShowDialog();
             }
         }
@@ -346,13 +350,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                         if (!await SubmitMessage(messageBodyJson))
                         {
-                            var errorView = new InfoDialogView {DataContext = new InfoDialogViewModel {OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed"}};
+                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                             errorView.ShowDialog();
                         }
                     }
                     else
                     {
-                        var errorView = new InfoDialogView {DataContext = new InfoDialogViewModel {OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed"}};
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
                         errorView.ShowDialog();
                     }
                 }
