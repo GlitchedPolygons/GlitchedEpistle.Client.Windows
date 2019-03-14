@@ -8,17 +8,17 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal" 
                     VerticalAlignment="Center">
-            
+
             <!--{Binding SenderName}-->
             <Label Content="{Binding SenderName}" />
-            
+
             <!-- Separator wall -->
             <Rectangle Width="1" 
                        Opacity="0.47"
                        Margin="0,3,0,3"
                        VerticalAlignment="Stretch" 
                        Stroke="{StaticResource SeparatorColorBrush}" />
-            
+
             <!--{Binding SenderId}-->
             <Label Content="{Binding SenderId}" 
                    FontSize="11"
@@ -46,22 +46,44 @@
         <Label Margin="0" 
                Padding="4,2" 
                Content="{Binding Timestamp}" />
-        
-        <!--{Binding FileName}-->
-        <Label Content="{Binding FileName}" />
-        
-        <!--{Binding Text}-->
-        <TextBox IsReadOnly="True" 
+
+        <!-- Attachment -->
+        <WrapPanel  Orientation="Horizontal" 
+                    Margin="0,4,0,-15"
+                    Visibility="{Binding AttachmentButtonVisibility}">
+
+            <Label Content="Attachment:" 
+                   Padding="0"
+                   Margin="5,0,0,0" 
+                   VerticalAlignment="Center"/>
+
+            <Label Content="{Binding FileSizeMB}" 
+                   Margin="0,0,3,0"
+                   VerticalAlignment="Center" />
+
+            <Button Content="{Binding FileName}" 
+                    MaxWidth="250"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Stretch"
+                    ToolTip="Click here to download the attachment to your computer."
+                    Command="{Binding DownloadAttachmentCommand}"/>
+        </WrapPanel>
+
+        <!-- Text -->
+        <TextBox Name="TextBox" 
                  UndoLimit="1" 
+                 IsReadOnly="True" 
                  AllowDrop="False" 
+                 Margin="0,0,0,8"
                  TextWrapping="Wrap"
                  MouseDoubleClick="TextBox_SelectText"
                  GotKeyboardFocus="TextBox_SelectText"
                  PreviewMouseLeftButtonDown="TextBox_OnMouseDown"
                  Text="{Binding Text}" 
                  Style="{StaticResource MessageLabelTextBox}"/>
-        
-        <Separator Margin="0,8,0,0" SnapsToDevicePixels="True" />
+
+        <Separator Margin="0" SnapsToDevicePixels="True" />
 
     </StackPanel>
 </UserControl>
