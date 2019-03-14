@@ -88,10 +88,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (metadata != null)
                 {
                     convo.Name = metadata.Name;
-                    convo.Expires = metadata.Expires;
+                    convo.ExpirationUTC = metadata.ExpirationUTC;
                     convo.CreatorId = metadata.CreatorId;
                     convo.Description = metadata.Description;
-                    convo.CreationTimestamp = metadata.CreationTimestamp;
+                    convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
                     convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
                     convo.Participants = metadata.Participants.Split(',').ToList();
                 }
