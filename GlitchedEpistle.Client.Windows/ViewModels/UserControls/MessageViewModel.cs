@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.Services.MethodQ;
+using Microsoft.Win32;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -86,7 +89,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             DownloadAttachmentCommand = new DelegateCommand(_ =>
             {
-                // TODO: open savefile dialog here 
+                string ext = Path.GetExtension(FileName) ?? string.Empty;
+
+                var dialog = new SaveFileDialog
+                {
+                    Title = "Download attachment",
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    FileName = FileName,
+                    DefaultExt = ext,
+                    AddExtension = true,
+                    OverwritePrompt = true,
+                    Filter = $"Epistle Message Attachment|*{ext}"
+                };
+
+                dialog.FileOk += (sender, e) =>
+                {
+                    if (sender is SaveFileDialog _dialog)
+                    {
+                        File.WriteAllBytes(_dialog.FileName, FileBytes);
+                    }
+                };
+
+                dialog.ShowDialog();
             });
         }
 
