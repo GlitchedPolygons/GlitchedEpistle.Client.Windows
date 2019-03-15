@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
 using System.Linq;
@@ -21,7 +22,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using Prism.Events;
 using Microsoft.Win32;
@@ -70,7 +70,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref clipboardTickVisibility, value);
         }
 
-        private ObservableCollection<MessageViewModel> messages = new AsyncObservableCollection<MessageViewModel>();
+        private ObservableCollection<MessageViewModel> messages = new ObservableCollection<MessageViewModel>();
         public ObservableCollection<MessageViewModel> Messages
         {
             get => messages;
@@ -85,10 +85,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
-                if (scheduledUpdateRoutine.HasValue)
-                    methodQ.Cancel(scheduledUpdateRoutine.Value);
-
-                Messages = new AsyncObservableCollection<MessageViewModel>();
+                StopAutomaticPulling();
+                Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;
                 LoadLocalMessages();
                 PullNewestMessages();
@@ -97,10 +95,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         private bool pulling;
-        private ulong? scheduledHideGreenTickIcon = null, scheduledUpdateRoutine = null;
+        private ulong? scheduledUpdateRoutine = null;
+        private ulong? scheduledHideGreenTickIcon = null;
+        private ConcurrentBag<MessageViewModel> msgQueue = new ConcurrentBag<MessageViewModel>();
 
         public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger)
         {
+            #region Injections
             this.user = user;
             this.logger = logger;
             this.crypto = crypto;
@@ -110,16 +111,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.convoService = convoService;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
+            #endregion
 
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
-            
+            methodQ.Schedule(TransferQueuedMessagesToUI, MSG_PULL_FREQUENCY);
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
-
             settings.Load();
         }
-        
+
         ~ActiveConvoViewModel()
         {
             if (scheduledUpdateRoutine.HasValue)
@@ -138,6 +139,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
         }
 
+        private void TransferQueuedMessagesToUI()
+        {
+            Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                if (msgQueue.Count > 0)
+                {
+                    Messages.AddRange(msgQueue.OrderBy(m => m.TimestampDateTimeUTC));
+                    msgQueue = new ConcurrentBag<MessageViewModel>();
+                }
+            });
+        }
+
         private void LoadLocalMessages()
         {
             if (ActiveConvo is null || string.IsNullOrEmpty(ActiveConvo.Id))
@@ -151,23 +164,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            foreach (string file in Directory.GetFiles(dir).OrderBy(f => f))
+            Parallel.ForEach(Directory.GetFiles(dir), file =>
             {
                 try
                 {
                     var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
-                    if (message is null)
+                    if (message != null)
                     {
-                        continue;
+                        AddMessageToView(message);
                     }
-
-                    AddMessageToView(message);
                 }
                 catch (Exception e)
                 {
                     logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
                 }
-            }
+            });
         }
 
         private void HideGreenTick()
@@ -285,7 +296,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             string fileBase64 = json["fileBase64"]?.Value<string>();
             messageViewModel.FileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
 
-            Messages.Add(messageViewModel);
+            msgQueue.Add(messageViewModel);
         }
 
         private async void PullNewestMessages()
@@ -297,8 +308,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             pulling = true;
 
-            int i = Messages.Count > 0 
-                ? await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id) 
+            int i = Messages.Count > 0
+                ? await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id)
                 : 0;
 
             if (i < 0)
@@ -307,14 +318,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            var retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, i);
+            var retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
             if (retrievedMessages is null || retrievedMessages.Length == 0)
             {
                 return;
             }
 
             // Add the retrieved messages only to the chatroom if it does not contain them yet (mistakes are always possible; safe is safe).
-            Parallel.ForEach(retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampUTC), message =>
+            Parallel.ForEach(retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)), message =>
             {
                 AddMessageToView(message);
                 WriteMessageToDisk(message);

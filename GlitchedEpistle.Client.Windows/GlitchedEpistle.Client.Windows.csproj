@@ -462,7 +462,6 @@
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
-    <Compile Include="Models\AsyncObservableCollection.cs" />
     <Compile Include="PubSubEvents\CouponRedeemedEvent.cs" />
     <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
