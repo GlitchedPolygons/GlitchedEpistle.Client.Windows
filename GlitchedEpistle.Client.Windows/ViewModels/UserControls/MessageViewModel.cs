@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 
@@ -142,7 +143,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }, DateTime.UtcNow.AddSeconds(3));
         }
 
-        private bool HasAttachment() => !string.IsNullOrEmpty(FileName) && FileBytes != null && FileBytes.Length > 0;
-        private bool IsImage() => HasAttachment() && (FileName.EndsWith(".png") || FileName.EndsWith(".jpg") || FileName.EndsWith(".jpeg"));
+        private bool HasAttachment()
+        {
+            return !string.IsNullOrEmpty(FileName) && FileBytes != null && FileBytes.Length > 0;
+        }
+
+        private bool IsImage()
+        {
+            if (!HasAttachment())
+            {
+                return false;
+            }
+
+            return FileName.EndsWith(".png", true, CultureInfo.InvariantCulture)
+                   || FileName.EndsWith(".jpg", true, CultureInfo.InvariantCulture)
+                   || FileName.EndsWith(".jpeg", true, CultureInfo.InvariantCulture)
+                   || FileName.EndsWith(".tif", true, CultureInfo.InvariantCulture);
+        }
     }
 }
