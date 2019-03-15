@@ -70,6 +70,13 @@
                     Command="{Binding DownloadAttachmentCommand}"/>
         </WrapPanel>
 
+        <!-- Image (only displayed when attachment is a .png or .jpg) -->
+        <Image Visibility="{Binding ImageVisibility}" 
+               MaxWidth="{Binding ImageMaxWidth}" 
+               Margin="5,26,0,-12"
+               HorizontalAlignment="Left"
+               Source="{Binding FileBytes}" />
+
         <!-- Text -->
         <TextBox Name="TextBox" 
                  UndoLimit="1" 

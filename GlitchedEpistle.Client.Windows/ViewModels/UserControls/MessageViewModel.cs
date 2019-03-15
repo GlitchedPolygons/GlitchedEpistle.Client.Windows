@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 
 using Microsoft.Win32;
@@ -45,7 +45,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
 
-        public Visibility AttachmentButtonVisibility => !string.IsNullOrEmpty(FileName) && FileBytes != null && FileBytes.Length > 0 ? Visibility.Visible : Visibility.Hidden;
+        public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
+        public Visibility ImageVisibility => IsImage() ? Visibility.Visible : Visibility.Hidden;
+
+        private Image image;
+        public int ImageMaxWidth
+        {
+            get
+            {
+                const int DEFAULT_MAX_WIDTH = 500;
+
+                if (!HasAttachment() || !IsImage())
+                {
+                    return DEFAULT_MAX_WIDTH;
+                }
+
+                if (image != null)
+                {
+                    return image.Width;
+                }
+                
+                using (var ms = new MemoryStream(FileBytes))
+                {
+                    try
+                    {
+                        image = Image.FromStream(ms);
+                    }
+                    catch (Exception)
+                    {
+                        image = null;
+                    }
+                }
+
+                return image?.Width ?? DEFAULT_MAX_WIDTH;
+            }
+        } 
+
         #endregion
 
         public byte[] FileBytes { get; set; }
@@ -73,47 +108,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public MessageViewModel(IMethodQ methodQ)
         {
             this.methodQ = methodQ;
-
-            CopyUserIdToClipboardCommand = new DelegateCommand(_ =>
-            {
-                Clipboard.SetText(SenderId);
-                ClipboardTickVisibility = Visibility.Visible;
-
-                if (scheduledHideGreenTickIcon.HasValue)
-                    methodQ.Cancel(scheduledHideGreenTickIcon.Value);
-
-                scheduledHideGreenTickIcon = methodQ.Schedule(() =>
-                {
-                    ClipboardTickVisibility = Visibility.Hidden;
-                    scheduledHideGreenTickIcon = null;
-                }, DateTime.UtcNow.AddSeconds(3));
-            });
-
-            DownloadAttachmentCommand = new DelegateCommand(_ =>
-            {
-                string ext = Path.GetExtension(FileName) ?? string.Empty;
-
-                var dialog = new SaveFileDialog
-                {
-                    Title = "Download attachment",
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                    FileName = FileName,
-                    DefaultExt = ext,
-                    AddExtension = true,
-                    OverwritePrompt = true,
-                    Filter = $"Epistle Message Attachment|*{ext}"
-                };
-
-                dialog.FileOk += (sender, e) =>
-                {
-                    if (sender is SaveFileDialog _dialog)
-                    {
-                        File.WriteAllBytes(_dialog.FileName, FileBytes);
-                    }
-                };
-
-                dialog.ShowDialog();
-            });
+            
+            DownloadAttachmentCommand = new DelegateCommand(OnDownloadAttachment);
+            CopyUserIdToClipboardCommand = new DelegateCommand(OnCopyUserIdToClipboard);
         }
 
         ~MessageViewModel()
@@ -127,5 +124,49 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
             }
         }
+
+        private void OnDownloadAttachment(object o)
+        {
+            string ext = Path.GetExtension(FileName) ?? string.Empty;
+
+            var dialog = new SaveFileDialog
+            {
+                Title = "Download attachment",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                FileName = FileName,
+                DefaultExt = ext,
+                AddExtension = true,
+                OverwritePrompt = true,
+                Filter = $"Epistle Message Attachment|*{ext}"
+            };
+
+            dialog.FileOk += (sender, e) =>
+            {
+                if (sender is SaveFileDialog _dialog)
+                {
+                    File.WriteAllBytes(_dialog.FileName, FileBytes);
+                }
+            };
+
+            dialog.ShowDialog();
+        }
+
+        private void OnCopyUserIdToClipboard(object o)
+        {
+            Clipboard.SetText(SenderId);
+            ClipboardTickVisibility = Visibility.Visible;
+
+            if (scheduledHideGreenTickIcon.HasValue)
+                methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+
+            scheduledHideGreenTickIcon = methodQ.Schedule(() =>
+            {
+                ClipboardTickVisibility = Visibility.Hidden;
+                scheduledHideGreenTickIcon = null;
+            }, DateTime.UtcNow.AddSeconds(3));
+        }
+
+        private bool HasAttachment() => !string.IsNullOrEmpty(FileName) && FileBytes != null && FileBytes.Length > 0;
+        private bool IsImage() => HasAttachment() && (FileName.EndsWith(".png") || FileName.EndsWith(".jpg") || FileName.EndsWith(".jpeg"));
     }
 }
