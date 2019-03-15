@@ -1,9 +1,16 @@
 ﻿using System;
+using System.IO;
+using System.IO.Compression;
+using System.Threading.Tasks;
+
 using System.Windows;
 using System.Windows.Input;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using System.Windows.Controls;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 
 using Microsoft.Win32;
 
@@ -12,12 +19,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class UserExportViewModel : ViewModel, ICloseable
     {
         #region Constants
-        private const bool DEFAULT_EXPORT_SETTINGS = true;
-        private const bool DEFAULT_EXPORT_CONVOS = false;
-        private const bool DEFAULT_COMPRESS_OUTPUT = false;
-
-        // Injections:
-        private readonly ISettings settings;
+        private readonly ISymmetricCryptography aes;
         #endregion
 
         #region Events        
@@ -36,114 +38,93 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
+        private bool enabled = true;
+        public bool Enabled { get => enabled; set => Set(ref enabled, value); }
+
         private string outputFilePath;
         public string OutputFilePath { get => outputFilePath; set => Set(ref outputFilePath, value); }
 
-        private string exportLabel;
+        private string exportLabel = "Export a complete backup of your Epistle account. This includes convos and user settings. You can also choose to encrypt your backup with a password.";
         public string ExportLabel { get => exportLabel; set => Set(ref exportLabel, value); }
-
-        private bool exportSettings = DEFAULT_EXPORT_SETTINGS;
-        public bool ExportSettings
-        {
-            get => exportSettings;
-            set
-            {
-                Set(ref exportSettings, value);
-                UpdateExportLabel();
-            }
-        }
-
-        private bool exportConvos = DEFAULT_EXPORT_CONVOS;
-        public bool ExportConvos
-        {
-            get => exportConvos;
-            set
-            {
-                Set(ref exportConvos, value);
-                UpdateExportLabel();
-            }
-        }
-
-        private bool compressOutput = DEFAULT_COMPRESS_OUTPUT;
-        public bool CompressOutput
-        {
-            get => compressOutput;
-            set
-            {
-                Set(ref compressOutput, value);
-                UpdateExportLabel();
-            }
-        }
-
-        private bool exportReady;
-        public bool ExportReady { get => exportReady; set => Set(ref exportReady, value); }
         #endregion
 
-        public UserExportViewModel(ISettings settings)
+        public UserExportViewModel(ISymmetricCryptography aes)
         {
-            this.settings = settings;
-
+            this.aes = aes;
             ClosedCommand = new DelegateCommand(OnClosed);
-            BrowseButtonCommand = new DelegateCommand(OnClickedBrowse);
-            CancelButtonCommand = new DelegateCommand(OnClickedCancel);
-            ExportButtonCommand = new DelegateCommand(OnClickedExport);
 
-            settings.Load();
-            UpdateExportLabel();
-        }
+            // On clicked "Browse"
+            BrowseButtonCommand = new DelegateCommand(commandParam =>
+            {
+                var dialog = new SaveFileDialog
+                {
+                    Title = "Epistle backup file path",
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                    FileName = $"{DateTime.Now:yyyy-MM-dd-HH-mm}-glitched-epistle-backup.dat",
+                    DefaultExt = ".dat",
+                    AddExtension = true,
+                    OverwritePrompt = true,
+                    Filter = "Epistle Backup File|*.dat"
+                };
 
-        private void UpdateExportLabel()
-        {
-            string verb = compressOutput ? "gzipped and exported" : "exported";
-            if (!exportSettings && !exportConvos)
-                ExportLabel = $"Only your raw user id and key pair will be {verb}; no convos, no settings!";
-            else if (exportSettings && !exportConvos)
-                ExportLabel = $"Your user credentials and settings will be {verb} without the convos.";
-            else if (exportSettings && exportConvos)
-                ExportLabel = $"Everything including your convos will be {verb}. Please note that this might take a while and end up using a lot of space!";
-            else if (!exportSettings && exportConvos)
-                ExportLabel = $"Your user credentials and convos will be {verb} without the user settings.";
+                dialog.FileOk += (sender, e) =>
+                {
+                    if (sender is SaveFileDialog _dialog)
+                    {
+                        OutputFilePath = _dialog.FileName;
+                    }
+                };
+
+                dialog.ShowDialog();
+            });
+
+            // On clicked "Export"
+            ExportButtonCommand = new DelegateCommand(async commandParam =>
+            {
+                string pw = null;
+                if (commandParam is PasswordBox passwordBox)
+                {
+                    pw = passwordBox.Password;
+                }
+
+                await Task.Run(() =>
+                {
+                    if (File.Exists(OutputFilePath))
+                        File.Delete(OutputFilePath);
+
+                    ZipFile.CreateFromDirectory(Paths.ROOT_DIRECTORY, OutputFilePath, CompressionLevel.Optimal, false);
+                });
+
+                if (!File.Exists(OutputFilePath))
+                {
+                    ExportLabel = $"Backup couldn't be exported to {OutputFilePath}... Reason unknown";
+                    OutputFilePath = null;
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(pw))
+                {
+                    ExportLabel = "Backup exported successfully! Please keep that file VERY secret (you chose not to encrypt it with a password after all...).";
+                    Enabled = false;
+                    OutputFilePath = null;
+                    return;
+                }
+
+                byte[] encryptedBytes = await Task.Run(() => aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw));
+                File.WriteAllBytes(OutputFilePath, encryptedBytes);
+
+                Enabled = false;
+                OutputFilePath = null;
+                ExportLabel = "Backup exported successfully! Please don't share that file with anybody.";
+            });
+
+            // On clicked "Cancel"
+            CancelButtonCommand = new DelegateCommand(_ => RequestedClose?.Invoke(this, EventArgs.Empty));
         }
 
         private void OnClosed(object commandParam)
         {
             // nop
-        }
-
-        private void OnClickedBrowse(object commandParam)
-        {
-            var dialog = new SaveFileDialog
-            {
-                Title = "Epistle backup file path",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                FileName = $"{DateTime.Now:yyyy-MM-dd-HH-mm}-glitched-epistle-backup.dat",
-                DefaultExt = ".dat",
-                AddExtension = true,
-                OverwritePrompt = true,
-                Filter = "Epistle Backup File|*.dat"
-            };
-            dialog.FileOk += FileDialog_FileOk;
-            dialog.ShowDialog();
-        }
-
-        private void FileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (sender is SaveFileDialog dialog)
-            {
-                dialog.FileOk -= FileDialog_FileOk;
-                OutputFilePath = dialog.FileName;
-            }
-            ExportReady = !string.IsNullOrEmpty(OutputFilePath);
-        }
-
-        private void OnClickedCancel(object commandParam)
-        {
-            RequestedClose?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void OnClickedExport(object commandParam)
-        {
-            // TODO: implement this!
         }
     }
 }

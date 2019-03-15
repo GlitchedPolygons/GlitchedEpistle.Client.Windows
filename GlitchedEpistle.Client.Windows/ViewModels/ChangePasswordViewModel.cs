@@ -57,7 +57,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             NewPasswordChangedCommand = new DelegateCommand(pw => newPw = (pw as PasswordBox)?.Password);
             NewPassword2ChangedCommand = new DelegateCommand(pw => newPw2 = (pw as PasswordBox)?.Password);
 
-            messageTimer.Elapsed += (_, __) => { ErrorMessage = null; SuccessMessage = null; };
+            messageTimer.Elapsed += (_, __) => ErrorMessage = SuccessMessage = null;
             messageTimer.Start();
         }
 

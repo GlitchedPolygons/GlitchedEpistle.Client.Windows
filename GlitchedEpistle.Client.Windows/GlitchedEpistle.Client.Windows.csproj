@@ -47,8 +47,8 @@
     <Reference Include="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.1.0.2\lib\netstandard2.0\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll</HintPath>
     </Reference>
-    <Reference Include="GlitchedPolygons.Services.MethodQ, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GlitchedPolygons.Services.MethodQ.1.0.1\lib\netstandard2.0\GlitchedPolygons.Services.MethodQ.dll</HintPath>
+    <Reference Include="GlitchedPolygons.Services.MethodQ, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GlitchedPolygons.Services.MethodQ.1.0.2\lib\netstandard2.0\GlitchedPolygons.Services.MethodQ.dll</HintPath>
     </Reference>
     <Reference Include="JwtService, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GlitchedPolygons.Services.JwtService.1.1.2\lib\netstandard2.0\JwtService.dll</HintPath>
@@ -188,6 +188,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.IO.Compression.ZipFile, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.9.2\lib\net47\System.IO.Compression.ZipFile.dll</HintPath>
     </Reference>
@@ -265,6 +266,7 @@
     <Reference Include="System.Net.WebSockets.Client, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.9.2\lib\net47\System.Net.WebSockets.Client.dll</HintPath>
     </Reference>
+    <Reference Include="System.Numerics" />
     <Reference Include="System.ObjectModel, Version=4.0.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Unity.5.9.2\lib\net47\System.ObjectModel.dll</HintPath>
     </Reference>
@@ -440,8 +442,8 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="XamlAnimatedGif, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\XamlAnimatedGif.1.2.0\lib\net45\XamlAnimatedGif.dll</HintPath>
+    <Reference Include="XamlAnimatedGif, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XamlAnimatedGif.1.2.1\lib\net45\XamlAnimatedGif.dll</HintPath>
     </Reference>
     <Reference Include="zxing, Version=0.16.4.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <HintPath>..\packages\ZXing.Net.0.16.4\lib\net47\zxing.dll</HintPath>
@@ -463,9 +465,13 @@
     <Compile Include="PubSubEvents\CouponRedeemedEvent.cs" />
     <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
+    <Compile Include="PubSubEvents\JoinedConvoEvent.cs" />
+    <Compile Include="PubSubEvents\LogoutEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationVerifiedEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationSucceededEvent.cs" />
+    <Compile Include="PubSubEvents\ConvoCreationSucceededEvent.cs" />
     <Compile Include="PubSubEvents\UsernameChangedEvent.cs" />
+    <Compile Include="Services\Convos\ConvoProvider.cs" />
     <Compile Include="Services\Factories\IViewModelFactory.cs" />
     <Compile Include="Services\Factories\IWindowFactory.cs" />
     <Compile Include="Services\Factories\ViewModelFactory.cs" />
@@ -473,13 +479,20 @@
     <Compile Include="Services\Logging\Logger.cs" />
     <Compile Include="Services\Settings\SettingsJson.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\CreateConvoViewModel.cs" />
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
+    <Compile Include="ViewModels\ImageViewerViewModel.cs" />
+    <Compile Include="ViewModels\ImportUserFromBackupViewModel.cs" />
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
+    <Compile Include="ViewModels\JoinConvoDialogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ActiveConvoViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ConvosListViewModel.cs" />
     <Compile Include="ViewModels\UserControls\CouponRedeemedSuccessfullyViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ExpiredViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ExpirationReminderViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\MessageViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationSuccessfulViewModel.cs" />
@@ -492,14 +505,26 @@
     <Compile Include="Views\ConfirmResetView.xaml.cs">
       <DependentUpon>ConfirmResetView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CreateConvoView.xaml.cs">
+      <DependentUpon>CreateConvoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GeneratingKeyView.xaml.cs">
       <DependentUpon>GeneratingKeyView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HelpView.xaml.cs">
       <DependentUpon>HelpView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImageViewerView.xaml.cs">
+      <DependentUpon>ImageViewerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ImportUserFromBackupView.xaml.cs">
+      <DependentUpon>ImportUserFromBackupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InfoDialogView.xaml.cs">
       <DependentUpon>InfoDialogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JoinConvoDialogView.xaml.cs">
+      <DependentUpon>JoinConvoDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -510,6 +535,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\ActiveConvoView.xaml.cs">
+      <DependentUpon>ActiveConvoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ConvosListView.xaml.cs">
+      <DependentUpon>ConvosListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\CouponRedeemedSuccessfullyView.xaml.cs">
       <DependentUpon>CouponRedeemedSuccessfullyView.xaml</DependentUpon>
@@ -522,6 +553,9 @@
     </Compile>
     <Compile Include="Views\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\MessageView.xaml.cs">
+      <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\UserCreationView.xaml.cs">
       <DependentUpon>UserCreationView.xaml</DependentUpon>
@@ -544,6 +578,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CreateConvoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GeneratingKeyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -552,7 +590,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ImageViewerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportUserFromBackupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\InfoDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JoinConvoDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -563,6 +613,14 @@
     <Page Include="Views\SettingsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\ActiveConvoView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\UserControls\ConvosListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\CouponRedeemedSuccessfullyView.xaml">
       <SubType>Designer</SubType>
@@ -577,6 +635,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\MessageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -621,9 +683,7 @@
   <ItemGroup>
     <Resource Include="Resources\Images\settings-icon-white.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Resources\Images\reset-icon-black.png" />
     <Resource Include="Resources\Images\reset-icon-white.png" />
@@ -657,6 +717,23 @@
   <ItemGroup>
     <Resource Include="Resources\Images\trash-icon-black.png" />
     <Resource Include="Resources\Images\trash-icon-white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\clipboard-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\green-tick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\help-icon-selected.png" />
+    <Resource Include="Resources\Images\reset-icon-selected.png" />
+    <Resource Include="Resources\Images\settings-icon-selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\trash-icon-selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\clipboard-icon-selected.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

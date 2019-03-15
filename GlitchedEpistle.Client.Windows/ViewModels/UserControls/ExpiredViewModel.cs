@@ -14,19 +14,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ICommand BuyButtonCommand { get; }
         #endregion
 
-        public ExpiredViewModel(IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
+        public ExpiredViewModel(IWindowFactory windowFactory)
         {
             BuyButtonCommand = new DelegateCommand(_ => Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub"));
-            RedeemButtonCommand = new DelegateCommand(_ =>
-            {
-                var settingsView = windowFactory.Create<SettingsView>(true);
-                if (settingsView.DataContext is null)
-                {
-                    settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
-                }
-                settingsView.Show();
-                settingsView.Activate();
-            });
+            RedeemButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<SettingsView, SettingsViewModel>(true, true));
         }
     }
 }

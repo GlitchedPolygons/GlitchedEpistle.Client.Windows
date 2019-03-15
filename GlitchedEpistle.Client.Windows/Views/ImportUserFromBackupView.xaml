@@ -1,0 +1,63 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Background="{StaticResource WindowBackgroundBrush}"
+        Icon="/Resources/Images/reset-icon-white.png"
+        Title="Import user from backup"  
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+
+    <StackPanel Margin="10" Width="300">
+
+        <Label Content="Selected file:"/>
+
+        <TextBlock Style="{StaticResource TextBlock}" 
+                   TextWrapping="Wrap" 
+                   Text="{Binding BackupFilePath}"/>
+
+        <TextBlock Text="{Binding ErrorMessage}" 
+                   TextWrapping="Wrap" 
+                   MaxWidth="250" 
+                   Margin="5,0,0,0"
+                   HorizontalAlignment="Left" 
+                   Foreground="Red" 
+                   FontSize="14"/>
+
+        <Label Content="Backup decryption password (if applicable)"/>
+
+        <PasswordBox Name="PasswordBox" 
+                     Height="23"
+                     Style="{StaticResource PasswordBox}"/>
+
+        <TextBlock Style="{StaticResource TextBlock}" 
+                   TextWrapping="Wrap"  
+                   Margin="0,10,0,0"
+                   Text="Please note that by clicking on import you agree to IRREVERSIBLY override the current Epistle config (any existing convos stored on the device are deleted!). The app will automatically restart if import was successful."/>
+
+        <StackPanel Orientation="Horizontal" 
+                    Margin="0,10,0,0" 
+                    HorizontalAlignment="Right">
+
+            <Button Content="Cancel" 
+                    Width="75" 
+                    Margin="0,0,10,0"
+                    Command="{Binding CancelCommand}"/>
+
+            <Button Content="Import" 
+                    Width="75"
+                    Command="{Binding ImportCommand}"
+                    CommandParameter="{Binding ElementName=PasswordBox}"/>
+        </StackPanel>
+
+    </StackPanel>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter" 
+                    Command="{Binding ImportCommand}"
+                    CommandParameter="{Binding ElementName=PasswordBox}"/>
+    </Window.InputBindings>
+</Window>

@@ -8,6 +8,8 @@ using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.ServerHealth;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 
@@ -18,12 +20,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class LoginViewModel : ViewModel
     {
         #region Constants
+        private const double ERROR_MESSAGE_INTERVAL_MS = 7000;
+        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL_MS) { AutoReset = true };
+
+        // Injections:
         private readonly User user;
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
-        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL_MS) { AutoReset = true };
-        private const double ERROR_MESSAGE_INTERVAL_MS = 7000;
+        private readonly IServerConnectionTest connectionTest;
         #endregion
 
         #region Commands
@@ -44,11 +49,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private int failedAttempts = 0;
         private bool pendingAttempt = false;
 
-        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user)
+        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest)
         {
             this.user = user;
             this.settings = settings;
             this.userService = userService;
+            this.connectionTest = connectionTest;
             this.eventAggregator = eventAggregator;
 
             QuitCommand = new DelegateCommand(OnClickedQuit);
@@ -68,6 +74,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 || string.IsNullOrEmpty(password)
                 || string.IsNullOrEmpty(totp))
             {
+                return;
+            }
+
+            if (!await connectionTest.TestConnection())
+            {
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.", Title = "Epistle Server Unresponsive" } };
+                errorView.ShowDialog();
                 return;
             }
 

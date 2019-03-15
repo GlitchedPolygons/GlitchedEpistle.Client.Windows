@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
-    <StackPanel Width="420">
+    <StackPanel Width="420" HorizontalAlignment="Center">
         <Label Content="Oh no! Your Glitched Epistle account has expired." 
                FontWeight="Bold" 
                FontSize="16"/>

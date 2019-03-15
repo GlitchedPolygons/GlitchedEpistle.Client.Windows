@@ -10,6 +10,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         public UserCreationView()
         {
             InitializeComponent();
+            Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            this.Loaded -= OnLoaded;
+            UsernameTextBox.Focus();
         }
     }
 }
