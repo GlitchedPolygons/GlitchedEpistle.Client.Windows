@@ -47,40 +47,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
         public Visibility ImageVisibility => IsImage() ? Visibility.Visible : Visibility.Hidden;
-
-        private Image image;
-        public int ImageMaxWidth
-        {
-            get
-            {
-                const int DEFAULT_MAX_WIDTH = 500;
-
-                if (!HasAttachment() || !IsImage())
-                {
-                    return DEFAULT_MAX_WIDTH;
-                }
-
-                if (image != null)
-                {
-                    return image.Width;
-                }
-                
-                using (var ms = new MemoryStream(FileBytes))
-                {
-                    try
-                    {
-                        image = Image.FromStream(ms);
-                    }
-                    catch (Exception)
-                    {
-                        image = null;
-                    }
-                }
-
-                return image?.Width ?? DEFAULT_MAX_WIDTH;
-            }
-        } 
-
         #endregion
 
         public byte[] FileBytes { get; set; }
