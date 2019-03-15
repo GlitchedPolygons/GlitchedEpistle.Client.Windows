@@ -29,7 +29,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ConvosScrollViewer.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35.0d;
+            ConvosListControl.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35.0d;
         }
 
         /// <summary>

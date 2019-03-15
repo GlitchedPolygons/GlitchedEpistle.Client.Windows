@@ -11,6 +11,8 @@ using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
@@ -23,7 +25,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
-
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -34,17 +35,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MIN_WIDTH = 345;
         public const double SIDEBAR_MAX_WIDTH = 666;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
-        public const double MAIN_WINDOW_MIN_HEIGHT = 480;
+        public const double MAIN_WINDOW_MIN_HEIGHT = 530;
+        private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
 
         // Injections:
         private readonly User user;
+        private readonly ILogger logger;
         private readonly IMethodQ methodQ;
         private readonly ISettings settings;
         private readonly IUserService userService;
+        private readonly IConvoProvider convoProvider;
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
-        private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
         #endregion
 
         #region Commands
@@ -56,6 +59,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand JoinConvoButtonCommand { get; }
         public ICommand ChangePasswordButtonCommand { get; }
         public ICommand LogoutButtonCommand { get; }
+        public ICommand CopyUserIdToClipboardCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -91,31 +95,65 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private double progressBarValue = 100;
         public double ProgressBarValue { get => progressBarValue; set => Set(ref progressBarValue, value); }
 
+        private Visibility clipboardTickVisibility = Visibility.Hidden;
+        public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
+
         private Control mainControl;
         public Control MainControl { get => mainControl; set => Set(ref mainControl, value); }
+
+        private Control convosListControl;
+        public Control ConvosListControl { get => convosListControl; set => Set(ref convosListControl, value); }
         #endregion
 
         private bool reset = false;
-        private int? scheduledAuthRefresh = null, scheduledExpirationDialog = null;
+        private ulong? scheduledAuthRefresh = null, scheduledExpirationDialog = null, scheduledHideGreenTickIcon = null;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider)
         {
             this.user = user;
+            this.logger = logger;
             this.methodQ = methodQ;
             this.settings = settings;
             this.userService = userService;
+            this.convoProvider = convoProvider;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
 
+            #region Button click commands
+
+            ResetWindowButtonCommand = new DelegateCommand(_ =>
+            {
+                WindowState = WindowState.Normal;
+                MainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
+                MainWindowHeight = MAIN_WINDOW_MIN_HEIGHT;
+                SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
+            });
+
+            SettingsButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<SettingsView, SettingsViewModel>(true, true));
+            HelpButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<HelpView, HelpViewModel>(false, true));
+            CreateConvoButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<CreateConvoView, CreateConvoViewModel>(true, true));
+            JoinConvoButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<JoinConvoDialogView, JoinConvoDialogViewModel>(true, true));
+            ChangePasswordButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<ChangePasswordView, ChangePasswordViewModel>(true, true));
+            LogoutButtonCommand = new DelegateCommand(_ => Logout());
+            CopyUserIdToClipboardCommand = new DelegateCommand(_ =>
+            {
+                Clipboard.SetText(UserId);
+                ClipboardTickVisibility = Visibility.Visible;
+
+                if (scheduledHideGreenTickIcon.HasValue)
+                    methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+
+                scheduledHideGreenTickIcon = methodQ.Schedule(() =>
+                {
+                    ClipboardTickVisibility = Visibility.Hidden;
+                    scheduledHideGreenTickIcon = null;
+                }, DateTime.UtcNow.AddSeconds(3));
+            });
+
+            #endregion
+
             ClosedCommand = new DelegateCommand(OnClosed);
-            SettingsButtonCommand = new DelegateCommand(OnClickedSettingsIcon);
-            ResetWindowButtonCommand = new DelegateCommand(OnClickedResetWindowIcon);
-            HelpButtonCommand = new DelegateCommand(OnClickedHelpIcon);
-            CreateConvoButtonCommand = new DelegateCommand(OnClickedCreateConvo);
-            ChangePasswordButtonCommand = new DelegateCommand(OnClickedChangePassword);
-            JoinConvoButtonCommand = new DelegateCommand(OnClickedJoinConvo);
-            LogoutButtonCommand = new DelegateCommand(OnClickedLogout);
 
             // Update the username label on the main window when that setting has changed.
             eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
@@ -127,14 +165,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             eventAggregator.GetEvent<UserCreationSucceededEvent>().Subscribe(OnUserCreationSuccessful);
 
             // After a successful user creation, show the login screen.
-            eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(OnUserCreationVerified);
+            eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(ShowLoginControl);
 
             // If the user agreed to delete all of his data on the local machine, respect his will
             // and get rid of everything (even preventing new settings to be written out on app shutdown too).
-            eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(OnConfirmedTotalReset);
+            eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(() => { reset = true; Application.Current.Shutdown(); });
 
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
             eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
+
+            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
 
             // Load up the settings on startup.
             if (settings.Load())
@@ -150,12 +190,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
-
-                if (File.Exists(Paths.PRIVATE_KEY_PATH))
-                {
-                    string keyXml = File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml();
-                    user.PrivateKey = RSAParametersExtensions.FromXml(keyXml);
-                }
             }
 
             if (string.IsNullOrEmpty(UserId))
@@ -166,6 +200,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ShowLoginControl();
             }
+
+            ConvosListControl = new ConvosListView { DataContext = viewModelFactory.Create<ConvosListViewModel>() };
         }
 
         #region MainControl
@@ -203,12 +239,38 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #endregion
 
+        private void OnClosed(object commandParam)
+        {
+            // Don't save out anything and delete
+            // epistle root directory if the app's been reset.
+            if (reset)
+            {
+                var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
+                if (dir.Exists)
+                {
+                    dir.DeleteRecursively();
+                }
+                Application.Current.Shutdown();
+            }
+            else
+            {
+                // Save the window's state before termination.
+                settings.Load();
+                var c = CultureInfo.InvariantCulture;
+                settings[nameof(WindowState)] = WindowState.ToString();
+                settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
+                settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
+                settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
+                settings.Save();
+
+                Application.Current.Shutdown();
+            }
+        }
+
         private async void UpdateUserExp()
         {
             // Gather user expiration UTC from server.
-            DateTime utcNow = DateTime.UtcNow;
             DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
-
             if (!exp.HasValue)
             {
                 return;
@@ -216,6 +278,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Update the UI accordingly (blue progress bar + tooltip).
             user.ExpirationUTC = exp.Value;
+            DateTime utcNow = DateTime.UtcNow;
             bool expired = utcNow > user.ExpirationUTC;
             ProgressBarValue = expired ? 0 : (user.ExpirationUTC - utcNow).TotalHours * 100.0d / 720.0d;
             ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
@@ -246,32 +309,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UIEnabled = !expired;
         }
 
-        private void OnClosed(object commandParam)
-        {
-            // Don't save out anything if the app's been reset.
-            if (reset)
-            {
-                var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
-                if (dir.Exists)
-                {
-                    dir.DeleteRecursively();
-                }
-                Application.Current.Shutdown();
-                return;
-            }
-
-            // Save the window's state before termination.
-            settings.Load();
-            var c = CultureInfo.InvariantCulture;
-            settings[nameof(WindowState)] = WindowState.ToString();
-            settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
-            settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
-            settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
-            settings.Save();
-
-            Application.Current.Shutdown();
-        }
-
         private void OnLoginSuccessful()
         {
             MainControl = null;
@@ -285,6 +322,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             UpdateUserExp();
+
+            // Load the user's RSA keys into the User instance.
+            if (!File.Exists(Paths.PUBLIC_KEY_PATH))
+            {
+                logger.LogError("Login was successful but no public key was found on disk! Did you delete/modify that key file manually?");
+                throw new FileNotFoundException("No public key found on disk!");
+            }
+
+            user.PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml();
+            user.PublicKey = RSAParametersExtensions.FromXml(user.PublicKeyXml);
+
+            if (!File.Exists(Paths.PRIVATE_KEY_PATH))
+            {
+                logger.LogError("Login was successful but no private key was found on disk! Did you delete/modify that key file manually?");
+                throw new FileNotFoundException("No private key found on disk!");
+            }
+
+            user.PrivateKey = RSAParametersExtensions.FromXml(File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml());
         }
 
         private void OnCouponRedeemedSuccessfully()
@@ -309,88 +364,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             };
 
             var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
+            viewModel.Secret = userCreationResponse.TotpSecret;
             viewModel.QR = qrWriter.Write($"otpauth://totp/GlitchedEpistle:{userCreationResponse.Id}?secret={userCreationResponse.TotpSecret}");
             viewModel.BackupCodes = userCreationResponse.TotpEmergencyBackupCodes;
 
             MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
-        }
-
-        private void OnUserCreationVerified()
-        {
-            ShowLoginControl();
-        }
-
-        private void OnClickedCreateConvo(object commandParam)
-        {
-            // TODO: implement create convo dialog
-        }
-        
-        private void OnClickedJoinConvo(object commandParam)
-        {
-            // TODO: implement join convo dialog
-        }
-
-        private void OnClickedChangePassword(object commandParam)
-        {
-            var changePasswordView = windowFactory.Create<ChangePasswordView>(true);
-            if (changePasswordView.DataContext is null)
-            {
-                changePasswordView.DataContext = viewModelFactory.Create<ChangePasswordViewModel>();
-            }
-            changePasswordView.Show();
-            changePasswordView.Activate();
-        }
-
-        private void OnClickedLogout(object commandParam)
-        {
-            if (MainControl is LoginView)
-            {
-                return;
-            }
-
-            Logout();
-        }
-
-        private void OnClickedSettingsIcon(object commandParam)
-        {
-            var settingsView = windowFactory.Create<SettingsView>(true);
-
-            // When opening views that only exist one at a time,
-            // it's important not to recreate the viewmodel every time,
-            // as that would override any changes made.
-            // Therefore, check if the view already has a data context that isn't null.
-            if (settingsView.DataContext is null)
-            {
-                settingsView.DataContext = viewModelFactory.Create<SettingsViewModel>();
-            }
-
-            settingsView.Show();
-            settingsView.Activate();
-        }
-
-        private void OnClickedHelpIcon(object commandParam)
-        {
-            var helpView = windowFactory.Create<HelpView>(true);
-            if (helpView.DataContext is null)
-            {
-                helpView.DataContext = viewModelFactory.Create<HelpViewModel>();
-            }
-            helpView.Show();
-            helpView.Activate();
-        }
-
-        private void OnClickedResetWindowIcon(object commandParam)
-        {
-            WindowState = WindowState.Normal;
-            MainWindowWidth = MAIN_WINDOW_MIN_WIDTH;
-            MainWindowHeight = MAIN_WINDOW_MIN_HEIGHT;
-            SidebarWidth = SidebarMinWidth = SIDEBAR_MIN_WIDTH;
-        }
-
-        private void OnConfirmedTotalReset()
-        {
-            reset = true;
-            Application.Current.Shutdown();
         }
 
         private async void OnRefreshAuth()
@@ -413,8 +391,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, newToken);
         }
 
+        private void OnJoinedConvo(Convo convo)
+        {
+            var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
+            viewModel.ActiveConvo = convo;
+            MainControl = new ActiveConvoView { DataContext = viewModel };
+        }
+
         private void Logout()
         {
+            if (MainControl is LoginView)
+                return;
+
             user.Token = null;
             user.PasswordSHA512 = null;
 
@@ -426,6 +414,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 methodQ.Cancel(scheduledAuthRefresh.Value);
                 scheduledAuthRefresh = null;
             }
+
+            eventAggregator.GetEvent<LogoutEvent>().Publish();
         }
     }
 }

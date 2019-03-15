@@ -9,7 +9,7 @@
         Title="Glitched Epistle" 
         MinWidth="800" 
         Width="{Binding Path=MainWindowWidth, Mode=TwoWay}" 
-        MinHeight="480" 
+        MinHeight="530" 
         Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"
@@ -54,11 +54,29 @@
                        FontSize="18" 
                        Padding="0,5,0,0"/>
 
-                <Label Content="{Binding UserId}"
-                       HorizontalAlignment="Center"
-                       FontSize="11"
-                       Padding="0,0,0,5" 
-                       Foreground="Gray" FontStyle="Italic"/>
+                <StackPanel Orientation="Horizontal" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Center">
+
+                    <Label Content="{Binding UserId}"
+                           FontSize="11"
+                           Padding="0,0,0,5" 
+                           Foreground="Gray" 
+                           FontStyle="Italic"/>
+
+                    <Button Width="15" 
+                            Height="15"
+                            Margin="4,0,0,4"
+                            ToolTip="Copy user id to clipboard"
+                            Command="{Binding CopyUserIdToClipboardCommand}"
+                            Style="{StaticResource CopyToClipboardButton}"/>
+
+                    <Image Source="/Resources/Images/green-tick.png" 
+                           Width="15" 
+                           Height="15"
+                           Margin="1,0,0,4" 
+                           Visibility="{Binding ClipboardTickVisibility}"/>
+                </StackPanel>
 
                 <ProgressBar Height="4" 
                              Name="SubscriptionProgressBar"
@@ -78,17 +96,26 @@
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."
                             Command="{Binding CreateConvoButtonCommand}"/>
-                    <Separator/>
+                    <Rectangle Width="1" 
+                               Opacity="0.5"
+                               VerticalAlignment="Stretch" 
+                               Stroke="{StaticResource SeparatorColorBrush}" />
                     <Button Content="Join Convo" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to join an existing conversation."
                             Command="{Binding JoinConvoButtonCommand}"/>
-                    <Separator/>
+                    <Rectangle Width="1" 
+                               Opacity="0.5"
+                               VerticalAlignment="Stretch" 
+                               Stroke="{StaticResource SeparatorColorBrush}" />
                     <Button Content="Change Password" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
                             Command="{Binding ChangePasswordButtonCommand}"/>
-                    <Separator/>
+                    <Rectangle Width="1" 
+                               Opacity="0.5"
+                               VerticalAlignment="Stretch" 
+                               Stroke="{StaticResource SeparatorColorBrush}" />
                     <Button Content="Logout" 
                             Padding="6 4 6 4"
                             ToolTip="Click here to log out of your Glitched Epistle account."
@@ -97,73 +124,13 @@
 
             </StackPanel>
 
-            <!-- Convos list -->
-            <ScrollViewer Name="ConvosScrollViewer" 
-                          VerticalScrollBarVisibility="Auto">
+            <Rectangle Opacity="0.5"
+                       Height="1"
+                       HorizontalAlignment="Stretch" 
+                       Stroke="{StaticResource SeparatorColorBrush}"/>
 
-                <StackPanel Name="ConvosStackPanel">
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                    <Button Content="TEST"></Button>
-                    <Separator/>
-                </StackPanel>
-            </ScrollViewer>
+            <!-- Convos list -->
+            <ContentControl Name="ConvosListControl" Content="{Binding ConvosListControl}"/>
 
         </StackPanel>
 
@@ -178,10 +145,11 @@
         <!-- Convos list collapse button -->
         <Button Grid.Column="1" Grid.Row="0"
                 Style="{StaticResource CollapseButton}"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top"
                 Content="&lt;" 
                 Width="15" 
-                Height="50"
+                Height="52.5"
                 Name="CollapseButton"
                 Click="CollapseButton_OnClick"/>
 
@@ -215,17 +183,17 @@
                     Command="{Binding ResetWindowButtonCommand}"
                     Style="{StaticResource ResetMainWindowButton}"
                     ToolTip="Reset the main window's size and layout." Click="ResetWindowButton_Click"/>
-
         </Canvas>
 
         <!-- Right Column -->
-        <StackPanel Grid.Column="1" Grid.Row="0" Margin="15,35,15,15">
-
-            <ContentControl Content="{Binding MainControl}" 
-                            HorizontalAlignment="Center"
-                            Margin="0"/>
-
-        </StackPanel>
+        <ContentControl Content="{Binding MainControl}" 
+                        HorizontalAlignment="Stretch" 
+                        HorizontalContentAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        Grid.Row="0" 
+                        Grid.Column="1" 
+                        Margin="5,35,0,0"/>
     </Grid>
 </Window>
 <!-- Copyright (C) Raphael Beck | Glitched Polygons, 2018 -->

@@ -1,0 +1,104 @@
+﻿<UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+             mc:Ignorable="d">
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" 
+                    VerticalAlignment="Center">
+
+            <!--{Binding SenderName}-->
+            <Label Content="{Binding SenderName}" />
+
+            <!-- Separator wall -->
+            <Rectangle Width="1" 
+                       Opacity="0.47"
+                       Margin="0,3,0,3"
+                       VerticalAlignment="Stretch" 
+                       Stroke="{StaticResource SeparatorColorBrush}" />
+
+            <!--{Binding SenderId}-->
+            <Label Content="{Binding SenderId}" 
+                   FontSize="11"
+                   Margin="0,1,0,0"
+                   Foreground="Gray" 
+                   FontStyle="Italic" />
+
+            <!-- Copy UserId to clipboard button -->
+            <Button Width="15" 
+                    Height="15"
+                    Margin="0"
+                    ToolTip="Copy user id to clipboard"
+                    Command="{Binding CopyUserIdToClipboardCommand}"
+                    Style="{StaticResource CopyToClipboardButton}"/>
+
+            <!-- Copied to clipboard confirmation tick -->
+            <Image Source="/Resources/Images/green-tick.png" 
+                   Width="15" 
+                   Height="15"
+                   Margin="1,0,0,0" 
+                   Visibility="{Binding ClipboardTickVisibility}"/>
+        </StackPanel>
+
+        <!--{Binding Timestamp}-->
+        <Label Margin="0" 
+               Padding="4,2" 
+               Content="{Binding Timestamp}" />
+
+        <!-- Attachment -->
+        <WrapPanel  Orientation="Horizontal" 
+                    Margin="5,4,0,-15"
+                    Visibility="{Binding AttachmentButtonVisibility}">
+
+            <Label Content="Attachment:" 
+                   Margin="0" 
+                   Padding="0"
+                   VerticalAlignment="Center"/>
+
+            <Label Content="{Binding FileSizeMB}" 
+                   Margin="0,0,3,0"
+                   VerticalAlignment="Center" />
+
+            <Button Content="{Binding FileName}" 
+                    MaxWidth="420"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Left"
+                    HorizontalContentAlignment="Stretch"
+                    ToolTip="Click here to download the attachment to your computer."
+                    Command="{Binding DownloadAttachmentCommand}"/>
+        </WrapPanel>
+
+        <!-- Image (only displayed when attachment is a .png or .jpg) -->
+        <Image Cursor="Hand"
+               MaxWidth="350" 
+               MaxHeight="350"
+               Margin="5,26,0,-12"
+               Name="ImagePreview"
+               HorizontalAlignment="Left"
+               Source="{Binding FileBytes}"
+               Visibility="{Binding ImageVisibility}" 
+               Style="{StaticResource ImageAttachmentStyle}">
+            <Image.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding ClickedOnImageAttachmentCommand}" />
+            </Image.InputBindings>
+        </Image>
+
+        <!-- Text -->
+        <TextBox Name="TextBox" 
+                 UndoLimit="1" 
+                 IsReadOnly="True" 
+                 AllowDrop="False" 
+                 Margin="2.5,0,0,8"
+                 TextWrapping="Wrap"
+                 MouseDoubleClick="TextBox_SelectText"
+                 GotKeyboardFocus="TextBox_SelectText"
+                 PreviewMouseLeftButtonDown="TextBox_OnMouseDown"
+                 Text="{Binding Text}" 
+                 Style="{StaticResource MessageLabelTextBox}"/>
+
+        <Separator Margin="0" SnapsToDevicePixels="True" />
+
+    </StackPanel>
+</UserControl>

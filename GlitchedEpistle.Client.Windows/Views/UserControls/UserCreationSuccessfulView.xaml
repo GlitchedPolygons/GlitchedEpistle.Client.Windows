@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Left">
+    <StackPanel HorizontalAlignment="Center" MaxWidth="280">
 
         <TextBlock Text="Please set up your 2FA authenticator app." 
                    TextWrapping="Wrap" 
@@ -16,7 +16,8 @@
                    FontSize="16"
                    Style="{StaticResource TextBlock}"/>
 
-        <Label Content="(Authy is recommended)" 
+        <Label Content="(Google Authenticator is recommended)" 
+               FontSize="11"
                HorizontalAlignment="Center"/>
 
         <TextBlock Text="{Binding ErrorMessage}" 
@@ -35,6 +36,21 @@
                HorizontalAlignment="Center" 
                Source="{Binding QR}"/>
 
+        <Label Content="2FA secret (please back this up somewhere safe)" 
+               ToolTip="This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you'll need it if you happen to lose your 2FA device."/>
+        
+        <TextBox Style="{StaticResource TextBox}" 
+                 Name="SecretTextBox"
+                 Padding="1"
+                 Margin="5,0,0,0"
+                 Height="23"
+                 IsReadOnly="True" 
+                 ToolTip="This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you'll need it if you happen to lose your 2FA device."
+                 MouseDoubleClick="SecretTextBox_SelectText"
+                 GotKeyboardFocus="SecretTextBox_SelectText"
+                 PreviewMouseLeftButtonDown="SecretTextBox_OnPreviewMouseLeftButtonDown"
+                 Text="{Binding Secret}"/>
+
         <Label Content="Enter your 2FA code for verification:" 
                FontSize="14"/>
 
@@ -44,8 +60,7 @@
         <TextBox Name="TotpTextBox" 
                  Height="23"
                  Margin="5,0,0,0"
-                 MinWidth="250"
-                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
+                 ToolTip="Your 2-Factor authentication token (from Google Authenticator, Authy or a similar app)"
                  Text="{Binding Totp}"
                  Style="{StaticResource TextBox}"
                  TextChanged="TotpTextBox_OnTextChanged"/>

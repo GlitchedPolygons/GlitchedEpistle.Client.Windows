@@ -20,7 +20,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         public const string DEFAULT_USERNAME = "user";
-        public const double DEFAULT_UPDATE_FREQUENCY = 500D;
 
         // Injections:
         private readonly User user;
@@ -56,9 +55,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region UI Bindings
         private string username = DEFAULT_USERNAME;
         public string Username { get => username; set => Set(ref username, value); }
-
-        private double updateFrequency = DEFAULT_UPDATE_FREQUENCY;
-        public double UpdateFrequency { get => updateFrequency; set => Set(ref updateFrequency, value); }
         #endregion
 
         public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory)
@@ -76,7 +72,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
             RedeemButtonCommand = new DelegateCommand(OnClickedRedeem);
-            ExportUserButtonCommand = new DelegateCommand(OnClickedExport);
+            ExportUserButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<UserExportView, UserExportViewModel>(true, true));
 
             if (!settings.Load())
             {
@@ -85,7 +81,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Load up the current settings into the UI on load.
             Username = settings[nameof(Username), DEFAULT_USERNAME];
-            UpdateFrequency = settings[nameof(UpdateFrequency), DEFAULT_UPDATE_FREQUENCY];
         }
 
         private void OnClosed(object commandParam)
@@ -93,7 +88,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             if (!cancelled)
             {
                 settings[nameof(Username)] = Username;
-                settings[nameof(UpdateFrequency)] = UpdateFrequency.ToString(CultureInfo.InvariantCulture);
                 settings.Save();
 
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
@@ -109,7 +103,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedRevert(object commandParam)
         {
             Username = DEFAULT_USERNAME;
-            UpdateFrequency = DEFAULT_UPDATE_FREQUENCY;
         }
 
         private async void OnClickedRedeem(object commandParam)
@@ -143,25 +136,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             dialogView.ShowDialog();
         }
 
-        private void OnClickedExport(object commandParam)
-        {
-            var userExportView = windowFactory.Create<UserExportView>(true);
-            
-            if (userExportView.DataContext is null)
-            {
-                userExportView.DataContext = viewModelFactory.Create<UserExportViewModel>();
-            }
-
-            userExportView.Show();
-            userExportView.Activate();
-        }
-
         private void OnClickedDelete(object commandParam)
         {
             var dialog = new ConfirmResetView();
             bool? dialogResult = dialog.ShowDialog();
             if (dialogResult.HasValue && dialogResult is true)
             {
+                cancelled = true;
+
                 // Handle this event inside the MainViewModel to prevent
                 // user settings being saved out on application shutdown.
                 eventAggregator.GetEvent<ResetConfirmedEvent>().Publish();

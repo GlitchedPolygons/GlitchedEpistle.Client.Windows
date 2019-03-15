@@ -39,6 +39,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
 
+        private string secret = string.Empty;
+        public string Secret { get => secret; set => Set(ref secret, value); }
+
         private BitmapSource qr;
         public BitmapSource QR { get => qr; set => Set(ref qr, value); }
         #endregion

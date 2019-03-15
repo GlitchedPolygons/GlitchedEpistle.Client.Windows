@@ -7,13 +7,18 @@ using System.Reflection;
 
 // Shared code namespaces
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.ServerHealth;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 
 // Glitched Polygons NuGet packages
+using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.CompressionUtility;
 
@@ -21,10 +26,10 @@ using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.Services.MethodQ;
 
 // Third party namespaces
 using Unity;
@@ -67,19 +72,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<IUserService, UserService>();
+            container.RegisterType<IConvoService, ConvoService>();
             container.RegisterType<ICouponService, CouponService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricKeygen, RSA4096Keygen>();
+            container.RegisterType<ISymmetricCryptography, SymmetricCryptography>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
+            container.RegisterType<IMessageCryptography, MessageCryptography>();
+            container.RegisterType<IServerConnectionTest, ServerConnectionTest>();
 
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.
             container.RegisterType<IMethodQ, MethodQ>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
-
+            container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConvoProvider, ConvoProvider>(new ContainerControlledLifetimeManager());
+            
             // Open the main app's window.
             var mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
