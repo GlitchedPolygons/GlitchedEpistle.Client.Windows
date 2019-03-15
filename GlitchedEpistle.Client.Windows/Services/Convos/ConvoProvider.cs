@@ -1,10 +1,6 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
@@ -30,16 +26,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
             FileInfo[] files = dir.GetFiles();
             if (files.Length > 0)
             {
-                var convosBag = new ConcurrentBag<Convo>();
-                Parallel.ForEach(files, file =>
+                foreach (var file in files)
                 {
                     var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(file.FullName));
                     if (convo != null)
                     {
-                        convosBag.Add(convo);
+                        convos.Add(convo);
                     }
-                });
-                convos = convosBag.ToList().OrderBy(c => c.Name).ToList();
+                }
+                convos = convos.OrderBy(c => c.Name).ToList();
             }
         }
 
