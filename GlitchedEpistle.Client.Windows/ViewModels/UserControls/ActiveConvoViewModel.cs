@@ -36,7 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
-        private static readonly char[] MSG_TRIM_CHARS = {'\n', '\r', '\t'};
+        private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
         private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(1111);
 
         // Injections:
@@ -61,7 +61,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region UI Bindings
-        
+
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility
         {
@@ -84,13 +84,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
+                if (scheduledUpdateRoutine.HasValue)
+                    methodQ.Cancel(scheduledUpdateRoutine.Value);
+
                 Messages = new AsyncObservableCollection<MessageViewModel>();
                 activeConvo = value;
                 LoadLocalMessages();
                 PullNewestMessages();
+                scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
             }
         }
 
+        private bool pulling;
         private ulong? scheduledHideGreenTickIcon = null, scheduledUpdateRoutine = null;
 
         public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger)
@@ -108,8 +113,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
-
-            scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
 
             settings.Load();
         }
@@ -268,14 +271,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private async void PullNewestMessages()
         {
-            if (ActiveConvo is null || user is null)
+            if (pulling || ActiveConvo is null || user is null)
             {
                 return;
             }
 
-            int i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
+            pulling = true;
+
+            int i = Messages.Count > 0 
+                ? await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id) 
+                : 0;
+
             if (i < 0)
             {
+                pulling = false;
                 return;
             }
 
@@ -291,6 +300,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 AddMessageToView(message);
                 WriteMessageToDisk(message);
             }
+
+            pulling = false;
         }
 
         private async void OnSendText(object commandParam)
