@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
 
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 
 using Microsoft.Win32;
@@ -22,6 +23,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Commands
         public ICommand DownloadAttachmentCommand { get; }
         public ICommand CopyUserIdToClipboardCommand { get; }
+        public ICommand ClickedOnImageAttachmentCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -74,9 +76,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public MessageViewModel(IMethodQ methodQ)
         {
             this.methodQ = methodQ;
-            
+
             DownloadAttachmentCommand = new DelegateCommand(OnDownloadAttachment);
             CopyUserIdToClipboardCommand = new DelegateCommand(OnCopyUserIdToClipboard);
+            ClickedOnImageAttachmentCommand = new DelegateCommand(OnClickedImagePreview);
         }
 
         ~MessageViewModel()
@@ -91,7 +94,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        private void OnDownloadAttachment(object o)
+        private void OnDownloadAttachment(object commandParam)
         {
             string ext = Path.GetExtension(FileName) ?? string.Empty;
 
@@ -117,7 +120,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             dialog.ShowDialog();
         }
 
-        private void OnCopyUserIdToClipboard(object o)
+        private void OnClickedImagePreview(object commandParam)
+        {
+            var viewModel = new ImageViewerViewModel { ImageBytes = FileBytes };
+            var view = new ImageViewerView { DataContext = viewModel };
+            view.ShowDialog();
+        }
+
+        private void OnCopyUserIdToClipboard(object commandParam)
         {
             Clipboard.SetText(SenderId);
             ClipboardTickVisibility = Visibility.Visible;
