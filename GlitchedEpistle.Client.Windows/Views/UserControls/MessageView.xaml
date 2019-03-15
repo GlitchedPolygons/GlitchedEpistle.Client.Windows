@@ -75,6 +75,7 @@
                MaxWidth="350" 
                MaxHeight="350"
                Margin="5,26,0,-12"
+               Name="ImagePreview"
                HorizontalAlignment="Left"
                Source="{Binding FileBytes}"
                Visibility="{Binding ImageVisibility}" 
