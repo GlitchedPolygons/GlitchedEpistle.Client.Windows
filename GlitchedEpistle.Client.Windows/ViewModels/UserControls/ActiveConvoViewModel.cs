@@ -181,12 +181,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             });
         }
 
-        private void HideGreenTick()
-        {
-            ClipboardTickVisibility = Visibility.Hidden;
-            scheduledHideGreenTickIcon = null;
-        }
-
         private async Task<List<Tuple<string, string>>> GetKeys()
         {
             var stringBuilder = new StringBuilder(100);
@@ -416,6 +410,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 methodQ.Cancel(scheduledHideGreenTickIcon.Value);
 
             scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
+        }
+
+        private void HideGreenTick()
+        {
+            ClipboardTickVisibility = Visibility.Hidden;
+            scheduledHideGreenTickIcon = null;
         }
     }
 }
