@@ -75,6 +75,16 @@
         <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 
+    <!-- Image Attachment Preview -->
+    <Style x:Key="ImageAttachmentStyle" TargetType="Image">
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Opacity" Value="0.75"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- Default Button -->
     <Style TargetType="Button">
         <Setter Property="Template">
