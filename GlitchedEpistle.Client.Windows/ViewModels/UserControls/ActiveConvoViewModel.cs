@@ -135,6 +135,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void StartAutomaticPulling()
         {
             StopAutomaticPulling();
+            scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
         }
 
         private void LoadLocalMessages()
@@ -227,10 +228,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Body = messageBody.ToString()
             };
 
+            StopAutomaticPulling();
             AddMessageToView(message);
             WriteMessageToDisk(message);
 
-            return await convoService.PostMessage
+            bool success = await convoService.PostMessage
             (
                 convoId: ActiveConvo.Id,
                 messageDto: new PostMessageParamsDto
@@ -243,6 +245,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
                 }
             );
+
+            StartAutomaticPulling();
+            return success;
         }
 
         private void WriteMessageToDisk(Message message)
