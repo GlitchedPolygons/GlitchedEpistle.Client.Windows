@@ -115,6 +115,9 @@
                                 Modifiers="Shift"
                                 Command="{Binding SendTextCommand}"
                                 CommandParameter="{Binding ElementName=TextBox}"/>
+                    <KeyBinding Key="Enter" 
+                                Modifiers="Control"
+                                Command="{Binding SendFileCommand}" />
                 </TextBox.InputBindings>
             </TextBox>
 
