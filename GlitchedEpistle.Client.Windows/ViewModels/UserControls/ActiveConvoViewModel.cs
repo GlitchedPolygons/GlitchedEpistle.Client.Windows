@@ -21,7 +21,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
-
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Models;
 using Prism.Events;
 using Microsoft.Win32;
 
@@ -69,7 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref clipboardTickVisibility, value);
         }
 
-        private ObservableCollection<MessageViewModel> messages = new ObservableCollection<MessageViewModel>();
+        private ObservableCollection<MessageViewModel> messages = new AsyncObservableCollection<MessageViewModel>();
         public ObservableCollection<MessageViewModel> Messages
         {
             get => messages;
@@ -84,7 +84,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
-                Messages = new ObservableCollection<MessageViewModel>();
+                Messages = new AsyncObservableCollection<MessageViewModel>();
                 activeConvo = value;
                 LoadLocalMessages();
                 PullNewestMessages();
