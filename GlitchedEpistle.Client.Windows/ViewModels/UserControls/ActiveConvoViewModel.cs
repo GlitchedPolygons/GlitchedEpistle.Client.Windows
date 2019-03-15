@@ -22,6 +22,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using Prism.Events;
 using Microsoft.Win32;
 
@@ -91,7 +92,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 activeConvo = value;
                 LoadLocalMessages();
                 PullNewestMessages();
-                scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
+                StartAutomaticPulling();
             }
         }
 
@@ -113,14 +114,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
+            
+            eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
 
             settings.Load();
         }
-
+        
         ~ActiveConvoViewModel()
         {
             if (scheduledUpdateRoutine.HasValue)
                 methodQ?.Cancel(scheduledUpdateRoutine.Value);
+        }
+
+        private void StopAutomaticPulling()
+        {
+            if (scheduledUpdateRoutine.HasValue)
+                methodQ.Cancel(scheduledUpdateRoutine.Value);
+        }
+
+        private void StartAutomaticPulling()
+        {
+            StopAutomaticPulling();
         }
 
         private void LoadLocalMessages()
@@ -295,11 +309,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             // Add the retrieved messages only to the chatroom if it does not contain them yet (mistakes are always possible; safe is safe).
-            foreach (var message in retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampUTC).ToList())
+            Parallel.ForEach(retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampUTC), message =>
             {
                 AddMessageToView(message);
                 WriteMessageToDisk(message);
-            }
+            });
 
             pulling = false;
         }

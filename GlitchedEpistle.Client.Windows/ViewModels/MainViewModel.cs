@@ -414,6 +414,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 methodQ.Cancel(scheduledAuthRefresh.Value);
                 scheduledAuthRefresh = null;
             }
+
+            eventAggregator.GetEvent<LogoutEvent>().Publish();
         }
     }
 }
