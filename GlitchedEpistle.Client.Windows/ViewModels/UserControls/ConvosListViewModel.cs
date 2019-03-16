@@ -45,7 +45,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(_ => UpdateList());
         }
 
-        private void UpdateList() => Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos) : new ObservableCollection<Convo>();
+        private void UpdateList()
+        {
+            Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos) : new ObservableCollection<Convo>();
+        }
 
         private void OnClickedOnConvo(object commandParam)
         {
