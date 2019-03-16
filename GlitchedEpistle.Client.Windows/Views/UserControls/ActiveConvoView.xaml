@@ -22,6 +22,7 @@
 
             <Label FontSize="24" 
                    Padding="0"
+                   Margin="0,0,0,5"
                    VerticalAlignment="Center"
                    Content="{Binding Path=ActiveConvo.Name}"/>
 

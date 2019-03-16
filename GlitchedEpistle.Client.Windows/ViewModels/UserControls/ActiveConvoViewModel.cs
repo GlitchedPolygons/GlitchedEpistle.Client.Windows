@@ -186,7 +186,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             string encryptedMessage = crypto.EncryptMessage
             (
                 messageJson: messageBodyJson,
-                recipientPublicRsaKey: RSAParametersExtensions.FromXml(userKeyPair.Item2)
+                recipientPublicRsaKey: RSAParametersExtensions.FromXmlString(userKeyPair.Item2)
             );
             resultsBag.Add(new Tuple<string, string>(userKeyPair.Item1, encryptedMessage));
             return Task.CompletedTask;
