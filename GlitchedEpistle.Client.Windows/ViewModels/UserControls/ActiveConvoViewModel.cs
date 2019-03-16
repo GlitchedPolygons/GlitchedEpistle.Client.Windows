@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -181,7 +182,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             });
         }
 
-        private async Task<List<Tuple<string, string>>> GetKeys()
+        private Task<List<Tuple<string, string>>> GetKeys() // TODO: extract into client shared code base
         {
             var stringBuilder = new StringBuilder(100);
             int participantsCount = ActiveConvo.Participants.Count;
@@ -194,13 +195,33 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
             }
 
-            return await userService.GetUserPublicKeyXml(user.Id, stringBuilder.ToString(), user.Token.Item2);
+            return userService.GetUserPublicKeyXml(user.Id, stringBuilder.ToString(), user.Token.Item2);
+        }
+
+        private Task EncryptMessageBodyForUser(ConcurrentBag<Tuple<string, string>> resultsBag, Tuple<string, string> userKeyPair, string messageBodyJson)
+        {
+            string encryptedMessage = crypto.EncryptMessage
+            (
+                messageJson: messageBodyJson,
+                recipientPublicRsaKey: RSAParametersExtensions.FromXml(userKeyPair.Item2)
+            );
+            resultsBag.Add(new Tuple<string, string>(userKeyPair.Item1, encryptedMessage));
+            return Task.CompletedTask;
         }
 
         private async Task<bool> SubmitMessage(JObject messageBodyJson)
         {
-            JObject messageBodiesJson = new JObject();
-
+            if (ActiveConvo is null)
+            {
+                logger.LogError($"Tried to submit a message from an {nameof(ActiveConvoViewModel)} whose {nameof(ActiveConvo)} is null! Something's wrong... please analyze this behaviour!");
+                return false;
+            }
+            
+            var messageBodiesJson = new JObject();
+            var bag = new ConcurrentBag<Tuple<string, string>>();
+            var tasks = new List<Task>(ActiveConvo.Participants.Count);
+            var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
+            
             foreach (Tuple<string, string> key in await GetKeys())
             {
                 if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
@@ -208,17 +229,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     continue;
                 }
 
-                string encryptedMessage = crypto.EncryptMessage
-                (
-                    messageJson: messageBodyJson.ToString(Formatting.None),
-                    recipientPublicRsaKey: RSAParametersExtensions.FromXml(key.Item2)
-                );
-
-                messageBodiesJson[key.Item1] = encryptedMessage;
+                tasks.Add(EncryptMessageBodyForUser(bag, key, messageBodyJsonString));
             }
 
-            JToken messageBody = messageBodiesJson[user.Id];
-            if (messageBody is null)
+            await Task.WhenAll(tasks);
+            
+            foreach (Tuple<string, string> encryptedMessage in bag)
+            {
+                messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
+            }
+
+            JToken ownMessageBody = messageBodiesJson[user.Id];
+            if (ownMessageBody is null)
             {
                 return false;
             }
@@ -230,12 +252,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 SenderId = user.Id,
                 SenderName = username,
                 TimestampUTC = DateTime.UtcNow,
-                Body = messageBody.ToString()
+                Body = ownMessageBody.ToString()
             };
 
             StopAutomaticPulling();
-            AddMessageToView(message);
-            WriteMessageToDisk(message);
+            
+            await AddMessageToView(message);
+            await WriteMessageToDisk(message);
 
             bool success = await convoService.PostMessage
             (
@@ -255,20 +278,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return success;
         }
 
-        private void WriteMessageToDisk(Message message)
+        private Task WriteMessageToDisk(Message message)
         {
             File.WriteAllText
             (
                 contents: JsonConvert.SerializeObject(message),
                 path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssff"))
             );
+            return Task.CompletedTask;
         }
 
-        private void AddMessageToView(Message message)
+        private Task AddMessageToView(Message message)
         {
             if (message is null)
             {
-                return;
+                return Task.CompletedTask;
             }
 
             var messageViewModel = new MessageViewModel(methodQ)
@@ -282,7 +306,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             var json = JToken.Parse(crypto.DecryptMessage(message.Body, user.PrivateKey));
             if (json is null)
             {
-                return;
+                return Task.CompletedTask;
             }
 
             messageViewModel.Text = json["text"]?.Value<string>();
@@ -291,6 +315,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             messageViewModel.FileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
 
             msgQueue.Add(messageViewModel);
+            return Task.CompletedTask;
         }
 
         private async void PullNewestMessages()
@@ -302,9 +327,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             pulling = true;
 
-            int i = Messages.Count > 0
-                ? await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id)
-                : 0;
+            int i = 0;
+            if (Messages.Count > 0)
+            {
+                i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
+            }
 
             if (i < 0)
             {
@@ -312,19 +339,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            var retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
+            Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
             if (retrievedMessages is null || retrievedMessages.Length == 0)
             {
+                pulling = false;
                 return;
             }
 
+            var tasks = new List<Task>(retrievedMessages.Length * 2);
+            
             // Add the retrieved messages only to the chatroom if it does not contain them yet (mistakes are always possible; safe is safe).
-            Parallel.ForEach(retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)), message =>
+            foreach (var message in retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)))
             {
-                AddMessageToView(message);
-                WriteMessageToDisk(message);
-            });
+                tasks.Add(AddMessageToView(message));
+                tasks.Add(WriteMessageToDisk(message));
+            }
 
+            await Task.WhenAll(tasks);
             pulling = false;
         }
 
