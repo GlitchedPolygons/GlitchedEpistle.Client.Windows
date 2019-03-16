@@ -145,7 +145,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (msgQueue.Count > 0)
                 {
-                    Messages.AddRange(msgQueue.OrderBy(m => m.TimestampDateTimeUTC));
+                    foreach (var msg in msgQueue.OrderBy(m => m.TimestampDateTimeUTC))
+                    {
+                        if (Messages.Any(m => m.Id == msg.Id))
+                        {
+                            continue;
+                        }
+
+                    }
+                    Messages.AddRange();
                     msgQueue = new ConcurrentBag<MessageViewModel>();
                 }
             });
@@ -332,9 +340,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             var tasks = new List<Task>(retrievedMessages.Length * 2);
             
-            // Add the retrieved messages only to the chatroom if it does not contain them yet (mistakes are always possible; safe is safe).
-            foreach (var message in retrievedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)))
+            foreach (var message in retrievedMessages)
             {
+                // Add the retrieved messages only to the chatroom
+                // if it does not contain them yet (mistakes are always possible; safe is safe).
+                if (Messages.Any(m => m.Id == message.Id))
+                {
+                    continue;
+                }
+
                 tasks.Add(AddMessageToView(message));
                 tasks.Add(WriteMessageToDisk(message));
             }
