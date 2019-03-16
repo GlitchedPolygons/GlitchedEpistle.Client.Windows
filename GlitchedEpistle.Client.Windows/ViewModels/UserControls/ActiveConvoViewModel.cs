@@ -182,22 +182,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             });
         }
 
-        private Task<List<Tuple<string, string>>> GetKeys() // TODO: extract into client shared code base
-        {
-            var stringBuilder = new StringBuilder(100);
-            int participantsCount = ActiveConvo.Participants.Count;
-            for (int i = 0; i < participantsCount; i++)
-            {
-                stringBuilder.Append(ActiveConvo.Participants[i]);
-                if (i < participantsCount - 1)
-                {
-                    stringBuilder.Append(',');
-                }
-            }
-
-            return userService.GetUserPublicKeyXml(user.Id, stringBuilder.ToString(), user.Token.Item2);
-        }
-
         private Task EncryptMessageBodyForUser(ConcurrentBag<Tuple<string, string>> resultsBag, Tuple<string, string> userKeyPair, string messageBodyJson)
         {
             string encryptedMessage = crypto.EncryptMessage
@@ -221,8 +205,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             var bag = new ConcurrentBag<Tuple<string, string>>();
             var tasks = new List<Task>(ActiveConvo.Participants.Count);
             var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
+            List<Tuple<string, string>> keys = await userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
             
-            foreach (Tuple<string, string> key in await GetKeys())
+            foreach (Tuple<string, string> key in keys)
             {
                 if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
                 {
