@@ -35,6 +35,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
         /// <value>The error log file path.</value>
         public string ErrorLogFilePath { get; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Logger"/> class (implements <see cref="ILogger"/>).
+        /// </summary>
         public Logger()
         {
             DirectoryPath = Path.Combine(
@@ -67,21 +70,33 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
                 Directory.CreateDirectory(DirectoryPath);
             }
         }
-
+        
         private string Timestamp(string msg) => $"[{DateTime.Now:s}] {msg}\n";
 
+        /// <summary>
+        /// Logs an innocent message.
+        /// </summary>
+        /// <param name="msg">The message.</param>
         public void LogMessage(string msg)
         {
             CheckDirectory();
             File.AppendAllText(MessageLogFilePath, Timestamp(msg));
         }
 
+        /// <summary>
+        /// Logs a warning.
+        /// </summary>
+        /// <param name="msg">The warning.</param>
         public void LogWarning(string msg)
         {
             CheckDirectory();
             File.AppendAllText(WarningLogFilePath, Timestamp(msg));
         }
 
+        /// <summary>
+        /// Logs an error.
+        /// </summary>
+        /// <param name="msg">The error.</param>
         public void LogError(string msg)
         {
             CheckDirectory();

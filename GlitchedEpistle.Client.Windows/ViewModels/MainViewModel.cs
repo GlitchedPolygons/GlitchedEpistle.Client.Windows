@@ -7,9 +7,9 @@ using System.Windows.Media.Imaging;
 using System.Globalization;
 
 using GlitchedPolygons.Services.MethodQ;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
@@ -21,6 +21,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 
 using ZXing;
 using ZXing.Common;
@@ -331,7 +332,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             user.PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml();
-            user.PublicKey = RSAParametersExtensions.FromXml(user.PublicKeyXml);
+            user.PublicKey = RSAParametersExtensions.FromXmlString(user.PublicKeyXml);
 
             if (!File.Exists(Paths.PRIVATE_KEY_PATH))
             {
@@ -339,7 +340,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 throw new FileNotFoundException("No private key found on disk!");
             }
 
-            user.PrivateKey = RSAParametersExtensions.FromXml(File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml());
+            user.PrivateKey = RSAParametersExtensions.FromXmlString(File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml());
         }
 
         private void OnCouponRedeemedSuccessfully()
@@ -348,11 +349,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ShowCouponRedeemedSuccessfullyControl();
         }
 
-        private void OnUserCreationSuccessful(UserCreationResponse userCreationResponse)
+        private void OnUserCreationSuccessful(UserCreationResponseDto userCreationResponseDto)
         {
             settings.Load();
             Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
-            settings[nameof(UserId)] = UserId = user.Id = userCreationResponse.Id;
+            settings[nameof(UserId)] = UserId = user.Id = userCreationResponseDto.Id;
             settings.Save();
 
             // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
@@ -364,9 +365,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             };
 
             var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
-            viewModel.Secret = userCreationResponse.TotpSecret;
-            viewModel.QR = qrWriter.Write($"otpauth://totp/GlitchedEpistle:{userCreationResponse.Id}?secret={userCreationResponse.TotpSecret}");
-            viewModel.BackupCodes = userCreationResponse.TotpEmergencyBackupCodes;
+            viewModel.Secret = userCreationResponseDto.TotpSecret;
+            viewModel.QR = qrWriter.Write($"otpauth://totp/GlitchedEpistle:{userCreationResponseDto.Id}?secret={userCreationResponseDto.TotpSecret}");
+            viewModel.BackupCodes = userCreationResponseDto.TotpEmergencyBackupCodes;
 
             MainControl = new UserCreationSuccessfulView { DataContext = viewModel };
         }

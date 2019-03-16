@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 
 using Newtonsoft.Json;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -24,6 +25,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 
         private readonly ILogger logger;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SettingsJson"/> class.
+        /// </summary>
+        /// <param name="logger">The <see cref="ILogger"/> instance needed for logging any eventual errors that might occur.</param>
         public SettingsJson(ILogger logger)
         {
             this.logger = logger;
@@ -31,6 +36,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
             FilePath = Path.Combine(Paths.ROOT_DIRECTORY, "UserSettings.json");
         }
 
+        /// <summary>
+        /// Saves the current user settings out to disk.
+        /// </summary>
+        /// <returns>Whether the settings were saved out to disk successfully or not.</returns>
         public bool Save()
         {
             settings["Version"] = App.VERSION;
@@ -46,6 +55,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
             }
         }
 
+        /// <summary>
+        /// Loads user settings from disk into the <see cref="ISettings" /> instance.
+        /// </summary>
+        /// <returns>Whether the loading procedure was successful or not.</returns>
         public bool Load()
         {
             if (!File.Exists(FilePath)) return false;

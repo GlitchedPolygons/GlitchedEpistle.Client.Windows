@@ -71,10 +71,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             if (commandParam is PasswordBox passwordBox)
             {
                 string pw = passwordBox.Password.SHA512();
+
                 if (!await convoService.JoinConvo(ConvoId, pw, user.Id, user.Token.Item2))
                 {
                     ResetMessages();
-                    ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again.";
+                    ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
                     return;
                 }
 
@@ -103,10 +104,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 }
 
                 convoProvider.Convos.Add(convo);
-
-                // Create (or update) the convo metadata file + ensure existence of its messages directory.
-                Directory.CreateDirectory(Path.Combine(Paths.CONVOS_DIRECTORY, ConvoId));
-                File.WriteAllText(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id + ".json"), JsonConvert.SerializeObject(convo, Formatting.Indented));
+                convoProvider.Save();
 
                 eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
                 RequestedClose?.Invoke(this, EventArgs.Empty);

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows;
 using System.Collections.Generic;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+
 using Unity;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
