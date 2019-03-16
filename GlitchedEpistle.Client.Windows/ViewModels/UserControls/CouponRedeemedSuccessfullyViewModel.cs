@@ -1,6 +1,4 @@
-﻿using System;
-using System.Net.Http;
-
+﻿using RestSharp;
 using Newtonsoft.Json;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
@@ -26,18 +24,15 @@ By redeeming your access code you have successfully extended your Glitched Epist
 
 To celebrate your decision of valuing privacy, here's a completely random quote:";
 
-            GetQuoteOfTheDay();
-        }
+            var request = new RestRequest(Method.GET);
+            var restClient = new RestClient("http://quotes.rest/qod.json");
 
-        private async void GetQuoteOfTheDay()
-        {
-            dynamic qod;
-            using (var httpClient = new HttpClient())
+            dynamic qodJson = JsonConvert.DeserializeObject(restClient.Get(request)?.Content);
+            if (qodJson != null)
             {
-                dynamic qodJson = JsonConvert.DeserializeObject(await httpClient.GetStringAsync(new Uri("http://quotes.rest/qod.json")));
-                qod = qodJson.contents.quotes[0];
+                dynamic qod = qodJson.contents.quotes[0];
+                Quote = $"{qod.quote}\n\n- {qod.author}";
             }
-            Quote = $"{qod.quote}\n\n- {qod.author}";
         }
     }
 }
