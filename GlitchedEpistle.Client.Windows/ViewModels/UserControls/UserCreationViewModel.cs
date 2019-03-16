@@ -126,7 +126,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     var userCreationResponse = await userService.CreateUser(new UserCreationDto
                     {
-                        PasswordHash = password1.SHA512(),
+                        PasswordSHA512 = password1.SHA512(),
                         PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
                         CreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), compressionSettings))
                     });
