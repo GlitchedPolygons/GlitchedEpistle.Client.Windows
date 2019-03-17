@@ -145,15 +145,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (msgQueue.Count > 0)
                 {
-                    foreach (var msg in msgQueue.OrderBy(m => m.TimestampDateTimeUTC))
+                    foreach (var message in msgQueue.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC))
                     {
-                        if (Messages.Any(m => m.Id == msg.Id))
-                        {
-                            continue;
-                        }
-
+                        Messages.Add(message);
                     }
-                    Messages.AddRange();
                     msgQueue = new ConcurrentBag<MessageViewModel>();
                 }
             });
@@ -207,13 +202,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 logger.LogError($"Tried to submit a message from an {nameof(ActiveConvoViewModel)} whose {nameof(ActiveConvo)} is null! Something's wrong... please analyze this behaviour!");
                 return false;
             }
-            
+
             var messageBodiesJson = new JObject();
             var bag = new ConcurrentBag<Tuple<string, string>>();
             var tasks = new List<Task>(ActiveConvo.Participants.Count);
             var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
             List<Tuple<string, string>> keys = await userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
-            
+
             foreach (Tuple<string, string> key in keys)
             {
                 if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
@@ -225,7 +220,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             await Task.WhenAll(tasks);
-            
+
             foreach (Tuple<string, string> encryptedMessage in bag)
             {
                 messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
@@ -248,7 +243,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             };
 
             StopAutomaticPulling();
-            
+
             await AddMessageToView(message);
             await WriteMessageToDisk(message);
 
@@ -339,7 +334,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             var tasks = new List<Task>(retrievedMessages.Length * 2);
-            
+
             foreach (var message in retrievedMessages)
             {
                 // Add the retrieved messages only to the chatroom

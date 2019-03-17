@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using System.Collections.ObjectModel;
-
+using System.Linq;
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
@@ -47,7 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void UpdateList()
         {
-            Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos) : new ObservableCollection<Convo>();
+            Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos.OrderBy(c => c.Name)) : new ObservableCollection<Convo>();
         }
 
         private void OnClickedOnConvo(object commandParam)
