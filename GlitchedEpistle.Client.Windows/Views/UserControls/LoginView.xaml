@@ -7,7 +7,8 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Center">
+    <StackPanel HorizontalAlignment="Center" 
+                IsEnabled="{Binding UIEnabled}">
 
         <Label Content="Welcome to Glitched Epistle." 
                FontWeight="Bold" 
