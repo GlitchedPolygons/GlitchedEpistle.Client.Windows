@@ -61,11 +61,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
             // Insta-kill the app if there is already another instance running!
-            if (!SINGLETON.WaitOne(TimeSpan.Zero, true))
+            if (!SINGLETON.WaitOne(TimeSpan.FromMilliseconds(750), true))
             {
+                MessageBox.Show("There is already one instance of Glitched Epistle running!");
                 Application.Current.Shutdown();
             }
-
+            
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
 
             // Register transient types:
