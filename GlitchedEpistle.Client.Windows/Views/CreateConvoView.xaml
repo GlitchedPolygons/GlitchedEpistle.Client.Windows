@@ -48,8 +48,9 @@
 
         <TextBox Name="NameTextBox" 
                  Height="23"
+                 MaxLength="25"
                  Margin="5,0,0,0"
-                 Text="{Binding Name}"
+                 Text="{Binding Name}" 
                  ToolTip="Give your convo a meaningful and unique name!"
                  Style="{StaticResource TextBox}"/>
 
@@ -114,6 +115,7 @@
 
         <TextBox Name="TotpTextBox" 
                  Height="23"
+                 MaxLength="100"
                  Margin="5,0,0,0"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
                  Style="{StaticResource TextBox}"/>

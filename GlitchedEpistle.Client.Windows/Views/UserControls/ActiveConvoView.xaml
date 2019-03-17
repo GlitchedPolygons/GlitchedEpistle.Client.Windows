@@ -91,7 +91,9 @@
         </ListBox>
 
         <!-- TextBox + Send Buttons -->
-        <Grid Grid.Row="2" HorizontalAlignment="Stretch">
+        <Grid Grid.Row="2" 
+              HorizontalAlignment="Stretch" 
+              IsEnabled="{Binding CanSend}">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -165,6 +167,20 @@
                        VerticalAlignment="Stretch" 
                        Stroke="{StaticResource SeparatorColorBrush}" />
         </Grid>
+
+        <Label Grid.Row="2" 
+               Margin="0,0,3,4"
+               Content="Encrypting..."
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Right"
+               Visibility="{Binding EncryptingVisibility}"/>
+
+        <Label Grid.Row="2" 
+               Margin="0,0,2,47"
+               Content="Decrypting..."
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Right"
+               Visibility="{Binding DecryptingVisibility}"/>
     </Grid>
 
 </UserControl>

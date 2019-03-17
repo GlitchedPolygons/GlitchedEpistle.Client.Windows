@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Timers;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
 
@@ -43,6 +44,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string convoId = string.Empty;
         public string ConvoId { get => convoId; set => Set(ref convoId, value); }
+
+        private bool uiEnabled = true;
+        public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
         #endregion
 
         public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, IConvoProvider convoProvider, User user)
@@ -70,12 +74,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (commandParam is PasswordBox passwordBox)
             {
+                UIEnabled = false;
                 string pw = passwordBox.Password.SHA512();
 
                 if (!await convoService.JoinConvo(ConvoId, pw, user.Id, user.Token.Item2))
                 {
                     ResetMessages();
                     ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
+
+                    UIEnabled = true;
                     return;
                 }
 
@@ -96,7 +103,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
                     convo.Participants = metadata.Participants.Split(',').ToList();
                 }
-
+                
                 var _convo = convoProvider[convo.Id];
                 if (_convo != null)
                 {
@@ -106,6 +113,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 convoProvider.Convos.Add(convo);
                 convoProvider.Save();
 
+                UIEnabled = true;
                 eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
                 RequestedClose?.Invoke(this, EventArgs.Empty);
             }

@@ -11,7 +11,8 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource WindowBackgroundBrush}">
     <StackPanel Width="320" 
-                Margin="10">
+                Margin="10" 
+                IsEnabled="{Binding UIEnabled}">
         <TextBlock Style="{StaticResource TextBlock}" 
                    FontSize="16" 
                    TextWrapping="Wrap" 

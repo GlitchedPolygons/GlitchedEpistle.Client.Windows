@@ -63,11 +63,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         #region UI Bindings
 
+        private bool canSend = false;
+        public bool CanSend { get => canSend; set => Set(ref canSend, value); }
+
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility
         {
             get => clipboardTickVisibility;
             set => Set(ref clipboardTickVisibility, value);
+        }
+
+        private Visibility encryptingVisibility = Visibility.Hidden;
+        public Visibility EncryptingVisibility
+        {
+            get => encryptingVisibility;
+            set => Set(ref encryptingVisibility, value);
+        }
+
+        private Visibility decryptingVisibility = Visibility.Hidden;
+        public Visibility DecryptingVisibility
+        {
+            get => decryptingVisibility;
+            set => Set(ref decryptingVisibility, value);
         }
 
         private ObservableCollection<MessageViewModel> messages = new ObservableCollection<MessageViewModel>();
@@ -85,12 +102,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
+                CanSend = false;
                 StopAutomaticPulling();
                 Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;
                 LoadLocalMessages();
                 PullNewestMessages();
                 StartAutomaticPulling();
+                CanSend = true;
             }
         }
 
@@ -116,7 +135,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
-            methodQ.Schedule(TransferQueuedMessagesToUI, MSG_PULL_FREQUENCY);
+            methodQ.Schedule(() => Application.Current?.Dispatcher?.Invoke(TransferQueuedMessagesToUI), MSG_PULL_FREQUENCY);
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
             settings.Load();
         }
@@ -141,17 +160,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void TransferQueuedMessagesToUI()
         {
-            Application.Current?.Dispatcher?.Invoke(() =>
+            if (msgQueue.Count <= 0)
             {
-                if (msgQueue.Count > 0)
-                {
-                    foreach (var message in msgQueue.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC))
-                    {
-                        Messages.Add(message);
-                    }
-                    msgQueue = new ConcurrentBag<MessageViewModel>();
-                }
-            });
+                return;
+            }
+            Messages.AddRange(msgQueue.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC));
+            msgQueue = new ConcurrentBag<MessageViewModel>();
         }
 
         private void LoadLocalMessages()
@@ -166,6 +180,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 return;
             }
+
+            DecryptingVisibility = Visibility.Visible;
 
             Parallel.ForEach(Directory.GetFiles(dir), file =>
             {
@@ -182,6 +198,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
                 }
             });
+
+            DecryptingVisibility = Visibility.Hidden;
         }
 
         private Task EncryptMessageBodyForUser(ConcurrentBag<Tuple<string, string>> resultsBag, Tuple<string, string> userKeyPair, string messageBodyJson)
@@ -202,6 +220,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 logger.LogError($"Tried to submit a message from an {nameof(ActiveConvoViewModel)} whose {nameof(ActiveConvo)} is null! Something's wrong... please analyze this behaviour!");
                 return false;
             }
+
+            EncryptingVisibility = Visibility.Visible;
 
             var messageBodiesJson = new JObject();
             var bag = new ConcurrentBag<Tuple<string, string>>();
@@ -225,6 +245,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
             }
+
+            EncryptingVisibility = Visibility.Hidden;
 
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody is null)
@@ -305,7 +327,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return Task.CompletedTask;
         }
 
-        private async void PullNewestMessages()
+        private void PullNewestMessages()
         {
             if (pulling || ActiveConvo is null || user is null)
             {
@@ -314,42 +336,48 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             pulling = true;
 
-            int i = 0;
-            if (Messages.Count > 0)
+            Task.Run(async () =>
             {
-                i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
-            }
-
-            if (i < 0)
-            {
-                pulling = false;
-                return;
-            }
-
-            Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
-            if (retrievedMessages is null || retrievedMessages.Length == 0)
-            {
-                pulling = false;
-                return;
-            }
-
-            var tasks = new List<Task>(retrievedMessages.Length * 2);
-
-            foreach (var message in retrievedMessages)
-            {
-                // Add the retrieved messages only to the chatroom
-                // if it does not contain them yet (mistakes are always possible; safe is safe).
-                if (Messages.Any(m => m.Id == message.Id))
+                int i = 0;
+                if (Messages.Count > 0)
                 {
-                    continue;
+                    i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
                 }
 
-                tasks.Add(AddMessageToView(message));
-                tasks.Add(WriteMessageToDisk(message));
-            }
+                if (i < 0)
+                {
+                    pulling = false;
+                    return;
+                }
 
-            await Task.WhenAll(tasks);
-            pulling = false;
+                Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
+                if (retrievedMessages is null || retrievedMessages.Length == 0)
+                {
+                    pulling = false;
+                    return;
+                }
+
+                DecryptingVisibility = Visibility.Visible;
+
+                var tasks = new List<Task>(retrievedMessages.Length * 2);
+
+                foreach (var message in retrievedMessages)
+                {
+                    // Add the retrieved messages only to the chatroom
+                    // if it does not contain them yet (mistakes are always possible; safe is safe).
+                    if (Messages.Any(m => m.Id == message.Id))
+                    {
+                        continue;
+                    }
+
+                    tasks.Add(AddMessageToView(message));
+                    tasks.Add(WriteMessageToDisk(message));
+                }
+
+                await Task.WhenAll(tasks);
+                pulling = false;
+                DecryptingVisibility = Visibility.Hidden;
+            });
         }
 
         private async void OnSendText(object commandParam)
@@ -393,10 +421,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Title = "Epistle - Select the file you want to send",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
             };
+            dialog.FileOk += OnSelectedFile;
+            dialog.ShowDialog();
+        }
 
-            dialog.FileOk += async (sender, e) =>
+        private void OnSelectedFile(object sender, EventArgs e)
+        {
+            if (sender is OpenFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
             {
-                if (sender is OpenFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
+                Task.Run(async () =>
                 {
                     byte[] file = File.ReadAllBytes(_dialog.FileName);
 
@@ -419,10 +452,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
                         errorView.ShowDialog();
                     }
-                }
-            };
-
-            dialog.ShowDialog();
+                });
+            }
         }
 
         private void OnClickedCopyConvoIdToClipboard(object commandParam)
