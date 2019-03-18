@@ -20,7 +20,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         private const double ERROR_MESSAGE_INTERVAL = 7000;
-        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
+        private readonly Timer messageResetTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
 
         // Injections:
         private readonly ILogger logger;
@@ -46,6 +46,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
+
+        private string successMessage = string.Empty;
+        public string SuccessMessage { get => successMessage; set => Set(ref successMessage, value); }
+
+        private bool uiEnabled = true;
+        public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
         #endregion
 
         public ImportUserFromBackupViewModel(ISymmetricCryptography aes, ILogger logger)
@@ -66,6 +72,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 if (File.Exists(BackupFilePath))
                 {
+                    UIEnabled = false;
+                    messageResetTimer.Stop(); messageResetTimer.Start();
+                    ErrorMessage = null;
+                    SuccessMessage = "Importing user account from backup...";
+
                     string path = BackupFilePath;
                     try
                     {
@@ -75,23 +86,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                             byte[] decr = await Task.Run(() => aes.DecryptWithPassword(File.ReadAllBytes(BackupFilePath), pw));
                             if (decr == null || decr.Length == 0)
                             {
-                                errorMessageTimer.Stop(); errorMessageTimer.Start();
+                                messageResetTimer.Stop(); messageResetTimer.Start();
+                                SuccessMessage = null;
                                 ErrorMessage = "Import procedure failed: couldn't decrypt backup file. Wrong password?";
+                                UIEnabled = true;
                                 return;
                             }
                             File.WriteAllBytes(path, decr);
                         }
 
-                        // Epistle folder needs to be empty before a backup can be imported.
-                        var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
-                        if (dir.Exists)
+                        await Task.Run(() =>
                         {
-                            dir.DeleteRecursively();
-                        }
-                        dir.Create();
+                            // Epistle folder needs to be empty before a backup can be imported.
+                            var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
+                            if (dir.Exists)
+                            {
+                                dir.DeleteRecursively();
+                            }
+                            dir.Create();
 
-                        // Unzip the backup into the epistle user directory.
-                        ZipFile.ExtractToDirectory(path, Paths.ROOT_DIRECTORY);
+                            // Unzip the backup into the epistle user directory.
+                            ZipFile.ExtractToDirectory(path, Paths.ROOT_DIRECTORY);
+                        });
 
                         // Epistle needs to restart in order for the changes to be applied.
                         Application.Current.Shutdown();
@@ -99,13 +115,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     }
                     catch (Exception e)
                     {
-                        errorMessageTimer.Stop(); errorMessageTimer.Start();
+                        messageResetTimer.Stop(); messageResetTimer.Start();
                         logger.LogError($"{nameof(ImportUserFromBackupViewModel)}::{nameof(ImportCommand)}: User account import from backup procedure failed; thrown exception: {e.Message}");
+                        SuccessMessage = null;
+                        UIEnabled = true;
                         ErrorMessage = "Import procedure failed: perhaps double check that password (if the backup has one) and make sure that you selected the right file...";
                     }
                     finally
                     {
-                        if (!string.IsNullOrEmpty(pw) && path != BackupFilePath && File.Exists(path))
+                        if (pw.NotNullNotEmpty() && path != BackupFilePath && File.Exists(path))
                         {
                             File.Delete(path);
                         }
@@ -113,13 +131,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 }
                 else
                 {
-                    errorMessageTimer.Stop(); errorMessageTimer.Start();
+                    messageResetTimer.Stop(); messageResetTimer.Start();
                     ErrorMessage = "No backup file path specified; nothing to import!";
+                    SuccessMessage = null;
                 }
             });
 
-            errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
-            errorMessageTimer.Start();
+            messageResetTimer.Elapsed += (_, __) => ErrorMessage = SuccessMessage = null;
+            messageResetTimer.Start();
         }
     }
 }
