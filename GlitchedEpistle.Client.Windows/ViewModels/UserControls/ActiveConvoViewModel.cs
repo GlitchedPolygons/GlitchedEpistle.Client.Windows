@@ -221,6 +221,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
+            CanSend = false;
             EncryptingVisibility = Visibility.Visible;
 
             var messageBodiesJson = new JObject();
@@ -231,7 +232,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             foreach (Tuple<string, string> key in keys)
             {
-                if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
+                if (key is null || key.Item1.NullOrEmpty() || key.Item2.NullOrEmpty())
                 {
                     continue;
                 }
@@ -251,6 +252,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody is null)
             {
+                CanSend = true;
                 return false;
             }
 
@@ -278,11 +280,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     SenderName = username,
                     Auth = user.Token.Item2,
                     TimestampUTC = message.TimestampUTC,
-                    ConvoPasswordHash = ActiveConvo.PasswordSHA512,
+                    ConvoPasswordSHA512 = ActiveConvo.PasswordSHA512,
                     MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
                 }
             );
 
+            CanSend = true;
             StartAutomaticPulling();
             return success;
         }

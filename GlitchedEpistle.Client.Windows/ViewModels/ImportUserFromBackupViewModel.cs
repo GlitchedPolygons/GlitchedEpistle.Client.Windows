@@ -69,7 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     string path = BackupFilePath;
                     try
                     {
-                        if (!string.IsNullOrEmpty(pw))
+                        if (pw.NotNullNotEmpty())
                         {
                             path = Path.GetTempFileName();
                             byte[] decr = await Task.Run(() => aes.DecryptWithPassword(File.ReadAllBytes(BackupFilePath), pw));
