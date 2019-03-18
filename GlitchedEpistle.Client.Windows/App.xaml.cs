@@ -47,12 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// The client version number.
         /// </summary>
         public const string VERSION = "1.0.0";
-        
-        /// <summary>
-        /// The singleton app instance (prevent multiple Epistle instances running).
-        /// </summary>
-        private static readonly Mutex SINGLETON = new Mutex(true, Assembly.GetCallingAssembly().GetName().Name);
-
+      
         /// <summary>
         /// The IoC container.
         /// </summary>
@@ -60,11 +55,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            // Insta-kill the app if there is already another instance running!
-            if (!SINGLETON.WaitOne(TimeSpan.FromMilliseconds(750), true))
+            var mutex = new Mutex(true, Assembly.GetCallingAssembly().GetName().Name, out bool newInstance);  
+            if (!newInstance)
             {
                 MessageBox.Show("There is already one instance of Glitched Epistle running!");
-                Application.Current.Shutdown();
+                Current.Shutdown();  
             }
             
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
