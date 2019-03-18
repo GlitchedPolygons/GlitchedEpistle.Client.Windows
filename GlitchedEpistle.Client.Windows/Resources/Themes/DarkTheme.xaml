@@ -62,6 +62,13 @@
     <Style x:Key="TextBox" TargetType="TextBox">
         <Setter Property="Background" Value="#404040" />
         <Setter Property="Foreground" Value="AliceBlue" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Cursor" Value="No"/>
+                <Setter Property="Opacity" Value="1"/>
+                <Setter Property="Background" Value="#707070"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- PasswordBox (input field) -->
