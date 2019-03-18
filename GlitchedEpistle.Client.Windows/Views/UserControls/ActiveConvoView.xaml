@@ -58,13 +58,15 @@
                  Name="MessagesListBox"
                  ItemsSource="{Binding Messages}"
                  Style="{StaticResource MessagesListBox}"
+                 VirtualizingStackPanel.ScrollUnit="Pixel"
+                 VirtualizingStackPanel.IsVirtualizing="True"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                  ScrollViewer.VerticalScrollBarVisibility="Visible">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Margin="0" 
-                                Height="Auto"
-                                Orientation="Vertical"/>
+                    <VirtualizingStackPanel Margin="0" 
+                                            Height="Auto"
+                                            Orientation="Vertical"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
