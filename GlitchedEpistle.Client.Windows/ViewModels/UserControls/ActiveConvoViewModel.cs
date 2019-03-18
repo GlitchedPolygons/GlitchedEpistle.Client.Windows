@@ -327,7 +327,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             };
 
             string fileBase64 = json["fileBase64"]?.Value<string>();
-            messageViewModel.FileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
+            messageViewModel.FileBytes = fileBase64.NullOrEmpty() ? null : Convert.FromBase64String(fileBase64);
             msgQueue.Add(messageViewModel);
 
             return Task.CompletedTask;
