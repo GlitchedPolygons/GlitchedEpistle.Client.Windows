@@ -115,7 +115,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             string totp = commandParam as string;
 
-            if (string.IsNullOrEmpty(totp))
+            if (totp.NullOrEmpty())
             {
                 ResetMessages();
                 ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
@@ -155,7 +155,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             string id = await convoService.CreateConvo(convoCreationDto, user.Id, user.Token.Item2);
 
-            if (!string.IsNullOrEmpty(id))
+            if (id.NotNullNotEmpty())
             {
                 // Create the convo model object and feed it into the convo provider.
                 var convo = new Convo
@@ -190,6 +190,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
             else
             {
+                ErrorMessage = $"Convo {Name} couldn't be created.";
                 logger.LogError($"Convo {Name} couldn't be created. Reason unknown.");
             }
         }

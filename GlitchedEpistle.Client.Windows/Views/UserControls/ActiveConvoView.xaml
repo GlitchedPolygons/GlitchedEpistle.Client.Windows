@@ -92,8 +92,7 @@
 
         <!-- TextBox + Send Buttons -->
         <Grid Grid.Row="2" 
-              HorizontalAlignment="Stretch" 
-              IsEnabled="{Binding CanSend}">
+              HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -108,6 +107,8 @@
                      TextWrapping="Wrap"
                      Text="{Binding Text}"
                      AcceptsReturn="True"
+                     IsEnabled="{Binding CanSend}"
+                     TextChanged="TextBox_OnTextChanged"
                      HorizontalAlignment="Stretch"
                      HorizontalContentAlignment="Stretch"
                      HorizontalScrollBarVisibility="Disabled"
@@ -142,6 +143,7 @@
                 <Button Grid.Row="1" 
                         BorderThickness="0" 
                         Content="Send File"
+                        IsEnabled="{Binding CanSend}"
                         Command="{Binding SendFileCommand}"/>
 
                 <Rectangle Grid.Row="2"
@@ -152,6 +154,7 @@
                 <Button Grid.Row="3" 
                         BorderThickness="0"
                         Content="Send Text"
+                        IsEnabled="{Binding CanSend}"
                         Command="{Binding SendTextCommand}"
                         CommandParameter="{Binding ElementName=TextBox}"/>
 

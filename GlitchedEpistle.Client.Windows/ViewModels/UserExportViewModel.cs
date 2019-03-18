@@ -87,6 +87,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     pw = passwordBox.Password;
                 }
 
+                Enabled = false;
+                ExportLabel = "Exporting backup... please don't close this window until it's done.";
+
                 await Task.Run(() =>
                 {
                     if (File.Exists(OutputFilePath))
@@ -99,21 +102,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     ExportLabel = $"Backup couldn't be exported to {OutputFilePath}... Reason unknown";
                     OutputFilePath = null;
+                    Enabled = true;
                     return;
                 }
 
                 if (string.IsNullOrEmpty(pw))
                 {
                     ExportLabel = "Backup exported successfully! Please keep that file VERY secret (you chose not to encrypt it with a password after all...).";
-                    Enabled = false;
                     OutputFilePath = null;
                     return;
                 }
 
                 byte[] encryptedBytes = await Task.Run(() => aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw));
                 File.WriteAllBytes(OutputFilePath, encryptedBytes);
-
-                Enabled = false;
+                
                 OutputFilePath = null;
                 ExportLabel = "Backup exported successfully! Please don't share that file with anybody.";
             });
