@@ -104,21 +104,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
+        private void ResetMessages() => ErrorMessage = SuccessMessage = null;
+
         private void OnClickedCancel(object commandParam)
         {
             RequestedClose?.Invoke(null, EventArgs.Empty);
         }
 
-        private void ResetMessages() => ErrorMessage = SuccessMessage = null;
-
         private async void OnSubmit(object commandParam)
         {
             string totp = commandParam as string;
+
+            CanSubmit = false;
 
             if (totp.NullOrEmpty())
             {
                 ResetMessages();
                 ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
+                CanSubmit = true;
                 return;
             }
 
@@ -128,6 +131,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ResetMessages();
                 ErrorMessage = "Two-Factor Authentication failed! Convo creation request rejected.";
+                CanSubmit = true;
                 return;
             }
 
@@ -135,6 +139,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ResetMessages();
                 ErrorMessage = "The password does not match its confirmation; please make sure that you re-type your password correctly!";
+                CanSubmit = true;
                 return;
             }
 
@@ -142,6 +147,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ResetMessages();
                 ErrorMessage = "Your password is too weak; make sure that it has at least >5 characters!";
+                CanSubmit = true;
                 return;
             }
 
@@ -192,6 +198,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ErrorMessage = $"Convo {Name} couldn't be created.";
                 logger.LogError($"Convo {Name} couldn't be created. Reason unknown.");
+                CanSubmit = true;
             }
         }
     }
