@@ -56,5 +56,7 @@
         <KeyBinding Key="Enter" 
                     Command="{Binding JoinCommand}"
                     CommandParameter="{Binding ElementName=ConvoPasswordBox}"/>
+        <KeyBinding Key="Escape"
+                    Command="{Binding CancelCommand}"/>
     </Window.InputBindings>
 </Window>
