@@ -33,5 +33,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
             scrollViewer.ScrollToBottom();
         }
+
+        private void TextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox.Focus();
+        }
     }
 }

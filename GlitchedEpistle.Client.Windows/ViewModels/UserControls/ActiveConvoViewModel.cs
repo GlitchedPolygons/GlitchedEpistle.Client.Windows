@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -164,6 +166,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 return;
             }
+
             Messages.AddRange(msgQueue.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC));
             msgQueue = new ConcurrentBag<MessageViewModel>();
         }
@@ -221,6 +224,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
+            CanSend = false;
             EncryptingVisibility = Visibility.Visible;
 
             var messageBodiesJson = new JObject();
@@ -231,7 +235,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             foreach (Tuple<string, string> key in keys)
             {
-                if (key is null || string.IsNullOrEmpty(key.Item1) || string.IsNullOrEmpty(key.Item2))
+                if (key is null || key.Item1.NullOrEmpty() || key.Item2.NullOrEmpty())
                 {
                     continue;
                 }
@@ -251,6 +255,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody is null)
             {
+                CanSend = true;
                 return false;
             }
 
@@ -278,11 +283,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     SenderName = username,
                     Auth = user.Token.Item2,
                     TimestampUTC = message.TimestampUTC,
-                    ConvoPasswordHash = ActiveConvo.PasswordSHA512,
+                    ConvoPasswordSHA512 = ActiveConvo.PasswordSHA512,
                     MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
                 }
             );
 
+            CanSend = true;
             StartAutomaticPulling();
             return success;
         }
@@ -304,26 +310,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return Task.CompletedTask;
             }
 
-            var messageViewModel = new MessageViewModel(methodQ)
-            {
-                SenderId = message.SenderId,
-                SenderName = message.SenderName,
-                TimestampDateTimeUTC = message.TimestampUTC,
-                Timestamp = message.TimestampUTC.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
-            };
-
             var json = JToken.Parse(crypto.DecryptMessage(message.Body, user.PrivateKey));
             if (json is null)
             {
                 return Task.CompletedTask;
             }
 
-            messageViewModel.Text = json["text"]?.Value<string>();
-            messageViewModel.FileName = json["fileName"]?.Value<string>();
+            var messageViewModel = new MessageViewModel(methodQ)
+            {
+                SenderId = message.SenderId,
+                SenderName = message.SenderName,
+                TimestampDateTimeUTC = message.TimestampUTC,
+                Timestamp = message.TimestampUTC.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
+                Text = json["text"]?.Value<string>(),
+                FileName = json["fileName"]?.Value<string>(),
+            };
+
             string fileBase64 = json["fileBase64"]?.Value<string>();
             messageViewModel.FileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
-
             msgQueue.Add(messageViewModel);
+
             return Task.CompletedTask;
         }
 

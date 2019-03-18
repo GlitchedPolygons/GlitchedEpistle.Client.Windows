@@ -73,10 +73,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             string totp = commandParam as string;
 
-            if (pendingAttempt
-                || string.IsNullOrEmpty(UserId)
-                || string.IsNullOrEmpty(password)
-                || string.IsNullOrEmpty(totp))
+            if (pendingAttempt || UserId.NullOrEmpty() || password.NullOrEmpty() || totp.NullOrEmpty())
             {
                 return;
             }
@@ -96,7 +93,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
 
                 string jwt = await userService.Login(UserId, password.SHA512(), totp);
-                if (!string.IsNullOrEmpty(jwt))
+                if (jwt.NotNullNotEmpty())
                 {
                     failedAttempts = 0;
                     user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
