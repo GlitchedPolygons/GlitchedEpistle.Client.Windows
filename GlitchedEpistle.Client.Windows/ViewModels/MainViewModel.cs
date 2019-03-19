@@ -284,9 +284,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Update the UI accordingly (blue progress bar + tooltip).
             user.ExpirationUTC = exp.Value;
             DateTime utcNow = DateTime.UtcNow;
+            TimeSpan delta = user.ExpirationUTC - utcNow;
             bool expired = utcNow > user.ExpirationUTC;
-            
-            ProgressBarValue = expired ? 0 : (user.ExpirationUTC - utcNow).TotalHours * 100.0d / 720.0d;
+            ProgressBarValue = expired ? 0 : delta.TotalHours * 100.0d / 720.0d;
             ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
 
             // Schedule expiration dialog / extension prompt
@@ -296,8 +296,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
             else
             {
-                TimeSpan remainingTime = user.ExpirationUTC - utcNow;
-                if (remainingTime < TimeSpan.FromDays(5))
+                if (delta < TimeSpan.FromDays(5))
                 {
                     ShowExpirationReminderControl();
 

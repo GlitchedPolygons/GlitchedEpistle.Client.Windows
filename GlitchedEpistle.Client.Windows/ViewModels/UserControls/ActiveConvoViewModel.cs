@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -55,6 +56,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Commands
         public ICommand SendTextCommand { get; }
         public ICommand SendFileCommand { get; }
+        public ICommand PressedEscapeCommand { get; }
         public ICommand CopyConvoIdToClipboardCommand { get; }
         #endregion
 
@@ -129,6 +131,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
+            PressedEscapeCommand = new DelegateCommand(OnPressedEscape);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
             methodQ.Schedule(() => Application.Current?.Dispatcher?.Invoke(TransferQueuedMessagesToUI), MSG_PULL_FREQUENCY);
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
@@ -456,6 +459,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
+        }
+
+        private void OnPressedEscape(object commandParam)
+        {
+            var messagesListBox = commandParam as ListBox;
+            if (messagesListBox is null)
+            {
+                return;
+            }
+            
+            if (VisualTreeHelper.GetChildrenCount(messagesListBox) <= 0)
+            {
+                return;
+            }
+
+            Border border = (Border)VisualTreeHelper.GetChild(messagesListBox, 0);
+            ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+            scrollViewer.ScrollToBottom();
         }
 
         private void HideGreenTick()
