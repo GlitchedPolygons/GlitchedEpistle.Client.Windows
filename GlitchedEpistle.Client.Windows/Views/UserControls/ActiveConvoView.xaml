@@ -189,5 +189,11 @@
                HorizontalAlignment="Right"
                Visibility="{Binding DecryptingVisibility}" />
     </Grid>
+    
+    <UserControl.InputBindings>
+        <KeyBinding Key="Escape"
+                    Command="{Binding PressedEscapeCommand}"
+                    CommandParameter="{Binding ElementName=MessagesListBox}"/>
+    </UserControl.InputBindings>
 
 </UserControl>
