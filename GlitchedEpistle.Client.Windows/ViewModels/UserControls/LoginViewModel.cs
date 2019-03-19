@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -70,7 +71,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             errorMessageTimer.Start();
         }
 
-        private async void OnClickedLogin(object commandParam)
+        private void OnClickedLogin(object commandParam)
         {
             string totp = commandParam as string;
 
@@ -79,39 +80,45 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            pendingAttempt = true;
-            UIEnabled = false;
-
-            if (!await connectionTest.TestConnection())
-            {
-                pendingAttempt = false;
-                UIEnabled = true;
-                InfoDialogView errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.", Title = "Epistle Server Unresponsive" } };
-                errorView.ShowDialog();
-                return;
-            }
-
-            string jwt = await userService.Login(UserId, password.SHA512(), totp);
-            if (jwt.NullOrEmpty())
-            {
-                failedAttempts++;
-                errorMessageTimer.Stop();
-                errorMessageTimer.Start();
-                ErrorMessage = "Error! Invalid user id, password or 2FA.";
-                if (failedAttempts > 3)
+            Task.Run
+            (
+                async () =>
                 {
-                    ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
-                }
-            }
-            else
-            {
-                failedAttempts = 0;
-                user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
-                eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
-            }
+                    pendingAttempt = true;
+                    UIEnabled = false;
 
-            pendingAttempt = false;
-            UIEnabled = true;
+                    if (!await connectionTest.TestConnection())
+                    {
+                        pendingAttempt = false;
+                        UIEnabled = true;
+                        InfoDialogView errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.", Title = "Epistle Server Unresponsive" } };
+                        errorView.ShowDialog();
+                        return;
+                    }
+
+                    string jwt = await userService.Login(UserId, password.SHA512(), totp);
+                    if (jwt.NullOrEmpty())
+                    {
+                        failedAttempts++;
+                        errorMessageTimer.Stop();
+                        errorMessageTimer.Start();
+                        ErrorMessage = "Error! Invalid user id, password or 2FA.";
+                        if (failedAttempts > 3)
+                        {
+                            ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
+                        }
+                    }
+                    else
+                    {
+                        failedAttempts = 0;
+                        user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
+                        eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
+                    }
+
+                    pendingAttempt = false;
+                    UIEnabled = true;
+                }
+            );            
         }
 
         private void OnClickedQuit(object commandParam)
