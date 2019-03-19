@@ -1,5 +1,6 @@
-﻿using Prism.Events;
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
+﻿using GlitchedPolygons.GlitchedEpistle.Client.Models;
+
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
 {
@@ -8,5 +9,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
     /// is raised whenever the user has successfully created a new <see cref="Convo"/>.
     /// </summary>
     /// <seealso cref="Prism.Events.PubSubEvent{String}" />
-    public class ConvoCreationSucceededEvent : PubSubEvent<string> { }
+    public class ConvoCreationSucceededEvent : PubSubEvent<string>
+    {
+    }
 }

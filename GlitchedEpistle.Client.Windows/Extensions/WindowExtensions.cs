@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
@@ -18,7 +19,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
         {
             if (window.DataContext is ICloseable dataContext)
             {
-                void OnRequestedClosure(object sender, EventArgs args) => window.Close();
+                void OnRequestedClosure(object sender, EventArgs args)
+                {
+                    window.Close();
+                }
+
                 dataContext.RequestedClose += OnRequestedClosure;
                 window.Closing += (sender, args) => dataContext.RequestedClose -= OnRequestedClosure;
             }

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Linq;
 using System.Windows;
-using System.Windows.Threading;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
 {
@@ -22,11 +22,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
         public static BitmapSource ToBitmapSource(this Bitmap bitmap)
         {
             if (Application.Current.Dispatcher == null)
+            {
                 return null; // Is this even possible?
+            }
 
             try
             {
-                using (var memoryStream = new MemoryStream())
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
                     // You need to specify the image format to fill the stream. Let's hope this is always PNG ;D
                     bitmap.Save(memoryStream, ImageFormat.Png);
@@ -55,7 +57,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
         private static BitmapSource CreateBitmapSourceFromBitmap(Stream stream)
         {
             BitmapDecoder bitmapDecoder = BitmapDecoder.Create(
-                bitmapStream: stream,
+                stream,
                 cacheOption: BitmapCacheOption.OnLoad,
                 createOptions: BitmapCreateOptions.PreservePixelFormat
             );

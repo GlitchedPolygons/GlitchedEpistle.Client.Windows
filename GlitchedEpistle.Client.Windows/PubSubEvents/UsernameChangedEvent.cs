@@ -1,4 +1,5 @@
 ﻿using Prism.Events;
+
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
 {
     /// <summary>
@@ -6,5 +7,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
     /// is raised whenever the username setting has been changed and saved (usually when closing the user settings window).
     /// </summary>
     /// <seealso cref="Prism.Events.PubSubEvent{String}" />
-    public class UsernameChangedEvent : PubSubEvent<string> { }
+    public class UsernameChangedEvent : PubSubEvent<string>
+    {
+    }
 }

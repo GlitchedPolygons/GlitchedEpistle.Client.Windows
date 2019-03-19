@@ -10,23 +10,23 @@
         WindowStartupLocation="CenterScreen"
         Icon="/Resources/Images/help-icon-white.png"
         MaxWidth="{Binding MaxWidth}"
-        Title="{Binding Title}" 
+        Title="{Binding Title}"
         Background="{StaticResource WindowBackgroundBrush}">
 
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
         <StackPanel>
-            <TextBlock TextWrapping="Wrap" 
+            <TextBlock TextWrapping="Wrap"
                        Text="{Binding Text}"
-                       Style="{StaticResource TextBlock}"/>
+                       Style="{StaticResource TextBlock}" />
 
-            <Button Content="{Binding OkButtonText}" 
-                    HorizontalAlignment="Right" 
-                    Margin="0,15,0,0" 
-                    Command="{Binding OkButtonCommand}"/>
+            <Button Content="{Binding OkButtonText}"
+                    HorizontalAlignment="Right"
+                    Margin="0,15,0,0"
+                    Command="{Binding OkButtonCommand}" />
         </StackPanel>
     </Grid>
 </Window>

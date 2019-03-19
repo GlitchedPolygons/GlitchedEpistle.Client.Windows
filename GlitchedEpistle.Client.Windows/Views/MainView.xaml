@@ -6,11 +6,11 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:converters="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Converters"
         mc:Ignorable="d"
-        Title="Glitched Epistle" 
-        MinWidth="800" 
-        Width="{Binding Path=MainWindowWidth, Mode=TwoWay}" 
-        MinHeight="530" 
-        Height="{Binding Path=MainWindowHeight, Mode=TwoWay}" 
+        Title="Glitched Epistle"
+        MinWidth="800"
+        Width="{Binding Path=MainWindowWidth, Mode=TwoWay}"
+        MinHeight="530"
+        Height="{Binding Path=MainWindowHeight, Mode=TwoWay}"
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"
         WindowStartupLocation="CenterScreen"
@@ -18,7 +18,7 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding Path=ClosedCommand}"/>
+            <i:InvokeCommandAction Command="{Binding Path=ClosedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -30,172 +30,175 @@
 
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
-            <ColumnDefinition Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}" 
-                              MinWidth="{Binding Path=SidebarMinWidth}" 
-                              MaxWidth="{Binding Path=SidebarMaxWidth}"
-                              Name="LeftColumn"/>
+            <ColumnDefinition
+                Width="{Binding Path=SidebarWidth, Mode=TwoWay, Converter={StaticResource GridLengthConverter}}"
+                MinWidth="{Binding Path=SidebarMinWidth}"
+                MaxWidth="{Binding Path=SidebarMaxWidth}"
+                Name="LeftColumn" />
             <!-- Right Column -->
-            <ColumnDefinition Width="2*" 
-                              Name="RightColumn"/>
+            <ColumnDefinition Width="2*"
+                              Name="RightColumn" />
         </Grid.ColumnDefinitions>
 
         <!-- Left Column -->
-        <StackPanel Grid.Row="0"  
-                    Grid.Column="0" 
+        <StackPanel Grid.Row="0"
+                    Grid.Column="0"
                     IsEnabled="{Binding UIEnabled}"
                     Background="{StaticResource WindowBackgroundBrush}">
 
             <!-- Profile -->
-            <StackPanel Name="ProfileStackPanel" 
+            <StackPanel Name="ProfileStackPanel"
                         Height="175">
 
-                <Label Content="{Binding Username}" 
-                       HorizontalAlignment="Center" 
-                       FontSize="18" 
-                       Padding="0,5,0,0"/>
+                <Label Content="{Binding Username}"
+                       HorizontalAlignment="Center"
+                       FontSize="18"
+                       Padding="0,5,0,0" />
 
-                <StackPanel Orientation="Horizontal" 
-                            HorizontalAlignment="Center" 
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
                             VerticalAlignment="Center">
 
                     <Label Content="{Binding UserId}"
                            FontSize="11"
-                           Padding="0,0,0,5" 
-                           Foreground="Gray" 
-                           FontStyle="Italic"/>
+                           Padding="0,0,0,5"
+                           Foreground="Gray"
+                           FontStyle="Italic" />
 
-                    <Button Width="15" 
+                    <Button Width="15"
                             Height="15"
                             Margin="4,0,0,4"
                             ToolTip="Copy user id to clipboard"
                             Command="{Binding CopyUserIdToClipboardCommand}"
-                            Style="{StaticResource CopyToClipboardButton}"/>
+                            Style="{StaticResource CopyToClipboardButton}" />
 
-                    <Image Source="/Resources/Images/green-tick.png" 
-                           Width="15" 
+                    <Image Source="/Resources/Images/green-tick.png"
+                           Width="15"
                            Height="15"
-                           Margin="1,0,0,4" 
-                           Visibility="{Binding ClipboardTickVisibility}"/>
+                           Margin="1,0,0,4"
+                           Visibility="{Binding ClipboardTickVisibility}" />
                 </StackPanel>
 
-                <ProgressBar Height="4" 
+                <ProgressBar Height="4"
                              Name="SubscriptionProgressBar"
-                             Value="{Binding ProgressBarValue}" 
+                             Value="{Binding ProgressBarValue}"
                              ToolTip="{Binding ProgressBarTooltip}"
                              MouseEnter="SubscriptionProgressBar_OnMouseEnter"
                              MouseLeave="SubscriptionProgressBar_OnMouseLeave"
                              MouseDown="SubscriptionProgressBar_OnMouseDown"
-                             Background="#FFE5E5E5" 
+                             Background="#FFE5E5E5"
                              Foreground="#FF08AFE2" />
 
-                <WrapPanel Margin="10"  
-                           Orientation="Horizontal" 
+                <WrapPanel Margin="10"
+                           Orientation="Horizontal"
                            HorizontalAlignment="Center">
 
                     <Button Content="Create Convo"
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."
-                            Command="{Binding CreateConvoButtonCommand}"/>
-                    <Rectangle Width="1" 
+                            Command="{Binding CreateConvoButtonCommand}" />
+                    <Rectangle Width="1"
                                Opacity="0.5"
-                               VerticalAlignment="Stretch" 
+                               VerticalAlignment="Stretch"
                                Stroke="{StaticResource SeparatorColorBrush}" />
-                    <Button Content="Join Convo" 
+                    <Button Content="Join Convo"
                             Padding="6 4 6 4"
                             ToolTip="Click here to join an existing conversation."
-                            Command="{Binding JoinConvoButtonCommand}"/>
-                    <Rectangle Width="1" 
+                            Command="{Binding JoinConvoButtonCommand}" />
+                    <Rectangle Width="1"
                                Opacity="0.5"
-                               VerticalAlignment="Stretch" 
+                               VerticalAlignment="Stretch"
                                Stroke="{StaticResource SeparatorColorBrush}" />
-                    <Button Content="Change Password" 
+                    <Button Content="Change Password"
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
-                            Command="{Binding ChangePasswordButtonCommand}"/>
-                    <Rectangle Width="1" 
+                            Command="{Binding ChangePasswordButtonCommand}" />
+                    <Rectangle Width="1"
                                Opacity="0.5"
-                               VerticalAlignment="Stretch" 
+                               VerticalAlignment="Stretch"
                                Stroke="{StaticResource SeparatorColorBrush}" />
-                    <Button Content="Logout" 
+                    <Button Content="Logout"
                             Padding="6 4 6 4"
                             ToolTip="Click here to log out of your Glitched Epistle account."
-                            Command="{Binding LogoutButtonCommand}"/>
+                            Command="{Binding LogoutButtonCommand}" />
                 </WrapPanel>
 
             </StackPanel>
 
             <Rectangle Opacity="0.5"
                        Height="1"
-                       HorizontalAlignment="Stretch" 
-                       Stroke="{StaticResource SeparatorColorBrush}"/>
+                       HorizontalAlignment="Stretch"
+                       Stroke="{StaticResource SeparatorColorBrush}" />
 
             <!-- Convos list -->
-            <ContentControl Name="ConvosListControl" Content="{Binding ConvosListControl}"/>
+            <ContentControl Name="ConvosListControl"
+                            Content="{Binding ConvosListControl}" />
 
         </StackPanel>
 
         <!-- Convos list horizontal size handle -->
-        <GridSplitter Grid.Column="1" Grid.Row="0"
+        <GridSplitter Grid.Column="1"
+                      Grid.Row="0"
                       DragStarted="GridSplitter_OnDragStarted"
-                      HorizontalAlignment="Left" 
+                      HorizontalAlignment="Left"
                       VerticalAlignment="Stretch"
                       Width="4"
-                      Cursor="SizeWE"/>
+                      Cursor="SizeWE" />
 
         <!-- Convos list collapse button -->
-        <Button Grid.Column="1" Grid.Row="0"
+        <Button Grid.Column="1"
+                Grid.Row="0"
                 Style="{StaticResource CollapseButton}"
-                HorizontalAlignment="Left" 
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="&lt;" 
-                Width="15" 
+                Content="&lt;"
+                Width="15"
                 Height="52.5"
                 Name="CollapseButton"
-                Click="CollapseButton_OnClick"/>
+                Click="CollapseButton_OnClick" />
 
-        <Canvas Grid.Column="1" Grid.Row="0">
+        <Canvas Grid.Column="1"
+                Grid.Row="0">
             <!-- Help Button -->
             <Button Width="25"
-                    Height="25" 
-                    Canvas.Top="5" 
-                    Canvas.Right="5" 
+                    Height="25"
+                    Canvas.Top="5"
+                    Canvas.Right="5"
                     Style="{StaticResource HelpButton}"
                     Command="{Binding HelpButtonCommand}"
-                    ToolTip="Open up the tutorial window.">
-            </Button>
+                    ToolTip="Open up the tutorial window." />
 
             <!-- Settings Button -->
             <Button Width="25"
-                    Height="25" 
-                    Canvas.Top="5" 
-                    Canvas.Right="35" 
+                    Height="25"
+                    Canvas.Top="5"
+                    Canvas.Right="35"
                     IsEnabled="{Binding UIEnabled}"
                     Style="{StaticResource SettingsButton}"
                     Command="{Binding SettingsButtonCommand}"
-                    ToolTip="Open up the settings window.">
-            </Button>
+                    ToolTip="Open up the settings window." />
 
             <!-- Reset Window Button -->
             <Button Width="25"
-                    Height="25" 
-                    Canvas.Top="5" 
-                    Canvas.Right="65" 
+                    Height="25"
+                    Canvas.Top="5"
+                    Canvas.Right="65"
                     Command="{Binding ResetWindowButtonCommand}"
                     Style="{StaticResource ResetMainWindowButton}"
-                    ToolTip="Reset the main window's size and layout." Click="ResetWindowButton_Click"/>
+                    ToolTip="Reset the main window's size and layout."
+                    Click="ResetWindowButton_Click" />
         </Canvas>
 
         <!-- Right Column -->
-        <ContentControl Content="{Binding MainControl}" 
-                        HorizontalAlignment="Stretch" 
+        <ContentControl Content="{Binding MainControl}"
+                        HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         VerticalContentAlignment="Stretch"
-                        Grid.Row="0" 
-                        Grid.Column="1" 
-                        Margin="5,35,0,0"/>
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="5,35,0,0" />
     </Grid>
 </Window>
 <!-- Copyright (C) Raphael Beck | Glitched Polygons, 2018 -->
 <!-- www.glitchedpolygons.com -->
-    

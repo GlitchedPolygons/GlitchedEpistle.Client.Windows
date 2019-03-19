@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
@@ -21,9 +22,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             Loaded -= OnLoaded;
         }
 
-        private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e) => Check();
-        private void PasswordBox2_OnPasswordChanged(object sender, RoutedEventArgs e) => Check();
-        private void OutputFilePathTextBox_OnTextChanged(object sender, TextChangedEventArgs e) => Check();
+        private void PasswordBox_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            Check();
+        }
+
+        private void PasswordBox2_OnPasswordChanged(object sender, RoutedEventArgs e)
+        {
+            Check();
+        }
+
+        private void OutputFilePathTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            Check();
+        }
 
         private void Check()
         {

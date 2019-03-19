@@ -1,14 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Globalization;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
-using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.Services.MethodQ;
 
 using Microsoft.Win32;
 
@@ -49,7 +49,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 fileBytes = value;
                 if (value != null)
                 {
-                    var img = new BitmapImage();
+                    BitmapImage img = new BitmapImage();
                     img.BeginInit();
                     img.DecodePixelWidth = 300;
                     img.StreamSource = new MemoryStream(value);
@@ -76,7 +76,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
         #endregion
 
-        private string id = null;
+        private string id;
         /// <summary>
         /// Gets the message's unique identifier, which is <para> </para>
         /// md5( <see cref="SenderId"/> + UTC timestamp )
@@ -93,7 +93,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        private ulong? scheduledHideGreenTickIcon = null;
+        private ulong? scheduledHideGreenTickIcon;
 
         public MessageViewModel(IMethodQ methodQ)
         {
@@ -120,7 +120,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             string ext = Path.GetExtension(FileName) ?? string.Empty;
 
-            var dialog = new SaveFileDialog
+            SaveFileDialog dialog = new SaveFileDialog
             {
                 Title = "Download attachment",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -144,8 +144,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedImagePreview(object commandParam)
         {
-            var viewModel = new ImageViewerViewModel { ImageBytes = FileBytes };
-            var view = new ImageViewerView { DataContext = viewModel };
+            ImageViewerViewModel viewModel = new ImageViewerViewModel { ImageBytes = FileBytes };
+            ImageViewerView view = new ImageViewerView { DataContext = viewModel };
             view.ShowDialog();
         }
 
@@ -155,7 +155,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             ClipboardTickVisibility = Visibility.Visible;
 
             if (scheduledHideGreenTickIcon.HasValue)
+            {
                 methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+            }
 
             scheduledHideGreenTickIcon = methodQ.Schedule(() =>
             {

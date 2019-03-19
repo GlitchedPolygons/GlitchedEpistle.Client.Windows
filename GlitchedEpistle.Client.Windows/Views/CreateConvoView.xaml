@@ -13,129 +13,129 @@
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ClosedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <StackPanel Margin="10" MinWidth="320" IsEnabled="{Binding CanSubmit}">
+    <StackPanel Margin="10"
+                MinWidth="320"
+                IsEnabled="{Binding CanSubmit}">
 
-        <Label Content="Create a new conversation" 
-               FontWeight="Bold" 
-               FontSize="16"/>
+        <Label Content="Create a new conversation"
+               FontWeight="Bold"
+               FontSize="16" />
 
-        <Separator/>
+        <Separator />
 
-        <TextBlock Text="{Binding ErrorMessage}" 
-                   TextWrapping="Wrap" 
-                   MaxWidth="300" 
+        <TextBlock Text="{Binding ErrorMessage}"
+                   TextWrapping="Wrap"
+                   MaxWidth="300"
                    Margin="5,0,0,0"
-                   HorizontalAlignment="Left" 
-                   Foreground="Red" 
-                   FontSize="14"/>
+                   HorizontalAlignment="Left"
+                   Foreground="Red"
+                   FontSize="14" />
 
-        <TextBlock Text="{Binding SuccessMessage}" 
-                   TextWrapping="Wrap" 
-                   MaxWidth="300" 
+        <TextBlock Text="{Binding SuccessMessage}"
+                   TextWrapping="Wrap"
+                   MaxWidth="300"
                    Margin="5,0,0,0"
-                   HorizontalAlignment="Left" 
-                   Foreground="Lime" 
-                   FontSize="14"/>
+                   HorizontalAlignment="Left"
+                   Foreground="Lime"
+                   FontSize="14" />
 
         <Label Content="Name"
-               ToolTip="Give your convo a meaningful and unique name!"/>
+               ToolTip="Give your convo a meaningful and unique name!" />
 
-        <TextBox Name="NameTextBox" 
+        <TextBox Name="NameTextBox"
                  Height="23"
                  MaxLength="25"
                  Margin="5,0,0,0"
-                 Text="{Binding Name}" 
+                 Text="{Binding Name}"
                  ToolTip="Give your convo a meaningful and unique name!"
-                 Style="{StaticResource TextBox}"/>
+                 Style="{StaticResource TextBox}" />
 
-        <Label Content="Description" 
-               ToolTip="Describe what this conversation is about."/>
+        <Label Content="Description"
+               ToolTip="Describe what this conversation is about." />
 
-        <TextBox Style="{StaticResource TextBox}" 
-                 AcceptsReturn="True" 
+        <TextBox Style="{StaticResource TextBox}"
+                 AcceptsReturn="True"
                  MaxLength="100"
                  MaxWidth="315"
                  Height="46"
                  Margin="5,0,0,0"
                  TextWrapping="Wrap"
                  ToolTip="Describe what this conversation is about."
-                 Text="{Binding Description}"/>
+                 Text="{Binding Description}" />
 
-        <Label Content="Expiration Date" 
-               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly."/>
+        <Label Content="Expiration Date"
+               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly." />
 
-        <DatePicker Name="DatePicker" 
+        <DatePicker Name="DatePicker"
                     Margin="5,0,0,0"
                     ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly."
                     DisplayDateStart="{Binding MinExpirationUTC}"
-                    SelectedDate="{Binding ExpirationUTC}" 
-                    FirstDayOfWeek="Monday" 
-                    SelectedDateFormat="Long"/>
+                    SelectedDate="{Binding ExpirationUTC}"
+                    FirstDayOfWeek="Monday"
+                    SelectedDateFormat="Long" />
 
-            <Label Content="Convo Password" 
-               ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!"/>
+        <Label Content="Convo Password"
+               ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!" />
 
-        <PasswordBox Name="Password" 
+        <PasswordBox Name="Password"
                      Height="23"
                      Margin="5,0,0,0"
                      Style="{StaticResource PasswordBox}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
-                    <i:InvokeCommandAction 
-                        Command="{Binding PasswordChangedCommand}" 
-                        CommandParameter="{Binding ElementName=Password}"/>
+                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
+                                           CommandParameter="{Binding ElementName=Password}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </PasswordBox>
 
-        <Label Content="Confirm Password" 
-               ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!"/>
+        <Label Content="Confirm Password"
+               ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!" />
 
-        <PasswordBox Name="Password2" 
+        <PasswordBox Name="Password2"
                      Height="23"
                      Margin="5,0,0,0"
                      Style="{StaticResource PasswordBox}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
-                    <i:InvokeCommandAction 
-                        Command="{Binding Password2ChangedCommand}" 
-                        CommandParameter="{Binding ElementName=Password2}"/>
+                    <i:InvokeCommandAction Command="{Binding Password2ChangedCommand}"
+                                           CommandParameter="{Binding ElementName=Password2}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </PasswordBox>
 
-        <Label Content="2FA TOTP" 
-               ToolTip="Your user password."/>
+        <Label Content="2FA TOTP"
+               ToolTip="Your user password." />
 
-        <TextBox Name="TotpTextBox" 
+        <TextBox Name="TotpTextBox"
                  Height="23"
                  MaxLength="100"
                  Margin="5,0,0,0"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                 Style="{StaticResource TextBox}"/>
+                 Style="{StaticResource TextBox}" />
 
-        <StackPanel Orientation="Horizontal" 
-                    HorizontalAlignment="Right" 
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
                     Margin="0,10,0,0">
 
-            <Button Content="Cancel" 
-                    Command="{Binding CancelCommand}" 
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}"
                     ToolTip="Never mind, no convo will be created."
-                    Margin="0,0,10,0"/>
+                    Margin="0,0,10,0" />
 
-            <Button Content="Submit" 
+            <Button Content="Submit"
                     ToolTip="Submits the convo creation request to the Epistle backend."
                     Command="{Binding SubmitCommand}"
-                    CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}"/>
+                    CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />
         </StackPanel>
     </StackPanel>
     <Window.InputBindings>
-        <KeyBinding Key="Enter" 
+        <KeyBinding Key="Enter"
                     Command="{Binding SubmitCommand}"
-                    CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}"/>
+                    CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />
     </Window.InputBindings>
 </Window>

@@ -6,64 +6,66 @@
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Background="{StaticResource WindowBackgroundBrush}"
-        mc:Ignorable="d" 
-        Title="Export User" 
+        mc:Ignorable="d"
+        Title="Export User"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
-            <i:InvokeCommandAction Command="{Binding ClosedCommand}"/>
+            <i:InvokeCommandAction Command="{Binding ClosedCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
-    <StackPanel Margin="15" IsEnabled="{Binding Enabled}">
+    <StackPanel Margin="15"
+                IsEnabled="{Binding Enabled}">
 
         <StackPanel Orientation="Horizontal">
-            <TextBox Width="370" 
-                         TextWrapping="Wrap" 
-                         UndoLimit="10" 
-                         Name="OutputFilePathTextBox"
-                         Style="{StaticResource TextBox}"
-                         TextChanged="OutputFilePathTextBox_OnTextChanged"
-                         Text="{Binding OutputFilePath}" IsReadOnly="True"/>
-            <Button Content="Browse" 
-                        Command="{Binding BrowseButtonCommand}"/>
+            <TextBox Width="370"
+                     TextWrapping="Wrap"
+                     UndoLimit="10"
+                     Name="OutputFilePathTextBox"
+                     Style="{StaticResource TextBox}"
+                     TextChanged="OutputFilePathTextBox_OnTextChanged"
+                     Text="{Binding OutputFilePath}"
+                     IsReadOnly="True" />
+            <Button Content="Browse"
+                    Command="{Binding BrowseButtonCommand}" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                        Margin="0,15,0,0">
-            <Label Content="Password"/>
-            <PasswordBox Style="{StaticResource PasswordBox}" 
-                             MinWidth="125" 
-                             Name="PasswordBox"
-                             PasswordChanged="PasswordBox_OnPasswordChanged"
-                             Margin="0,0,0,0"/>
-            <Label Content="Retype Password" 
-                       Margin="10,0,0,0"/>
-            <PasswordBox Style="{StaticResource PasswordBox}"  
-                             MinWidth="125"
-                             PasswordChanged="PasswordBox2_OnPasswordChanged"
-                             Name="PasswordBox2"/>
+                    Margin="0,15,0,0">
+            <Label Content="Password" />
+            <PasswordBox Style="{StaticResource PasswordBox}"
+                         MinWidth="125"
+                         Name="PasswordBox"
+                         PasswordChanged="PasswordBox_OnPasswordChanged"
+                         Margin="0,0,0,0" />
+            <Label Content="Retype Password"
+                   Margin="10,0,0,0" />
+            <PasswordBox Style="{StaticResource PasswordBox}"
+                         MinWidth="125"
+                         PasswordChanged="PasswordBox2_OnPasswordChanged"
+                         Name="PasswordBox2" />
         </StackPanel>
 
-        <TextBlock Margin="0,15,0,0" 
-                       MinHeight="50"
-                       MaxWidth="400"
-                       Style="{StaticResource TextBlock}"
-                       Text="{Binding ExportLabel}" 
-                       TextWrapping="Wrap" />
+        <TextBlock Margin="0,15,0,0"
+                   MinHeight="50"
+                   MaxWidth="400"
+                   Style="{StaticResource TextBlock}"
+                   Text="{Binding ExportLabel}"
+                   TextWrapping="Wrap" />
 
-        <StackPanel Orientation="Horizontal" 
-                        HorizontalAlignment="Right">
-            <Button Content="Cancel" 
-                        Command="{Binding CancelButtonCommand}"/>
-            <Button Content="Export" 
-                        Margin="10,0,0,0"
-                        Name="ExportButton"
-                        IsEnabled="False"
-                        Command="{Binding ExportButtonCommand}"
-                        CommandParameter="{Binding ElementName=PasswordBox}"/>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Cancel"
+                    Command="{Binding CancelButtonCommand}" />
+            <Button Content="Export"
+                    Margin="10,0,0,0"
+                    Name="ExportButton"
+                    IsEnabled="False"
+                    Command="{Binding ExportButtonCommand}"
+                    CommandParameter="{Binding ElementName=PasswordBox}" />
         </StackPanel>
     </StackPanel>
 </Window>

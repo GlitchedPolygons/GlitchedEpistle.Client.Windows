@@ -18,15 +18,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             InitializeComponent();
 
-            var transformGroup = new TransformGroup();
-            var scaleTransform = new ScaleTransform();
-            var translateTransform = new TranslateTransform();
+            TransformGroup transformGroup = new TransformGroup();
+            ScaleTransform scaleTransform = new ScaleTransform();
+            TranslateTransform translateTransform = new TranslateTransform();
 
             transformGroup.Children.Add(scaleTransform);
             transformGroup.Children.Add(translateTransform);
 
             Image.RenderTransform = transformGroup;
-            
+
             Image.MouseWheel += Image_OnMouseWheel;
             Image.MouseLeftButtonDown += Image_OnMouseLeftButtonDown;
             Image.MouseLeftButtonUp += Image_OnMouseLeftButtonUp;
@@ -47,7 +47,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void Image_OnMouseMove(object sender, MouseEventArgs e)
         {
-            if (!Image.IsMouseCaptured) return;
+            if (!Image.IsMouseCaptured)
+            {
+                return;
+            }
 
             Point position = e.MouseDevice.GetPosition(Border);
 
@@ -60,7 +63,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void Image_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Image.IsMouseCaptured) return;
+            if (Image.IsMouseCaptured)
+            {
+                return;
+            }
 
             Image.CaptureMouse();
 
@@ -68,7 +74,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             origin.X = Image.RenderTransform.Value.OffsetX;
             origin.Y = Image.RenderTransform.Value.OffsetY;
         }
-        
+
         private void Image_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Image.ReleaseMouseCapture();

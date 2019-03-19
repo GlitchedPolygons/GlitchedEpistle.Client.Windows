@@ -1,15 +1,15 @@
-﻿using System.Linq;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
-using System.Collections.ObjectModel;
-
-using Prism.Events;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -55,18 +55,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedOnConvo(object commandParam)
         {
-            var convo = commandParam as Convo;
+            Convo convo = commandParam as Convo;
             if (convo is null)
             {
                 return;
             }
 
-            var view = windowFactory.Create<JoinConvoDialogView>(true);
-            var viewModel = viewModelFactory.Create<JoinConvoDialogViewModel>();
+            JoinConvoDialogView view = windowFactory.Create<JoinConvoDialogView>(true);
+            JoinConvoDialogViewModel viewModel = viewModelFactory.Create<JoinConvoDialogViewModel>();
             viewModel.ConvoId = convo.Id;
 
             if (view.DataContext is null)
+            {
                 view.DataContext = viewModel;
+            }
 
             view.ShowDialog();
         }

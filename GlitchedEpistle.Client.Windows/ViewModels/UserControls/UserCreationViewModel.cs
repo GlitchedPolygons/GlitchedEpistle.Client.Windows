@@ -3,25 +3,26 @@ using System.IO;
 using System.Text;
 using System.Timers;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
-using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.Services.CompressionUtility;
+
+using Microsoft.Win32;
 
 using Prism.Events;
-using Microsoft.Win32;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -55,7 +56,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
         #endregion
 
-        private bool pendingAttempt = false;
+        private bool pendingAttempt;
         private string password1, password2;
 
         public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory)
@@ -63,20 +64,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             PasswordChangedCommand1 = new DelegateCommand(commandParam =>
             {
                 if (commandParam is PasswordBox passwordBox)
+                {
                     password1 = passwordBox.Password;
+                }
                 ValidateForm();
             });
 
             PasswordChangedCommand2 = new DelegateCommand(commandParam =>
             {
                 if (commandParam is PasswordBox passwordBox)
+                {
                     password2 = passwordBox.Password;
+                }
                 ValidateForm();
             });
 
             ImportCommand = new DelegateCommand(_ =>
             {
-                var dialog = new OpenFileDialog
+                OpenFileDialog dialog = new OpenFileDialog
                 {
                     Title = "Epistle backup file path",
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -89,10 +94,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     if (sender is OpenFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
                     {
-                        var view = windowFactory.Create<ImportUserFromBackupView>(true);
+                        ImportUserFromBackupView view = windowFactory.Create<ImportUserFromBackupView>(true);
                         if (view.DataContext is null)
                         {
-                            var viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
+                            ImportUserFromBackupViewModel viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
                             viewModel.BackupFilePath = _dialog.FileName;
                             view.DataContext = viewModel;
                         }
@@ -118,18 +123,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 pendingAttempt = true;
                 UIEnabled = false;
 
-                var loadingScreen = new GeneratingKeyView { Topmost = true };
+                GeneratingKeyView loadingScreen = new GeneratingKeyView { Topmost = true };
                 loadingScreen.Show();
 
                 bool keyGenerationSuccessful = await keygen.GenerateKeyPair(Paths.KEYS_DIRECTORY);
                 if (keyGenerationSuccessful)
                 {
-                    var userCreationResponse = await userService.CreateUser(new UserCreationDto
-                    {
-                        PasswordSHA512 = password1.SHA512(),
-                        PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
-                        CreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), compressionSettings))
-                    });
+                    UserCreationResponseDto userCreationResponse = await userService.CreateUser(new UserCreationDto { PasswordSHA512 = password1.SHA512(), PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(), CreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), compressionSettings)) });
 
                     // Handle this event back in the main view model,
                     // since it's there where the backup codes + 2FA secret (QR) will be shown.
@@ -164,6 +164,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             password2 = null;
         }
 
-        private void ValidateForm() => FormValid = !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(password1) && !string.IsNullOrEmpty(password2) && password1 == password2 && password1.Length > 7;
+        private void ValidateForm()
+        {
+            FormValid = !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(password1) && !string.IsNullOrEmpty(password2) && password1 == password2 && password1.Length > 7;
+        }
     }
 }

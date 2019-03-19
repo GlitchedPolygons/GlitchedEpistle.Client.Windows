@@ -5,58 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         mc:Ignorable="d"
-        Title="Join Convo" 
+        Title="Join Convo"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource WindowBackgroundBrush}">
-    <StackPanel Width="320" 
-                Margin="10" 
+    <StackPanel Width="320"
+                Margin="10"
                 IsEnabled="{Binding UIEnabled}">
-        <TextBlock Style="{StaticResource TextBlock}" 
-                   FontSize="16" 
-                   TextWrapping="Wrap" 
+        <TextBlock Style="{StaticResource TextBlock}"
+                   FontSize="16"
+                   TextWrapping="Wrap"
                    TextAlignment="Center"
-                   Text="Join an Epistle conversation now by entering its ID and access password."/>
-        <Separator Margin="10"/>
-        <TextBlock Text="{Binding ErrorMessage}" 
-                   TextWrapping="Wrap" 
-                   MaxWidth="300" 
+                   Text="Join an Epistle conversation now by entering its ID and access password." />
+        <Separator Margin="10" />
+        <TextBlock Text="{Binding ErrorMessage}"
+                   TextWrapping="Wrap"
+                   MaxWidth="300"
                    Margin="5,0,0,0"
-                   HorizontalAlignment="Left" 
-                   Foreground="Red" 
-                   FontSize="14"/>
-        <Label Content="Convo ID"/>
-        <TextBox Height="23" 
+                   HorizontalAlignment="Left"
+                   Foreground="Red"
+                   FontSize="14" />
+        <Label Content="Convo ID" />
+        <TextBox Height="23"
                  Margin="5,0,0,0"
                  Name="ConvoIdTextBox"
                  ToolTip="The conversation's unique identifier."
                  Text="{Binding ConvoId}"
-                 Style="{StaticResource TextBox}"/>
-        <Label Content="Convo Password"/>
-        <PasswordBox Style="{StaticResource PasswordBox}" 
+                 Style="{StaticResource TextBox}" />
+        <Label Content="Convo Password" />
+        <PasswordBox Style="{StaticResource PasswordBox}"
                      Name="ConvoPasswordBox"
-                     Height="23" 
-                     Margin="5,0,0,0"/>
-        <StackPanel Orientation="Horizontal" 
-                    HorizontalAlignment="Right" 
+                     Height="23"
+                     Margin="5,0,0,0" />
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
                     Margin="0,10,0,0">
-            <Button Content="Cancel" 
-                    Command="{Binding CancelCommand}" 
+            <Button Content="Cancel"
+                    Command="{Binding CancelCommand}"
                     ToolTip="Cancel joining the convo."
-                    Margin="0,0,10,0"/>
-            <Button Content="Join" 
+                    Margin="0,0,10,0" />
+            <Button Content="Join"
                     MinWidth="50"
                     ToolTip="Submits the convo join request to the Epistle backend."
                     Command="{Binding JoinCommand}"
-                    CommandParameter="{Binding ElementName=ConvoPasswordBox}"/>
+                    CommandParameter="{Binding ElementName=ConvoPasswordBox}" />
         </StackPanel>
     </StackPanel>
     <Window.InputBindings>
-        <KeyBinding Key="Enter" 
+        <KeyBinding Key="Enter"
                     Command="{Binding JoinCommand}"
-                    CommandParameter="{Binding ElementName=ConvoPasswordBox}"/>
+                    CommandParameter="{Binding ElementName=ConvoPasswordBox}" />
         <KeyBinding Key="Escape"
-                    Command="{Binding CancelCommand}"/>
+                    Command="{Binding CancelCommand}" />
     </Window.InputBindings>
 </Window>

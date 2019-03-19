@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
@@ -54,7 +54,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
                     return null;
                 }
 
-                foreach (var convo in convos)
+                foreach (Convo convo in convos)
                 {
                     if (convo is null || convo.Id != id)
                     {
@@ -80,7 +80,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
 
             for (int i = 0; i < convos.Count; i++)
             {
-                var convo = convos[i];
+                Convo convo = convos[i];
                 if (convo is null || string.IsNullOrEmpty(convo.Id))
                 {
                     continue;
@@ -98,7 +98,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
         /// </summary>
         public void Load()
         {
-            var dir = new DirectoryInfo(Paths.CONVOS_DIRECTORY);
+            DirectoryInfo dir = new DirectoryInfo(Paths.CONVOS_DIRECTORY);
             if (!dir.Exists)
             {
                 dir = Directory.CreateDirectory(Paths.CONVOS_DIRECTORY);
@@ -107,9 +107,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
             convos.Clear();
 
             FileInfo[] files = dir.GetFiles();
-            for (var i = 0; i < files.Length; i++)
+            for (int i = 0; i < files.Length; i++)
             {
-                var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
+                Convo convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
                 if (convo != null)
                 {
                     convos.Add(convo);
@@ -121,4 +121,3 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
         }
     }
 }
-

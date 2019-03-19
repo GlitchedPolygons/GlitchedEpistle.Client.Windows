@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
@@ -15,7 +15,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             Loaded += OnLoaded;
         }
 
-        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
             Loaded -= OnLoaded;
 
@@ -31,13 +31,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void SecretTextBox_SelectText(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
+            TextBox textBox = sender as TextBox;
             textBox?.SelectAll();
         }
 
         private void SecretTextBox_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var textBox = sender as TextBox;
+            TextBox textBox = sender as TextBox;
 
             if (textBox == null || textBox.IsKeyboardFocusWithin)
             {

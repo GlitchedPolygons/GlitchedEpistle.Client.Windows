@@ -9,31 +9,31 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Title="Generating Keys" 
+        Title="Generating Keys"
         Width="600"
         Height="420">
     <Grid>
         <Image Stretch="UniformToFill"
                gif:AnimationBehavior.AnimateInDesignMode="True"
                gif:AnimationBehavior.RepeatBehavior="Forever"
-               gif:AnimationBehavior.SourceUri="../Resources/Images/animated-matrix-code.gif">
-        </Image>
-        <StackPanel VerticalAlignment="Center" Background="Black">
-            <Label HorizontalAlignment="Center" 
+               gif:AnimationBehavior.SourceUri="../Resources/Images/animated-matrix-code.gif" />
+        <StackPanel VerticalAlignment="Center"
+                    Background="Black">
+            <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="28"
                    Foreground="AliceBlue"
-                   Content="Generating 4096-bit RSA key pair..."/>
-            <Label HorizontalAlignment="Center" 
+                   Content="Generating 4096-bit RSA key pair..." />
+            <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="28"
                    Foreground="AliceBlue"
-                   Content="Please wait, and don't terminate Epistle!"/>
-            <Label HorizontalAlignment="Center" 
+                   Content="Please wait, and don't terminate Epistle!" />
+            <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="14"
                    Foreground="AliceBlue"
-                   Content="Depending on your hardware, this might take up to a few minutes, so just relax!"/>
+                   Content="Depending on your hardware, this might take up to a few minutes, so just relax!" />
         </StackPanel>
     </Grid>
 </Window>

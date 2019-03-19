@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -33,19 +33,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             switch (Math.Abs(month))
             {
-                default: return null;
-                case 1: return "January";
-                case 2: return "February";
-                case 3: return "March";
-                case 4: return "April";
-                case 5: return "May";
-                case 6: return "June";
-                case 7: return "July";
-                case 8: return "August";
-                case 9: return "September";
-                case 10: return "October";
-                case 11: return "November";
-                case 12: return "December";
+                default:
+                    return null;
+                case 1:
+                    return "January";
+                case 2:
+                    return "February";
+                case 3:
+                    return "March";
+                case 4:
+                    return "April";
+                case 5:
+                    return "May";
+                case 6:
+                    return "June";
+                case 7:
+                    return "July";
+                case 8:
+                    return "August";
+                case 9:
+                    return "September";
+                case 10:
+                    return "October";
+                case 11:
+                    return "November";
+                case 12:
+                    return "December";
             }
         }
     }

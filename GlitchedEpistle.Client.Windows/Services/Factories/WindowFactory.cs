@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Windows;
 using System.Collections.Generic;
+using System.Windows;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Unity;
 
@@ -28,21 +28,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
         /// <returns>The retrieved <see cref="Window" /> instance, ready to be shown (via <see cref="Window.Show" />).</returns>
         public T Create<T>(bool ensureSingleWindow) where T : Window
         {
-            var app = Application.Current as App;
-            if (app is null) return null;
+            App app = Application.Current as App;
+            if (app is null)
+            {
+                return null;
+            }
 
             if (!ensureSingleWindow)
             {
                 return app.Resolve<T>();
             }
 
-            var type = typeof(T);
+            Type type = typeof(T);
             if (type == typeof(MainView))
             {
                 throw new ArgumentException($"{nameof(App)}::{nameof(Create)}: The provided {nameof(Window)} type parameter is of type {nameof(MainView)}, which is not allowed (since it's the main window, only the creating class instance should have control over it).", nameof(T));
             }
 
-            if (!windows.TryGetValue(type, out var window) || window == null)
+            if (!windows.TryGetValue(type, out Window window) || window == null)
             {
                 window = app.Resolve<T>();
                 window.Closed += OnWindowClosed;
@@ -67,10 +70,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
             // as that would override any changes made.
             // Therefore, check if the view already has a data context that isn't null.
 
-            var view = Create<TView>(ensureSingleInstance);
+            TView view = Create<TView>(ensureSingleInstance);
 
             if (view.DataContext is null)
+            {
                 view.DataContext = viewModelFactory.Create<TViewModel>();
+            }
 
             if (dialog)
             {
@@ -87,7 +92,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
 
         private void OnWindowClosed(object sender, EventArgs e)
         {
-            var type = sender.GetType();
+            Type type = sender.GetType();
             windows[type] = null;
         }
     }

@@ -1,32 +1,33 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Globalization;
 
-using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
+using GlitchedPolygons.Services.MethodQ;
+
+using Prism.Events;
 
 using ZXing;
 using ZXing.Common;
 using ZXing.Rendering;
-using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -106,8 +107,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public Control ConvosListControl { get => convosListControl; set => Set(ref convosListControl, value); }
         #endregion
 
-        private bool reset = false;
-        private ulong? scheduledAuthRefresh = null, scheduledExpirationDialog = null, scheduledHideGreenTickIcon = null;
+        private bool reset;
+        private ulong? scheduledAuthRefresh, scheduledExpirationDialog, scheduledHideGreenTickIcon;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider)
         {
@@ -122,7 +123,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.eventAggregator = eventAggregator;
 
             #region Button click commands
-
             ResetWindowButtonCommand = new DelegateCommand(_ =>
             {
                 WindowState = WindowState.Normal;
@@ -143,7 +143,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 ClipboardTickVisibility = Visibility.Visible;
 
                 if (scheduledHideGreenTickIcon.HasValue)
+                {
                     methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+                }
 
                 scheduledHideGreenTickIcon = methodQ.Schedule(() =>
                 {
@@ -151,7 +153,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     scheduledHideGreenTickIcon = null;
                 }, DateTime.UtcNow.AddSeconds(3));
             });
-
             #endregion
 
             ClosedCommand = new DelegateCommand(OnClosed);
@@ -170,7 +171,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // If the user agreed to delete all of his data on the local machine, respect his will
             // and get rid of everything (even preventing new settings to be written out on app shutdown too).
-            eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(() => { reset = true; Application.Current.Shutdown(); });
+            eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(() =>
+            {
+                reset = true;
+                Application.Current.Shutdown();
+            });
 
             // When the user redeemed a coupon, update the account's remaining time bar in main menu.
             eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
@@ -183,7 +188,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 Username = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
                 UserId = user.Id = settings[nameof(UserId)];
 
-                Enum.TryParse<WindowState>(settings[nameof(WindowState), WindowState.Normal.ToString()], out var loadedWindowState);
+                Enum.TryParse(settings[nameof(WindowState), WindowState.Normal.ToString()], out WindowState loadedWindowState);
                 WindowState = loadedWindowState;
 
                 MainWindowWidth = Math.Abs(settings[nameof(MainWindowWidth), MAIN_WINDOW_MIN_WIDTH]);
@@ -206,38 +211,36 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
 
         #region MainControl
-
         private void ShowLoginControl()
         {
-            var viewModel = viewModelFactory.Create<LoginViewModel>();
+            LoginViewModel viewModel = viewModelFactory.Create<LoginViewModel>();
             viewModel.UserId = UserId;
             MainControl = new LoginView { DataContext = viewModel };
         }
 
         private void ShowRegisterControl()
         {
-            var viewModel = viewModelFactory.Create<UserCreationViewModel>();
+            UserCreationViewModel viewModel = viewModelFactory.Create<UserCreationViewModel>();
             MainControl = new UserCreationView { DataContext = viewModel };
         }
 
         private void ShowExpiredControl()
         {
-            var viewModel = viewModelFactory.Create<ExpiredViewModel>();
+            ExpiredViewModel viewModel = viewModelFactory.Create<ExpiredViewModel>();
             MainControl = new ExpiredView { DataContext = viewModel };
         }
 
         private void ShowExpirationReminderControl()
         {
-            var viewModel = viewModelFactory.Create<ExpirationReminderViewModel>();
+            ExpirationReminderViewModel viewModel = viewModelFactory.Create<ExpirationReminderViewModel>();
             MainControl = new ExpirationReminderView { DataContext = viewModel };
         }
 
         private void ShowCouponRedeemedSuccessfullyControl()
         {
-            var viewModel = viewModelFactory.Create<CouponRedeemedSuccessfullyViewModel>();
+            CouponRedeemedSuccessfullyViewModel viewModel = viewModelFactory.Create<CouponRedeemedSuccessfullyViewModel>();
             MainControl = new CouponRedeemedSuccessfullyView { DataContext = viewModel };
         }
-
         #endregion
 
         private void OnClosed(object commandParam)
@@ -246,7 +249,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // epistle root directory if the app's been reset.
             if (reset)
             {
-                var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
+                DirectoryInfo dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
                 if (dir.Exists)
                 {
                     dir.DeleteRecursively();
@@ -257,7 +260,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 // Save the window's state before termination.
                 settings.Load();
-                var c = CultureInfo.InvariantCulture;
+                CultureInfo c = CultureInfo.InvariantCulture;
                 settings[nameof(WindowState)] = WindowState.ToString();
                 settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
                 settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
@@ -357,14 +360,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings.Save();
 
             // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
-            IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap>
-            {
-                Format = BarcodeFormat.QR_CODE,
-                Renderer = new WriteableBitmapRenderer(),
-                Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 },
-            };
+            IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap> { Format = BarcodeFormat.QR_CODE, Renderer = new WriteableBitmapRenderer(), Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 } };
 
-            var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
+            UserCreationSuccessfulViewModel viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
             viewModel.Secret = userCreationResponseDto.TotpSecret;
             viewModel.QR = qrWriter.Write($"otpauth://totp/GlitchedEpistle:{userCreationResponseDto.Id}?secret={userCreationResponseDto.TotpSecret}");
             viewModel.BackupCodes = userCreationResponseDto.TotpEmergencyBackupCodes;
@@ -382,7 +380,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            var newToken = await userService.RefreshAuthToken(user.Id, user.Token.Item2);
+            string newToken = await userService.RefreshAuthToken(user.Id, user.Token.Item2);
             if (string.IsNullOrEmpty(newToken))
             {
                 Logout();
@@ -394,7 +392,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
+            ActiveConvoViewModel viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
             viewModel.ActiveConvo = convo;
             MainControl = new ActiveConvoView { DataContext = viewModel };
         }
@@ -402,7 +400,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void Logout()
         {
             if (MainControl is LoginView)
+            {
                 return;
+            }
 
             user.Token = null;
             user.PasswordSHA512 = null;

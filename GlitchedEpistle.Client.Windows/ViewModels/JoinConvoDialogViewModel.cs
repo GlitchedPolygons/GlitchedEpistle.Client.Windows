@@ -1,19 +1,17 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Timers;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
-using Prism.Events;
-using Newtonsoft.Json;
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -86,13 +84,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     return;
                 }
 
-                var convo = new Convo
-                {
-                    Id = ConvoId,
-                    PasswordSHA512 = pw
-                };
+                Convo convo = new Convo { Id = ConvoId, PasswordSHA512 = pw };
 
-                var metadata = await convoService.GetConvoMetadata(ConvoId, pw, user.Id, user.Token.Item2);
+                ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, pw, user.Id, user.Token.Item2);
                 if (metadata != null)
                 {
                     convo.Name = metadata.Name;
@@ -103,8 +97,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
                     convo.Participants = metadata.Participants.Split(',').ToList();
                 }
-                
-                var _convo = convoProvider[convo.Id];
+
+                Convo _convo = convoProvider[convo.Id];
                 if (_convo != null)
                 {
                     convoProvider.Convos.Remove(_convo);

@@ -1,7 +1,9 @@
-﻿using RestSharp;
-using Newtonsoft.Json;
-using GlitchedPolygons.GlitchedEpistle.Client.Models;
+﻿using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+
+using Newtonsoft.Json;
+
+using RestSharp;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -18,14 +20,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public CouponRedeemedSuccessfullyViewModel(User user, IUserService userService)
         {
             ThankYouNote =
-$@"You are awesome!
+                $@"You are awesome!
 
 By redeeming your access code you have successfully extended your Glitched Epistle membership by 30 days, which means it will now expire {userService.GetUserExpirationUTC(user.Id).Result:F} (UTC).
 
 To celebrate your decision of valuing privacy, here's a completely random quote:";
 
-            var request = new RestRequest(Method.GET);
-            var restClient = new RestClient("http://quotes.rest/qod.json");
+            RestRequest request = new RestRequest(Method.GET);
+            RestClient restClient = new RestClient("http://quotes.rest/qod.json");
 
             dynamic qodJson = JsonConvert.DeserializeObject(restClient.Get(request)?.Content);
             if (qodJson != null)

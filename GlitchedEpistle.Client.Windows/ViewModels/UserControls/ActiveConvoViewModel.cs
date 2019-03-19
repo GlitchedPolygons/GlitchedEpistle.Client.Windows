@@ -1,42 +1,40 @@
 ﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
-using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.Services.MethodQ;
 
-using Prism.Events;
 using Microsoft.Win32;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
     public class ActiveConvoViewModel : ViewModel
     {
         #region Constants
-
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
@@ -52,20 +50,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IConvoProvider convoProvider;
         private readonly IMessageCryptography crypto;
         private readonly IEventAggregator eventAggregator;
-
         #endregion
 
         #region Commands
-
         public ICommand SendTextCommand { get; }
         public ICommand SendFileCommand { get; }
         public ICommand CopyConvoIdToClipboardCommand { get; }
-
         #endregion
 
         #region UI Bindings
-
-        private bool canSend = false;
+        private bool canSend;
         public bool CanSend { get => canSend; set => Set(ref canSend, value); }
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
@@ -95,7 +89,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => messages;
             set => Set(ref messages, value);
         }
-
         #endregion
 
         private Convo activeConvo;
@@ -116,8 +109,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         private bool pulling;
-        private ulong? scheduledUpdateRoutine = null;
-        private ulong? scheduledHideGreenTickIcon = null;
+        private ulong? scheduledUpdateRoutine;
+        private ulong? scheduledHideGreenTickIcon;
         private ConcurrentBag<MessageViewModel> msgQueue = new ConcurrentBag<MessageViewModel>();
 
         public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger)
@@ -145,13 +138,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         ~ActiveConvoViewModel()
         {
             if (scheduledUpdateRoutine.HasValue)
+            {
                 methodQ?.Cancel(scheduledUpdateRoutine.Value);
+            }
         }
 
         private void StopAutomaticPulling()
         {
             if (scheduledUpdateRoutine.HasValue)
+            {
                 methodQ.Cancel(scheduledUpdateRoutine.Value);
+            }
         }
 
         private void StartAutomaticPulling()
@@ -190,7 +187,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 try
                 {
-                    var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
+                    Message message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
                     if (message != null)
                     {
                         AddMessageToView(message);
@@ -207,10 +204,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private Task EncryptMessageBodyForUser(ConcurrentBag<Tuple<string, string>> resultsBag, Tuple<string, string> userKeyPair, string messageBodyJson)
         {
-            string encryptedMessage = crypto.EncryptMessage
-            (
-                messageJson: messageBodyJson,
-                recipientPublicRsaKey: RSAParametersExtensions.FromXmlString(userKeyPair.Item2)
+            string encryptedMessage = crypto.EncryptMessage(
+                messageBodyJson,
+                RSAParametersExtensions.FromXmlString(userKeyPair.Item2)
             );
             resultsBag.Add(new Tuple<string, string>(userKeyPair.Item1, encryptedMessage));
             return Task.CompletedTask;
@@ -227,10 +223,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             CanSend = false;
             EncryptingVisibility = Visibility.Visible;
 
-            var messageBodiesJson = new JObject();
-            var bag = new ConcurrentBag<Tuple<string, string>>();
-            var tasks = new List<Task>(ActiveConvo.Participants.Count);
-            var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
+            JObject messageBodiesJson = new JObject();
+            ConcurrentBag<Tuple<string, string>> bag = new ConcurrentBag<Tuple<string, string>>();
+            List<Task> tasks = new List<Task>(ActiveConvo.Participants.Count);
+            string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
             List<Tuple<string, string>> keys = await userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
 
             foreach (Tuple<string, string> key in keys)
@@ -261,11 +257,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             string username = settings["Username"];
 
-            var message = new Message
+            Message message = new Message
             {
-                SenderId = user.Id,
-                SenderName = username,
-                TimestampUTC = DateTime.UtcNow,
+                SenderId = user.Id, 
+                SenderName = username, 
+                TimestampUTC = DateTime.UtcNow, 
                 Body = ownMessageBody.ToString()
             };
 
@@ -295,8 +291,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private Task WriteMessageToDisk(Message message)
         {
-            File.WriteAllText
-            (
+            File.WriteAllText(
                 contents: JsonConvert.SerializeObject(message),
                 path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssff"))
             );
@@ -310,20 +305,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return Task.CompletedTask;
             }
 
-            var json = JToken.Parse(crypto.DecryptMessage(message.Body, user.PrivateKey));
+            JToken json = JToken.Parse(crypto.DecryptMessage(message.Body, user.PrivateKey));
             if (json is null)
             {
                 return Task.CompletedTask;
             }
 
-            var messageViewModel = new MessageViewModel(methodQ)
+            MessageViewModel messageViewModel = new MessageViewModel(methodQ)
             {
                 SenderId = message.SenderId,
                 SenderName = message.SenderName,
                 TimestampDateTimeUTC = message.TimestampUTC,
                 Timestamp = message.TimestampUTC.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
                 Text = json["text"]?.Value<string>(),
-                FileName = json["fileName"]?.Value<string>(),
+                FileName = json["fileName"]?.Value<string>()
             };
 
             string fileBase64 = json["fileBase64"]?.Value<string>();
@@ -365,9 +360,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 DecryptingVisibility = Visibility.Visible;
 
-                var tasks = new List<Task>(retrievedMessages.Length * 2);
+                List<Task> tasks = new List<Task>(retrievedMessages.Length * 2);
 
-                foreach (var message in retrievedMessages)
+                foreach (Message message in retrievedMessages)
                 {
                     // Add the retrieved messages only to the chatroom
                     // if it does not contain them yet (mistakes are always possible; safe is safe).
@@ -388,7 +383,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private async void OnSendText(object commandParam)
         {
-            var textBox = commandParam as TextBox;
+            TextBox textBox = commandParam as TextBox;
             if (textBox is null)
             {
                 return;
@@ -401,10 +396,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             messageText = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS);
-            JObject messageBodyJson = new JObject
-            {
-                ["text"] = messageText
-            };
+            JObject messageBodyJson = new JObject { ["text"] = messageText };
 
             if (await SubmitMessage(messageBodyJson))
             {
@@ -414,19 +406,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
             else
             {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                InfoDialogView errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                 errorView.ShowDialog();
             }
         }
 
         private void OnSendFile(object commandParam)
         {
-            var dialog = new OpenFileDialog
-            {
-                Multiselect = false,
-                Title = "Epistle - Select the file you want to send",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-            };
+            OpenFileDialog dialog = new OpenFileDialog { Multiselect = false, Title = "Epistle - Select the file you want to send", InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
             dialog.FileOk += OnSelectedFile;
             dialog.ShowDialog();
         }
@@ -441,21 +428,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                     if (file.LongLength < MAX_FILE_SIZE_BYTES)
                     {
-                        var messageBodyJson = new JObject
-                        {
-                            ["fileName"] = Path.GetFileName(_dialog.FileName),
-                            ["fileBase64"] = Convert.ToBase64String(file)
-                        };
+                        JObject messageBodyJson = new JObject { ["fileName"] = Path.GetFileName(_dialog.FileName), ["fileBase64"] = Convert.ToBase64String(file) };
 
                         if (!await SubmitMessage(messageBodyJson))
                         {
-                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                            InfoDialogView errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                             errorView.ShowDialog();
                         }
                     }
                     else
                     {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
+                        InfoDialogView errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
                         errorView.ShowDialog();
                     }
                 });
@@ -468,7 +451,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             ClipboardTickVisibility = Visibility.Visible;
 
             if (scheduledHideGreenTickIcon.HasValue)
+            {
                 methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+            }
 
             scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
         }

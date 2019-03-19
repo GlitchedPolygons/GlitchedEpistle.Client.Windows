@@ -1,6 +1,8 @@
-﻿using Unity;
-using System.Windows;
+﻿using System.Windows;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+
+using Unity;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
 {
@@ -12,6 +14,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
         /// </summary>
         /// <typeparam name="T">The type of <see cref="ViewModel" /> you want to get.</typeparam>
         /// <returns>The retrieved <see cref="ViewModel" /> instance, ready to be assigned to a <see cref="Window.DataContext" />.</returns>
-        public T Create<T>() where T : ViewModel => (Application.Current as App)?.Resolve<T>();
+        public T Create<T>() where T : ViewModel
+        {
+            return (Application.Current as App)?.Resolve<T>();
+        }
     }
 }

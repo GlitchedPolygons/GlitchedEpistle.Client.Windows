@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
@@ -13,9 +14,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             Loaded += OnLoaded;
         }
 
-        private void OnLoaded(object sender, System.Windows.RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= OnLoaded;
+            Loaded -= OnLoaded;
             UsernameTextBox.Focus();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -7,7 +8,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class InfoDialogViewModel : ViewModel, ICloseable
     {
         #region Constants
-
         #endregion
 
         #region Events
