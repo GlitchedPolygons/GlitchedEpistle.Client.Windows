@@ -114,8 +114,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     return;
                 }
 
-                byte[] encryptedBytes = await Task.Run(() => aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw));
-                File.WriteAllBytes(OutputFilePath, encryptedBytes);
+                await Task.Run(() =>
+                {
+                    // TODO: Report export progress to a progress bar of some sort.
+                    byte[] encryptedBytes = aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw);
+                    File.WriteAllBytes(OutputFilePath, encryptedBytes);
+                });
 
                 OutputFilePath = null;
                 ExportLabel = "Backup exported successfully! Please don't share that file with anybody.";

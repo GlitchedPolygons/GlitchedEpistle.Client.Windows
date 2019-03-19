@@ -275,6 +275,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             // Gather user expiration UTC from server.
             DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
+            
             if (!exp.HasValue)
             {
                 return;
@@ -284,6 +285,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             user.ExpirationUTC = exp.Value;
             DateTime utcNow = DateTime.UtcNow;
             bool expired = utcNow > user.ExpirationUTC;
+            
             ProgressBarValue = expired ? 0 : (user.ExpirationUTC - utcNow).TotalHours * 100.0d / 720.0d;
             ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
 
