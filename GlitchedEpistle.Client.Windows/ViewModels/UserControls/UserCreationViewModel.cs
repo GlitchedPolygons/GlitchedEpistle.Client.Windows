@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,8 +31,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         private const double ERROR_MESSAGE_INTERVAL = 7000;
-        private readonly CompressionSettings compressionSettings = new CompressionSettings();
+        private readonly ILogger logger;
+        private readonly ISettings settings;
+        private readonly IUserService userService;
+        private readonly IAsymmetricKeygen keygen;
+        private readonly ICompressionUtility gzip;
+        private readonly IWindowFactory windowFactory;
+        private readonly IViewModelFactory viewModelFactory;
+        private readonly IEventAggregator eventAggregator;
         private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
+        private static readonly CompressionSettings COMPRESSION_SETTINGS = new CompressionSettings();
         #endregion
 
         #region Commands
@@ -61,6 +70,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory)
         {
+            this.gzip = gzip;
+            this.logger = logger;
+            this.keygen = keygen;
+            this.settings = settings;
+            this.userService = userService;
+            this.windowFactory = windowFactory;
+            this.viewModelFactory = viewModelFactory;
+            this.eventAggregator = eventAggregator;
+
             PasswordChangedCommand1 = new DelegateCommand(commandParam =>
             {
                 if (commandParam is PasswordBox passwordBox)
@@ -79,79 +97,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ValidateForm();
             });
 
-            ImportCommand = new DelegateCommand(_ =>
-            {
-                OpenFileDialog dialog = new OpenFileDialog
-                {
-                    Title = "Epistle backup file path",
-                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                    DefaultExt = ".dat",
-                    AddExtension = true,
-                    Filter = "Epistle Backup File|*.dat"
-                };
-
-                dialog.FileOk += (sender, e) =>
-                {
-                    if (sender is OpenFileDialog _dialog && !string.IsNullOrEmpty(_dialog.FileName))
-                    {
-                        ImportUserFromBackupView view = windowFactory.Create<ImportUserFromBackupView>(true);
-                        if (view.DataContext is null)
-                        {
-                            ImportUserFromBackupViewModel viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
-                            viewModel.BackupFilePath = _dialog.FileName;
-                            view.DataContext = viewModel;
-                        }
-                        view.ShowDialog();
-                        view.Activate();
-                    }
-                };
-
-                dialog.ShowDialog();
-            });
-
-            RegisterCommand = new DelegateCommand(async commandParam =>
-            {
-                if (pendingAttempt
-                    || string.IsNullOrEmpty(Username)
-                    || string.IsNullOrEmpty(password1)
-                    || string.IsNullOrEmpty(password2)
-                    || password1 != password2 || password1.Length < 7)
-                {
-                    return;
-                }
-
-                pendingAttempt = true;
-                UIEnabled = false;
-
-                GeneratingKeyView loadingScreen = new GeneratingKeyView { Topmost = true };
-                loadingScreen.Show();
-
-                bool keyGenerationSuccessful = await keygen.GenerateKeyPair(Paths.KEYS_DIRECTORY);
-                if (keyGenerationSuccessful)
-                {
-                    UserCreationResponseDto userCreationResponse = await userService.CreateUser(new UserCreationDto { PasswordSHA512 = password1.SHA512(), PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(), CreationSecret = Encoding.UTF8.GetString(gzip.Decompress(File.ReadAllBytes("UserCreator.dat"), compressionSettings)) });
-
-                    // Handle this event back in the main view model,
-                    // since it's there where the backup codes + 2FA secret (QR) will be shown.
-                    eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse);
-                    logger.LogMessage($"Created user {userCreationResponse.Id}.");
-
-                    settings[nameof(Username)] = Username;
-                    settings.Save();
-                }
-                else
-                {
-                    string errorMsg = "There was an unexpected error whilst generating the RSA key pair (during user creation process).";
-                    logger.LogError(errorMsg);
-                    ErrorMessage = errorMsg;
-                }
-
-                UIEnabled = true;
-                loadingScreen.Close();
-                pendingAttempt = false;
-                password1 = password2 = null;
-            });
-
+            ImportCommand = new DelegateCommand(OnClickedImport);
+            RegisterCommand = new DelegateCommand(OnClickedRegister);
             QuitCommand = new DelegateCommand(_ => { Application.Current.Shutdown(); });
 
             errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
@@ -164,9 +111,116 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             password2 = null;
         }
 
+        private void OnClickedImport(object commandParam)
+        {
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Title = "Epistle backup file path",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                DefaultExt = ".dat",
+                AddExtension = true,
+                Filter = "Epistle Backup File|*.dat"
+            };
+
+            dialog.FileOk += (sender, e) =>
+            {
+                if (sender is OpenFileDialog _dialog && _dialog.FileName.NotNullNotEmpty())
+                {
+                    ImportUserFromBackupView view = windowFactory.Create<ImportUserFromBackupView>(true);
+                    if (view.DataContext is null)
+                    {
+                        ImportUserFromBackupViewModel viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
+                        viewModel.BackupFilePath = _dialog.FileName;
+                        view.DataContext = viewModel;
+                    }
+                    view.ShowDialog();
+                    view.Activate();
+                }
+            };
+
+            dialog.ShowDialog();
+        }
+
+        private async void OnClickedRegister(object commandParam)
+        {
+            if (pendingAttempt
+                || Username.NullOrEmpty()
+                || password1.NullOrEmpty()
+                || password2.NullOrEmpty()
+                || password1 != password2 || password1.Length < 7)
+            {
+                return;
+            }
+
+            pendingAttempt = true;
+            UIEnabled = false;
+
+            var loadingScreen = new GeneratingKeyView { Topmost = true };
+            loadingScreen.Show();
+
+            bool keyGenerationSuccessful = await Task.Run(() => keygen.GenerateKeyPair(Paths.KEYS_DIRECTORY));
+            if (keyGenerationSuccessful)
+            {
+                try
+                {
+                    UserCreationResponseDto userCreationResponse = await userService.CreateUser
+                    (
+                        new UserCreationDto
+                        {
+                            PasswordSHA512 = password1.SHA512(),
+                            PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
+                            CreationSecret = Encoding.UTF8.GetString
+                            (
+                                gzip.Decompress
+                                (
+                                    File.ReadAllBytes("UserCreator.dat"), COMPRESSION_SETTINGS
+                                )
+                            )
+                        }
+                    );
+
+                    if (userCreationResponse is null)
+                    {
+                        logger.LogError($"The user creation process failed server-side. Reason unknown; please make an admin check out the server's log files!");
+                        UIEnabled = true;
+                        pendingAttempt = false;
+                        loadingScreen?.Close();
+                        return;
+                    }
+
+                    // Handle this event back in the main view model,
+                    // since it's there where the backup codes + 2FA secret (QR) will be shown.
+                    eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse);
+                    logger.LogMessage($"Created user {userCreationResponse.Id}.");
+
+                    settings[nameof(Username)] = Username;
+                    settings.Save();
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"The user creation process failed. Thrown exception: {e.ToString()}");
+                }
+            }
+            else
+            {
+                string errorMsg = "There was an unexpected error whilst generating the RSA key pair (during user creation process).";
+                logger.LogError(errorMsg);
+                ErrorMessage = errorMsg;
+            }
+
+            UIEnabled = true;
+            pendingAttempt = false;
+            loadingScreen?.Close();
+            password1 = password2 = null;
+        }
+
         private void ValidateForm()
         {
-            FormValid = !string.IsNullOrEmpty(Username) && !string.IsNullOrEmpty(password1) && !string.IsNullOrEmpty(password2) && password1 == password2 && password1.Length > 7;
+            FormValid = Username.NotNullNotEmpty() && 
+                        password1.NotNullNotEmpty() && 
+                        password2.NotNullNotEmpty() && 
+                        password1 == password2 && 
+                        password1.Length > 7;
         }
     }
 }
