@@ -69,5 +69,7 @@
         <KeyBinding Key="Enter"
                     Command="{Binding ImportCommand}"
                     CommandParameter="{Binding ElementName=PasswordBox}" />
+        <KeyBinding Key="Escape" 
+                    Command="{Binding CancelCommand}"/>
     </Window.InputBindings>
 </Window>
