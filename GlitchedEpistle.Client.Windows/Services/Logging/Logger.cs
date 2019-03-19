@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
@@ -70,8 +71,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
                 Directory.CreateDirectory(DirectoryPath);
             }
         }
-        
-        private string Timestamp(string msg) => $"[{DateTime.Now:s}] {msg}\n";
+
+        private string Timestamp(string msg)
+        {
+            return $"[{DateTime.Now.ToString("s")}] {msg}\n";
+        }
 
         /// <summary>
         /// Logs an innocent message.

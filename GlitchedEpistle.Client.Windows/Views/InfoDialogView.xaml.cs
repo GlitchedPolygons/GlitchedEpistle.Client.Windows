@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views

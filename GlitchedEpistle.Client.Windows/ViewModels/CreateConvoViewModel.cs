@@ -1,22 +1,23 @@
 ﻿using System;
-using System.IO;
-using System.Windows.Input;
-using System.Windows.Controls;
 using System.Collections.Generic;
+using System.IO;
+using System.Windows.Controls;
+using System.Windows.Input;
 
-using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.Services.MethodQ;
+
+using Newtonsoft.Json;
 
 using Prism.Events;
-using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -104,7 +105,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
-        private void ResetMessages() => ErrorMessage = SuccessMessage = null;
+        private void ResetMessages()
+        {
+            ErrorMessage = SuccessMessage = null;
+        }
 
         private void OnClickedCancel(object commandParam)
         {
@@ -151,20 +155,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            var convoCreationDto = new ConvoCreationDto
-            {
-                Name = Name,
-                Description = Description,
-                ExpirationUTC = ExpirationUTC,
-                PasswordSHA512 = pw.SHA512()
-            };
+            ConvoCreationDto convoCreationDto = new ConvoCreationDto { Name = Name, Description = Description, ExpirationUTC = ExpirationUTC, PasswordSHA512 = pw.SHA512() };
 
             string id = await convoService.CreateConvo(convoCreationDto, user.Id, user.Token.Item2);
 
             if (id.NotNullNotEmpty())
             {
                 // Create the convo model object and feed it into the convo provider.
-                var convo = new Convo
+                Convo convo = new Convo
                 {
                     Id = id,
                     CreatorId = user.Id,
@@ -188,7 +186,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 // Display success message and close the window automatically after 5s.
                 if (methodQ.Cancel(scheduledActions[0]))
+                {
                     scheduledActions.RemoveAt(0);
+                }
 
                 ResetMessages();
                 CanSubmit = false;

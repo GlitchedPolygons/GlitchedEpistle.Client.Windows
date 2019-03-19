@@ -5,5 +5,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
     /// <summary>
     /// This event is raised whenever the user has logged out.
     /// </summary>
-    public class LogoutEvent : PubSubEvent { }
+    public class LogoutEvent : PubSubEvent
+    {
+    }
 }

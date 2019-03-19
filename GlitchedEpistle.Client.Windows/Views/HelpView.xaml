@@ -8,8 +8,8 @@
         WindowStartupLocation="CenterScreen"
         Background="{StaticResource WindowBackgroundBrush}"
         Icon="/Resources/Images/help-icon-white.png"
-        Title="HelpView" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="HelpView"
+        Height="450"
+        Width="800">
+    <Grid />
 </Window>

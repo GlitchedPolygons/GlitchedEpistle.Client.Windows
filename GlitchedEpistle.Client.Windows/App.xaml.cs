@@ -1,40 +1,33 @@
-﻿// System namespaces
-using System;
-using System.IO;
-using System.Windows;
-using System.Threading;
+﻿using System.IO;
 using System.Reflection;
+using System.Threading;
+using System.Windows;
 
-// Shared code namespaces
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.ServerHealth;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
-
-// Glitched Polygons NuGet packages
-using GlitchedPolygons.Services.MethodQ;
-using GlitchedPolygons.Services.JwtService;
-using GlitchedPolygons.Services.CompressionUtility;
-
-// Windows client namespaces
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.ServerHealth;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.JwtService;
+using GlitchedPolygons.Services.MethodQ;
 
-// Third party namespaces
+using Prism.Events;
+
 using Unity;
 using Unity.Lifetime;
-using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -47,7 +40,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// The client version number.
         /// </summary>
         public const string VERSION = "1.0.0";
-      
+
         /// <summary>
         /// The IoC container.
         /// </summary>
@@ -55,13 +48,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            var mutex = new Mutex(true, Assembly.GetCallingAssembly().GetName().Name, out bool newInstance);  
+            var mutex = new Mutex(true, Assembly.GetCallingAssembly().GetName().Name, out bool newInstance);
             if (!newInstance)
             {
                 MessageBox.Show("There is already one instance of Glitched Epistle running!");
-                Current.Shutdown();  
+                Current.Shutdown();
             }
-            
+
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
 
             // Register transient types:
@@ -85,12 +78,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConvoProvider, ConvoProvider>(new ContainerControlledLifetimeManager());
-            
+
             // Open the main app's window.
-            var mainView = container.Resolve<MainView>();
+            MainView mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
-            Application.Current.MainWindow = mainView;
-            Application.Current.MainWindow?.Show();
+            Current.MainWindow = mainView;
+            Current.MainWindow?.Show();
         }
 
         /// <summary>
@@ -98,6 +91,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// </summary>
         /// <typeparam name="T">The class to resolve/create.</typeparam>
         /// <returns>Instantiated/resolved class.</returns>
-        public T Resolve<T>() where T : class => container?.Resolve<T>();
+        public T Resolve<T>() where T : class
+        {
+            return container?.Resolve<T>();
+        }
     }
 }

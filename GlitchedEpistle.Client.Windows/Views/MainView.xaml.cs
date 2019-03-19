@@ -1,8 +1,10 @@
-﻿using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
@@ -29,7 +31,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         /// <param name="e">The <see cref="SizeChangedEventArgs"/> instance containing the event data.</param>
         private void MainWindow_OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ConvosListControl.Height = this.ActualHeight - ProfileStackPanel.ActualHeight - 35.0d;
+            ConvosListControl.Height = ActualHeight - ProfileStackPanel.ActualHeight - 35.0d;
         }
 
         /// <summary>
@@ -40,7 +42,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         private void CollapseButton_OnClick(object sender, RoutedEventArgs e)
         {
             double width = LeftColumn.ActualWidth;
-            if (width > 0) sidebarWidth = width;
+            if (width > 0)
+            {
+                sidebarWidth = width;
+            }
 
             LeftColumn.MinWidth = width > 0 ? 0 : MainViewModel.SIDEBAR_MIN_WIDTH;
             LeftColumn.Width = new GridLength(width > 0 ? 0 : sidebarWidth);
@@ -67,7 +72,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         private void UpdateCollapseButtonContent(Button button)
         {
             if (button is null)
+            {
                 return;
+            }
 
             button.Content = LeftColumn.MinWidth > 0 ? "<" : ">";
         }
@@ -80,7 +87,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
         private void SubscriptionProgressBar_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub");
+            Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub");
         }
 
         /// <summary>
@@ -110,6 +117,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             }
         }
 
-        private void ResetWindowButton_Click(object sender, RoutedEventArgs e) => CollapseButton.Content = "<";
+        private void ResetWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            CollapseButton.Content = "<";
+        }
     }
 }

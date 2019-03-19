@@ -8,23 +8,23 @@
         WindowStartupLocation="CenterScreen"
         Icon="/Resources/Images/epistle-icon.png"
         Background="{StaticResource WindowBackgroundBrush}"
-        Title="Image Viewer" 
+        Title="Image Viewer"
         MinWidth="250"
         MinHeight="250"
-        Width="1000" 
+        Width="1000"
         Height="750">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Border Grid.Row="0"
-                Name="Border" 
+                Name="Border"
                 ClipToBounds="True">
             <Image Opacity="1"
                    Margin="50"
                    Name="Image"
                    Cursor="SizeAll"
-                   Source="{Binding ImageBytes}"/>
+                   Source="{Binding ImageBytes}" />
         </Border>
     </Grid>
 </Window>

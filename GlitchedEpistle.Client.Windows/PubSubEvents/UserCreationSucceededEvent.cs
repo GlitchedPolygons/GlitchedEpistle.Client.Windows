@@ -1,5 +1,6 @@
-﻿using Prism.Events;
-using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+﻿using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
 {
@@ -8,5 +9,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
     /// is raised whenever the user has submitted the registration form successfully, and is now awaiting to receive his 2FA TOTP secret + backup codes to show on a QR and unordered list, respectively.
     /// </summary>
     /// <seealso cref="Prism.Events.PubSubEvent{UserCreationResponse}" />
-    public class UserCreationSucceededEvent : PubSubEvent<UserCreationResponseDto> { }
+    public class UserCreationSucceededEvent : PubSubEvent<UserCreationResponseDto>
+    {
+    }
 }

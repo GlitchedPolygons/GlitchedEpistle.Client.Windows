@@ -35,18 +35,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands
         /// Defines the method to be called when the command is invoked.
         /// </summary>
         /// <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <see langword="null"/>.</param>
-        public void Execute(object parameter) => execution?.Invoke(parameter);
+        public void Execute(object parameter)
+        {
+            execution?.Invoke(parameter);
+        }
 
         /// <summary>
         /// Defines the method that determines whether the command can execute in its current state.
         /// </summary>
         /// <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
         /// <returns><see langword="true" /> if this command can be executed; otherwise, <see langword="false"/>.</returns>
-        public bool CanExecute(object parameter) => executionCheck?.Invoke(parameter) ?? true;
+        public bool CanExecute(object parameter)
+        {
+            return executionCheck?.Invoke(parameter) ?? true;
+        }
 
         /// <summary>
         /// Invokes the <see cref="CanExecuteChanged"/> <see langword="event"/> (should be done when the command execution conditions have changed).
         /// </summary>
-        public void InvokeCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        public void InvokeCanExecuteChanged()
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

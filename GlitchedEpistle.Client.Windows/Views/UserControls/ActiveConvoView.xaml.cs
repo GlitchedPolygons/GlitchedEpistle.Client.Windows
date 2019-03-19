@@ -1,7 +1,7 @@
-﻿using System.Windows;
-using System.Windows.Media;
+﻿using System.Collections.Specialized;
+using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Specialized;
+using System.Windows.Media;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
@@ -27,7 +27,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         private void ScrollToBottom()
         {
             if (VisualTreeHelper.GetChildrenCount(MessagesListBox) <= 0)
+            {
                 return;
+            }
 
             Border border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
             ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);

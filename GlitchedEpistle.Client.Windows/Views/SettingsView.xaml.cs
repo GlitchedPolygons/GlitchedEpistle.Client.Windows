@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
@@ -36,7 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         // Select the text inside the username's textbox on click.
         private void UsernameTextBox_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var textBox = sender as TextBox;
+            TextBox textBox = sender as TextBox;
 
             if (textBox == null || textBox.IsKeyboardFocusWithin)
             {
@@ -49,7 +49,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void UsernameTextBox_SelectText(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
+            TextBox textBox = sender as TextBox;
             textBox?.SelectAll();
         }
 

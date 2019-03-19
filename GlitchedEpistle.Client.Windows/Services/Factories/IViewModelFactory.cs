@@ -1,6 +1,8 @@
-﻿using Unity;
-using System.Windows;
+﻿using System.Windows;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+
+using Unity;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
 {

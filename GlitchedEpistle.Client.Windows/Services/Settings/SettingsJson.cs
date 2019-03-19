@@ -1,12 +1,12 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-
-using Newtonsoft.Json;
+using System.IO;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+
+using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 {
@@ -61,7 +61,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         /// <returns>Whether the loading procedure was successful or not.</returns>
         public bool Load()
         {
-            if (!File.Exists(FilePath)) return false;
+            if (!File.Exists(FilePath))
+            {
+                return false;
+            }
             try
             {
                 settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.VERSION } };

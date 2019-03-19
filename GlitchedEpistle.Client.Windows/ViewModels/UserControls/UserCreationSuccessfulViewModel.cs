@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Text;
 using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using System.Collections.Generic;
 
-using Prism.Events;
-using Microsoft.Win32;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+
+using Microsoft.Win32;
+
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -46,7 +49,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public BitmapSource QR { get => qr; set => Set(ref qr, value); }
         #endregion
 
-        private bool pendingAttempt = false;
+        private bool pendingAttempt;
 
         public List<string> BackupCodes { get; set; }
 
@@ -66,7 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedExport(object commandParam)
         {
-            var dialog = new SaveFileDialog
+            SaveFileDialog dialog = new SaveFileDialog
             {
                 Title = "Epistle 2FA Backup Codes",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -102,7 +105,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             pendingAttempt = false;
         }
 
-        private void ExportFileDialog_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
+        private void ExportFileDialog_FileOk(object sender, CancelEventArgs e)
         {
             if (sender is SaveFileDialog dialog)
             {
@@ -112,7 +115,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     return;
                 }
 
-                var sb = new StringBuilder(512);
+                StringBuilder sb = new StringBuilder(512);
                 sb.AppendLine("Glitched Epistle 2FA Backup Codes\n");
                 sb.AppendLine($"User: {user.Id}");
                 sb.AppendLine($"Export timestamp: {DateTime.UtcNow:s} (UTC)\n");

@@ -1,18 +1,18 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Timers;
-using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -73,7 +73,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (File.Exists(BackupFilePath))
                 {
                     UIEnabled = false;
-                    messageResetTimer.Stop(); messageResetTimer.Start();
+                    messageResetTimer.Stop();
+                    messageResetTimer.Start();
                     ErrorMessage = null;
                     SuccessMessage = "Importing user account from backup...";
 
@@ -86,7 +87,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                             byte[] decr = await Task.Run(() => aes.DecryptWithPassword(File.ReadAllBytes(BackupFilePath), pw));
                             if (decr == null || decr.Length == 0)
                             {
-                                messageResetTimer.Stop(); messageResetTimer.Start();
+                                messageResetTimer.Stop();
+                                messageResetTimer.Start();
                                 SuccessMessage = null;
                                 ErrorMessage = "Import procedure failed: couldn't decrypt backup file. Wrong password?";
                                 UIEnabled = true;
@@ -98,7 +100,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         await Task.Run(() =>
                         {
                             // Epistle folder needs to be empty before a backup can be imported.
-                            var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
+                            DirectoryInfo dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
                             if (dir.Exists)
                             {
                                 dir.DeleteRecursively();
@@ -115,7 +117,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     }
                     catch (Exception e)
                     {
-                        messageResetTimer.Stop(); messageResetTimer.Start();
+                        messageResetTimer.Stop();
+                        messageResetTimer.Start();
                         logger.LogError($"{nameof(ImportUserFromBackupViewModel)}::{nameof(ImportCommand)}: User account import from backup procedure failed; thrown exception: {e.Message}");
                         SuccessMessage = null;
                         UIEnabled = true;
@@ -131,7 +134,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 }
                 else
                 {
-                    messageResetTimer.Stop(); messageResetTimer.Start();
+                    messageResetTimer.Stop();
+                    messageResetTimer.Start();
                     ErrorMessage = "No backup file path specified; nothing to import!";
                     SuccessMessage = null;
                 }

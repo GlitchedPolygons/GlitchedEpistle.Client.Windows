@@ -2,15 +2,14 @@
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
-
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Microsoft.Win32;
 
@@ -56,7 +55,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // On clicked "Browse"
             BrowseButtonCommand = new DelegateCommand(commandParam =>
             {
-                var dialog = new SaveFileDialog
+                SaveFileDialog dialog = new SaveFileDialog
                 {
                     Title = "Epistle backup file path",
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -93,7 +92,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 await Task.Run(() =>
                 {
                     if (File.Exists(OutputFilePath))
+                    {
                         File.Delete(OutputFilePath);
+                    }
 
                     ZipFile.CreateFromDirectory(Paths.ROOT_DIRECTORY, OutputFilePath, CompressionLevel.Optimal, false);
                 });
@@ -115,7 +116,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 byte[] encryptedBytes = await Task.Run(() => aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw));
                 File.WriteAllBytes(OutputFilePath, encryptedBytes);
-                
+
                 OutputFilePath = null;
                 ExportLabel = "Backup exported successfully! Please don't share that file with anybody.";
             });

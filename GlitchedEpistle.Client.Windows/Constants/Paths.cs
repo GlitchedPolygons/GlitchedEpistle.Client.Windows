@@ -27,7 +27,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants
         /// </summary>
         public static readonly string CONVOS_DIRECTORY = Path.Combine(ROOT_DIRECTORY, "Convos");
 
+        /// <summary>
+        /// Public message encryption key filepath.
+        /// </summary>
         public static readonly string PUBLIC_KEY_PATH = Path.Combine(KEYS_DIRECTORY, "Public.rsa.pem");
+        
+        /// <summary>
+        /// Private message decryption key filepath.
+        /// </summary>
         public static readonly string PRIVATE_KEY_PATH = Path.Combine(KEYS_DIRECTORY, "Private.rsa.pem");
     }
 }

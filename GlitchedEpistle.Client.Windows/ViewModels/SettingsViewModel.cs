@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-using System.Globalization;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Prism.Events;
 
@@ -32,7 +31,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region Variables
-        private bool cancelled = false;
+        private bool cancelled;
         #endregion
 
         #region Events        
@@ -66,7 +65,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
-            
+
             ClosedCommand = new DelegateCommand(OnClosed);
             DeleteButtonCommand = new DelegateCommand(OnClickedDelete);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
@@ -93,7 +92,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
             }
         }
-        
+
         private void OnClickedCancel(object commandParam)
         {
             cancelled = true;
@@ -107,7 +106,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private async void OnClickedRedeem(object commandParam)
         {
-            var couponCode = commandParam as string;
+            string couponCode = commandParam as string;
 
             if (string.IsNullOrEmpty(couponCode))
             {
@@ -116,7 +115,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             bool success = await couponService.UseCoupon(couponCode, user.Id, user.Token.Item2);
 
-            var dialogViewModel = viewModelFactory.Create<InfoDialogViewModel>();
+            InfoDialogViewModel dialogViewModel = viewModelFactory.Create<InfoDialogViewModel>();
 
             if (success)
             {
@@ -128,17 +127,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             else
             {
                 dialogViewModel.Title = "Couldn't redeem coupon...";
-                dialogViewModel.Text= $"The coupon \"{couponCode}\" couldn't be redeemed, sorry... Please make sure that you have no typos in it, and keep in mind that its validity is case-sensitive!";
+                dialogViewModel.Text = $"The coupon \"{couponCode}\" couldn't be redeemed, sorry... Please make sure that you have no typos in it, and keep in mind that its validity is case-sensitive!";
                 logger.LogError($"Unsuccessful coupon redeem attempt ({couponCode})");
             }
 
-            var dialogView = new InfoDialogView { DataContext = dialogViewModel };
+            InfoDialogView dialogView = new InfoDialogView { DataContext = dialogViewModel };
             dialogView.ShowDialog();
         }
 
         private void OnClickedDelete(object commandParam)
         {
-            var dialog = new ConfirmResetView();
+            ConfirmResetView dialog = new ConfirmResetView();
             bool? dialogResult = dialog.ShowDialog();
             if (dialogResult.HasValue && dialogResult is true)
             {

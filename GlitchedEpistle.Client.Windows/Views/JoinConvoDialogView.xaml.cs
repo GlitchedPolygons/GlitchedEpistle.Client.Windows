@@ -36,7 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.MakeCloseable();
-            this.Loaded -= OnLoaded;
+            Loaded -= OnLoaded;
         }
     }
 }

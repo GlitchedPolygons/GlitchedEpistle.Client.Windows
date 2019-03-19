@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
@@ -16,7 +17,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= OnLoaded;
+            Loaded -= OnLoaded;
             this.MakeCloseable();
             PasswordBox.Focus();
         }

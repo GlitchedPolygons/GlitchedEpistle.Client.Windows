@@ -1,39 +1,43 @@
 ﻿<UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ConvosListView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
-    <ListBox Name="ConvosListBox" 
-             ItemsSource="{Binding Convos}" 
+    <ListBox Name="ConvosListBox"
+             ItemsSource="{Binding Convos}"
              Style="{StaticResource ConvosListBox}"
              VirtualizingStackPanel.ScrollUnit="Pixel"
              VirtualizingStackPanel.IsVirtualizing="True"
-             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
              ScrollViewer.VerticalScrollBarVisibility="Visible">
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <VirtualizingStackPanel Margin="0" 
+                <VirtualizingStackPanel Margin="0"
                                         Height="Auto"
-                                        Orientation="Vertical"/>
+                                        Orientation="Vertical" />
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <Button Content="{Binding Name}"
-                        ToolTip="{Binding Description}" 
-                        Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}" 
-                        CommandParameter="{Binding}"/>
+                        ToolTip="{Binding Description}"
+                        Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                        CommandParameter="{Binding}" />
             </DataTemplate>
         </ListBox.ItemTemplate>
         <ListBox.ItemContainerStyle>
             <Style TargetType="ListBoxItem">
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="Margin" Value="0,0,0,2"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="Padding"
+                        Value="0" />
+                <Setter Property="Margin"
+                        Value="0,0,0,2" />
+                <Setter Property="BorderThickness"
+                        Value="0" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="Stretch" />
             </Style>
         </ListBox.ItemContainerStyle>
     </ListBox>

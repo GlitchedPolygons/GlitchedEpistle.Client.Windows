@@ -1,27 +1,29 @@
 ﻿<UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
-    <StackPanel Width="320" HorizontalAlignment="Center">
-        <Label Content="Hey, your account is about to expire!" 
-               FontWeight="Bold" 
-               FontSize="16"/>
-        <Label Content="Gosh darn, if only there was a way to extend it..."/>
-        <Separator Margin="10" Opacity="0.5"/>
-        <TextBlock Text="{Binding ReminderText}" 
-                   TextWrapping="Wrap" 
+    <StackPanel Width="320"
+                HorizontalAlignment="Center">
+        <Label Content="Hey, your account is about to expire!"
+               FontWeight="Bold"
+               FontSize="16" />
+        <Label Content="Gosh darn, if only there was a way to extend it..." />
+        <Separator Margin="10"
+                   Opacity="0.5" />
+        <TextBlock Text="{Binding ReminderText}"
+                   TextWrapping="Wrap"
                    Margin="5"
-                   Style="{StaticResource TextBlock}"/>
+                   Style="{StaticResource TextBlock}" />
         <Button Content="Buy a 1-month Glitched Epistle access code now!"
                 ToolTip="Click here to be redirected to the official website where Epistle 1-month (30 days) tokens can be acquired."
                 Margin="0,10,0,0"
-                Command="{Binding BuyButtonCommand}"/>
+                Command="{Binding BuyButtonCommand}" />
         <Button Content="I already have a code that I want to redeem"
                 ToolTip="Click here to extend your Epistle membership and enjoy more encrypted communication. You will be redirected to the settings page, where you can redeem your access code."
                 Margin="0,10,0,0"
-                Command="{Binding RedeemButtonCommand}"/>
+                Command="{Binding RedeemButtonCommand}" />
     </StackPanel>
 </UserControl>

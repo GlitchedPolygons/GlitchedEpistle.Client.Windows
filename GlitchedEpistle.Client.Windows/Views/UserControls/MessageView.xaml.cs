@@ -1,8 +1,6 @@
-﻿using System.Linq;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
+using System.Windows.Input;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
@@ -31,7 +29,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         // Select the text inside the textbox on click.
         private void TextBox_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            var textBox = sender as TextBox;
+            TextBox textBox = sender as TextBox;
             if (textBox == null || textBox.IsKeyboardFocusWithin)
             {
                 return;
@@ -43,7 +41,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void TextBox_SelectText(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
+            TextBox textBox = sender as TextBox;
             textBox?.SelectAll();
         }
     }

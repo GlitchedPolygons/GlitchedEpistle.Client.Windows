@@ -1,24 +1,26 @@
-﻿<UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
-             mc:Ignorable="d">
-    <StackPanel Width="405" HorizontalAlignment="Center">
-        <Label Content="Thank you so much for your trust in Glitched Epistle!" 
-               FontWeight="Bold" 
-               FontSize="16"/>
+﻿<UserControl
+    x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+    mc:Ignorable="d">
+    <StackPanel Width="405"
+                HorizontalAlignment="Center">
+        <Label Content="Thank you so much for your trust in Glitched Epistle!"
+               FontWeight="Bold"
+               FontSize="16" />
         <TextBlock Style="{StaticResource TextBlock}"
                    TextWrapping="Wrap"
                    Margin="5"
-                   Text="{Binding ThankYouNote}"/>
-        <Separator Margin="5,20,5,16"/>
+                   Text="{Binding ThankYouNote}" />
+        <Separator Margin="5,20,5,16" />
         <TextBlock Style="{StaticResource TextBlock}"
                    Margin="5"
                    TextWrapping="Wrap"
                    TextAlignment="Center"
-                   Text="{Binding Quote}" 
-                   FontStyle="Italic"/>
+                   Text="{Binding Quote}"
+                   FontStyle="Italic" />
     </StackPanel>
 </UserControl>
