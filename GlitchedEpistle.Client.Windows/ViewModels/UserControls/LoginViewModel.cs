@@ -62,6 +62,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             QuitCommand = new DelegateCommand(OnClickedQuit);
             LoginCommand = new DelegateCommand(OnClickedLogin);
+            
+            // Bind the password box to the password field.
             PasswordChangedCommand = new DelegateCommand(o => password = (o as PasswordBox)?.Password);
 
             errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
@@ -90,13 +92,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             string jwt = await userService.Login(UserId, password.SHA512(), totp);
-            if (jwt.NotNullNotEmpty())
-            {
-                failedAttempts = 0;
-                user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
-                eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
-            }
-            else
+            if (jwt.NullOrEmpty())
             {
                 failedAttempts++;
                 errorMessageTimer.Stop();
@@ -106,6 +102,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
                 }
+            }
+            else
+            {
+                failedAttempts = 0;
+                user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
+                eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
             }
 
             pendingAttempt = false;
