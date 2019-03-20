@@ -341,55 +341,63 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void PullNewestMessages()
         {
-            // if (pulling || ActiveConvo is null || user is null)
-            // {
-            //     return;
-            // }
-            //
-            // pulling = true;
-            //
-            // Task.Run(async () =>
-            // {
-            //     int i = 0;
-            //     if (Messages.Count > 0)
-            //     {
-            //         i = await convoService.IndexOf(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2, Messages.Last().Id);
-            //     }
-            //
-            //     if (i < 0)
-            //     {
-            //         pulling = false;
-            //         return;
-            //     }
-            //
-            //     Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
-            //     if (retrievedMessages is null || retrievedMessages.Length == 0)
-            //     {
-            //         pulling = false;
-            //         return;
-            //     }
-            //
-            //     DecryptingVisibility = Visibility.Visible;
-            //
-            //     List<Task> tasks = new List<Task>(retrievedMessages.Length * 2);
-            //
-            //     foreach (Message message in retrievedMessages)
-            //     {
-            //         // Add the retrieved messages only to the chatroom
-            //         // if it does not contain them yet (mistakes are always possible; safe is safe).
-            //         if (Messages.Any(m => m.Id == message.Id))
-            //         {
-            //             continue;
-            //         }
-            //
-            //         tasks.Add(AddMessageToView(message));
-            //         tasks.Add(WriteMessageToDisk(message));
-            //     }
-            //
-            //     await Task.WhenAll(tasks);
-            //     pulling = false;
-            //     DecryptingVisibility = Visibility.Hidden;
-            // });
+            // TODO: check if this is actually thread safe when also sending simultaneously! If not, then only pull messages when not sending!
+            
+            if (pulling || ActiveConvo is null || user is null)
+            {
+                return;
+            }
+            
+            pulling = true;
+            
+            Task.Run(async () =>
+            {
+                int i = 0;
+                if (Messages.Count > 0)
+                {
+                    i = await convoService.IndexOf
+                    (
+                        convoId: ActiveConvo.Id,
+                        convoPasswordSHA512: ActiveConvo.PasswordSHA512,
+                        userId: user.Id,
+                        auth: user.Token.Item2,
+                        messageId: Messages.Last().Id
+                    );
+                }
+
+                if (i < 0)
+                {
+                    pulling = false;
+                    return;
+                }
+                
+                Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
+
+                if (retrievedMessages == null || retrievedMessages.Length == 0)
+                {
+                    pulling = false;
+                    return;
+                }
+                
+                DecryptingVisibility = Visibility.Visible;
+
+                Parallel.ForEach
+                (
+                    retrievedMessages, message =>
+                    {
+                        // Add the retrieved messages only to the chatroom
+                        // if it does not contain them yet (mistakes are always possible; safe is safe).
+                        if (!Messages.Any(m => m.Id == message.Id))
+                        {
+                            DecryptMessageAndAddToView(message);
+                            WriteMessageToDisk(message);
+                        }
+                    }
+                );
+
+                pulling = false;
+                DecryptingVisibility = Visibility.Hidden;
+            });
         }
 
         private void OnSendText(object commandParam)
@@ -410,8 +418,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             (
                 () =>
                 {
-                    messageText = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS);
-                    JObject messageBodyJson = new JObject { ["text"] = messageText };
+                    JObject messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
 
                     if (SubmitMessage(messageBodyJson))
                     {
