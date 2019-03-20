@@ -342,6 +342,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void PullNewestMessages()
         {
             // TODO: check if this is actually thread safe when also sending simultaneously! If not, then only pull messages when not sending!
+            // TODO: find out why pulled messages are not transfered to ui correctly!
             
             if (pulling || ActiveConvo is null || user is null)
             {
@@ -395,6 +396,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 );
 
+                TransferQueuedMessagesToUI();
                 pulling = false;
                 DecryptingVisibility = Visibility.Hidden;
             });
