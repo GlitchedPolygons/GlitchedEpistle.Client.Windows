@@ -47,15 +47,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set
             {
                 fileBytes = value;
-                if (value != null)
+                if (value != null && IsImage())
                 {
-                    BitmapImage img = new BitmapImage();
-                    img.BeginInit();
-                    img.DecodePixelWidth = 300;
-                    img.StreamSource = new MemoryStream(value);
-                    img.EndInit();
-                    img.Freeze();
-                    Image = img;
+                    try
+                    {
+                        var img = new BitmapImage();
+                        img.BeginInit();
+                        img.DecodePixelWidth = 300;
+                        img.StreamSource = new MemoryStream(value);
+                        img.EndInit();
+                        img.Freeze();
+                        Image = img;
+                    }
+                    catch (Exception)
+                    {
+                    }
                 }
             }
         }
