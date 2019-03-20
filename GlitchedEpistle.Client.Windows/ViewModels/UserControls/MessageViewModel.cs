@@ -29,16 +29,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         #region UI Bindings
         private string senderId = string.Empty;
-        public string SenderId { get => senderId; set => Set(ref senderId, value); }
+        public string SenderId
+        {
+            get => senderId;
+            set => Set(ref senderId, value);
+        }
 
         private string senderName = string.Empty;
-        public string SenderName { get => senderName; set => Set(ref senderName, value); }
+        public string SenderName
+        {
+            get => senderName;
+            set => Set(ref senderName, value);
+        }
 
         private string text = string.Empty;
-        public string Text { get => text; set => Set(ref text, value); }
+        public string Text
+        {
+            get => text;
+            set => Set(ref text, value);
+        }
 
         private string fileName = string.Empty;
-        public string FileName { get => fileName; set => Set(ref fileName, value); }
+        public string FileName
+        {
+            get => fileName;
+            set => Set(ref fileName, value);
+        }
 
         private byte[] fileBytes;
         public byte[] FileBytes
@@ -71,12 +87,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public BitmapImage Image { get; set; }
 
         private string timestamp = string.Empty;
-        public string Timestamp { get => timestamp; set => Set(ref timestamp, value); }
+        public string Timestamp
+        {
+            get => timestamp;
+            set => Set(ref timestamp, value);
+        }
 
         public DateTime TimestampDateTimeUTC { get; set; }
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
-        public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
+        public Visibility ClipboardTickVisibility
+        {
+            get => clipboardTickVisibility;
+            set => Set(ref clipboardTickVisibility, value);
+        }
 
         public Visibility ImageVisibility => IsImage() ? Visibility.Visible : Visibility.Hidden;
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
@@ -91,7 +115,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             get
             {
-                if (string.IsNullOrEmpty(id))
+                if (id.NullOrEmpty())
                 {
                     id = (SenderId + TimestampDateTimeUTC.ToString("u")).MD5();
                 }
@@ -115,7 +139,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             Text = FileName = null;
             if (FileBytes != null)
             {
-                for (int i = 0; i < FileBytes.Length; i++)
+                for (var i = 0; i < FileBytes.Length; i++)
                 {
                     FileBytes[i] = 0;
                 }
@@ -126,7 +150,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             string ext = Path.GetExtension(FileName) ?? string.Empty;
 
-            SaveFileDialog dialog = new SaveFileDialog
+            var dialog = new SaveFileDialog
             {
                 Title = "Download attachment",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -150,8 +174,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedImagePreview(object commandParam)
         {
-            ImageViewerViewModel viewModel = new ImageViewerViewModel { ImageBytes = FileBytes };
-            ImageViewerView view = new ImageViewerView { DataContext = viewModel };
+            var viewModel = new ImageViewerViewModel { ImageBytes = FileBytes };
+            var view = new ImageViewerView { DataContext = viewModel };
             view.ShowDialog();
         }
 

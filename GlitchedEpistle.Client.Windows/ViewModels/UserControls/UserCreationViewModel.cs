@@ -163,8 +163,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 try
                 {
-                    UserCreationResponseDto userCreationResponse = await userService.CreateUser
-                    (
+                    var userCreationResponse = await userService.CreateUser(
                         new UserCreationDto
                         {
                             PasswordSHA512 = password1.SHA512(),

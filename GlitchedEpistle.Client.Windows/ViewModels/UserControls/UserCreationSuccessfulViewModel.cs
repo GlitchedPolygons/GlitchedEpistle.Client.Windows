@@ -37,16 +37,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         #region UI Bindings
         private string totp = string.Empty;
-        public string Totp { get => totp; set => Set(ref totp, value); }
+        public string Totp
+        {
+            get => totp;
+            set => Set(ref totp, value);
+        }
 
         private string errorMessage = string.Empty;
-        public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
+        }
 
         private string secret = string.Empty;
-        public string Secret { get => secret; set => Set(ref secret, value); }
+        public string Secret
+        {
+            get => secret;
+            set => Set(ref secret, value);
+        }
 
         private BitmapSource qr;
-        public BitmapSource QR { get => qr; set => Set(ref qr, value); }
+        public BitmapSource QR
+        {
+            get => qr;
+            set => Set(ref qr, value);
+        }
         #endregion
 
         private bool pendingAttempt;
@@ -69,7 +85,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedExport(object commandParam)
         {
-            SaveFileDialog dialog = new SaveFileDialog
+            var dialog = new SaveFileDialog
             {
                 Title = "Epistle 2FA Backup Codes",
                 InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
@@ -115,12 +131,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     return;
                 }
 
-                StringBuilder sb = new StringBuilder(512);
+                var sb = new StringBuilder(512);
                 sb.AppendLine("Glitched Epistle 2FA Backup Codes\n");
                 sb.AppendLine($"User: {user.Id}");
                 sb.AppendLine($"Export timestamp: {DateTime.UtcNow:s} (UTC)\n");
 
-                for (int i = 0; i < BackupCodes.Count; i++)
+                for (var i = 0; i < BackupCodes.Count; i++)
                 {
                     sb.AppendLine(BackupCodes[i]);
                 }
