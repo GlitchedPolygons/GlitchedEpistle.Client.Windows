@@ -48,25 +48,53 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #region UI Bindings
         private string name;
-        public string Name { get => name; set => Set(ref name, value); }
+        public string Name
+        {
+            get => name;
+            set => Set(ref name, value);
+        }
 
         private string description;
-        public string Description { get => description; set => Set(ref description, value); }
+        public string Description
+        {
+            get => description;
+            set => Set(ref description, value);
+        }
 
         private DateTime minExpirationUTC = DateTime.UtcNow.AddDays(2);
-        public DateTime MinExpirationUTC { get => minExpirationUTC; set => Set(ref minExpirationUTC, value); }
+        public DateTime MinExpirationUTC
+        {
+            get => minExpirationUTC;
+            set => Set(ref minExpirationUTC, value);
+        }
 
         private DateTime expirationUTC = DateTime.UtcNow.AddDays(14);
-        public DateTime ExpirationUTC { get => expirationUTC; set => Set(ref expirationUTC, value); }
+        public DateTime ExpirationUTC
+        {
+            get => expirationUTC;
+            set => Set(ref expirationUTC, value);
+        }
 
         private string errorMessage = string.Empty;
-        public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
+        }
 
         private string successMessage = string.Empty;
-        public string SuccessMessage { get => successMessage; set => Set(ref successMessage, value); }
+        public string SuccessMessage
+        {
+            get => successMessage;
+            set => Set(ref successMessage, value);
+        }
 
         private bool canSubmit = true;
-        public bool CanSubmit { get => canSubmit; set => Set(ref canSubmit, value); }
+        public bool CanSubmit
+        {
+            get => canSubmit;
+            set => Set(ref canSubmit, value);
+        }
         #endregion
 
         private string pw = string.Empty;
@@ -99,7 +127,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void CancelAllScheduledActions()
         {
-            for (int i = 0; i < scheduledActions.Count; i++)
+            for (var i = 0; i < scheduledActions.Count; i++)
             {
                 methodQ?.Cancel(scheduledActions[i]);
             }
@@ -117,7 +145,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private async void OnSubmit(object commandParam)
         {
-            string totp = commandParam as string;
+            var totp = commandParam as string;
 
             CanSubmit = false;
 
@@ -155,14 +183,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            ConvoCreationDto convoCreationDto = new ConvoCreationDto { Name = Name, Description = Description, ExpirationUTC = ExpirationUTC, PasswordSHA512 = pw.SHA512() };
+            var convoCreationDto = new ConvoCreationDto { Name = Name, Description = Description, ExpirationUTC = ExpirationUTC, PasswordSHA512 = pw.SHA512() };
 
             string id = await convoService.CreateConvo(convoCreationDto, user.Id, user.Token.Item2);
 
             if (id.NotNullNotEmpty())
             {
                 // Create the convo model object and feed it into the convo provider.
-                Convo convo = new Convo
+                var convo = new Convo
                 {
                     Id = id,
                     CreatorId = user.Id,

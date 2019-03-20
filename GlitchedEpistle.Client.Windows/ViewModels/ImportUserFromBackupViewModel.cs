@@ -95,21 +95,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     // If the user entered a password, attempt to decrypt the backup file with it.
                     if (pw.NotNullNotEmpty())
                     {
-                        path = await Task.Run
-                        (
-                            () =>
+                        path = await Task.Run(() =>
+                        {
+                            // The decrypted backup will be stored in a temporary path.
+                            string tempPath = Path.GetTempFileName();
+                            byte[] decr = aes.DecryptWithPassword(File.ReadAllBytes(BackupFilePath), pw);
+                            if (decr == null || decr.Length == 0)
                             {
-                                // The decrypted backup will be stored in a temporary path.
-                                string tempPath = Path.GetTempFileName();
-                                byte[] decr = aes.DecryptWithPassword(File.ReadAllBytes(BackupFilePath), pw);
-                                if (decr == null || decr.Length == 0)
-                                {
-                                    return null;
-                                }
-                                File.WriteAllBytes(tempPath, decr);
-                                return tempPath;
+                                return null;
                             }
-                        );
+                            File.WriteAllBytes(tempPath, decr);
+                            return tempPath;
+                        });
+                        
                         if (path.NullOrEmpty())
                         {
                             UIEnabled = true;
@@ -119,22 +117,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         }
                     }
 
-                    await Task.Run
-                    (
-                        () =>
+                    await Task.Run(() =>
+                    {
+                        // Epistle folder needs to be empty before a backup can be imported.
+                        var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
+                        if (dir.Exists)
                         {
-                            // Epistle folder needs to be empty before a backup can be imported.
-                            var dir = new DirectoryInfo(Paths.ROOT_DIRECTORY);
-                            if (dir.Exists)
-                            {
-                                dir.DeleteRecursively();
-                            }
-                            dir.Create();
-
-                            // Unzip the backup into the epistle user directory.
-                            ZipFile.ExtractToDirectory(path, Paths.ROOT_DIRECTORY);
+                            dir.DeleteRecursively();
                         }
-                    );
+                        dir.Create();
+
+                        // Unzip the backup into the epistle user directory.
+                        ZipFile.ExtractToDirectory(path, Paths.ROOT_DIRECTORY);
+                    });
 
                     // Epistle needs to restart in order for the changes to be applied.
                     Application.Current.Shutdown();
