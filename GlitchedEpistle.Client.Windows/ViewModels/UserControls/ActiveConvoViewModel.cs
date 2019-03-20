@@ -103,16 +103,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 StopAutomaticPulling();
                 Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;
-                Task.Run
-                (
-                    () =>
-                    {
-                        LoadLocalMessages();
-                        TransferQueuedMessagesToUI();
-                        StartAutomaticPulling();
-                        CanSend = true;
-                    }
-                );
+                Task.Run(() =>
+                {
+                    LoadLocalMessages();
+                    TransferQueuedMessagesToUI();
+                    StartAutomaticPulling();
+                    CanSend = true;
+                });
             }
         }
 
@@ -164,7 +161,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             StopAutomaticPulling();
             scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
         }
-        
+
         private void TransferQueuedMessagesToUI()
         {
             Application.Current?.Dispatcher?.Invoke
@@ -179,7 +176,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
             );
         }
-        
+
         private void DecryptMessageAndAddToView(Message message)
         {
             if (message is null)
@@ -239,7 +236,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 }
             );
-            
+
             DecryptingVisibility = Visibility.Hidden;
         }
 
@@ -251,8 +248,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
-            CanSend = false;
             EncryptingVisibility = Visibility.Visible;
+            CanSend = false;
 
             JObject messageBodiesJson = new JObject();
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
@@ -288,9 +285,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Message message = new Message
             {
-                SenderId = user.Id, 
-                SenderName = username, 
-                TimestampUTC = DateTime.UtcNow, 
+                SenderId = user.Id,
+                SenderName = username,
+                TimestampUTC = DateTime.UtcNow,
                 Body = ownMessageBody.ToString()
             };
 
@@ -317,7 +314,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             StartAutomaticPulling();
             return success;
         }
-        
+
         private void EncryptMessageBodyForUser(ConcurrentBag<Tuple<string, string>> resultsBag, Tuple<string, string> userKeyPair, string messageBodyJson)
         {
             if (resultsBag is null || userKeyPair is null || messageBodyJson.NullOrEmpty())
@@ -343,14 +340,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             // TODO: check if this is actually thread safe when also sending simultaneously! If not, then only pull messages when not sending!
             // TODO: find out why pulled messages are not transfered to ui correctly!
-            
+
             if (pulling || ActiveConvo is null || user is null)
             {
                 return;
             }
-            
+
             pulling = true;
-            
+
             Task.Run(async () =>
             {
                 int i = 0;
@@ -366,39 +363,34 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     );
                 }
 
-                if (i < 0)
+                if (i >= 0)
                 {
-                    pulling = false;
-                    return;
-                }
-                
-                Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
+                    Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
 
-                if (retrievedMessages == null || retrievedMessages.Length == 0)
-                {
-                    pulling = false;
-                    return;
-                }
-                
-                DecryptingVisibility = Visibility.Visible;
-
-                Parallel.ForEach
-                (
-                    retrievedMessages, message =>
+                    if (retrievedMessages != null && retrievedMessages.Length != 0)
                     {
-                        // Add the retrieved messages only to the chatroom
-                        // if it does not contain them yet (mistakes are always possible; safe is safe).
-                        if (!Messages.Any(m => m.Id == message.Id))
-                        {
-                            DecryptMessageAndAddToView(message);
-                            WriteMessageToDisk(message);
-                        }
-                    }
-                );
+                        Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Visible);
 
-                TransferQueuedMessagesToUI();
+                        Parallel.ForEach
+                        (
+                            retrievedMessages, message =>
+                            {
+                                // Add the retrieved messages only to the chatroom
+                                // if it does not contain them yet (mistakes are always possible; safe is safe).
+                                if (!Messages.Any(m => m.Id == message.Id))
+                                {
+                                    DecryptMessageAndAddToView(message);
+                                    WriteMessageToDisk(message);
+                                }
+                            }
+                        );
+
+                        Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Hidden);
+                        TransferQueuedMessagesToUI();
+                    }
+                }
+
                 pulling = false;
-                DecryptingVisibility = Visibility.Hidden;
             });
         }
 
@@ -452,7 +444,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 return;
             }
-            
+
             Task.Run(() =>
             {
                 byte[] file = File.ReadAllBytes(dialog.FileName);
@@ -461,7 +453,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     JObject messageBodyJson = new JObject
                     {
-                        ["fileName"] = Path.GetFileName(dialog.FileName), 
+                        ["fileName"] = Path.GetFileName(dialog.FileName),
                         ["fileBase64"] = Convert.ToBase64String(file)
                     };
 
