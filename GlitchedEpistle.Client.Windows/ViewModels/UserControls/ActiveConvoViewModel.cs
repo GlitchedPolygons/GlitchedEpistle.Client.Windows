@@ -508,5 +508,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             ClipboardTickVisibility = Visibility.Hidden;
             scheduledHideGreenTickIcon = null;
         }
+
+        public void OnDragAndDropFile(string filePath)
+        {
+            if (filePath.NullOrEmpty())
+            {
+                return;
+            }
+            throw new NotImplementedException();
+            // TODO: submit file here
+        }
     }
 }

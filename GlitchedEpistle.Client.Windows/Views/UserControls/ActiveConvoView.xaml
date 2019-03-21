@@ -99,7 +99,7 @@
         </ListBox>
 
         <!-- TextBox + Send Buttons -->
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="2" 
               HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
@@ -120,7 +120,9 @@
                      HorizontalContentAlignment="Stretch"
                      HorizontalScrollBarVisibility="Disabled"
                      VerticalScrollBarVisibility="Auto"
-                     Style="{StaticResource TextBox}">
+                     Style="{StaticResource TextBox}"
+                     PreviewDragOver="TextBox_OnDragEnter"
+                     PreviewDrop="TextBox_OnDrop">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter"
                                 Modifiers="Shift"
