@@ -110,6 +110,7 @@
                      Name="TextBox"
                      FontSize="14"
                      MinWidth="200"
+                     AllowDrop="True"
                      TextWrapping="Wrap"
                      Text="{Binding Text}"
                      AcceptsReturn="True"
