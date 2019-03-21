@@ -2,13 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Control colors -->
-    <Color x:Key="WindowBackgroundColor">#101010</Color>
-    <Color x:Key="ControlNormalColor">#353535</Color>
-    <Color x:Key="ControlNormalForegroundColor">AliceBlue</Color>
-    <Color x:Key="ControlMouseOverColor">#4f6066</Color>
-    <Color x:Key="ControlPressedColor">#699bad</Color>
-    <Color x:Key="DisabledControlColor">#888888</Color>
-    <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
+    <Color x:Key="WindowBackgroundColor">#bcbaba</Color>
+    <Color x:Key="ControlNormalColor">#e0e0e0</Color>
+    <Color x:Key="ControlNormalForegroundColor">Black</Color>
+    <Color x:Key="ControlMouseOverColor">#c0dbdb</Color>
+    <Color x:Key="ControlPressedColor">#acdce5</Color>
+    <Color x:Key="DisabledControlColor">#a0a9aa</Color>
+    <Color x:Key="DisabledForegroundColor">#535656</Color>
 
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush"
@@ -24,17 +24,17 @@
 
     <!-- Radio buttons -->
     <Style TargetType="RadioButton">
-        <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="Foreground" Value="Black"/>
     </Style>
 
     <!-- Background brush for chatroom -->
     <ImageBrush x:Key="ChatroomBackgroundBrush"
-                ImageSource="/Resources/Images/glitched-polygons-blue-1440p.png"
+                ImageSource="/Resources/Images/glitched-polygons-white-1440p.png"
                 TileMode="Tile"
                 Stretch="UniformToFill" />
 
     <SolidColorBrush x:Key="SeparatorColorBrush"
-                     Color="AliceBlue" />
+                     Color="#333232" />
 
     <ImageBrush x:Key="HelpIcon"
                 ImageSource="/Resources/Images/help-icon-white.png" />
