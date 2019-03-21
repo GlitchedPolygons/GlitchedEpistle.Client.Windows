@@ -365,24 +365,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
 
-                    if (retrievedMessages != null && retrievedMessages.Length != 0)
+                    if (retrievedMessages is null || retrievedMessages.Length == 0)
                     {
-                        Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Visible);
-
-                        Parallel.ForEach(retrievedMessages, message =>
-                        {
-                            // Add the retrieved messages only to the chatroom
-                            // if it does not contain them yet (mistakes are always possible; safe is safe).
-                            if (!Messages.Any(m => m.Id == message.Id))
-                            {
-                                DecryptMessageAndAddToView(message);
-                                WriteMessageToDisk(message);
-                            }
-                        });
-
-                        Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Hidden);
-                        TransferQueuedMessagesToUI();
+                        Application.Current.Dispatcher.Invoke(() => Pulling = false);
+                        return;
                     }
+
+                    Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Visible);
+
+                    Parallel.ForEach(retrievedMessages, message =>
+                    {
+                        // Add the retrieved messages only to the chatroom
+                        // if it does not contain them yet (mistakes are always possible; safe is safe).
+                        if (!Messages.Any(m => m.Id == message.Id))
+                        {
+                            DecryptMessageAndAddToView(message);
+                            WriteMessageToDisk(message);
+                        }
+                    });
+
+                    Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Hidden);
+                    TransferQueuedMessagesToUI();
                 }
 
                 Application.Current.Dispatcher.Invoke(() => Pulling = false);
