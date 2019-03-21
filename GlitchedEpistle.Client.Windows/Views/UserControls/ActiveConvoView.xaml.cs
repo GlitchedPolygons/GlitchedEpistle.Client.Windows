@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -68,8 +69,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
                 e.Handled = true;
                 return;
             }
-            (DataContext as ActiveConvoViewModel)?.OnDragAndDropFile(draggedFiles[0]);
             e.Handled = true;
+            (DataContext as ActiveConvoViewModel)?.OnDragAndDropFile(draggedFiles[0]);
         }
     }
 }

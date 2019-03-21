@@ -443,33 +443,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            Task.Run(() =>
-            {
-                byte[] file = File.ReadAllBytes(dialog.FileName);
-
-                if (file.LongLength < MAX_FILE_SIZE_BYTES)
-                {
-                    var messageBodyJson = new JObject
-                    {
-                        ["fileName"] = Path.GetFileName(dialog.FileName),
-                        ["fileBase64"] = Convert.ToBase64String(file)
-                    };
-
-                    if (!SubmitMessage(messageBodyJson))
-                    {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                        errorView.ShowDialog();
-                    }
-
-                    TransferQueuedMessagesToUI();
-                    messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = null;
-                }
-                else
-                {
-                    var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
-                    errorView.ShowDialog();
-                }
-            });
+            OnDragAndDropFile(dialog.FileName);
         }
 
         private void OnClickedCopyConvoIdToClipboard(object commandParam)
@@ -511,12 +485,44 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public void OnDragAndDropFile(string filePath)
         {
-            if (filePath.NullOrEmpty())
+            Task.Run(() =>
             {
-                return;
-            }
-            throw new NotImplementedException();
-            // TODO: submit file here
+                if (filePath.NullOrEmpty())
+                {
+                    return;
+                }
+
+                byte[] file = File.ReadAllBytes(filePath);
+
+                if (file.LongLength < MAX_FILE_SIZE_BYTES)
+                {
+                    var messageBodyJson = new JObject
+                    {
+                        ["fileName"] = Path.GetFileName(filePath),
+                        ["fileBase64"] = Convert.ToBase64String(file)
+                    };
+
+                    if (!SubmitMessage(messageBodyJson))
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                            errorView.ShowDialog();
+                        });
+                    }
+
+                    TransferQueuedMessagesToUI();
+                    messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = null;
+                }
+                else
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
+                        errorView.ShowDialog();
+                    });
+                }
+            });
         }
     }
 }
