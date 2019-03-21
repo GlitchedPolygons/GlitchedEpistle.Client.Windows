@@ -67,6 +67,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => canSend;
             set => Set(ref canSend, value);
         }
+        
+        private bool pulling;
+        public bool Pulling
+        {
+            get => pulling;
+            set => Set(ref pulling, value);
+        }
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility
@@ -117,7 +124,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        private bool pulling;
         private ulong? scheduledUpdateRoutine;
         private ulong? scheduledHideGreenTickIcon;
         private ConcurrentBag<MessageViewModel> msgQueue = new ConcurrentBag<MessageViewModel>();
@@ -246,8 +252,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
-            EncryptingVisibility = Visibility.Visible;
-            CanSend = false;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                EncryptingVisibility = Visibility.Visible;
+                CanSend = false;
+            });
 
             var messageBodiesJson = new JObject();
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
@@ -272,7 +281,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody is null)
             {
-                CanSend = true;
+                Application.Current.Dispatcher.Invoke(() => CanSend = true);
                 return false;
             }
 
@@ -291,20 +300,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             DecryptMessageAndAddToView(message);
             WriteMessageToDisk(message);
 
-            bool success = convoService.PostMessage(
-                ActiveConvo.Id,
-                new PostMessageParamsDto
-                {
-                    UserId = user.Id,
-                    SenderName = username,
-                    Auth = user.Token.Item2,
-                    TimestampUTC = message.TimestampUTC,
-                    ConvoPasswordSHA512 = ActiveConvo.PasswordSHA512,
-                    MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
-                }
-            ).GetAwaiter().GetResult();
+            var postParamsDto = new PostMessageParamsDto
+            {
+                UserId = user.Id,
+                SenderName = username,
+                Auth = user.Token.Item2,
+                TimestampUTC = message.TimestampUTC,
+                ConvoPasswordSHA512 = ActiveConvo.PasswordSHA512,
+                MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
+            };
+            
+            bool success = convoService.PostMessage(ActiveConvo.Id, postParamsDto).GetAwaiter().GetResult();
 
-            CanSend = true;
+            Application.Current.Dispatcher.Invoke(() => CanSend = true);
             StartAutomaticPulling();
             return success;
         }
@@ -332,28 +340,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void PullNewestMessages()
         {
-            // TODO: check if this is actually thread safe when also sending simultaneously! If not, then only pull messages when not sending!
-            // TODO: find out why pulled messages are not transfered to ui correctly!
-
-            if (pulling || ActiveConvo is null || user is null)
+            if (Pulling || ActiveConvo is null || user is null)
             {
                 return;
             }
 
-            pulling = true;
+            Application.Current.Dispatcher.Invoke(() => Pulling = true);
 
             Task.Run(async () =>
             {
                 var i = 0;
                 if (Messages.Count > 0)
                 {
-                    i = await convoService.IndexOf
-                    (
-                        ActiveConvo.Id,
-                        ActiveConvo.PasswordSHA512,
-                        user.Id,
-                        user.Token.Item2,
-                        Messages.Last().Id
+                    i = await convoService.IndexOf(
+                        convoId: ActiveConvo.Id,
+                        convoPasswordSHA512: ActiveConvo.PasswordSHA512,
+                        userId: user.Id,
+                        auth: user.Token.Item2,
+                        messageId: Messages.Last().Id
                     );
                 }
 
@@ -381,7 +385,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 }
 
-                pulling = false;
+                Application.Current.Dispatcher.Invoke(() => Pulling = false);
             });
         }
 
@@ -408,13 +412,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     TransferQueuedMessagesToUI();
                     messageBodyJson["text"] = null;
                     messageBodyJson = null;
-                    Application.Current?.Dispatcher?.Invoke(textBox.Clear);
                 }
                 else
                 {
                     var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                     errorView.ShowDialog();
                 }
+                
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    textBox.Clear();
+                    textBox.Focus();
+                    textBox.SelectAll();
+                });
             });
         }
 
