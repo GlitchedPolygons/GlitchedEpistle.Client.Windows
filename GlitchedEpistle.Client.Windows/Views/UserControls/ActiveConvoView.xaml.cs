@@ -1,9 +1,7 @@
-﻿using System.Collections.Specialized;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.Specialized;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 
@@ -69,8 +67,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
                 e.Handled = true;
                 return;
             }
+            string filePath = draggedFiles[0];
+            var dialog = new ConfirmFileUploadView(filePath);
+            bool? dialogResult = dialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value == true)
+            {
+                (DataContext as ActiveConvoViewModel)?.OnDragAndDropFile(filePath);
+            }
             e.Handled = true;
-            (DataContext as ActiveConvoViewModel)?.OnDragAndDropFile(draggedFiles[0]);
         }
     }
 }

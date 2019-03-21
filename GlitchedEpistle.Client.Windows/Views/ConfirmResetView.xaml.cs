@@ -17,7 +17,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             if (sender is TextBox textBox)
             {
-                ConfirmButton.IsEnabled = textBox.Text == "DELETE!";
+                ConfirmButton.IsEnabled = textBox.Text.Equals("DELETE!");
             }
         }
 
