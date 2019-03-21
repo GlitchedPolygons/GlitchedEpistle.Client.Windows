@@ -502,6 +502,9 @@
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfirmFileUploadView.xaml.cs">
+      <DependentUpon>ConfirmFileUploadView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfirmResetView.xaml.cs">
       <DependentUpon>ConfirmResetView.xaml</DependentUpon>
     </Compile>
@@ -573,6 +576,10 @@
     <Page Include="Views\ChangePasswordView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConfirmFileUploadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConfirmResetView.xaml">
       <SubType>Designer</SubType>
