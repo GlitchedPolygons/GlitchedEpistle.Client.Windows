@@ -39,6 +39,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string successMessage = string.Empty;
         public string SuccessMessage { get => successMessage; set => Set(ref successMessage, value); }
+        
+        public bool uiEnabled = true;
+        public bool UIEnabled
+        {
+            get => uiEnabled;
+            private set => Set(ref uiEnabled, value);
+        }
         #endregion
 
         private string oldPw = string.Empty;
@@ -72,12 +79,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             string totp = commandParam as string;
 
-            if (string.IsNullOrEmpty(totp))
+            if (totp.NullOrEmpty())
             {
                 ResetMessages();
                 ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
                 return;
             }
+
+            UIEnabled = false;
 
             bool totpValid = await userService.Validate2FA(user.Id, totp);
 
@@ -85,13 +94,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ResetMessages();
                 ErrorMessage = "Two-Factor Authentication failed! Password change request rejected.";
+                UIEnabled = true;
                 return;
             }
 
-            if (string.IsNullOrEmpty(oldPw) || string.IsNullOrEmpty(newPw) || newPw != newPw2)
+            if (oldPw.NullOrEmpty() || newPw.NullOrEmpty() || newPw != newPw2)
             {
                 ResetMessages();
                 ErrorMessage = "The old password is wrong or the new ones don't match.";
+                UIEnabled = true;
                 return;
             }
 
@@ -99,6 +110,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 ResetMessages();
                 ErrorMessage = "Your password is too weak; make sure that it has at least >7 characters!";
+                UIEnabled = true;
                 return;
             }
 

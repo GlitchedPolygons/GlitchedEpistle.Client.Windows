@@ -29,7 +29,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         #region UI Bindings
         private ObservableCollection<Convo> convos;
-        public ObservableCollection<Convo> Convos { get => convos; set => Set(ref convos, value); }
+        public ObservableCollection<Convo> Convos
+        {
+            get => convos;
+            set => Set(ref convos, value);
+        }
         #endregion
 
         public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
@@ -55,14 +59,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedOnConvo(object commandParam)
         {
-            Convo convo = commandParam as Convo;
+            var convo = commandParam as Convo;
             if (convo is null)
             {
                 return;
             }
 
-            JoinConvoDialogView view = windowFactory.Create<JoinConvoDialogView>(true);
-            JoinConvoDialogViewModel viewModel = viewModelFactory.Create<JoinConvoDialogViewModel>();
+            var view = windowFactory.Create<JoinConvoDialogView>(true);
+            var viewModel = viewModelFactory.Create<JoinConvoDialogViewModel>();
             viewModel.ConvoId = convo.Id;
 
             if (view.DataContext is null)
