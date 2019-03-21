@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -37,8 +38,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
-        private bool enabled = true;
-        public bool Enabled { get => enabled; set => Set(ref enabled, value); }
+        private bool uiEnabled = true;
+        public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
 
         private string outputFilePath;
         public string OutputFilePath { get => outputFilePath; set => Set(ref outputFilePath, value); }
@@ -78,55 +79,64 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             });
 
             // On clicked "Export"
-            ExportButtonCommand = new DelegateCommand(async commandParam =>
-            {
-                string pw = null;
-                if (commandParam is PasswordBox passwordBox)
-                {
-                    pw = passwordBox.Password;
-                }
-
-                Enabled = false;
-                ExportLabel = "Exporting backup... please don't close this window until it's done.";
-
-                await Task.Run(() =>
-                {
-                    if (File.Exists(OutputFilePath))
-                    {
-                        File.Delete(OutputFilePath);
-                    }
-
-                    ZipFile.CreateFromDirectory(Paths.ROOT_DIRECTORY, OutputFilePath, CompressionLevel.Optimal, false);
-                });
-
-                if (!File.Exists(OutputFilePath))
-                {
-                    ExportLabel = $"Backup couldn't be exported to {OutputFilePath}... Reason unknown";
-                    OutputFilePath = null;
-                    Enabled = true;
-                    return;
-                }
-
-                if (string.IsNullOrEmpty(pw))
-                {
-                    ExportLabel = "Backup exported successfully! Please keep that file VERY secret (you chose not to encrypt it with a password after all...).";
-                    OutputFilePath = null;
-                    return;
-                }
-
-                await Task.Run(() =>
-                {
-                    // TODO: Report export progress to a progress bar of some sort.
-                    byte[] encryptedBytes = aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw);
-                    File.WriteAllBytes(OutputFilePath, encryptedBytes);
-                });
-
-                OutputFilePath = null;
-                ExportLabel = "Backup exported successfully! Please don't share that file with anybody.";
-            });
+            ExportButtonCommand = new DelegateCommand(OnExport);
 
             // On clicked "Cancel"
             CancelButtonCommand = new DelegateCommand(_ => RequestedClose?.Invoke(this, EventArgs.Empty));
+        }
+
+        private void OnExport(object commandParam)
+        {
+            string pw = null;
+            if (commandParam is PasswordBox passwordBox)
+            {
+                pw = passwordBox.Password;
+            }
+
+            UIEnabled = false;
+            ExportLabel = "Exporting backup... please don't close this window until it's done.";
+
+            Task.Run(() =>
+            {
+                if (File.Exists(OutputFilePath))
+                {
+                    File.Delete(OutputFilePath);
+                }
+
+                ZipFile.CreateFromDirectory(Paths.ROOT_DIRECTORY, OutputFilePath, CompressionLevel.Optimal, false);
+            }).ContinueWith(task =>
+            {
+                if (task.IsFaulted || task.IsCanceled || !File.Exists(OutputFilePath))
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        ExportLabel = $"Backup couldn't be exported to {OutputFilePath}... Reason unknown.";
+                        OutputFilePath = null;
+                        UIEnabled = true;
+                    });
+                    return;
+                }
+                
+                if (pw.NullOrEmpty())
+                {
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        ExportLabel = "Backup exported successfully! Please keep that file VERY secret (you chose not to encrypt it with a password after all...).";
+                        OutputFilePath = null;
+                    });
+                    return;
+                }
+                
+                // TODO: Report export progress to a progress bar of some sort.
+                byte[] encryptedBytes = aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw);
+                File.WriteAllBytes(OutputFilePath, encryptedBytes);
+
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ExportLabel = "Backup exported successfully! Please don't share that file with anybody.";
+                    OutputFilePath = null;
+                });
+            });
         }
 
         private void OnClosed(object commandParam)

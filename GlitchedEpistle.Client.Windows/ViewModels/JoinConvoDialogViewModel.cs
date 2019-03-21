@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -38,13 +40,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #region UI Bindings
         private string errorMessage = string.Empty;
-        public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
+        public string ErrorMessage
+        {
+            get => errorMessage;
+            set => Set(ref errorMessage, value);
+        }
 
         private string convoId = string.Empty;
-        public string ConvoId { get => convoId; set => Set(ref convoId, value); }
+        public string ConvoId
+        {
+            get => convoId;
+            set => Set(ref convoId, value);
+        }
 
         private bool uiEnabled = true;
-        public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
+        public bool UIEnabled
+        {
+            get => uiEnabled;
+            set => Set(ref uiEnabled, value);
+        }
         #endregion
 
         public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, IConvoProvider convoProvider, User user)
@@ -68,23 +82,36 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ErrorMessage = null;
         }
 
-        private async void OnClickedJoinConvo(object commandParam)
+        private void OnClickedJoinConvo(object commandParam)
         {
-            if (commandParam is PasswordBox passwordBox)
+            var passwordBox = commandParam as PasswordBox;
+            if (passwordBox == null)
             {
-                UIEnabled = false;
-                string pw = passwordBox.Password.SHA512();
+                return;
+            }
 
+            string pw = passwordBox.Password?.SHA512();
+            if (pw.NullOrEmpty())
+            {
+                return;
+            }
+
+            UIEnabled = false;
+
+            Task.Run(async () =>
+            {
                 if (!await convoService.JoinConvo(ConvoId, pw, user.Id, user.Token.Item2))
                 {
-                    ResetMessages();
-                    ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
-
-                    UIEnabled = true;
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        ResetMessages();
+                        ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
+                        UIEnabled = true;
+                    });
                     return;
                 }
 
-                Convo convo = new Convo { Id = ConvoId, PasswordSHA512 = pw };
+                var convo = new Convo { Id = ConvoId, PasswordSHA512 = pw };
 
                 ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, pw, user.Id, user.Token.Item2);
                 if (metadata != null)
@@ -107,10 +134,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 convoProvider.Convos.Add(convo);
                 convoProvider.Save();
 
-                UIEnabled = true;
-                eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
-                RequestedClose?.Invoke(this, EventArgs.Empty);
-            }
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    UIEnabled = true;
+                    eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
+                    RequestedClose?.Invoke(this, EventArgs.Empty);
+                });
+            });
         }
     }
 }

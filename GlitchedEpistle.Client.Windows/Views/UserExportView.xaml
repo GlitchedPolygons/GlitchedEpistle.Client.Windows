@@ -18,7 +18,7 @@
     </i:Interaction.Triggers>
 
     <StackPanel Margin="15"
-                IsEnabled="{Binding Enabled}">
+                IsEnabled="{Binding UIEnabled}">
 
         <StackPanel Orientation="Horizontal">
             <TextBox Width="370"

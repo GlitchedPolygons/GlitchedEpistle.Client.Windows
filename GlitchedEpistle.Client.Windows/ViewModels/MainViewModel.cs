@@ -375,14 +375,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             // If there is no current token,
             // instantly interrupt everything and prompt the user to log in.
-            if (user.Token is null || string.IsNullOrEmpty(user.Token.Item2))
+            if (user.Token is null || user.Token.Item2.NullOrEmpty())
             {
                 Logout();
                 return;
             }
 
             string newToken = await userService.RefreshAuthToken(user.Id, user.Token.Item2);
-            if (string.IsNullOrEmpty(newToken))
+            if (newToken.NullOrEmpty())
             {
                 Logout();
                 return;

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
@@ -99,7 +102,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             dialog.ShowDialog();
         }
 
-        private async void OnClickedVerify(object commandParam)
+        private void OnClickedVerify(object commandParam)
         {
             if (pendingAttempt)
             {
@@ -107,18 +110,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             pendingAttempt = true;
-            if (await userService.Validate2FA(user.Id, Totp))
+
+            Task.Run(async () =>
             {
-                eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish();
-            }
-            else
-            {
-                errorMessageTimer.Stop();
-                errorMessageTimer.Start();
-                ErrorMessage = "Two-Factor authentication failed!";
-                Totp = string.Empty;
-            }
-            pendingAttempt = false;
+                if (!await userService.Validate2FA(user.Id, Totp))
+                {
+                    errorMessageTimer.Stop();
+                    errorMessageTimer.Start();
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        ErrorMessage = "Two-Factor authentication failed!";
+                        Totp = string.Empty;
+                    });
+                }
+                else
+                {
+                    eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish();
+                }
+
+                pendingAttempt = false;
+            });
         }
 
         private void ExportFileDialog_FileOk(object sender, CancelEventArgs e)
@@ -126,7 +137,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             if (sender is SaveFileDialog dialog)
             {
                 dialog.FileOk -= ExportFileDialog_FileOk;
-                if (string.IsNullOrEmpty(dialog.FileName) || BackupCodes.Count == 0)
+                if (dialog.FileName.NullOrEmpty() || BackupCodes.Count == 0)
                 {
                     return;
                 }
