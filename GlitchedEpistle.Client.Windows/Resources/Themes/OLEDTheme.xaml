@@ -12,7 +12,7 @@
 
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush"
-                     Color="{StaticResource WindowBackgroundColor}" />
+                     Color="{DynamicResource WindowBackgroundColor}" />
 
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
@@ -29,7 +29,7 @@
 
     <!-- Background brush for chatroom -->
     <SolidColorBrush x:Key="ChatroomBackgroundBrush"
-                     Color="{StaticResource WindowBackgroundColor}"/>
+                     Color="{DynamicResource WindowBackgroundColor}"/>
 
     <SolidColorBrush x:Key="SeparatorColorBrush"
                      Color="AliceBlue" />
@@ -141,7 +141,7 @@
                     <Border TextBlock.Foreground="{TemplateBinding Foreground}"
                             x:Name="Border">
                         <Border.Background>
-                            <SolidColorBrush Color="{StaticResource ControlNormalColor}" />
+                            <SolidColorBrush Color="{DynamicResource ControlNormalColor}" />
                         </Border.Background>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -157,7 +157,7 @@
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource ControlMouseOverColor}" />
+                                                                 Value="{DynamicResource ControlMouseOverColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -167,7 +167,7 @@
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource ControlPressedColor}" />
+                                                                 Value="{DynamicResource ControlPressedColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -177,13 +177,13 @@
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource DisabledControlColor}" />
+                                                                 Value="{DynamicResource DisabledControlColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames
                                             Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource DisabledForegroundColor}" />
+                                                                 Value="{DynamicResource DisabledForegroundColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -199,7 +199,7 @@
         </Setter>
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="{StaticResource ControlNormalForegroundColor}" />
+                <SolidColorBrush Color="{DynamicResource ControlNormalForegroundColor}" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -214,7 +214,7 @@
                     <Border TextBlock.Foreground="{TemplateBinding Foreground}"
                             x:Name="Border">
                         <Border.Background>
-                            <SolidColorBrush Color="{StaticResource ControlNormalColor}" />
+                            <SolidColorBrush Color="{DynamicResource ControlNormalColor}" />
                         </Border.Background>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
@@ -230,7 +230,7 @@
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource ControlMouseOverColor}" />
+                                                                 Value="{DynamicResource ControlMouseOverColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -240,7 +240,7 @@
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource ControlPressedColor}" />
+                                                                 Value="{DynamicResource ControlPressedColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -250,13 +250,13 @@
                                             Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource DisabledControlColor}" />
+                                                                 Value="{DynamicResource DisabledControlColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames
                                             Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
                                             Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{StaticResource DisabledForegroundColor}" />
+                                                                 Value="{DynamicResource DisabledForegroundColor}" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
@@ -276,7 +276,7 @@
     <Style x:Key="ResetMainWindowButton"
            TargetType="Button">
         <Setter Property="Background"
-                Value="{StaticResource ResetIcon}" />
+                Value="{DynamicResource ResetIcon}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -302,7 +302,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource ResetIconSelected}" />
+                                    Value="{DynamicResource ResetIconSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -314,7 +314,7 @@
     <Style x:Key="CopyToClipboardButton"
            TargetType="Button">
         <Setter Property="Background"
-                Value="{StaticResource ClipboardIcon}" />
+                Value="{DynamicResource ClipboardIcon}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -340,7 +340,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource ClipboardIconSelected}" />
+                                    Value="{DynamicResource ClipboardIconSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -352,7 +352,7 @@
     <Style x:Key="SettingsButton"
            TargetType="Button">
         <Setter Property="Background"
-                Value="{StaticResource SettingsIcon}" />
+                Value="{DynamicResource SettingsIcon}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -378,7 +378,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource SettingsIconSelected}" />
+                                    Value="{DynamicResource SettingsIconSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -390,7 +390,7 @@
     <Style x:Key="TrashButton"
            TargetType="Button">
         <Setter Property="Background"
-                Value="{StaticResource TrashIcon}" />
+                Value="{DynamicResource TrashIcon}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -416,7 +416,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource TrashIconSelected}" />
+                                    Value="{DynamicResource TrashIconSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -428,7 +428,7 @@
     <Style x:Key="HelpButton"
            TargetType="Button">
         <Setter Property="Background"
-                Value="{StaticResource HelpIcon}" />
+                Value="{DynamicResource HelpIcon}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -454,7 +454,7 @@
                         <Trigger Property="IsMouseOver"
                                  Value="True">
                             <Setter Property="Background"
-                                    Value="{StaticResource HelpIconSelected}" />
+                                    Value="{DynamicResource HelpIconSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -510,7 +510,7 @@
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Background"
-                Value="{StaticResource WindowBackgroundBrush}" />
+                Value="{DynamicResource WindowBackgroundBrush}" />
         <Style.Triggers>
             <Trigger Property="IsEnabled"
                      Value="False">
@@ -599,7 +599,7 @@
         <Setter Property="Stylus.IsFlicksEnabled"
                 Value="false" />
         <Setter Property="Foreground"
-                Value="{StaticResource ScrollBarThumbColor}" />
+                Value="{DynamicResource ScrollBarThumbColor}" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="Template">
@@ -643,7 +643,7 @@
                                     Value="{DynamicResource ButtonSelectBrush}"
                                     TargetName="Thumb" />
                             <Setter Property="Foreground"
-                                    Value="{StaticResource ScrollBarThumbOnHoverColor}" />
+                                    Value="{DynamicResource ScrollBarThumbOnHoverColor}" />
                         </Trigger>
                         <Trigger SourceName="Thumb"
                                  Property="IsDragging"
@@ -652,7 +652,7 @@
                                     Value="{DynamicResource DarkBrush}"
                                     TargetName="Thumb" />
                             <Setter Property="Foreground"
-                                    Value="{StaticResource ScrollBarThumbOnDragColor}" />
+                                    Value="{DynamicResource ScrollBarThumbOnDragColor}" />
                         </Trigger>
                         <Trigger Property="IsEnabled"
                                  Value="false">
