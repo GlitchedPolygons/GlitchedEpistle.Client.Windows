@@ -1,18 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Control colors -->
-    <Color x:Key="WindowBackgroundColor">#000000</Color>
-    <Color x:Key="ControlNormalColor">#353535</Color>
-    <Color x:Key="ControlNormalForegroundColor">AliceBlue</Color>
-    <Color x:Key="ControlMouseOverColor">#4f6066</Color>
-    <Color x:Key="ControlPressedColor">#699bad</Color>
-    <Color x:Key="DisabledControlColor">#888888</Color>
-    <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
-
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush"
-                     Color="{DynamicResource WindowBackgroundColor}" />
+                     Color="#000000" />
 
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
@@ -29,7 +20,7 @@
 
     <!-- Background brush for chatroom -->
     <SolidColorBrush x:Key="ChatroomBackgroundBrush"
-                     Color="{DynamicResource WindowBackgroundColor}"/>
+                     Color="#000000"/>
 
     <SolidColorBrush x:Key="SeparatorColorBrush"
                      Color="AliceBlue" />
@@ -132,6 +123,14 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <!-- Control colors -->
+    <Color x:Key="ControlNormalColor">#353535</Color>
+    <Color x:Key="ControlNormalForegroundColor">AliceBlue</Color>
+    <Color x:Key="ControlMouseOverColor">#4f6066</Color>
+    <Color x:Key="ControlPressedColor">#699bad</Color>
+    <Color x:Key="DisabledControlColor">#888888</Color>
+    <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
 
     <!-- Default Button -->
     <Style TargetType="Button">
