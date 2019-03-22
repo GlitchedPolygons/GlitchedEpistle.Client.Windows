@@ -459,6 +459,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Constants\Paths.cs" />
+    <Compile Include="Constants\Themes.cs" />
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
