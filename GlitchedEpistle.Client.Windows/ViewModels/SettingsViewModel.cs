@@ -151,7 +151,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             try
             {
-                Application.Current.Resources.MergedDictionaries[0] = new ResourceDictionary { Source = new Uri(path, UriKind.Relative) };
+                Application.Current.Resources.MergedDictionaries.Clear();
+                Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary { Source = new Uri(path, UriKind.Relative) });
             }
             catch (Exception e)
             {
