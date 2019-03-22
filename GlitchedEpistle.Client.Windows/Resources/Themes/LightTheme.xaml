@@ -60,7 +60,7 @@
     <!-- Grid Splitter -->
     <Style TargetType="GridSplitter">
         <Setter Property="Background"
-                Value="#a0a9aa" />
+                Value="#757575" />
     </Style>
 
     <!-- Labels -->
