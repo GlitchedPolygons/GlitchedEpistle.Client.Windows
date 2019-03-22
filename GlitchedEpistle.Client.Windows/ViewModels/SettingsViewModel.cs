@@ -21,9 +21,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         public const string DEFAULT_USERNAME = "user";
-        private const string DARK_THEME = "Dark polygons";
-        private const string LIGHT_THEME = "Light polygons";
-        private const string OLED_THEME = "OLED";
 
         // Injections:
         private readonly User user;
@@ -93,7 +90,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Load up the current settings into the UI on load.
             Username = settings[nameof(Username), DEFAULT_USERNAME];
-            oldTheme = newTheme = settings["Theme", DARK_THEME];
+            //oldTheme = newTheme = settings["Theme", DARK_THEME];
+            OnChangedTheme(oldTheme);
         }
 
         private void OnClosed(object commandParam)
@@ -132,32 +130,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             string path;
-            switch (theme)
-            {
-                default:
-                case DARK_THEME:
-                    newTheme = DARK_THEME;
-                    path = "/Resources/Themes/DarkTheme.xaml";
-                    break;
-                case LIGHT_THEME:
-                    newTheme = LIGHT_THEME;
-                    path = "/Resources/Themes/LightTheme.xaml";
-                    break;
-                case OLED_THEME:
-                    newTheme = OLED_THEME;
-                    path = "/Resources/Themes/OLEDTheme.xaml";
-                    break;
-            }
-
-            try
-            {
-                var app = Application.Current as App;
-                app.Resources.MergedDictionaries[0] = new ResourceDictionary { Source = new Uri(path, UriKind.Relative) };
-            }
-            catch (Exception e)
-            {
-                logger.LogError($"Theme \"{path}\" couldn't be applied. Reverting to default theme... Thrown exception: {e.ToString()}");
-            }
+            
         }
 
         private async void OnClickedRedeem(object commandParam)
