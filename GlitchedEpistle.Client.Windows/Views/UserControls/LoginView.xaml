@@ -34,7 +34,7 @@
                  MinWidth="250"
                  IsReadOnly="True"
                  Text="{Binding UserId}"
-                 Style="{StaticResource TextBox}"
+                 Style="{DynamicResource TextBox}"
                  TextChanged="UserIdTextBox_OnTextChanged" />
 
         <Label Content="Password"
@@ -44,7 +44,7 @@
                      Height="23"
                      Margin="5,0,0,0"
                      MinWidth="250"
-                     Style="{StaticResource PasswordBox}"
+                     Style="{DynamicResource PasswordBox}"
                      PasswordChanged="PasswordTextBox_OnTextChanged">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
@@ -62,7 +62,7 @@
                  Margin="5,0,0,0"
                  MinWidth="250"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                 Style="{StaticResource TextBox}"
+                 Style="{DynamicResource TextBox}"
                  TextChanged="TotpTextBox_OnTextChanged" />
 
         <StackPanel Orientation="Horizontal"

@@ -33,7 +33,7 @@
                      Height="23"
                      Margin="5,0,0,0"
                      MinWidth="250"
-                     Style="{StaticResource TextBox}"
+                     Style="{DynamicResource TextBox}"
                      ToolTip="Your username that will be displayed to other users. This is not the user id! The user id is the unique identifier that's assigned to you after registering, and does not change."
                      Text="{Binding Username}" />
 
@@ -44,7 +44,7 @@
                          Height="23"
                          Margin="5,0,0,0"
                          MinWidth="250"
-                         Style="{StaticResource PasswordBox}"
+                         Style="{DynamicResource PasswordBox}"
                          ToolTip="Your desired login password.">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
@@ -62,7 +62,7 @@
                          Margin="5,0,0,0"
                          MinWidth="250"
                          ToolTip="Type your password again for safety's sake."
-                         Style="{StaticResource PasswordBox}">
+                         Style="{DynamicResource PasswordBox}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
                         <i:InvokeCommandAction Command="{Binding PasswordChangedCommand2}"

@@ -9,11 +9,11 @@
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource WindowBackgroundBrush}">
+        Background="{DynamicResource WindowBackgroundBrush}">
     <StackPanel Width="320"
                 Margin="10"
                 IsEnabled="{Binding UIEnabled}">
-        <TextBlock Style="{StaticResource TextBlock}"
+        <TextBlock Style="{DynamicResource TextBlock}"
                    FontSize="16"
                    TextWrapping="Wrap"
                    TextAlignment="Center"
@@ -32,9 +32,9 @@
                  Name="ConvoIdTextBox"
                  ToolTip="The conversation's unique identifier."
                  Text="{Binding ConvoId}"
-                 Style="{StaticResource TextBox}" />
+                 Style="{DynamicResource TextBox}" />
         <Label Content="Convo Password" />
-        <PasswordBox Style="{StaticResource PasswordBox}"
+        <PasswordBox Style="{DynamicResource PasswordBox}"
                      Name="ConvoPasswordBox"
                      Height="23"
                      Margin="5,0,0,0" />

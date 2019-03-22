@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/help-icon-white.png"
         Title="HelpView"
         Height="450"

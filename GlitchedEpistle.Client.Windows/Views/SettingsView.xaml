@@ -6,7 +6,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"
         WindowStartupLocation="CenterScreen"
@@ -30,7 +30,7 @@
                  Height="23"
                  MaxLength="25"
                  Name="UsernameTextBox"
-                 Style="{StaticResource TextBox}"
+                 Style="{DynamicResource TextBox}"
                  Text="{Binding Username}"
                  TextWrapping="Wrap"
                  MouseDoubleClick="UsernameTextBox_SelectText"
@@ -49,7 +49,7 @@
                      MaxLength="42"
                      TextWrapping="Wrap"
                      TextAlignment="Left"
-                     Style="{StaticResource TextBox}"
+                     Style="{DynamicResource TextBox}"
                      VerticalContentAlignment="Center"
                      TextChanged="CouponTextBox_OnTextChanged"
                      ToolTip="Enter your Epistle coupon here to extend your subscription." />
@@ -96,7 +96,7 @@
             <Button Width="25"
                     Height="25"
                     Margin="0,0,65,0"
-                    Style="{StaticResource TrashButton}"
+                    Style="{DynamicResource TrashButton}"
                     Command="{Binding DeleteButtonCommand}"
                     ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this." />
 

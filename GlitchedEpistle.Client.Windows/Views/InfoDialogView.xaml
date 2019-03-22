@@ -11,7 +11,7 @@
         Icon="/Resources/Images/help-icon-white.png"
         MaxWidth="{Binding MaxWidth}"
         Title="{Binding Title}"
-        Background="{StaticResource WindowBackgroundBrush}">
+        Background="{DynamicResource WindowBackgroundBrush}">
 
     <Grid Margin="15">
         <Grid.ColumnDefinitions>
@@ -21,7 +21,7 @@
         <StackPanel>
             <TextBlock TextWrapping="Wrap"
                        Text="{Binding Text}"
-                       Style="{StaticResource TextBlock}" />
+                       Style="{DynamicResource TextBlock}" />
 
             <Button Content="{Binding OkButtonText}"
                     HorizontalAlignment="Right"
