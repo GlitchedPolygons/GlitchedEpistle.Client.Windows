@@ -12,7 +12,7 @@
 
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush"
-                     Color="{StaticResource WindowBackgroundColor}" />
+                     Color="{DynamicResource WindowBackgroundColor}" />
 
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
@@ -37,15 +37,15 @@
                      Color="#333232" />
 
     <ImageBrush x:Key="HelpIcon"
-                ImageSource="/Resources/Images/help-icon-white.png" />
+                ImageSource="/Resources/Images/help-icon-black.png" />
     <ImageBrush x:Key="HelpIconSelected"
                 ImageSource="/Resources/Images/help-icon-selected.png" />
     <ImageBrush x:Key="ResetIcon"
-                ImageSource="/Resources/Images/reset-icon-white.png" />
+                ImageSource="/Resources/Images/reset-icon-black.png" />
     <ImageBrush x:Key="ResetIconSelected"
                 ImageSource="/Resources/Images/reset-icon-selected.png" />
     <ImageBrush x:Key="TrashIcon"
-                ImageSource="/Resources/Images/trash-icon-white.png" />
+                ImageSource="/Resources/Images/trash-icon-black.png" />
     <ImageBrush x:Key="TrashIconSelected"
                 ImageSource="/Resources/Images/trash-icon-selected.png" />
     <ImageBrush x:Key="ClipboardIcon"
@@ -53,7 +53,7 @@
     <ImageBrush x:Key="ClipboardIconSelected"
                 ImageSource="/Resources/Images/clipboard-icon-selected.png" />
     <ImageBrush x:Key="SettingsIcon"
-                ImageSource="/Resources/Images/settings-icon-white.png" />
+                ImageSource="/Resources/Images/settings-icon-black.png" />
     <ImageBrush x:Key="SettingsIconSelected"
                 ImageSource="/Resources/Images/settings-icon-selected.png" />
 
@@ -66,20 +66,20 @@
     <!-- Labels -->
     <Style TargetType="Label">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <Style x:Key="TextBlock"
            TargetType="TextBlock">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <!-- Message View Text (label) -->
     <Style x:Key="MessageLabelTextBox"
            TargetType="TextBox">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
@@ -90,9 +90,9 @@
     <Style x:Key="TextBox"
            TargetType="TextBox">
         <Setter Property="Background"
-                Value="#404040" />
+                Value="{DynamicResource ControlNormalColor}" />
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
         <Style.Triggers>
             <Trigger Property="IsEnabled"
                      Value="False">
@@ -110,15 +110,15 @@
     <Style x:Key="PasswordBox"
            TargetType="PasswordBox">
         <Setter Property="Background"
-                Value="#404040" />
+                Value="{DynamicResource ControlNormalColor}" />
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <!-- Checkboxes -->
     <Style TargetType="CheckBox">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <!-- Image Attachment Preview -->
