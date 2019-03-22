@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/reset-icon-white.png"
         Title="Import user from backup"
         WindowStartupLocation="CenterScreen"
@@ -17,7 +17,7 @@
 
         <Label Content="Selected file:" />
 
-        <TextBlock Style="{StaticResource TextBlock}"
+        <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
                    Text="{Binding BackupFilePath}" />
 
@@ -41,9 +41,9 @@
 
         <PasswordBox Name="PasswordBox"
                      Height="23"
-                     Style="{StaticResource PasswordBox}" />
+                     Style="{DynamicResource PasswordBox}" />
 
-        <TextBlock Style="{StaticResource TextBlock}"
+        <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
                    Margin="0,10,0,0"
                    Text="Please note that by clicking on import you agree to IRREVERSIBLY override the current Epistle config (any existing convos stored on the device are deleted!). The app will automatically restart if import was successful." />

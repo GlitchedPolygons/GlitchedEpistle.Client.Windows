@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         Title="Create Convo"
@@ -52,12 +52,12 @@
                  Margin="5,0,0,0"
                  Text="{Binding Name}"
                  ToolTip="Give your convo a meaningful and unique name!"
-                 Style="{StaticResource TextBox}" />
+                 Style="{DynamicResource TextBox}" />
 
         <Label Content="Description"
                ToolTip="Describe what this conversation is about." />
 
-        <TextBox Style="{StaticResource TextBox}"
+        <TextBox Style="{DynamicResource TextBox}"
                  AcceptsReturn="True"
                  MaxLength="100"
                  MaxWidth="315"
@@ -84,7 +84,7 @@
         <PasswordBox Name="Password"
                      Height="23"
                      Margin="5,0,0,0"
-                     Style="{StaticResource PasswordBox}">
+                     Style="{DynamicResource PasswordBox}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
                     <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
@@ -99,7 +99,7 @@
         <PasswordBox Name="Password2"
                      Height="23"
                      Margin="5,0,0,0"
-                     Style="{StaticResource PasswordBox}">
+                     Style="{DynamicResource PasswordBox}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
                     <i:InvokeCommandAction Command="{Binding Password2ChangedCommand}"
@@ -116,7 +116,7 @@
                  MaxLength="100"
                  Margin="5,0,0,0"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                 Style="{StaticResource TextBox}" />
+                 Style="{DynamicResource TextBox}" />
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"

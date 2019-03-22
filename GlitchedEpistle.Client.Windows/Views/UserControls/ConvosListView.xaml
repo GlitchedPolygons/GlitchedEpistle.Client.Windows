@@ -8,7 +8,7 @@
 
     <ListBox Name="ConvosListBox"
              ItemsSource="{Binding Convos}"
-             Style="{StaticResource ConvosListBox}"
+             Style="{DynamicResource ConvosListBox}"
              VirtualizingStackPanel.ScrollUnit="Pixel"
              VirtualizingStackPanel.IsVirtualizing="True"
              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
