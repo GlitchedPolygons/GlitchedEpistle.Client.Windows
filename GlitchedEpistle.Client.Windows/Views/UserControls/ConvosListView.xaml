@@ -25,7 +25,8 @@
                 <Button Content="{Binding Name}"
                         ToolTip="{Binding Description}"
                         Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
-                        CommandParameter="{Binding}">
+                        CommandParameter="{Binding}"
+                        Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
                     <Button.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="{Binding Id}" 
@@ -33,9 +34,15 @@
                                       IsEnabled="False" 
                                       IsHitTestVisible="False"/>
                             <Separator/>
-                            <MenuItem Header="Open Convo"/>
-                            <MenuItem Header="Edit Convo"/>
-                            <MenuItem Header="Copy Convo ID to Clipboard"/>
+                            <MenuItem Header="Open Convo"
+                                      Command="{Binding PlacementTarget.Tag.OpenConvoCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                      CommandParameter="{Binding}"/>
+                            <MenuItem Header="Edit Convo"
+                                      Command="{Binding PlacementTarget.Tag.EditConvoCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                      CommandParameter="{Binding}"/>
+                            <MenuItem Header="Copy Convo ID to Clipboard" 
+                                      Command="{Binding PlacementTarget.Tag.CopyConvoIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                      CommandParameter="{Binding}"/>
                         </ContextMenu>
                     </Button.ContextMenu>
                 </Button>
