@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         ResizeMode="NoResize"
         Title="Confirm drag 'n' drop action"
         WindowStartupLocation="CenterScreen" 
@@ -18,7 +18,7 @@
                        Margin="5,0"
                        FontWeight="Bold"
                        Text="Picture.png"
-                       Style="{StaticResource TextBlock}"/>
+                       Style="{DynamicResource TextBlock}"/>
             <Label Content="Full path:"/>
             <TextBlock TextWrapping="Wrap" 
                        Name="FilePathLabel"
@@ -27,7 +27,7 @@
                        FontStyle="Italic" 
                        FontWeight="Thin"
                        Text="C:\Pictures\Picture.png"
-                       Style="{StaticResource TextBlock}" />
+                       Style="{DynamicResource TextBlock}" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Right">

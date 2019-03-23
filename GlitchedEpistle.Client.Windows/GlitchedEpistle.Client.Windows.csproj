@@ -459,6 +459,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Constants\Paths.cs" />
+    <Compile Include="Constants\Themes.cs" />
     <Compile Include="Converters\GridLengthConverter.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
@@ -569,6 +570,14 @@
     <Compile Include="Views\UserExportView.xaml.cs">
       <DependentUpon>UserExportView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Resources\Themes\OLEDTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Themes\LightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Resources\Themes\DarkTheme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

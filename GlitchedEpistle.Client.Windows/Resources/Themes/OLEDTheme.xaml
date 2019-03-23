@@ -3,7 +3,7 @@
 
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush"
-                     Color="#101010" />
+                     Color="#000000" />
 
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
@@ -19,10 +19,8 @@
     </Style>
 
     <!-- Background brush for chatroom -->
-    <ImageBrush x:Key="ChatroomBackgroundBrush"
-                ImageSource="/Resources/Images/glitched-polygons-blue-1440p.png"
-                TileMode="Tile"
-                Stretch="UniformToFill" />
+    <SolidColorBrush x:Key="ChatroomBackgroundBrush"
+                     Color="#000000"/>
 
     <SolidColorBrush x:Key="SeparatorColorBrush"
                      Color="AliceBlue" />

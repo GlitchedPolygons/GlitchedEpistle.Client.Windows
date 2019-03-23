@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         mc:Ignorable="d"
         Title="Export User"
         ResizeMode="NoResize"
@@ -25,7 +25,7 @@
                      TextWrapping="Wrap"
                      UndoLimit="10"
                      Name="OutputFilePathTextBox"
-                     Style="{StaticResource TextBox}"
+                     Style="{DynamicResource TextBox}"
                      TextChanged="OutputFilePathTextBox_OnTextChanged"
                      Text="{Binding OutputFilePath}"
                      IsReadOnly="True" />
@@ -36,14 +36,14 @@
         <StackPanel Orientation="Horizontal"
                     Margin="0,15,0,0">
             <Label Content="Password" />
-            <PasswordBox Style="{StaticResource PasswordBox}"
+            <PasswordBox Style="{DynamicResource PasswordBox}"
                          MinWidth="125"
                          Name="PasswordBox"
                          PasswordChanged="PasswordBox_OnPasswordChanged"
                          Margin="0,0,0,0" />
             <Label Content="Retype Password"
                    Margin="10,0,0,0" />
-            <PasswordBox Style="{StaticResource PasswordBox}"
+            <PasswordBox Style="{DynamicResource PasswordBox}"
                          MinWidth="125"
                          PasswordChanged="PasswordBox2_OnPasswordChanged"
                          Name="PasswordBox2" />
@@ -52,7 +52,7 @@
         <TextBlock Margin="0,15,0,0"
                    MinHeight="50"
                    MaxWidth="400"
-                   Style="{StaticResource TextBlock}"
+                   Style="{DynamicResource TextBlock}"
                    Text="{Binding ExportLabel}"
                    TextWrapping="Wrap" />
 

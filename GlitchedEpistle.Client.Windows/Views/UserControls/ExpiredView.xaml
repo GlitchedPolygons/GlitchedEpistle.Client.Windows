@@ -10,7 +10,7 @@
         <Label Content="Oh no! Your Glitched Epistle account has expired."
                FontWeight="Bold"
                FontSize="16" />
-        <TextBlock Style="{StaticResource TextBlock}"
+        <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
                    Margin="5"
                    Text="In order to continue using Glitched Epistle and enjoy its cryptographic advantages in communication, please buy a 1-month (30 days) access token." />

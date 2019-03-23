@@ -197,7 +197,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         if (userCreationResponse is null)
                         {
                             logger.LogError("The user creation process failed server-side. Reason unknown; please make an admin check out the server's log files!");
-                            Application.Current.Dispatcher.Invoke(() =>
+                            Application.Current?.Dispatcher?.Invoke(() =>
                             {
                                 UIEnabled = true;
                                 pendingAttempt = false;
@@ -226,7 +226,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     ErrorMessage = errorMsg;
                 }
 
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     UIEnabled = true;
                     pendingAttempt = false;

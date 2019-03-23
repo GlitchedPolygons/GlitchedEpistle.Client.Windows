@@ -26,7 +26,7 @@
         <converters:GridLengthConverter x:Key="GridLengthConverter" />
     </Window.Resources>
 
-    <Grid Background="{StaticResource ChatroomBackgroundBrush}">
+    <Grid Background="{DynamicResource ChatroomBackgroundBrush}">
 
         <Grid.ColumnDefinitions>
             <!-- Left Column -->
@@ -44,7 +44,7 @@
         <StackPanel Grid.Row="0"
                     Grid.Column="0"
                     IsEnabled="{Binding UIEnabled}"
-                    Background="{StaticResource WindowBackgroundBrush}">
+                    Background="{DynamicResource WindowBackgroundBrush}">
 
             <!-- Profile -->
             <StackPanel Name="ProfileStackPanel"
@@ -100,7 +100,7 @@
                     <Rectangle Width="1"
                                Opacity="0.5"
                                VerticalAlignment="Stretch"
-                               Stroke="{StaticResource SeparatorColorBrush}" />
+                               Stroke="{DynamicResource SeparatorColorBrush}" />
                     <Button Content="Join Convo"
                             Padding="6 4 6 4"
                             ToolTip="Click here to join an existing conversation."
@@ -108,7 +108,7 @@
                     <Rectangle Width="1"
                                Opacity="0.5"
                                VerticalAlignment="Stretch"
-                               Stroke="{StaticResource SeparatorColorBrush}" />
+                               Stroke="{DynamicResource SeparatorColorBrush}" />
                     <Button Content="Change Password"
                             Padding="6 4 6 4"
                             ToolTip="Click here to change the password you use to access Glitched Epistle."
@@ -116,7 +116,7 @@
                     <Rectangle Width="1"
                                Opacity="0.5"
                                VerticalAlignment="Stretch"
-                               Stroke="{StaticResource SeparatorColorBrush}" />
+                               Stroke="{DynamicResource SeparatorColorBrush}" />
                     <Button Content="Logout"
                             Padding="6 4 6 4"
                             ToolTip="Click here to log out of your Glitched Epistle account."
@@ -128,7 +128,7 @@
             <Rectangle Opacity="0.5"
                        Height="1"
                        HorizontalAlignment="Stretch"
-                       Stroke="{StaticResource SeparatorColorBrush}" />
+                       Stroke="{DynamicResource SeparatorColorBrush}" />
 
             <!-- Convos list -->
             <ContentControl Name="ConvosListControl"
@@ -148,7 +148,7 @@
         <!-- Convos list collapse button -->
         <Button Grid.Column="1"
                 Grid.Row="0"
-                Style="{StaticResource CollapseButton}"
+                Style="{DynamicResource CollapseButton}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Content="&lt;"
@@ -164,7 +164,7 @@
                     Height="25"
                     Canvas.Top="5"
                     Canvas.Right="5"
-                    Style="{StaticResource HelpButton}"
+                    Style="{DynamicResource HelpButton}"
                     Command="{Binding HelpButtonCommand}"
                     ToolTip="Open up the tutorial window." />
 
@@ -174,7 +174,7 @@
                     Canvas.Top="5"
                     Canvas.Right="35"
                     IsEnabled="{Binding UIEnabled}"
-                    Style="{StaticResource SettingsButton}"
+                    Style="{DynamicResource SettingsButton}"
                     Command="{Binding SettingsButtonCommand}"
                     ToolTip="Open up the settings window." />
 
@@ -184,7 +184,7 @@
                     Canvas.Top="5"
                     Canvas.Right="65"
                     Command="{Binding ResetWindowButtonCommand}"
-                    Style="{StaticResource ResetMainWindowButton}"
+                    Style="{DynamicResource ResetMainWindowButton}"
                     ToolTip="Reset the main window's size and layout."
                     Click="ResetWindowButton_Click" />
         </Canvas>

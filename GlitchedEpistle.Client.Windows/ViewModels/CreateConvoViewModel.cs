@@ -130,7 +130,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void PrintMessage(string message, bool error)
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 ResetMessages();
 
@@ -174,21 +174,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (!totpValid)
                 {
                     PrintMessage("Two-Factor Authentication failed! Convo creation request rejected.", true);
-                    Application.Current.Dispatcher.Invoke(() => CanSubmit = true);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
                     return;
                 }
 
                 if (pw != pw2)
                 {
                     PrintMessage("The password does not match its confirmation; please make sure that you re-type your password correctly!", true);
-                    Application.Current.Dispatcher.Invoke(() => CanSubmit = true);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
                     return;
                 }
 
                 if (pw.Length < 5)
                 {
                     PrintMessage("Your password is too weak; make sure that it has at least >5 characters!", true);
-                    Application.Current.Dispatcher.Invoke(() => CanSubmit = true);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
                     return;
                 }
 
@@ -228,7 +228,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     logger.LogMessage($"Convo {Name} created successfully under the id {id}.");
 
                     // Display success message and keep UI disabled.
-                    Application.Current.Dispatcher.Invoke(() => CanSubmit = false);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = false);
                     PrintMessage($"The convo {Name} has been created successfully under the id {id}. You can close this window now.", false);
                 }
                 else
@@ -236,7 +236,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     // If convo creation failed for some reason, the returned
                     // id string is null and the user is notified accordingly.
                     PrintMessage($"Convo {Name} couldn't be created.", true);
-                    Application.Current.Dispatcher.Invoke(() => CanSubmit = true);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
                     logger.LogError($"Convo {Name} couldn't be created. Reason unknown.");
                 }
             });

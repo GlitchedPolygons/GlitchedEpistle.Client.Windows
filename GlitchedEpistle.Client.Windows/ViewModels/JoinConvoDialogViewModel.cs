@@ -102,7 +102,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 if (!await convoService.JoinConvo(ConvoId, pw, user.Id, user.Token.Item2))
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         ResetMessages();
                         ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
@@ -134,7 +134,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 convoProvider.Convos.Add(convo);
                 convoProvider.Save();
 
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     UIEnabled = true;
                     eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);

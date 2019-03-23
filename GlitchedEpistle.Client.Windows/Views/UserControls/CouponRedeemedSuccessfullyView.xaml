@@ -11,12 +11,12 @@
         <Label Content="Thank you so much for your trust in Glitched Epistle!"
                FontWeight="Bold"
                FontSize="16" />
-        <TextBlock Style="{StaticResource TextBlock}"
+        <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
                    Margin="5"
                    Text="{Binding ThankYouNote}" />
         <Separator Margin="5,20,5,16" />
-        <TextBlock Style="{StaticResource TextBlock}"
+        <TextBlock Style="{DynamicResource TextBlock}"
                    Margin="5"
                    TextWrapping="Wrap"
                    TextAlignment="Center"

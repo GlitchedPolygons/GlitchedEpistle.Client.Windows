@@ -1,16 +1,18 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Prism.Events;
 
@@ -45,6 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #region Commands
         public ICommand ClosedCommand { get; }
+        public ICommand ChangeThemeCommand { get; }
         public ICommand DeleteButtonCommand { get; }
         public ICommand CancelButtonCommand { get; }
         public ICommand RevertButtonCommand { get; }
@@ -61,6 +64,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
+        private string oldTheme, newTheme;
+
         public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory)
         {
             this.user = user;
@@ -72,6 +77,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.viewModelFactory = viewModelFactory;
 
             ClosedCommand = new DelegateCommand(OnClosed);
+            ChangeThemeCommand = new DelegateCommand(OnChangedTheme);
             DeleteButtonCommand = new DelegateCommand(OnClickedDelete);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
@@ -85,13 +91,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Load up the current settings into the UI on load.
             Username = settings[nameof(Username), DEFAULT_USERNAME];
+            oldTheme = newTheme = settings["Theme", Themes.DARK_THEME];
+            OnChangedTheme(oldTheme);
         }
 
         private void OnClosed(object commandParam)
         {
-            if (!cancelled)
+            if (cancelled)
+            {
+                OnChangedTheme(oldTheme);
+            }
+            else
             {
                 settings[nameof(Username)] = Username;
+                settings["Theme"] = newTheme;
                 settings.Save();
 
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
@@ -107,6 +120,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedRevert(object commandParam)
         {
             Username = DEFAULT_USERNAME;
+        }
+
+        private void OnChangedTheme(object commandParam)
+        {
+            string theme = commandParam as string;
+            if (theme.NullOrEmpty())
+            {
+                return;
+            }
+
+            var app = Application.Current as App;
+            if (app is null)
+            {
+                return;
+            }
+
+            if (app.ChangeTheme(theme))
+            {
+                newTheme = theme;
+            }
         }
 
         private async void OnClickedRedeem(object commandParam)

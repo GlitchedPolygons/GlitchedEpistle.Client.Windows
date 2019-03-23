@@ -17,6 +17,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             this.filePath = filePath;
             FilePathLabel.Text = filePath;
             FileNameLabel.Text = Path.GetFileName(filePath);
+            Focus();
         }
 
         private void ExploreButton_Click(object sender, EventArgs e)
