@@ -25,7 +25,20 @@
                 <Button Content="{Binding Name}"
                         ToolTip="{Binding Description}"
                         Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
-                        CommandParameter="{Binding}" />
+                        CommandParameter="{Binding}">
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{Binding Id}" 
+                                      Focusable="False" 
+                                      IsEnabled="False" 
+                                      IsHitTestVisible="False"/>
+                            <Separator/>
+                            <MenuItem Header="Open Convo"/>
+                            <MenuItem Header="Edit Convo"/>
+                            <MenuItem Header="Copy Convo ID to Clipboard"/>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
             </DataTemplate>
         </ListBox.ItemTemplate>
         <ListBox.ItemContainerStyle>
