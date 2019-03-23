@@ -25,6 +25,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         #region Commands
         public ICommand OpenConvoCommand { get; }
+        public ICommand EditConvoCommand { get; }
+        public ICommand CopyConvoIdCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -46,6 +48,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             UpdateList();
 
             OpenConvoCommand = new DelegateCommand(OnClickedOnConvo);
+            EditConvoCommand = new DelegateCommand(OnClickedEditConvo);
+            CopyConvoIdCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => UpdateList());
             eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(_ => UpdateList());
@@ -75,6 +79,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             view.ShowDialog();
+        }
+
+        private void OnClickedEditConvo(object commandParam)
+        {
+
+        }
+
+        private void OnClickedCopyConvoIdToClipboard(object commandParam)
+        {
+
         }
     }
 }
