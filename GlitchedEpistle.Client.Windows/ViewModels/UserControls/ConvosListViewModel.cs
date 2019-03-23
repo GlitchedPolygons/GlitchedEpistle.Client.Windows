@@ -84,7 +84,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedEditConvo(object commandParam)
         {
-            // TODO: implement me!!
+            var convo = commandParam as Convo;
+            if (convo is null)
+            {
+                return;
+            }
+
+            var view = windowFactory.Create<EditConvoMetadataView>(true);
+            var viewModel = viewModelFactory.Create<EditConvoMetadataViewModel>();
+            viewModel.Convo = convo;
+
+            if (view.DataContext is null)
+            {
+                view.DataContext = viewModel;
+            }
+
+            view.ShowDialog();
         }
 
         private void OnClickedCopyConvoIdToClipboard(object commandParam)
