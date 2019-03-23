@@ -117,7 +117,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     errorMessageTimer.Stop();
                     errorMessageTimer.Start();
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         ErrorMessage = "Two-Factor authentication failed!";
                         Totp = string.Empty;

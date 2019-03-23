@@ -37,7 +37,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
                     // Make sure to create the bitmap in the UI thread...
                     if (InvokeRequired)
                     {
-                        return (BitmapSource)Application.Current.Dispatcher.Invoke(
+                        return (BitmapSource)Application.Current?.Dispatcher?.Invoke(
                             method: new Func<Stream, BitmapSource>(CreateBitmapSourceFromBitmap),
                             priority: DispatcherPriority.Normal,
                             arg: memoryStream);
@@ -52,7 +52,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
             }
         }
 
-        private static bool InvokeRequired => Dispatcher.CurrentDispatcher != Application.Current.Dispatcher;
+        private static bool InvokeRequired => Dispatcher.CurrentDispatcher != Application.Current?.Dispatcher;
 
         private static BitmapSource CreateBitmapSourceFromBitmap(Stream stream)
         {

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
@@ -30,13 +31,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             // to close this view when requested to by the ViewModel.
             this.MakeCloseable();
 
-            RedeemCouponButton.IsEnabled = !string.IsNullOrEmpty(CouponTextBox.Text);
+            RedeemCouponButton.IsEnabled = CouponTextBox.Text.NotNullNotEmpty();
         }
 
         // Select the text inside the username's textbox on click.
         private void UsernameTextBox_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
 
             if (textBox == null || textBox.IsKeyboardFocusWithin)
             {
@@ -49,7 +50,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void UsernameTextBox_SelectText(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
             textBox?.SelectAll();
         }
 
@@ -57,7 +58,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             if (sender is TextBox textBox)
             {
-                RedeemCouponButton.IsEnabled = !string.IsNullOrEmpty(textBox.Text);
+                RedeemCouponButton.IsEnabled = textBox.Text.NotNullNotEmpty();
             }
         }
     }

@@ -136,7 +136,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         if (path.NullOrEmpty())
                         {
                             importing = false;
-                            Application.Current.Dispatcher.Invoke(() =>
+                            Application.Current?.Dispatcher?.Invoke(() =>
                             {
                                 UIEnabled = true;
                                 ResetMessages();
@@ -158,7 +158,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     ZipFile.ExtractToDirectory(path, Paths.ROOT_DIRECTORY);
 
                     // Epistle needs to restart in order for the changes to be applied.
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         Application.Current.Shutdown();
                         Process.Start(Application.ResourceAssembly.Location);
@@ -166,7 +166,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 }
                 catch (Exception e)
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         ResetMessages();
                         ErrorMessage = "Import procedure failed: perhaps double check that password (if the backup has one) and make sure that you selected the right file...";
@@ -180,7 +180,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         File.Delete(path);
                     }
                     importing = false;
-                    Application.Current.Dispatcher.Invoke(() => UIEnabled = true);
+                    Application.Current?.Dispatcher?.Invoke(() => UIEnabled = true);
                 }
             });
         }
