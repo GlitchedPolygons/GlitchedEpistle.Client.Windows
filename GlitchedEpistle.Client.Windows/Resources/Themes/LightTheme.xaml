@@ -3,7 +3,7 @@
 
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush"
-                     Color="#101010" />
+                     Color="#bcbaba" />
 
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
@@ -15,28 +15,28 @@
 
     <!-- Radio buttons -->
     <Style TargetType="RadioButton">
-        <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="Foreground" Value="Black"/>
     </Style>
 
     <!-- Background brush for chatroom -->
     <ImageBrush x:Key="ChatroomBackgroundBrush"
-                ImageSource="/Resources/Images/glitched-polygons-blue-1440p.png"
+                ImageSource="/Resources/Images/glitched-polygons-white-1440p.png"
                 TileMode="Tile"
                 Stretch="UniformToFill" />
 
     <SolidColorBrush x:Key="SeparatorColorBrush"
-                     Color="AliceBlue" />
+                     Color="#333232" />
 
     <ImageBrush x:Key="HelpIcon"
-                ImageSource="/Resources/Images/help-icon-white.png" />
+                ImageSource="/Resources/Images/help-icon-black.png" />
     <ImageBrush x:Key="HelpIconSelected"
                 ImageSource="/Resources/Images/help-icon-selected.png" />
     <ImageBrush x:Key="ResetIcon"
-                ImageSource="/Resources/Images/reset-icon-white.png" />
+                ImageSource="/Resources/Images/reset-icon-black.png" />
     <ImageBrush x:Key="ResetIconSelected"
                 ImageSource="/Resources/Images/reset-icon-selected.png" />
     <ImageBrush x:Key="TrashIcon"
-                ImageSource="/Resources/Images/trash-icon-white.png" />
+                ImageSource="/Resources/Images/trash-icon-black.png" />
     <ImageBrush x:Key="TrashIconSelected"
                 ImageSource="/Resources/Images/trash-icon-selected.png" />
     <ImageBrush x:Key="ClipboardIcon"
@@ -44,33 +44,33 @@
     <ImageBrush x:Key="ClipboardIconSelected"
                 ImageSource="/Resources/Images/clipboard-icon-selected.png" />
     <ImageBrush x:Key="SettingsIcon"
-                ImageSource="/Resources/Images/settings-icon-white.png" />
+                ImageSource="/Resources/Images/settings-icon-black.png" />
     <ImageBrush x:Key="SettingsIconSelected"
                 ImageSource="/Resources/Images/settings-icon-selected.png" />
 
     <!-- Grid Splitter -->
     <Style TargetType="GridSplitter">
         <Setter Property="Background"
-                Value="#262626" />
+                Value="#757575" />
     </Style>
 
     <!-- Labels -->
     <Style TargetType="Label">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <Style x:Key="TextBlock"
            TargetType="TextBlock">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <!-- Message View Text (label) -->
     <Style x:Key="MessageLabelTextBox"
            TargetType="TextBox">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
         <Setter Property="Background"
                 Value="Transparent" />
         <Setter Property="BorderBrush"
@@ -81,9 +81,9 @@
     <Style x:Key="TextBox"
            TargetType="TextBox">
         <Setter Property="Background"
-                Value="#404040" />
+                Value="#e0e0e0" />
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
         <Style.Triggers>
             <Trigger Property="IsEnabled"
                      Value="False">
@@ -101,15 +101,15 @@
     <Style x:Key="PasswordBox"
            TargetType="PasswordBox">
         <Setter Property="Background"
-                Value="#404040" />
+                Value="#e0e0e0" />
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <!-- Checkboxes -->
     <Style TargetType="CheckBox">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
     </Style>
 
     <!-- Image Attachment Preview -->
@@ -127,12 +127,12 @@
     </Style>
 
     <!-- Control colors -->
-    <Color x:Key="ControlNormalColor">#353535</Color>
-    <Color x:Key="ControlNormalForegroundColor">AliceBlue</Color>
-    <Color x:Key="ControlMouseOverColor">#4f6066</Color>
-    <Color x:Key="ControlPressedColor">#699bad</Color>
-    <Color x:Key="DisabledControlColor">#888888</Color>
-    <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
+    <Color x:Key="ControlNormalColor">#e0e0e0</Color>
+    <Color x:Key="ControlNormalForegroundColor">Black</Color>
+    <Color x:Key="ControlMouseOverColor">#c0dbdb</Color>
+    <Color x:Key="ControlPressedColor">#acdce5</Color>
+    <Color x:Key="DisabledControlColor">#a0a9aa</Color>
+    <Color x:Key="DisabledForegroundColor">#535656</Color>
 
     <!-- Default Button -->
     <Style TargetType="Button">
@@ -466,9 +466,9 @@
     <!-- Date Picker -->
     <Style TargetType="DatePicker">
         <Setter Property="Foreground"
-                Value="AliceBlue" />
+                Value="Black" />
         <Setter Property="Background"
-                Value="#404040" />
+                Value="#e0e0e0" />
         <Setter Property="BorderBrush"
                 Value="#BFF0F8FF" />
     </Style>
@@ -476,7 +476,7 @@
     <!-- Date Picker TextBox -->
     <Style TargetType="{x:Type DatePickerTextBox}">
         <Setter Property="Background"
-                Value="#404040" />
+                Value="#e0e0e0" />
         <Setter Property="BorderThickness"
                 Value="0" />
         <Setter Property="Template">

@@ -17,7 +17,7 @@
                        Opacity="0.47"
                        Margin="0,3,0,3"
                        VerticalAlignment="Stretch"
-                       Stroke="{StaticResource SeparatorColorBrush}" />
+                       Stroke="{DynamicResource SeparatorColorBrush}" />
 
             <!--{Binding SenderId}-->
             <Label Content="{Binding SenderId}"
@@ -79,7 +79,7 @@
                HorizontalAlignment="Left"
                Source="{Binding Image}"
                Visibility="{Binding ImageVisibility}"
-               Style="{StaticResource ImageAttachmentStyle}">
+               Style="{DynamicResource ImageAttachmentStyle}">
             <Image.InputBindings>
                 <MouseBinding Gesture="LeftClick"
                               Command="{Binding ClickedOnImageAttachmentCommand}" />

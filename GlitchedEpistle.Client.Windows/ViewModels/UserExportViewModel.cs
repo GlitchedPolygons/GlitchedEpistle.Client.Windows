@@ -108,7 +108,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 if (task.IsFaulted || task.IsCanceled || !File.Exists(OutputFilePath))
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         ExportLabel = $"Backup couldn't be exported to {OutputFilePath}... Reason unknown.";
                         OutputFilePath = null;
@@ -119,7 +119,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 
                 if (pw.NullOrEmpty())
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         ExportLabel = "Backup exported successfully! Please keep that file VERY secret (you chose not to encrypt it with a password after all...).";
                         OutputFilePath = null;
@@ -131,7 +131,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 byte[] encryptedBytes = aes.EncryptWithPassword(File.ReadAllBytes(OutputFilePath), pw);
                 File.WriteAllBytes(OutputFilePath, encryptedBytes);
 
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     ExportLabel = "Backup exported successfully! Please don't share that file with anybody.";
                     OutputFilePath = null;

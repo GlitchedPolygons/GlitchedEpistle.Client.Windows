@@ -6,7 +6,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows"
         mc:Ignorable="d"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
         Title="Settings"
         WindowStartupLocation="CenterScreen"
@@ -30,7 +30,7 @@
                  Height="23"
                  MaxLength="25"
                  Name="UsernameTextBox"
-                 Style="{StaticResource TextBox}"
+                 Style="{DynamicResource TextBox}"
                  Text="{Binding Username}"
                  TextWrapping="Wrap"
                  MouseDoubleClick="UsernameTextBox_SelectText"
@@ -49,7 +49,7 @@
                      MaxLength="42"
                      TextWrapping="Wrap"
                      TextAlignment="Left"
-                     Style="{StaticResource TextBox}"
+                     Style="{DynamicResource TextBox}"
                      VerticalContentAlignment="Center"
                      TextChanged="CouponTextBox_OnTextChanged"
                      ToolTip="Enter your Epistle coupon here to extend your subscription." />
@@ -68,6 +68,27 @@
                 ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
                 Command="{Binding ExportUserButtonCommand}" />
 
+        <Label Content="Theme" 
+               Margin="0,8,0,0"
+               Padding="0,0,0,5"/>
+
+        <StackPanel Orientation="Horizontal">
+            <RadioButton Name="DarkThemeRadioButton" 
+                         Content="Dark polygons" 
+                         Command="{Binding ChangeThemeCommand}"
+                         CommandParameter="{Binding ElementName=DarkThemeRadioButton, Path=Content}"/>
+            <RadioButton Content="Light polygons" 
+                         Name="LightThemeRadioButton" 
+                         Margin="2,0" 
+                         Command="{Binding ChangeThemeCommand}"
+                         CommandParameter="{Binding ElementName=LightThemeRadioButton, Path=Content}"/>
+            <RadioButton Content="OLED" 
+                         Margin="2,0"
+                         Name="OLEDThemeRadioButton" 
+                         Command="{Binding ChangeThemeCommand}"
+                         CommandParameter="{Binding ElementName=OLEDThemeRadioButton, Path=Content}"/>
+        </StackPanel>
+
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0,10,0,0">
@@ -75,7 +96,7 @@
             <Button Width="25"
                     Height="25"
                     Margin="0,0,65,0"
-                    Style="{StaticResource TrashButton}"
+                    Style="{DynamicResource TrashButton}"
                     Command="{Binding DeleteButtonCommand}"
                     ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this." />
 

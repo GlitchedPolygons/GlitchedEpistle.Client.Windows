@@ -252,7 +252,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
                 EncryptingVisibility = Visibility.Visible;
                 CanSend = false;
@@ -281,7 +281,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody is null)
             {
-                Application.Current.Dispatcher.Invoke(() => CanSend = true);
+                Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
                 return false;
             }
 
@@ -312,7 +312,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             
             bool success = convoService.PostMessage(ActiveConvo.Id, postParamsDto).GetAwaiter().GetResult();
 
-            Application.Current.Dispatcher.Invoke(() => CanSend = true);
+            Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
             StartAutomaticPulling();
             return success;
         }
@@ -345,7 +345,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            Application.Current.Dispatcher.Invoke(() => Pulling = true);
+            Application.Current?.Dispatcher?.Invoke(() => Pulling = true);
 
             Task.Run(async () =>
             {
@@ -367,11 +367,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                     if (retrievedMessages is null || retrievedMessages.Length == 0)
                     {
-                        Application.Current.Dispatcher.Invoke(() => Pulling = false);
+                        Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
                         return;
                     }
 
-                    Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Visible);
+                    Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = Visibility.Visible);
 
                     Parallel.ForEach(retrievedMessages, message =>
                     {
@@ -384,11 +384,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         }
                     });
 
-                    Application.Current.Dispatcher.Invoke(() => DecryptingVisibility = Visibility.Hidden);
+                    Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = Visibility.Hidden);
                     TransferQueuedMessagesToUI();
                 }
 
-                Application.Current.Dispatcher.Invoke(() => Pulling = false);
+                Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
             });
         }
 
@@ -507,7 +507,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                     if (!SubmitMessage(messageBodyJson))
                     {
-                        Application.Current.Dispatcher.Invoke(() =>
+                        Application.Current?.Dispatcher?.Invoke(() =>
                         {
                             var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                             errorView.ShowDialog();
@@ -519,7 +519,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
                         errorView.ShowDialog();

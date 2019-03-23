@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Icon="/Resources/Images/epistle-icon.png"
-        Background="{StaticResource WindowBackgroundBrush}"
+        Background="{DynamicResource WindowBackgroundBrush}"
         Title="Image Viewer"
         MinWidth="250"
         MinHeight="250"
