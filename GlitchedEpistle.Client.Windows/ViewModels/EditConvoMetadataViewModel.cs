@@ -82,7 +82,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnSubmit(object commandParam)
         {
-            var totp = commandParam as string;
+            string totp = commandParam as string;
 
             if (totp.NullOrEmpty())
             {
