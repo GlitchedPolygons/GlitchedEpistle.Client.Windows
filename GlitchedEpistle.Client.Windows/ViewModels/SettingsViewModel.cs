@@ -3,15 +3,16 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Prism.Events;
 
@@ -90,7 +91,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Load up the current settings into the UI on load.
             Username = settings[nameof(Username), DEFAULT_USERNAME];
-            //oldTheme = newTheme = settings["Theme", DARK_THEME];
+            oldTheme = newTheme = settings["Theme", Themes.DARK_THEME];
             OnChangedTheme(oldTheme);
         }
 
@@ -129,8 +130,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            string path;
-            
+            var app = Application.Current as App;
+            if (app is null)
+            {
+                return;
+            }
+
+            if (app.ChangeTheme(theme))
+            {
+                newTheme = theme;
+            }
         }
 
         private async void OnClickedRedeem(object commandParam)

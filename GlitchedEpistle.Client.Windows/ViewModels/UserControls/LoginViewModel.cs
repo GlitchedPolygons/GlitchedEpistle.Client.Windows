@@ -87,7 +87,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (!await connectionTest.TestConnection())
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         pendingAttempt = false;
                         UIEnabled = true;
@@ -116,7 +116,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
                 }
 
-                Application.Current.Dispatcher.Invoke(() =>
+                Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     pendingAttempt = false;
                     UIEnabled = true;

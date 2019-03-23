@@ -116,6 +116,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// <returns>Whether the theme change occurred or not (e.g. in case of changing to a theme that's already active, or in case of a failure, this method returns <c>false</c>).</returns>
         public bool ChangeTheme(string theme)
         {
+            if (theme.NullOrEmpty() || theme.Equals(CurrentTheme))
+            {
+                return false;
+            }
+
             string path = null;
             ILogger logger = container?.Resolve<ILogger>();
 
@@ -141,6 +146,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             try
             {
                 Resources.MergedDictionaries[0] = new ResourceDictionary { Source = new Uri(path, UriKind.Relative) };
+                CurrentTheme = theme;
                 return true;
             }
             catch (Exception e)
