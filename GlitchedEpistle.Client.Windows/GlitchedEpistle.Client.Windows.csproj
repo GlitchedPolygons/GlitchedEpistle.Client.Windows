@@ -481,6 +481,7 @@
     <Compile Include="Services\Settings\SettingsJson.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\CreateConvoViewModel.cs" />
+    <Compile Include="ViewModels\EditConvoMetadataViewModel.cs" />
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\ImageViewerViewModel.cs" />
@@ -511,6 +512,9 @@
     </Compile>
     <Compile Include="Views\CreateConvoView.xaml.cs">
       <DependentUpon>CreateConvoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditConvoMetadataView.xaml.cs">
+      <DependentUpon>EditConvoMetadataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GeneratingKeyView.xaml.cs">
       <DependentUpon>GeneratingKeyView.xaml</DependentUpon>
@@ -595,6 +599,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateConvoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditConvoMetadataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -109,7 +109,7 @@
         </PasswordBox>
 
         <Label Content="2FA TOTP"
-               ToolTip="Your user password." />
+               ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
 
         <TextBox Name="TotpTextBox"
                  Height="23"
