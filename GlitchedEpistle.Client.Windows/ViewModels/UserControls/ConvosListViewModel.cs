@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -83,12 +84,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedEditConvo(object commandParam)
         {
-
+            // TODO: implement me!!
         }
 
         private void OnClickedCopyConvoIdToClipboard(object commandParam)
         {
+            var convo = commandParam as Convo;
+            if (convo is null)
+            {
+                return;
+            }
 
+            Clipboard.SetText(convo.Id);
         }
     }
 }
