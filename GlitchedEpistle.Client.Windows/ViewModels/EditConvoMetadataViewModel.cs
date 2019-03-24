@@ -15,6 +15,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Prism.Events;
@@ -218,7 +219,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         dir.DeleteRecursively();
                     }
 
-                    // TODO: Raise some sort of ChangedConvosList event here
+                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id));
                 });
             }
         }
@@ -302,7 +303,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 PrintMessage("Convo metadata changed successfully. You can now close this window.", false);
 
                 // TODO: save out convo here!
-                // TODO: Raise some sort of ChangedConvosList event here
+
+                Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
             });
         }
     }
