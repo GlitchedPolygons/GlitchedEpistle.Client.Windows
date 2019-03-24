@@ -7,6 +7,7 @@ using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
@@ -19,6 +20,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly User user;
         private readonly IUserService userService;
         private readonly IConvoService convoService;
+        private readonly IConvoProvider convoProvider;
         private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
         #endregion
 
@@ -76,7 +78,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => expirationUTC;
             set => Set(ref expirationUTC, value);
         }
-        
+
         public bool IsAdmin
         {
             get
@@ -114,11 +116,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IConvoProvider convoProvider)
         {
             this.user = user;
             this.userService = userService;
             this.convoService = convoService;
+            this.convoProvider = convoProvider;
 
             SubmitCommand = new DelegateCommand(OnSubmit);
             CancelCommand = new DelegateCommand(OnCancel);
@@ -166,15 +169,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnSubmit(object commandParam)
         {
+            CanSubmit = false;
+
+            if (oldPw.NullOrEmpty())
+            {
+                PrintMessage("Please authenticate your request by providing the current convo's password.", true);
+                CanSubmit = true;
+                return;
+            }
+
             string totp = commandParam as string;
 
             if (totp.NullOrEmpty())
             {
                 PrintMessage("No 2FA token provided - please take security seriously and authenticate your request!", true);
+                CanSubmit = true;
                 return;
             }
-
-            CanSubmit = false;
 
             if (newPw != newPw2)
             {
@@ -183,7 +194,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            if (newPw.Length < 5)
+            if (newPw.NotNullNotEmpty() && newPw.Length < 5)
             {
                 PrintMessage("Your new password is too weak; make sure that it has at least >5 characters!", true);
                 CanSubmit = true;
@@ -200,8 +211,40 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
                     return;
                 }
-                
-                // TODO: submit here
+
+                var dto = new ConvoChangeMetadataDto();
+
+                if (Name.NotNullNotEmpty() && Name != Convo.Name)
+                {
+                    dto.Name = Name;
+                }
+
+                if (Description.NotNullNotEmpty() && Description != Convo.Description)
+                {
+                    dto.Description = Description;
+                }
+
+                if (ExpirationUTC != Convo.ExpirationUTC)
+                {
+                    dto.ExpirationUTC = ExpirationUTC;
+                }
+
+                if (newPw.NotNullNotEmpty())
+                {
+                    dto.PasswordSHA512 = newPw.SHA512();
+                }
+
+                bool successful = await convoService.ChangeConvoMetadata(Convo.Id, oldPw, user.Id, user.Token.Item2, dto);
+
+                if (!successful)
+                {
+                    PrintMessage("Convo metadata change request was rejected. Perhaps you provided the wrong password or invalid data? Please double check the form.", true);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
+                    return;
+                }
+
+                PrintMessage("Convo metadata changed successfully. You can now close this window.", false);
+                // TODO: save out convo here!
             });
         }
     }
