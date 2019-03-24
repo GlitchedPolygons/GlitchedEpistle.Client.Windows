@@ -69,16 +69,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => expirationUTC;
             set => Set(ref expirationUTC, value);
         }
-
-        private bool isAdmin = false;
+        
         public bool IsAdmin
         {
-            get => isAdmin;
-            set => Set(ref isAdmin, value);
+            get
+            {
+                bool? isAdmin = Convo?.CreatorId.Equals(user?.Id);
+                return isAdmin ?? false;
+            }
         }
         #endregion
 
-        public Convo Convo { get; set; }
+        private Convo convo;
+        public Convo Convo
+        {
+            get => convo;
+            set
+            {
+                convo = value;
+                if (convo != null)
+                {
+                    Name = convo.Name;
+                    Description = convo.Description;
+                    ExpirationUTC = convo.ExpirationUTC;
+                }
+            }
+        }
 
         public EditConvoMetadataViewModel(IConvoService convoService, User user)
         {
