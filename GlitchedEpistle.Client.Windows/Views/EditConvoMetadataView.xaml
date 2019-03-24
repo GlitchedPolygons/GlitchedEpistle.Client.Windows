@@ -183,6 +183,7 @@
                             ToolTip="The entire convo will be immediately deleted on the server without any chance of recovery."
                             Margin="0,0,10,0" />
                     <Button Content="Submit"
+                            IsEnabled="{Binding CanSubmit}"
                             ToolTip="Submits the convo modification request to the Epistle backend."
                             Command="{Binding SubmitCommand}"
                             CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />

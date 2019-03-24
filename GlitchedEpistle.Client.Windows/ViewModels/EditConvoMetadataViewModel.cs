@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,6 +8,7 @@ using System.Windows.Input;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
@@ -15,6 +17,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         private readonly User user;
+        private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
         #endregion
@@ -83,6 +86,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
+        private bool canSubmit = true;
+        public bool CanSubmit
+        {
+            get => canSubmit;
+            set => Set(ref canSubmit, value);
+        }
+
         public bool CanLeave => !IsAdmin;
         #endregion
 
@@ -104,9 +114,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService)
         {
             this.user = user;
+            this.userService = userService;
             this.convoService = convoService;
 
             SubmitCommand = new DelegateCommand(OnSubmit);
@@ -163,7 +174,35 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            // TODO: submit here
+            CanSubmit = false;
+
+            if (newPw != newPw2)
+            {
+                PrintMessage("The new password does not match its confirmation; please make sure that you re-type your password correctly!", true);
+                CanSubmit = true;
+                return;
+            }
+
+            if (newPw.Length < 5)
+            {
+                PrintMessage("Your new password is too weak; make sure that it has at least >5 characters!", true);
+                CanSubmit = true;
+                return;
+            }
+
+            Task.Run(async () =>
+            {
+                bool totpValid = await userService.Validate2FA(user.Id, totp);
+
+                if (!totpValid)
+                {
+                    PrintMessage("Two-Factor Authentication failed! Convo creation request rejected.", true);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
+                    return;
+                }
+                
+                // TODO: submit here
+            });
         }
     }
 }
