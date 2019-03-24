@@ -361,6 +361,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     dto.PasswordSHA512 = newPw.SHA512();
                 }
 
+                // TODO: handle banned participants here
+
                 bool successful = await convoService.ChangeConvoMetadata(Convo.Id, oldPw, user.Id, user.Token.Item2, dto);
 
                 if (!successful)
@@ -391,6 +393,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         convo.PasswordSHA512 = dto.PasswordSHA512;
                     }
+                    // TODO: handle banned participants here
                     convoProvider.Save();
                 }
 
