@@ -78,6 +78,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return isAdmin ?? false;
             }
         }
+
+        public bool CanLeave => !IsAdmin;
         #endregion
 
         private Convo convo;
