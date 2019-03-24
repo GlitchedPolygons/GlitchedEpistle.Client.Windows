@@ -235,7 +235,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnDeleteLocally(object commandParam)
         {
-            // TODO
+            var dialog = new ConfirmDeleteConvoLocallyView();
+            bool? confirmed = dialog.ShowDialog();
+            if (confirmed.HasValue && confirmed.Value == true)
+            {
+                Task.Run(() =>
+                {
+                    DeleteConvoLocally();
+
+                    PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        UIEnabled = false;
+                        eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
+                    });
+                });
+            }
         }
 
         private void OnDelete(object commandParam)

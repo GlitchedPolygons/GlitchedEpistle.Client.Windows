@@ -1,0 +1,38 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmDeleteConvoLocallyView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        mc:Ignorable="d"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Title="Delete convo locally"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10" MaxWidth="420">
+        <Label Content="Are you sure that you want to delete this convo?"
+               FontWeight="Bold"
+               FontSize="16" />
+        <Separator Margin="0,0,0,10"/>
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   TextWrapping="Wrap">
+            By deleting a convo (client-side action) you remain a participant of the convo but remove the convo's chat data from this machine.
+        </TextBlock>
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   Margin="0,10,0,0"
+                   TextWrapping="Wrap">
+            As long as you have the convo's id and access password, you can sync back into the convo at any time. It'll just take a moment until the messages are downloaded and decrypted to your device.
+        </TextBlock>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0">
+            <Button Content="Cancel"
+                    Click="CancelButton_OnClick"
+                    Margin="0,0,10,0" />
+            <Button Content="Delete"
+                    Click="ConfirmDeleteButton_OnClick"
+                    ToolTip="Submits the convo creation request to the Epistle backend."/>
+        </StackPanel>
+    </StackPanel>
+</Window>
