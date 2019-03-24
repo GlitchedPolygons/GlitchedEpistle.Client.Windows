@@ -36,10 +36,14 @@
         <Expander Header="User Options"
                   IsExpanded="True"
                   IsEnabled="True"
+                  ToolTip="Actions that a regular convo participant can perform.
+                  If you're the convo's admin, leaving server-side is disabled because you'd need to define a new convo admin first before abandoning (under the Admin Options->Participants tab)."
                   Style="{DynamicResource Expander}">
             <StackPanel>
                 <Button Margin="0,10,0,0"
-                        ToolTip="This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side. This action requires you to enter the convo's access password for confirmation."
+                        IsEnabled="{Binding CanLeave}"
+                        ToolTip="This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side. 
+                        This action requires you to enter the convo's access password for confirmation."
                         Content="Leave convo (server-side) and delete local data on this device" />
                 <Button Margin="0,10,0,0"
                         ToolTip="This action will only delete the convo's data locally on this client device (you will stay a participant of the convo server-side)."
@@ -50,11 +54,12 @@
         <Expander Header="Admin Options"
                   Margin="0,10,0,0"
                   IsExpanded="false"
+                  ToolTip="Actions that only a convo admin can perform (like deleting the convo, modifying its metadata, password or participants)."
                   IsEnabled="{Binding IsAdmin}"
                   Style="{DynamicResource Expander}">
             <StackPanel>
                 <Expander Header="Metadata"
-                          Margin="15,0,0,0"
+                          Margin="15,0,0,0" ToolTip="Change the conversation's metadata by filling in this form."
                           Style="{DynamicResource Expander}">
                     <StackPanel>
                         <Label Content="Name"
