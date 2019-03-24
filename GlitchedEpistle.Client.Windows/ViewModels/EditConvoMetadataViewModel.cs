@@ -203,7 +203,34 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnLeave(object commandParam)
         {
-            // TODO
+            if (oldPw.NullOrEmpty())
+            {
+                PrintMessage("Please authenticate your request by providing the current convo's password.", true);
+                return;
+            }
+
+            bool? confirmed = new ConfirmLeaveConvoView().ShowDialog();
+            if (confirmed.HasValue && confirmed.Value == true)
+            {
+                Task.Run(async () =>
+                {
+                    bool success = await convoService.LeaveConvo(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2);
+                    if (!success)
+                    {
+                        PrintMessage("The request could not be fulfilled server-side; please double check the provided password and make sure that you actually are currently a participant of this convo.", true);
+                        return;
+                    }
+
+                    DeleteConvoLocally();
+
+                    PrintMessage($"You left the convo \"{Convo.Name}\" successfully! You are no longer a participant of it and can now close this window.", false);
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        UIEnabled = false;
+                        eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
+                    });
+                });
+            }
         }
 
         private void OnDeleteLocally(object commandParam)

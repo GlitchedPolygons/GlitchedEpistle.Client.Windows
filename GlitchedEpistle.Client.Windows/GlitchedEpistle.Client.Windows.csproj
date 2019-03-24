@@ -512,6 +512,9 @@
     <Compile Include="Views\ConfirmFileUploadView.xaml.cs">
       <DependentUpon>ConfirmFileUploadView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfirmLeaveConvoView.xaml.cs">
+      <DependentUpon>ConfirmLeaveConvoView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfirmResetView.xaml.cs">
       <DependentUpon>ConfirmResetView.xaml</DependentUpon>
     </Compile>
@@ -600,6 +603,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConfirmFileUploadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmLeaveConvoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

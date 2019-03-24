@@ -1,0 +1,39 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmLeaveConvoView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        mc:Ignorable="d"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Title="Leave convo"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10" MaxWidth="425">
+        <Label Content="Are you sure that you want to leave this convo?"
+               FontWeight="Bold"
+               FontSize="16" />
+        <Separator Margin="0,0,0,10"/>
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   TextWrapping="Wrap">
+            By leaving a convo (server-side action) you are no longer one of its participants.
+        </TextBlock>
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   Margin="0,10,0,0"
+                   TextWrapping="Wrap">
+            Your local copy of the conversation's chatroom will be deleted. Unless you backed it up somewhere, that data will be gone.
+            As long as you have the convo's id and access password, you can join back in any time though.
+        </TextBlock>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0">
+            <Button Content="Cancel"
+                    Click="CancelButton_OnClick"
+                    Margin="0,0,10,0" />
+            <Button Content="Leave"
+                    Click="LeaveButton_OnClick"
+                    ToolTip="Submits the convo creation request to the Epistle backend."/>
+        </StackPanel>
+    </StackPanel>
+</Window>
