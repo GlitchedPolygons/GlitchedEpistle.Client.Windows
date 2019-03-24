@@ -13,7 +13,8 @@
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize">
     <StackPanel Margin="10"
-                MinWidth="450">
+                MinWidth="450" 
+                IsEnabled="{Binding UIEnabled}">
         <Label Content="Edit, leave or delete a conversation"
                FontWeight="Bold"
                FontSize="16" />
@@ -42,10 +43,12 @@
             <StackPanel>
                 <Button Margin="0,10,0,0"
                         IsEnabled="{Binding CanLeave}"
+                        Command="{Binding LeaveCommand}"
                         ToolTip="This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side. 
                         This action requires you to enter the convo's access password for confirmation."
                         Content="Leave convo (server-side) and delete local data on this device" />
                 <Button Margin="0,10,0,0"
+                        Command="{Binding DeleteLocallyCommand}"
                         ToolTip="This action will only delete the convo's data locally on this client device (you will stay a participant of the convo server-side)."
                         Content="Delete convo on this device only (stay as participant in convo)" />
             </StackPanel>

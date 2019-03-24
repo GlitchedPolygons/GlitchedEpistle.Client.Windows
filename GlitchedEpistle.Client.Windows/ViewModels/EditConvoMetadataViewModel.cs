@@ -38,9 +38,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region Commands
+        public ICommand LeaveCommand { get; }
         public ICommand CancelCommand { get; }
         public ICommand SubmitCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ICommand DeleteLocallyCommand { get; }
         public ICommand OldPasswordChangedCommand { get; }
         public ICommand NewPasswordChangedCommand { get; }
         public ICommand NewPassword2ChangedCommand { get; }
@@ -89,6 +91,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             set => Set(ref expirationUTC, value);
         }
 
+        private bool uiEnabled = true;
+        public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
+
         public bool IsAdmin
         {
             get
@@ -134,9 +139,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
 
+            LeaveCommand = new DelegateCommand(OnLeave);
             SubmitCommand = new DelegateCommand(OnSubmit);
             CancelCommand = new DelegateCommand(OnCancel);
             DeleteCommand = new DelegateCommand(OnDelete);
+            DeleteLocallyCommand=new DelegateCommand(OnDeleteLocally);
             OldPasswordChangedCommand = new DelegateCommand(pwBox => oldPw = (pwBox as PasswordBox)?.Password);
             NewPasswordChangedCommand = new DelegateCommand(pwBox => newPw = (pwBox as PasswordBox)?.Password);
             NewPassword2ChangedCommand = new DelegateCommand(pwBox => newPw2 = (pwBox as PasswordBox)?.Password);
@@ -179,6 +186,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             RequestedClose?.Invoke(null, EventArgs.Empty);
         }
 
+        private void OnLeave(object commandParam)
+        {
+            // TODO
+        }
+
+        private void OnDeleteLocally(object commandParam)
+        {
+            // TODO
+        }
+
         private void OnDelete(object commandParam)
         {
             CanSubmit = false;
@@ -219,7 +236,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         dir.DeleteRecursively();
                     }
 
-                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id));
+                    PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        UIEnabled = false;
+                        eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
+                    });
                 });
             }
         }
@@ -304,7 +326,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 // TODO: save out convo here!
 
-                Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    UIEnabled = false;
+                    eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id);
+                });
             });
         }
     }

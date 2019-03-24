@@ -464,6 +464,8 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="PubSubEvents\CouponRedeemedEvent.cs" />
+    <Compile Include="PubSubEvents\ChangedConvoMetadataEvent.cs" />
+    <Compile Include="PubSubEvents\DeletedConvoEvent.cs" />
     <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
     <Compile Include="PubSubEvents\JoinedConvoEvent.cs" />
