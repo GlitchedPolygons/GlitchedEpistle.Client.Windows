@@ -68,7 +68,7 @@
                  Text="{Binding Description}" />
 
         <Label Content="Expiration Date"
-               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly." />
+               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly." />
 
         <DatePicker Name="DatePicker"
                     Margin="5,0,0,0"
