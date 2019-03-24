@@ -99,7 +99,9 @@
                 <Expander Header="Participants"
                           Margin="15,0,0,0"
                           Style="{DynamicResource Expander}">
-                    <StackPanel />
+                    <StackPanel>
+
+                    </StackPanel>
                 </Expander>
 
                 <Expander Header="Security"
