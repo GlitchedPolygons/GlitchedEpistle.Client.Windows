@@ -126,6 +126,11 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Expandable/collapsible group -->
+    <Style x:Key="Expander" TargetType="Expander">
+        <Setter Property="Foreground" Value="AliceBlue"/>
+    </Style>
+
     <!-- Control colors -->
     <Color x:Key="ControlNormalColor">#353535</Color>
     <Color x:Key="ControlNormalForegroundColor">AliceBlue</Color>

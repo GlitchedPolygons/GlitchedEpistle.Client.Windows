@@ -99,7 +99,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 view.DataContext = viewModel;
             }
 
-            view.ShowDialog();
+            view.Show();
+            view.Focus();
         }
 
         private void OnClickedCopyConvoIdToClipboard(object commandParam)

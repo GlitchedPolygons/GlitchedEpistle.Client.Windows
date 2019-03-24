@@ -126,6 +126,11 @@
         </Style.Triggers>
     </Style>
 
+    <!-- Expandable/collapsible group -->
+    <Style x:Key="Expander" TargetType="Expander">
+        <Setter Property="Foreground" Value="Black"/>
+    </Style>
+
     <!-- Control colors -->
     <Color x:Key="ControlNormalColor">#e0e0e0</Color>
     <Color x:Key="ControlNormalForegroundColor">Black</Color>

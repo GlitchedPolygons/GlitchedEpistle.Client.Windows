@@ -4,15 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
-        Title="Edit convo metadata"
+        Title="Edit convo"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize">
-    <StackPanel Margin="10" 
-                MinWidth="320">
+    <StackPanel Margin="10"
+                MinWidth="450">
         <Label Content="Edit, leave or delete a conversation"
                FontWeight="Bold"
                FontSize="16" />
@@ -32,26 +33,156 @@
                    Foreground="Lime"
                    FontSize="14" />
 
-        <Label Content="2FA TOTP"
-               ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
-        <TextBox Name="TotpTextBox"
-                 Height="23"
-                 MaxLength="100"
-                 Margin="5,0,0,0"
-                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                 Style="{DynamicResource TextBox}" />
-        <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0,10,0,0">
-            <Button Content="Cancel"
-                    Command="{Binding CancelCommand}"
-                    ToolTip="Never mind, no changes will be made."
-                    Margin="0,0,10,0" />
-            <Button Content="Submit"
-                    ToolTip="Submits the convo modification request to the Epistle backend."
-                    Command="{Binding SubmitCommand}"
-                    CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />
-        </StackPanel>
+        <Expander Header="User Options"
+                  IsExpanded="True"
+                  IsEnabled="True"
+                  Style="{DynamicResource Expander}">
+            <StackPanel>
+                <Button Margin="0,10,0,0"
+                        ToolTip="This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side. This action requires you to enter the convo's access password for confirmation."
+                        Content="Leave convo (server-side) and delete local data on this device" />
+                <Button Margin="0,10,0,0"
+                        ToolTip="This action will only delete the convo's data locally on this client device (you will stay a participant of the convo server-side)."
+                        Content="Delete convo on this device only (stay as participant in convo)" />
+            </StackPanel>
+        </Expander>
+
+        <Expander Header="Admin Options"
+                  Margin="0,10,0,0"
+                  IsExpanded="false"
+                  IsEnabled="{Binding IsAdmin}"
+                  Style="{DynamicResource Expander}">
+            <StackPanel>
+                <Expander Header="Metadata"
+                          Margin="15,0,0,0"
+                          Style="{DynamicResource Expander}">
+                    <StackPanel>
+                        <Label Content="Name"
+                               ToolTip="Change the convo's title." />
+                        <TextBox Height="23"
+                                 MaxLength="25"
+                                 Margin="5,0,0,0"
+                                 Text="{Binding Name}"
+                                 ToolTip="The new convo's title."
+                                 Style="{DynamicResource TextBox}" />
+
+                        <Label Content="Description"
+                               ToolTip="Describe what this conversation is about." />
+
+                        <TextBox Style="{DynamicResource TextBox}"
+                                 AcceptsReturn="True"
+                                 MaxLength="100"
+                                 MaxWidth="420"
+                                 Height="46"
+                                 Margin="5,0,0,0"
+                                 TextWrapping="Wrap"
+                                 ToolTip="Describe what this conversation is about."
+                                 Text="{Binding Description}" />
+
+                        <Label Content="Expiration Date"
+                               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly." />
+
+                        <DatePicker Name="DatePicker"
+                                    Margin="5,0,0,0"
+                                    ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly."
+                                    DisplayDateStart="{Binding MinExpirationUTC}"
+                                    SelectedDate="{Binding ExpirationUTC}"
+                                    FirstDayOfWeek="Monday"
+                                    SelectedDateFormat="Long" />
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Participants"
+                          Margin="15,0,0,0"
+                          Style="{DynamicResource Expander}">
+                    <StackPanel />
+                </Expander>
+
+                <Expander Header="Security"
+                          Margin="15,0,0,0"
+                          Style="{DynamicResource Expander}">
+                    <StackPanel>
+                        <Label Content="New Convo Password"
+                               ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: unless specifically banned, whoever has this password and your convo's id can join!" />
+                        <PasswordBox Name="NewPassword"
+                                     Height="23"
+                                     Margin="5,0,0,0"
+                                     Style="{DynamicResource PasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding NewPasswordChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=NewPassword}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
+                        <Label Content="Confirm New Password"
+                               ToolTip="Confirm your new convo password by re-entering it here." />
+
+                        <PasswordBox Name="NewPassword2"
+                                     Height="23"
+                                     Margin="5,0,0,0"
+                                     Style="{DynamicResource PasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding NewPassword2ChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=NewPassword2}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Request Authentication"
+                          Margin="15,0,0,0"
+                          Style="{DynamicResource Expander}"
+                          IsExpanded="True">
+                    <StackPanel>
+                        <Label Content="Current Convo Password"
+                               ToolTip="Enter the current convo's password here." />
+
+                        <PasswordBox Name="OldPassword"
+                                     Height="23"
+                                     Margin="5,0,0,0"
+                                     Style="{DynamicResource PasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding OldPasswordChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=OldPassword}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
+
+                        <Label Content="2FA TOTP"
+                               ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
+                        <TextBox Name="TotpTextBox"
+                                 Height="23"
+                                 MaxLength="100"
+                                 Margin="5,0,0,0"
+                                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
+                                 Style="{DynamicResource TextBox}" />
+                    </StackPanel>
+                </Expander>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,10,0,0">
+                    <Button Content="Cancel"
+                            Command="{Binding CancelCommand}"
+                            ToolTip="Never mind, no changes will be made."
+                            Margin="0,0,10,0" />
+                    <Button Content="Delete Convo"
+                            Command="{Binding DeleteCommand}"
+                            ToolTip="The entire convo will be immediately deleted on the server without any chance of recovery."
+                            Margin="0,0,10,0" />
+                    <Button Content="Submit"
+                            ToolTip="Submits the convo modification request to the Epistle backend."
+                            Command="{Binding SubmitCommand}"
+                            CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />
+                </StackPanel>
+            </StackPanel>
+        </Expander>
     </StackPanel>
     <Window.InputBindings>
         <KeyBinding Key="Escape"
