@@ -72,7 +72,6 @@
                         <TextBox Style="{DynamicResource TextBox}"
                                  AcceptsReturn="True"
                                  MaxLength="100"
-                                 MaxWidth="420"
                                  Height="46"
                                  Margin="5,0,0,0"
                                  TextWrapping="Wrap"
