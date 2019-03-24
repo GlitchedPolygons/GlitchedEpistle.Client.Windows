@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -25,6 +26,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Commands
         public ICommand CancelCommand { get; }
         public ICommand SubmitCommand { get; }
+        public ICommand OldPasswordChangedCommand { get; }
+        public ICommand NewPasswordChangedCommand { get; }
+        public ICommand NewPassword2ChangedCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -98,6 +102,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
+        private string oldPw, newPw, newPw2;
+
         public EditConvoMetadataViewModel(IConvoService convoService, User user)
         {
             this.user = user;
@@ -105,9 +111,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             SubmitCommand = new DelegateCommand(OnSubmit);
             CancelCommand = new DelegateCommand(OnCancel);
+            OldPasswordChangedCommand = new DelegateCommand(pwBox => oldPw = (pwBox as PasswordBox)?.Password);
+            NewPasswordChangedCommand = new DelegateCommand(pwBox => newPw = (pwBox as PasswordBox)?.Password);
+            NewPassword2ChangedCommand = new DelegateCommand(pwBox => newPw2 = (pwBox as PasswordBox)?.Password);
 
             messageTimer.Elapsed += (_, __) => ResetMessages();
             messageTimer.Start();
+        }
+
+        ~EditConvoMetadataViewModel()
+        {
+            oldPw = newPw = newPw2 = null;
         }
 
         private void ResetMessages()
