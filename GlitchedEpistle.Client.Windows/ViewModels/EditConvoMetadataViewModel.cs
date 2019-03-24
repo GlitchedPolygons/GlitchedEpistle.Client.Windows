@@ -143,7 +143,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             SubmitCommand = new DelegateCommand(OnSubmit);
             CancelCommand = new DelegateCommand(OnCancel);
             DeleteCommand = new DelegateCommand(OnDelete);
-            DeleteLocallyCommand=new DelegateCommand(OnDeleteLocally);
+            DeleteLocallyCommand = new DelegateCommand(OnDeleteLocally);
             OldPasswordChangedCommand = new DelegateCommand(pwBox => oldPw = (pwBox as PasswordBox)?.Password);
             NewPasswordChangedCommand = new DelegateCommand(pwBox => newPw = (pwBox as PasswordBox)?.Password);
             NewPassword2ChangedCommand = new DelegateCommand(pwBox => newPw2 = (pwBox as PasswordBox)?.Password);
@@ -372,7 +372,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 PrintMessage("Convo metadata changed successfully. You can now close this window.", false);
 
-                // TODO: save out convo here!
+                var convo = convoProvider[Convo.Id];
+                if (convo != null)
+                {
+                    if (dto.Name.NotNullNotEmpty())
+                    {
+                        convo.Name = dto.Name;
+                    }
+                    if (dto.Description.NotNullNotEmpty())
+                    {
+                        convo.Description = dto.Description;
+                    }
+                    if (dto.ExpirationUTC.HasValue)
+                    {
+                        convo.ExpirationUTC = dto.ExpirationUTC.Value;
+                    }
+                    if (dto.PasswordSHA512.NotNullNotEmpty())
+                    {
+                        convo.PasswordSHA512 = dto.PasswordSHA512;
+                    }
+                    convoProvider.Save();
+                }
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
