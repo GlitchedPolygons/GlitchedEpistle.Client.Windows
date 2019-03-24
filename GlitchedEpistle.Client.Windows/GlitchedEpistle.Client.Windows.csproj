@@ -509,6 +509,9 @@
     <Compile Include="Views\ConfirmConvoDeletionView.xaml.cs">
       <DependentUpon>ConfirmConvoDeletionView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfirmDeleteConvoLocallyView.xaml.cs">
+      <DependentUpon>ConfirmDeleteConvoLocallyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfirmFileUploadView.xaml.cs">
       <DependentUpon>ConfirmFileUploadView.xaml</DependentUpon>
     </Compile>
@@ -599,6 +602,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ConfirmConvoDeletionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmDeleteConvoLocallyView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

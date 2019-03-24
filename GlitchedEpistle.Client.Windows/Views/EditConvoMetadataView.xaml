@@ -37,6 +37,7 @@
         <Expander Header="User Options"
                   IsExpanded="True"
                   IsEnabled="True"
+                  Margin="0,3,0,0"
                   ToolTip="Actions that a regular convo participant can perform.
                   If you're the convo's admin, leaving server-side is disabled because you'd need to define a new convo admin first before abandoning (under the Admin Options->Participants tab)."
                   Style="{DynamicResource Expander}">
