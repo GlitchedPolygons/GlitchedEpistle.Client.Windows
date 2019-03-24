@@ -181,6 +181,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             });
         }
 
+        private void DeleteConvoLocally()
+        {
+            var jsonFile = new FileInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id + ".json"));
+            if (jsonFile.Exists)
+            {
+                jsonFile.Delete();
+            }
+
+            var dir = new DirectoryInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id));
+            if (dir.Exists)
+            {
+                dir.DeleteRecursively();
+            }
+        }
+
         private void OnCancel(object commandParam)
         {
             RequestedClose?.Invoke(null, EventArgs.Empty);
@@ -224,17 +239,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         return;
                     }
 
-                    var jsonFile = new FileInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id + ".json"));
-                    if (jsonFile.Exists)
-                    {
-                        jsonFile.Delete();
-                    }
-
-                    var dir = new DirectoryInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id));
-                    if (dir.Exists)
-                    {
-                        dir.DeleteRecursively();
-                    }
+                    DeleteConvoLocally();
 
                     PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
                     Application.Current?.Dispatcher?.Invoke(() =>
