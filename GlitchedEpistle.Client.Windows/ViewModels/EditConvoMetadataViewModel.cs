@@ -193,6 +193,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             if (dir.Exists)
             {
                 dir.DeleteRecursively();
+                dir.Delete();
             }
         }
 
