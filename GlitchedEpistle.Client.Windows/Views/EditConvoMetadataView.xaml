@@ -15,7 +15,8 @@
     <StackPanel Margin="10"
                 MinWidth="450" 
                 IsEnabled="{Binding UIEnabled}">
-        <Label Content="Edit, leave or delete a conversation"
+        <Label Content="{Binding Name}"
+               ContentStringFormat="Edit, leave or delete convo &quot;{0}&quot;"
                FontWeight="Bold"
                FontSize="16" />
         <Separator />
