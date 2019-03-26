@@ -496,6 +496,7 @@
     <Compile Include="ViewModels\UserControls\CouponRedeemedSuccessfullyViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ExpiredViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ExpirationReminderViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ManageParticipantViewModel.cs" />
     <Compile Include="ViewModels\UserControls\MessageViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
@@ -572,6 +573,9 @@
     </Compile>
     <Compile Include="Views\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ManageParticipantView.xaml.cs">
+      <DependentUpon>ManageParticipantView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>
@@ -682,6 +686,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\LoginView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ManageParticipantView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
