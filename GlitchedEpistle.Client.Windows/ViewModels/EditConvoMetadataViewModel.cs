@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 using System.Timers;
@@ -16,6 +17,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Prism.Events;
@@ -111,6 +113,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
 
         public bool CanLeave => !IsAdmin;
+
+        private ObservableCollection<ManageParticipantViewModel> participants = new ObservableCollection<ManageParticipantViewModel>();
+        public ObservableCollection<ManageParticipantViewModel> Participants
+        {
+            get => participants;
+            set => Set(ref participants, value);
+        }
         #endregion
 
         private Convo convo;
@@ -125,6 +134,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Name = convo.Name;
                     Description = convo.Description;
                     ExpirationUTC = convo.ExpirationUTC;
+                    Participants.Clear();
+                    foreach (string userId in convo.Participants)
+                    {
+                        Participants.Add(new ManageParticipantViewModel
+                        {
+
+                        });
+                    }
                 }
             }
         }
