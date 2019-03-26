@@ -315,7 +315,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (commandParam is string newAdminUserId)
             {
-                // TODO: promote user to admin here
+                bool? confirmed = new ConfirmChangeConvoAdminView().ShowDialog();
+                if (confirmed.HasValue && confirmed.Value == true)
+                {
+                    // TODO: promote user to admin here
+                }
             }
         }
 

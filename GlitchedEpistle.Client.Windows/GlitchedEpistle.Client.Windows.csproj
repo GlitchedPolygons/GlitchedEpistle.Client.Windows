@@ -506,6 +506,9 @@
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfirmChangeConvoAdminView.xaml.cs">
+      <DependentUpon>ConfirmChangeConvoAdminView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfirmConvoDeletionView.xaml.cs">
       <DependentUpon>ConfirmConvoDeletionView.xaml</DependentUpon>
     </Compile>
@@ -603,6 +606,10 @@
     <Page Include="Views\ChangePasswordView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConfirmChangeConvoAdminView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConfirmConvoDeletionView.xaml">
       <SubType>Designer</SubType>
