@@ -184,15 +184,17 @@
                        Stroke="{DynamicResource SeparatorColorBrush}" />
         </Grid>
 
+        <!--
         <Label Grid.Row="2"
                Margin="0,0"
                Content="Decrypting..."
                VerticalAlignment="Top"
                HorizontalAlignment="Right"
                Visibility="{Binding DecryptingVisibility}" />
+        -->
 
         <Label Grid.Row="2"
-               Margin="0,48,3,0"
+               Margin="0,45,3,0"
                Content="Encrypting..."
                VerticalAlignment="Top"
                HorizontalAlignment="Right"
