@@ -17,8 +17,8 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.Services.MethodQ;
 
 using Prism.Events;
 
@@ -48,6 +48,52 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand OldPasswordChangedCommand { get; }
         public ICommand NewPasswordChangedCommand { get; }
         public ICommand NewPassword2ChangedCommand { get; }
+
+        public ICommand MakeAdminCommand
+        {
+            get => new DelegateCommand(commandParam =>
+            {
+                if (commandParam is string userId)
+                {
+                    // TODO: implement me!
+                }
+            });
+        }
+
+        public ICommand KickAndBanUserCommand
+        {
+            get => new DelegateCommand(commandParam =>
+            {
+                if (commandParam is string userId)
+                {
+                    // TODO: implement me!
+                }
+            });
+        }
+
+        public ICommand CopyUserIdToClipboardCommand
+        {
+            get => new DelegateCommand(commandParam =>
+            {
+                if (commandParam is string userId)
+                {
+                    Clipboard.SetText(userId);
+
+                    var dialog = new InfoDialogView
+                    {
+                        DataContext = new InfoDialogViewModel
+                        {
+                            MaxWidth = 350,
+                            Title = "Success",
+                            OkButtonText = "Cool",
+                            Text = $"The user id \"{userId}\" has been copied successfully to the clipboard!"
+                        }
+                    };
+
+                    dialog.ShowDialog();
+                }
+            });
+        }
         #endregion
 
         #region UI Bindings
