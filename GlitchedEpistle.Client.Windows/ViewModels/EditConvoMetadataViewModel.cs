@@ -148,7 +148,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             set => Set(ref participants, value);
         }
 
-        public  Visibility OtherParticipantsListVisibility => Participants.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+        public Visibility OtherParticipantsListVisibility => Participants.Count > 0 ? Visibility.Visible : Visibility.Hidden;
 
         private ObservableCollection<string> banned = new ObservableCollection<string>();
         public ObservableCollection<string> Banned
@@ -172,25 +172,29 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Name = convo.Name;
                     Description = convo.Description;
                     ExpirationUTC = convo.ExpirationUTC;
-
-                    Participants.Clear();
-                    foreach (string userId in convo.Participants)
-                    {
-                        if (userId.Equals(this.user.Id))
-                            continue;
-
-                        Participants.Add(userId);
-                    }
-
-                    Banned.Clear();
-                    foreach (string bannedUserId in convo.BannedUsers)
-                    {
-                        if (bannedUserId.NullOrEmpty())
-                            continue;
-
-                        Banned.Add(bannedUserId);
-                    }
+                    RefreshParticipantLists();
                 }
+            }
+        }
+
+        private void RefreshParticipantLists()
+        {
+            Participants = new ObservableCollection<string>();
+            foreach (string userId in convo.Participants)
+            {
+                if (userId.Equals(this.user.Id))
+                    continue;
+
+                Participants.Add(userId);
+            }
+
+            Banned = new ObservableCollection<string>();
+            foreach (string bannedUserId in convo.BannedUsers)
+            {
+                if (bannedUserId.NullOrEmpty())
+                    continue;
+
+                Banned.Add(bannedUserId);
             }
         }
 
@@ -309,7 +313,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            if (commandParam is string userId)
+            if (commandParam is string newAdminUserId)
             {
                 // TODO: promote user to admin here
             }
@@ -323,21 +327,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            if (commandParam is string userId)
+            if (commandParam is string userIdToKick)
             {
-                // TODO: show confirmation dialog here before continuing
-
-                Task.Run(async () =>
+                bool? confirmed = new ConfirmKickUserView().ShowDialog();
+                if (confirmed.HasValue && confirmed.Value == true)
                 {
-                    bool success = await convoService.KickUser(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, userId, true);
-                    if (!success)
+                    Task.Run(async () =>
                     {
-                        PrintMessage($"The user \"{userId}\" could not be kicked and banned from the convo.", true);
-                        return;
-                    }
+                        bool success = await convoService.KickUser(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, userIdToKick, true);
+                        if (!success)
+                        {
+                            PrintMessage($"The user \"{userIdToKick}\" could not be kicked and banned from the convo. Perhaps double-check the provided convo password?", true);
+                            return;
+                        }
 
-                    // TODO: update UI here and convo metadata + save out
-                });
+                        PrintMessage($"The user \"{userIdToKick}\" has been kicked out of the convo.", false);
+                        var convo = convoProvider[Convo.Id];
+                        if (convo != null)
+                        {
+                            convo.BannedUsers.Add(userIdToKick);
+                            convo.Participants.Remove(userIdToKick);
+                        }
+                        convoProvider.Save();
+                        RefreshParticipantLists();
+                    });
+                }
             }
         }
 
@@ -468,9 +482,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     dto.PasswordSHA512 = newPw.SHA512();
                 }
 
-                // TODO: handle banned participants here
-
-                bool successful = await convoService.ChangeConvoMetadata(Convo.Id, oldPw, user.Id, user.Token.Item2, dto);
+                bool successful = await convoService.ChangeConvoMetadata(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, dto);
 
                 if (!successful)
                 {
@@ -500,7 +512,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         convo.PasswordSHA512 = dto.PasswordSHA512;
                     }
-                    // TODO: handle banned participants here
                     convoProvider.Save();
                 }
 
