@@ -90,6 +90,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             set => Set(ref successMessage, value);
         }
 
+        public string UserId => user?.Id;
+
         private string name;
         public string Name
         {
@@ -162,6 +164,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Participants.Clear();
                     foreach (string userId in convo.Participants)
                     {
+                        if (userId.Equals(user.Id))
+                            continue;
+
                         Participants.Add(userId);
                     }
                 }
@@ -277,6 +282,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnMakeAdmin(object commandParam)
         {
+            if (oldPw.NullOrEmpty())
+            {
+                PrintMessage("Please authenticate your request by providing the current convo's password (at the bottom of the form).", true);
+                return;
+            }
+
             if (commandParam is string userId)
             {
                 // TODO: promote user to admin here
@@ -287,7 +298,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (oldPw.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing the current convo's password.", true);
+                PrintMessage("Please authenticate your request by providing the current convo's password (at the bottom of the form).", true);
                 return;
             }
 

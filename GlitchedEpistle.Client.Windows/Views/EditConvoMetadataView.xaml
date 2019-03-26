@@ -23,14 +23,14 @@
         <Separator />
         <TextBlock Text="{Binding ErrorMessage}"
                    TextWrapping="Wrap"
-                   MaxWidth="300"
+                   MaxWidth="420"
                    Margin="5,0,0,0"
                    HorizontalAlignment="Left"
                    Foreground="Red"
                    FontSize="14" />
         <TextBlock Text="{Binding SuccessMessage}"
                    TextWrapping="Wrap"
-                   MaxWidth="300"
+                   MaxWidth="420"
                    Margin="5,0,0,0"
                    HorizontalAlignment="Left"
                    Foreground="Lime"
@@ -105,15 +105,20 @@
                 <Expander Header="Participants"
                           Margin="15,0,0,0"
                           Style="{DynamicResource Expander}">
-                    <ListBox Margin="0,6,0,4"
-                             MaxHeight="150"
-                             Name="ParticipantsListBox"
-                             ItemsSource="{Binding Participants}"
-                             Style="{DynamicResource MessagesListBox}"
-                             VirtualizingStackPanel.ScrollUnit="Pixel"
-                             VirtualizingStackPanel.IsVirtualizing="True"
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                             ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <StackPanel>
+                        <Label Margin="0,4,0,0" 
+                               Content="{Binding UserId}"
+                               ContentStringFormat="{}{0} (you)"/>
+                        <Label Content="Other participants:"/>
+                        <ListBox Margin="0,-2,0,4"
+                                 MaxHeight="150"
+                                 Name="ParticipantsListBox"
+                                 ItemsSource="{Binding Participants}"
+                                 Style="{DynamicResource MessagesListBox}"
+                                 VirtualizingStackPanel.ScrollUnit="Pixel"
+                                 VirtualizingStackPanel.IsVirtualizing="True"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Visible">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <VirtualizingStackPanel Margin="0"
@@ -147,6 +152,7 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
+                    </StackPanel>
                 </Expander>
 
                 <Expander Header="Security"
