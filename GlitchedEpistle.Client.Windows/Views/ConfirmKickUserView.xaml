@@ -1,0 +1,45 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmKickUserView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        mc:Ignorable="d"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Title="Confirm kick"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10" MaxWidth="425">
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   TextWrapping="Wrap" 
+                   Text="Are you sure that you want to kick the selected user out from this convo?"
+               FontWeight="Bold"
+               FontSize="16" />
+        <Separator Margin="0,0,0,10"/>
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   TextWrapping="Wrap">
+            By kicking and banning a user from a convo you prevent him from being able to receive new messages from the convo as well as post new messages to it.
+        </TextBlock>
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   Margin="0,10,0,0"
+                   TextWrapping="Wrap">
+            WARNING: This action is irreversible!
+        </TextBlock>
+        <TextBlock Style="{DynamicResource TextBlock}" 
+                   Margin="0,0,0,0"
+                   TextWrapping="Wrap">
+            Banned users can never join back into a convo; a new conversation would need to be created!
+        </TextBlock>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0">
+            <Button Content="Cancel"
+                    Click="CancelButton_OnClick"
+                    Margin="0,0,10,0" />
+            <Button Content="Confirm"
+                    Click="ConfirmButton_OnClick"
+                    ToolTip="Kicks and bans the user from the convo."/>
+        </StackPanel>
+    </StackPanel>
+</Window>
