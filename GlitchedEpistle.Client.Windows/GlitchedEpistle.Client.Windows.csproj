@@ -464,6 +464,8 @@
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\WindowExtensions.cs" />
     <Compile Include="PubSubEvents\CouponRedeemedEvent.cs" />
+    <Compile Include="PubSubEvents\ChangedConvoMetadataEvent.cs" />
+    <Compile Include="PubSubEvents\DeletedConvoEvent.cs" />
     <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
     <Compile Include="PubSubEvents\JoinedConvoEvent.cs" />
@@ -481,6 +483,7 @@
     <Compile Include="Services\Settings\SettingsJson.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\CreateConvoViewModel.cs" />
+    <Compile Include="ViewModels\EditConvoMetadataViewModel.cs" />
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\ImageViewerViewModel.cs" />
@@ -503,14 +506,32 @@
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConfirmChangeConvoAdminView.xaml.cs">
+      <DependentUpon>ConfirmChangeConvoAdminView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfirmConvoDeletionView.xaml.cs">
+      <DependentUpon>ConfirmConvoDeletionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfirmDeleteConvoLocallyView.xaml.cs">
+      <DependentUpon>ConfirmDeleteConvoLocallyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfirmFileUploadView.xaml.cs">
       <DependentUpon>ConfirmFileUploadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfirmKickUserView.xaml.cs">
+      <DependentUpon>ConfirmKickUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfirmLeaveConvoView.xaml.cs">
+      <DependentUpon>ConfirmLeaveConvoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConfirmResetView.xaml.cs">
       <DependentUpon>ConfirmResetView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CreateConvoView.xaml.cs">
       <DependentUpon>CreateConvoView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditConvoMetadataView.xaml.cs">
+      <DependentUpon>EditConvoMetadataView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GeneratingKeyView.xaml.cs">
       <DependentUpon>GeneratingKeyView.xaml</DependentUpon>
@@ -586,7 +607,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ConfirmChangeConvoAdminView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmConvoDeletionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmDeleteConvoLocallyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConfirmFileUploadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmKickUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfirmLeaveConvoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -595,6 +636,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CreateConvoView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditConvoMetadataView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
