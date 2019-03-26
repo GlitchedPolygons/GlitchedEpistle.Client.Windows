@@ -26,14 +26,14 @@
                    MaxWidth="420"
                    Margin="5,0,0,0"
                    HorizontalAlignment="Left"
-                   Foreground="Red"
+                   Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
         <TextBlock Text="{Binding SuccessMessage}"
                    TextWrapping="Wrap"
                    MaxWidth="420"
                    Margin="5,0,0,0"
                    HorizontalAlignment="Left"
-                   Foreground="Lime"
+                   Foreground="{DynamicResource SuccessMessageColor}"
                    FontSize="14" />
 
         <Expander Header="User Options"
