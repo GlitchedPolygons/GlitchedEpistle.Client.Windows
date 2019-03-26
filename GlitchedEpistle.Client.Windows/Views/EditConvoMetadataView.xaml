@@ -109,49 +109,51 @@
                         <Label Margin="0,4,0,0"
                                Content="{Binding UserId}"
                                ContentStringFormat="{}{0} (you)" />
-                        <Label Content="Other participants:" />
-                        <ListBox Margin="0,-2,0,4"
-                                 MaxHeight="150"
-                                 Name="ParticipantsListBox"
-                                 ItemsSource="{Binding Participants}"
-                                 Style="{DynamicResource MessagesListBox}"
-                                 VirtualizingStackPanel.ScrollUnit="Pixel"
-                                 VirtualizingStackPanel.IsVirtualizing="True"
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                 ScrollViewer.VerticalScrollBarVisibility="Visible">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel Margin="0"
-                                                            Height="Auto"
-                                                            Orientation="Vertical" />
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Label Content="{Binding}"
-                                               VerticalAlignment="Center" />
-                                        <Button Width="15"
-                                                Height="15"
-                                                Margin="0"
-                                                ToolTip="Copy user id to clipboard"
-                                                Command="{Binding DataContext.CopyUserIdToClipboardCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
-                                                CommandParameter="{Binding}"
-                                                Style="{DynamicResource CopyToClipboardButton}" />
-                                        <Button Margin="10,0,0,0"
-                                                Content="Make admin"
-                                                Command="{Binding DataContext.MakeAdminCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
-                                                CommandParameter="{Binding}"
-                                                ToolTip="Promotes this user to be the new convo's admin.&#x0a;Please be aware of the fact that by doing this you fully give up your rights as a convo admin,&#x0a;and that the new admin will have FULL control over the conversation." />
-                                        <Button Margin="10,0,0,0"
-                                                Content="Kick &amp; ban"
-                                                Command="{Binding DataContext.KickAndBanUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
-                                                CommandParameter="{Binding}"
-                                                ToolTip="Kicks the user from the convo and prevents him from joining back in by putting him on the convo's black list.&#x0a;Only use this when really needed (e.g. spam), as this action is intentionally irreversible!" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                        <StackPanel Visibility="{Binding OtherParticipantsListVisibility}">
+                            <Label Content="Other participants:" />
+                            <ListBox Margin="0,-2,0,4"
+                                     MaxHeight="150"
+                                     Name="ParticipantsListBox"
+                                     ItemsSource="{Binding Participants}"
+                                     Style="{DynamicResource MessagesListBox}"
+                                     VirtualizingStackPanel.ScrollUnit="Pixel"
+                                     VirtualizingStackPanel.IsVirtualizing="True"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Margin="0"
+                                                                Height="Auto"
+                                                                Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="{Binding}"
+                                                   VerticalAlignment="Center" />
+                                            <Button Width="15"
+                                                    Height="15"
+                                                    Margin="0"
+                                                    ToolTip="Copy user id to clipboard"
+                                                    Command="{Binding DataContext.CopyUserIdToClipboardCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource CopyToClipboardButton}" />
+                                            <Button Margin="10,0,0,0"
+                                                    Content="Make admin"
+                                                    Command="{Binding DataContext.MakeAdminCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="Promotes this user to be the new convo's admin.&#x0a;Please be aware of the fact that by doing this you fully give up your rights as a convo admin,&#x0a;and that the new admin will have FULL control over the conversation." />
+                                            <Button Margin="10,0,0,0"
+                                                    Content="Kick &amp; ban"
+                                                    Command="{Binding DataContext.KickAndBanUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="Kicks the user from the convo and prevents him from joining back in by putting him on the convo's black list.&#x0a;Only use this when really needed (e.g. spam), as this action is intentionally irreversible!" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
                         <StackPanel Visibility="{Binding BannedListVisibility}">
                             <Label Content="Banned users:" />
                             <ListBox MaxHeight="150"
