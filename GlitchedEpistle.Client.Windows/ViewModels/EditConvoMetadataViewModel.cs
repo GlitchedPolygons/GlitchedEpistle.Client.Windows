@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Net;
 using System.Timers;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
@@ -18,7 +18,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.Services.MethodQ;
 
 using Prism.Events;
 
@@ -48,28 +47,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand OldPasswordChangedCommand { get; }
         public ICommand NewPasswordChangedCommand { get; }
         public ICommand NewPassword2ChangedCommand { get; }
-
-        public ICommand MakeAdminCommand
-        {
-            get => new DelegateCommand(commandParam =>
-            {
-                if (commandParam is string userId)
-                {
-                    // TODO: implement me!
-                }
-            });
-        }
-
-        public ICommand KickAndBanUserCommand
-        {
-            get => new DelegateCommand(commandParam =>
-            {
-                if (commandParam is string userId)
-                {
-                    // TODO: implement me!
-                }
-            });
-        }
+        public ICommand MakeAdminCommand { get; }
+        public ICommand KickAndBanUserCommand { get; }
 
         public ICommand CopyUserIdToClipboardCommand
         {
@@ -204,6 +183,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelCommand = new DelegateCommand(OnCancel);
             DeleteCommand = new DelegateCommand(OnDelete);
             DeleteLocallyCommand = new DelegateCommand(OnDeleteLocally);
+            MakeAdminCommand = new DelegateCommand(OnMakeAdmin);
+            KickAndBanUserCommand = new DelegateCommand(OnKickAndBanUser);
             OldPasswordChangedCommand = new DelegateCommand(pwBox => oldPw = (pwBox as PasswordBox)?.Password);
             NewPasswordChangedCommand = new DelegateCommand(pwBox => newPw = (pwBox as PasswordBox)?.Password);
             NewPassword2ChangedCommand = new DelegateCommand(pwBox => newPw2 = (pwBox as PasswordBox)?.Password);
@@ -290,6 +271,40 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         UIEnabled = false;
                         eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
                     });
+                });
+            }
+        }
+
+        private void OnMakeAdmin(object commandParam)
+        {
+            if (commandParam is string userId)
+            {
+                // TODO: promote user to admin here
+            }
+        }
+
+        private void OnKickAndBanUser(object commandParam)
+        {
+            if (oldPw.NullOrEmpty())
+            {
+                PrintMessage("Please authenticate your request by providing the current convo's password.", true);
+                return;
+            }
+
+            if (commandParam is string userId)
+            {
+                // TODO: show confirmation dialog here before continuing
+
+                Task.Run(async () =>
+                {
+                    bool success = await convoService.KickUser(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, userId, true);
+                    if (!success)
+                    {
+                        PrintMessage($"The user \"{userId}\" could not be kicked and banned from the convo.", true);
+                        return;
+                    }
+
+                    // TODO: update UI here and convo metadata + save out
                 });
             }
         }
