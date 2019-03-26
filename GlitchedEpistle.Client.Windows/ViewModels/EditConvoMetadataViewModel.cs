@@ -148,6 +148,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             set => Set(ref participants, value);
         }
 
+        public  Visibility OtherParticipantsListVisibility => Participants.Count > 0 ? Visibility.Visible : Visibility.Hidden;
+
         private ObservableCollection<string> banned = new ObservableCollection<string>();
         public ObservableCollection<string> Banned
         {
