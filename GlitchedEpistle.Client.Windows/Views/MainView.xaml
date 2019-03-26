@@ -70,7 +70,7 @@
                             Margin="4,0,0,4"
                             ToolTip="Copy user id to clipboard"
                             Command="{Binding CopyUserIdToClipboardCommand}"
-                            Style="{StaticResource CopyToClipboardButton}" />
+                            Style="{DynamicResource CopyToClipboardButton}" />
 
                     <Image Source="/Resources/Images/green-tick.png"
                            Width="15"

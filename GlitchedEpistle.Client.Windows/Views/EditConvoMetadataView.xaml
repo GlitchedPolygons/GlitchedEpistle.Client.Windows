@@ -123,7 +123,25 @@
                         </ListBox.ItemsPanel>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <userControls:ManageParticipantView />
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding}"
+                                           VerticalAlignment="Center"/>
+                                    <Button Width="15"
+                                            Height="15"
+                                            Margin="0"
+                                            ToolTip="Copy user id to clipboard"
+                                            Command="{Binding CopyUserIdToClipboardCommand}"
+                                            Style="{DynamicResource CopyToClipboardButton}" />
+                                    <Image Source="/Resources/Images/green-tick.png"
+                                           Width="15"
+                                           Height="15"
+                                           Margin="1,0,0,2"
+                                           Visibility="{Binding ClipboardTickVisibility}"/>
+                                    <Button Margin="10,0,0,0"
+                                            Content="Make admin"/>
+                                    <Button Margin="10,0,0,0"
+                                            Content="Kick &amp; ban"/>
+                                </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

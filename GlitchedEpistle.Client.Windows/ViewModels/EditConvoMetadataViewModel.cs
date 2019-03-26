@@ -114,8 +114,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         public bool CanLeave => !IsAdmin;
 
-        private ObservableCollection<ManageParticipantViewModel> participants = new ObservableCollection<ManageParticipantViewModel>();
-        public ObservableCollection<ManageParticipantViewModel> Participants
+        private ObservableCollection<string> participants = new ObservableCollection<string>();
+        public ObservableCollection<string> Participants
         {
             get => participants;
             set => Set(ref participants, value);
@@ -137,10 +137,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Participants.Clear();
                     foreach (string userId in convo.Participants)
                     {
-                        Participants.Add(new ManageParticipantViewModel
-                        {
-
-                        });
+                        Participants.Add(userId);
                     }
                 }
             }
