@@ -147,6 +147,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => participants;
             set => Set(ref participants, value);
         }
+
+        private ObservableCollection<string> banned = new ObservableCollection<string>();
+        public ObservableCollection<string> Banned
+        {
+            get => banned;
+            set => Set(ref banned, value);
+        }
+
+        public Visibility BannedListVisibility => Banned.Count > 0 ? Visibility.Visible : Visibility.Hidden;
         #endregion
 
         private Convo convo;
@@ -161,13 +170,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Name = convo.Name;
                     Description = convo.Description;
                     ExpirationUTC = convo.ExpirationUTC;
+
                     Participants.Clear();
                     foreach (string userId in convo.Participants)
                     {
-                        if (userId.Equals(user.Id))
+                        if (userId.Equals(this.user.Id))
                             continue;
 
                         Participants.Add(userId);
+                    }
+
+                    Banned.Clear();
+                    foreach (string bannedUserId in convo.BannedUsers)
+                    {
+                        if (bannedUserId.NullOrEmpty())
+                            continue;
+
+                        Banned.Add(bannedUserId);
                     }
                 }
             }
