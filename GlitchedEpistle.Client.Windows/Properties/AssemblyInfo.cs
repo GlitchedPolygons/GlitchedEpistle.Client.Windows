@@ -9,7 +9,7 @@ using System.Windows;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Glitched Polygons")]
-[assembly: AssemblyProduct("GlitchedEpistle.Client.Windows")]
+[assembly: AssemblyProduct("Glitched Epistle")]
 [assembly: AssemblyCopyright("Copyright © 2019 - Glitched Polygons")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
