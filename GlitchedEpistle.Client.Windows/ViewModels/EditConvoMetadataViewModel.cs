@@ -318,7 +318,34 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 bool? confirmed = new ConfirmChangeConvoAdminView().ShowDialog();
                 if (confirmed.HasValue && confirmed.Value == true)
                 {
-                    // TODO: promote user to admin here
+                    Task.Run(async() =>
+                    {
+                        var dto = new ConvoChangeMetadataDto
+                        {
+                            Name = null,
+                            Description = null,
+                            ExpirationUTC = null,
+                            PasswordSHA512 = null,
+                            CreatorId = newAdminUserId
+                        };
+
+                        bool success = await convoService.ChangeConvoMetadata(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, dto);
+                        if (!success)
+                        {
+                            PrintMessage("The convo admin change request was rejected server-side! Perhaps double-check the provided convo password?",true);
+                            return;
+                        }
+
+                        var convo = convoProvider[Convo.Id];
+                        if (convo != null)
+                        {
+                            convo.CreatorId = newAdminUserId;
+                        }
+                        convoProvider.Save();
+
+                        PrintMessage($"Success! The user {newAdminUserId} is now the new convo admin. You can now close this window...", false);
+                        Application.Current?.Dispatcher?.Invoke(() => UIEnabled = false);
+                    });
                 }
             }
         }
@@ -346,6 +373,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         }
 
                         PrintMessage($"The user \"{userIdToKick}\" has been kicked out of the convo.", false);
+
                         var convo = convoProvider[Convo.Id];
                         if (convo != null)
                         {
