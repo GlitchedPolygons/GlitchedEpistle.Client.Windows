@@ -32,7 +32,7 @@
                    MaxWidth="300"
                    Margin="5,0,0,0"
                    HorizontalAlignment="Left"
-                   Foreground="Red"
+                   Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
 
         <TextBlock Text="{Binding SuccessMessage}"
@@ -40,7 +40,7 @@
                    MaxWidth="300"
                    Margin="5,0,0,0"
                    HorizontalAlignment="Left"
-                   Foreground="Lime"
+                   Foreground="{DynamicResource SuccessMessageColor}"
                    FontSize="14" />
 
         <Label Content="Name"
@@ -68,7 +68,7 @@
                  Text="{Binding Description}" />
 
         <Label Content="Expiration Date"
-               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly." />
+               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly." />
 
         <DatePicker Name="DatePicker"
                     Margin="5,0,0,0"
@@ -109,7 +109,7 @@
         </PasswordBox>
 
         <Label Content="2FA TOTP"
-               ToolTip="Your user password." />
+               ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
 
         <TextBox Name="TotpTextBox"
                  Height="23"

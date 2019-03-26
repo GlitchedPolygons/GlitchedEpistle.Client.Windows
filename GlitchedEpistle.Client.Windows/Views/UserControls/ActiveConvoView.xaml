@@ -103,8 +103,8 @@
               HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" /> 
-                <ColumnDefinition Width="80" /> 
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="80" />
                 <ColumnDefinition Width="0.5" />
             </Grid.ColumnDefinitions>
 
@@ -140,10 +140,10 @@
                   MinWidth="80">
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1" /> 
-                    <RowDefinition Height="*" /> 
                     <RowDefinition Height="1" />
-                    <RowDefinition Height="*" /> 
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="1" />
+                    <RowDefinition Height="*" />
                     <RowDefinition Height="1" />
                 </Grid.RowDefinitions>
 
@@ -166,6 +166,7 @@
                 <Button Grid.Row="3"
                         BorderThickness="0"
                         Content="Send Text"
+                        ToolTip="(Shift + Enter)"
                         IsEnabled="{Binding CanSend}"
                         Command="{Binding SendTextCommand}"
                         CommandParameter="{Binding ElementName=TextBox}" />
@@ -184,18 +185,18 @@
         </Grid>
 
         <Label Grid.Row="2"
-               Margin="0,0,3,4"
-               Content="Encrypting..."
-               VerticalAlignment="Bottom"
-               HorizontalAlignment="Right"
-               Visibility="{Binding EncryptingVisibility}" />
-
-        <Label Grid.Row="2"
-               Margin="0,0,2,47"
+               Margin="0,0"
                Content="Decrypting..."
-               VerticalAlignment="Bottom"
+               VerticalAlignment="Top"
                HorizontalAlignment="Right"
                Visibility="{Binding DecryptingVisibility}" />
+
+        <Label Grid.Row="2"
+               Margin="0,48,3,0"
+               Content="Encrypting..."
+               VerticalAlignment="Top"
+               HorizontalAlignment="Right"
+               Visibility="{Binding EncryptingVisibility}" />
     </Grid>
 
     <UserControl.InputBindings>

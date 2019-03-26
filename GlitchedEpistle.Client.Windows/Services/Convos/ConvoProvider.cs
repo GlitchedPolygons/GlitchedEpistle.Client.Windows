@@ -109,7 +109,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
             FileInfo[] files = dir.GetFiles();
             for (int i = 0; i < files.Length; i++)
             {
-                Convo convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
+                var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
                 if (convo != null)
                 {
                     convos.Add(convo);

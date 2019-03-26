@@ -1,0 +1,285 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.EditConvoMetadataView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:userControls="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+        mc:Ignorable="d"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Icon="/Resources/Images/settings-icon-white.png"
+        Title="Edit convo"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <StackPanel Margin="10"
+                MinWidth="450"
+                IsEnabled="{Binding UIEnabled}">
+        <Label Content="{Binding Name}"
+               ContentStringFormat="Edit, leave or delete convo &quot;{0}&quot;"
+               FontWeight="Bold"
+               FontSize="16" />
+        <Separator />
+        <TextBlock Text="{Binding ErrorMessage}"
+                   TextWrapping="Wrap"
+                   MaxWidth="420"
+                   Margin="5,0,0,0"
+                   HorizontalAlignment="Left"
+                   Foreground="{DynamicResource ErrorMessageColor}"
+                   FontSize="14" />
+        <TextBlock Text="{Binding SuccessMessage}"
+                   TextWrapping="Wrap"
+                   MaxWidth="420"
+                   Margin="5,0,0,0"
+                   HorizontalAlignment="Left"
+                   Foreground="{DynamicResource SuccessMessageColor}"
+                   FontSize="14" />
+
+        <Expander Header="User Options"
+                  IsExpanded="True"
+                  IsEnabled="True"
+                  Margin="0,3,0,0"
+                  ToolTip="Actions that a regular convo participant can perform.
+                  If you're the convo's admin, leaving server-side is disabled because you'd need to define a new convo admin first before abandoning (under the Admin Options->Participants tab)."
+                  Style="{DynamicResource Expander}">
+            <StackPanel>
+                <Button Margin="0,10,0,0"
+                        IsEnabled="{Binding CanLeave}"
+                        Command="{Binding LeaveCommand}"
+                        ToolTip="This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side. 
+                        This action requires you to enter the convo's access password for confirmation."
+                        Content="Leave convo (server-side) and delete local data on this device" />
+                <Button Margin="0,10,0,0"
+                        Command="{Binding DeleteLocallyCommand}"
+                        ToolTip="This action will only delete the convo's data locally on this client device (you will stay a participant of the convo server-side)."
+                        Content="Delete convo on this device only (stay as participant in convo)" />
+            </StackPanel>
+        </Expander>
+
+        <Expander Header="Admin Options"
+                  Margin="0,10,0,0"
+                  IsExpanded="false"
+                  ToolTip="Actions that only a convo admin can perform (like deleting the convo, modifying its metadata, password or participants)."
+                  IsEnabled="{Binding IsAdmin}"
+                  Style="{DynamicResource Expander}">
+            <StackPanel>
+                <Expander Header="Metadata"
+                          Margin="15,0,0,0" ToolTip="Change the conversation's metadata by filling in this form."
+                          Style="{DynamicResource Expander}">
+                    <StackPanel>
+                        <Label Content="Name"
+                               ToolTip="Change the convo's title." />
+                        <TextBox Height="23"
+                                 MaxLength="25"
+                                 Margin="5,0,0,0"
+                                 Text="{Binding Name}"
+                                 ToolTip="The new convo's title."
+                                 Style="{DynamicResource TextBox}" />
+
+                        <Label Content="Description"
+                               ToolTip="Describe what this conversation is about." />
+
+                        <TextBox Style="{DynamicResource TextBox}"
+                                 AcceptsReturn="True"
+                                 MaxLength="100"
+                                 Height="46"
+                                 Margin="5,0,0,0"
+                                 TextWrapping="Wrap"
+                                 ToolTip="Describe what this conversation is about."
+                                 Text="{Binding Description}" />
+
+                        <Label Content="Expiration Date"
+                               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly." />
+
+                        <DatePicker Name="DatePicker"
+                                    Margin="5,0,0,0"
+                                    ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly."
+                                    DisplayDateStart="{Binding MinExpirationUTC}"
+                                    SelectedDate="{Binding ExpirationUTC}"
+                                    FirstDayOfWeek="Monday"
+                                    SelectedDateFormat="Long" />
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Participants"
+                          Margin="15,0,0,0"
+                          Style="{DynamicResource Expander}">
+                    <StackPanel>
+                        <Label Margin="0,4,0,0"
+                               Content="{Binding UserId}"
+                               ContentStringFormat="{}{0} (you)" />
+                        <StackPanel Visibility="{Binding OtherParticipantsListVisibility}">
+                            <Label Content="Other participants:" />
+                            <ListBox Margin="0,-2,0,4"
+                                     MaxHeight="150"
+                                     Name="ParticipantsListBox"
+                                     ItemsSource="{Binding Participants}"
+                                     Style="{DynamicResource MessagesListBox}"
+                                     VirtualizingStackPanel.ScrollUnit="Pixel"
+                                     VirtualizingStackPanel.IsVirtualizing="True"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Margin="0"
+                                                                Height="Auto"
+                                                                Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="{Binding}"
+                                                   VerticalAlignment="Center" />
+                                            <Button Width="15"
+                                                    Height="15"
+                                                    Margin="0"
+                                                    ToolTip="Copy user id to clipboard"
+                                                    Command="{Binding DataContext.CopyUserIdToClipboardCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource CopyToClipboardButton}" />
+                                            <Button Margin="10,0,0,0"
+                                                    Content="Make admin"
+                                                    Command="{Binding DataContext.MakeAdminCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="Promotes this user to be the new convo's admin.&#x0a;Please be aware of the fact that by doing this you fully give up your rights as a convo admin,&#x0a;and that the new admin will have FULL control over the conversation." />
+                                            <Button Margin="10,0,0,0"
+                                                    Content="Kick &amp; ban"
+                                                    Command="{Binding DataContext.KickAndBanUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    ToolTip="Kicks the user from the convo and prevents him from joining back in by putting him on the convo's black list.&#x0a;Only use this when really needed (e.g. spam), as this action is intentionally irreversible!" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        <StackPanel Visibility="{Binding BannedListVisibility}">
+                            <Label Content="Banned users:" />
+                            <ListBox MaxHeight="150"
+                                     Name="BannedUsersListBox"
+                                     ToolTip="These are the user ids that have been permanently banned from this convo."
+                                     ItemsSource="{Binding Banned}"
+                                     Style="{DynamicResource MessagesListBox}"
+                                     VirtualizingStackPanel.ScrollUnit="Pixel"
+                                     VirtualizingStackPanel.IsVirtualizing="True"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Margin="0"
+                                                                Height="Auto"
+                                                                Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label Content="{Binding}" />
+                                            <Button Width="15"
+                                                    Height="15"
+                                                    Margin="0"
+                                                    ToolTip="Copy user id to clipboard"
+                                                    Command="{Binding DataContext.CopyUserIdToClipboardCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{DynamicResource CopyToClipboardButton}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Security"
+                          Margin="15,0,0,0"
+                          Style="{DynamicResource Expander}">
+                    <StackPanel>
+                        <Label Content="New Convo Password"
+                               ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: unless specifically banned, whoever has this password and your convo's id can join!" />
+                        <PasswordBox Name="NewPassword"
+                                     Height="23"
+                                     Margin="5,0,0,0"
+                                     Style="{DynamicResource PasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding NewPasswordChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=NewPassword}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
+                        <Label Content="Confirm New Password"
+                               ToolTip="Confirm your new convo password by re-entering it here." />
+
+                        <PasswordBox Name="NewPassword2"
+                                     Height="23"
+                                     Margin="5,0,0,0"
+                                     Style="{DynamicResource PasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding NewPassword2ChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=NewPassword2}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                    </StackPanel>
+                </Expander>
+
+                <Expander Header="Request Authentication"
+                          Margin="15,0,0,0"
+                          Style="{DynamicResource Expander}"
+                          IsExpanded="True">
+                    <StackPanel>
+                        <Label Content="Current Convo Password"
+                               ToolTip="Enter the current convo's password here." />
+
+                        <PasswordBox Name="OldPassword"
+                                     Height="23"
+                                     Margin="5,0,0,0"
+                                     Style="{DynamicResource PasswordBox}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding OldPasswordChangedCommand}"
+                                                           CommandParameter="{Binding ElementName=OldPassword}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
+
+                        <Label Content="2FA TOTP"
+                               ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
+                        <TextBox Name="TotpTextBox"
+                                 Height="23"
+                                 MaxLength="100"
+                                 Margin="5,0,0,0"
+                                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
+                                 Style="{DynamicResource TextBox}" />
+                    </StackPanel>
+                </Expander>
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Margin="0,10,0,0">
+                    <Button Content="Cancel"
+                            Command="{Binding CancelCommand}"
+                            ToolTip="Never mind, no changes will be made."
+                            Margin="0,0,10,0" />
+                    <Button Content="Delete Convo"
+                            Command="{Binding DeleteCommand}"
+                            ToolTip="The entire convo will be immediately deleted on the server without any chance of recovery."
+                            Margin="0,0,10,0" />
+                    <Button Content="Submit"
+                            IsEnabled="{Binding CanSubmit}"
+                            ToolTip="Submits the convo modification request to the Epistle backend."
+                            Command="{Binding SubmitCommand}"
+                            CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />
+                </StackPanel>
+            </StackPanel>
+        </Expander>
+    </StackPanel>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape"
+                    Command="{Binding CancelCommand}" />
+    </Window.InputBindings>
+</Window>

@@ -5,6 +5,9 @@
     <SolidColorBrush x:Key="WindowBackgroundBrush"
                      Color="#bcbaba" />
 
+    <SolidColorBrush x:Key="ErrorMessageColor" Color="#FFBD0000" />
+    <SolidColorBrush x:Key="SuccessMessageColor" Color="#FF00A500" />
+
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
                      Color="#757575" />
@@ -15,7 +18,7 @@
 
     <!-- Radio buttons -->
     <Style TargetType="RadioButton">
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="Black" />
     </Style>
 
     <!-- Background brush for chatroom -->
@@ -124,6 +127,11 @@
                         Value="0.75" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <!-- Expandable/collapsible group -->
+    <Style x:Key="Expander" TargetType="Expander">
+        <Setter Property="Foreground" Value="Black" />
     </Style>
 
     <!-- Control colors -->

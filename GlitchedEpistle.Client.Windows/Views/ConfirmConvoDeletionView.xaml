@@ -1,0 +1,63 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmConvoDeletionView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        mc:Ignorable="d"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        WindowStartupLocation="CenterScreen"
+        Icon="/Resources/Images/trash-icon-white.png"
+        ResizeMode="NoResize"
+        Title="Confirm convo deletion"
+        SizeToContent="WidthAndHeight">
+    <StackPanel Margin="10">
+        <Label Content="Please confirm convo deletion request"
+               FontWeight="Bold"
+               FontSize="16" />
+        <Separator />
+        <Label Name="ConvoNameLabel"
+               FontWeight="Bold"
+               HorizontalAlignment="Center" />
+        <Label Name="ConvoIdLabel"
+               FontStyle="Italic"
+               Padding="0,0,0,10"
+               FontSize="11"
+               HorizontalAlignment="Center" />
+        <TextBlock Style="{DynamicResource TextBlock}"
+                   MaxWidth="320"
+                   TextWrapping="Wrap">
+            Are you sure that you want to delete this convo irreversibly?
+            Nobody will be able to get or post any messages to it, it will be destroyed server-side for everybody!
+            Only local copies (encrypted) might persist on each participant's device.
+        </TextBlock>
+        <TextBlock Style="{DynamicResource TextBlock}"
+                   MaxWidth="320"
+                   Margin="0,10,0,0"
+                   TextWrapping="Wrap">
+            To confirm deletion, please enter "DELETE!" into the text box down below and confirm with one last click.
+        </TextBlock>
+        <Label Margin="0"
+               Padding="0,10,0,0"
+               Foreground="Orange"
+               Content="Your convo can NOT be recovered in any way after this!" />
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,10,0,0">
+            <TextBox Style="{DynamicResource TextBox}"
+                     Name="TextBox"
+                     MaxLength="7"
+                     FontSize="17"
+                     MinWidth="150"
+                     Foreground="Red"
+                     TextChanged="TextBox_OnTextChanged" />
+            <Button Content="Cancel"
+                    Margin="10,0,0,0"
+                    Click="CancelButton_OnClick" />
+            <Button Content="Confirm Deletion"
+                    IsEnabled="False"
+                    Name="DeleteButton"
+                    Click="DeleteButton_OnClick"
+                    Margin="10,0,0,0" />
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -5,6 +5,9 @@
     <SolidColorBrush x:Key="WindowBackgroundBrush"
                      Color="#000000" />
 
+    <SolidColorBrush x:Key="ErrorMessageColor" Color="Red"/>
+    <SolidColorBrush x:Key="SuccessMessageColor" Color="Lime"/>
+
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
                      Color="#757575" />
@@ -122,6 +125,11 @@
                         Value="0.75" />
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <!-- Expandable/collapsible group -->
+    <Style x:Key="Expander" TargetType="Expander">
+        <Setter Property="Foreground" Value="AliceBlue"/>
     </Style>
 
     <!-- Control colors -->
