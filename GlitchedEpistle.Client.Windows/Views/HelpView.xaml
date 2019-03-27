@@ -34,7 +34,7 @@
                           FontWeight="Bold"
                           Header="First of all, what is Epistle?">
                     <TextBlock Style="{DynamicResource TextBlock}"
-                               Margin="24,10,10,0"
+                               Margin="24,10,10,10"
                                TextWrapping="Wrap" 
                                FontWeight="Regular"
                                Text="
@@ -47,7 +47,7 @@ The Epistle server knows NOTHING about you, or what you send to whom. Because we
                 <Expander Style="{DynamicResource Expander}" FontWeight="Bold"
                           Header="Who is behind this project?">
                     <TextBlock Style="{DynamicResource TextBlock}"
-                               Margin="24,10,10,0"
+                               Margin="24,10,10,10"
                                TextWrapping="Wrap" 
                                FontWeight="Regular"
                                Text="
@@ -58,7 +58,7 @@ Glitched Epistle was developed by Glitched Polygons, &#x0a; a tiny video game st
                           FontWeight="Bold"
                           Header="How do I get started?">
                     <TextBlock Style="{DynamicResource TextBlock}"
-                               Margin="24,10,10,0"
+                               Margin="24,10,10,10"
                                TextWrapping="Wrap" 
                                FontWeight="Regular"
                                Text="
@@ -73,7 +73,7 @@ Please make sure to create both a backup (offline on a paper is safest) of your 
                           FontWeight="Bold"
                           Header="User interface overview">
                     <TextBlock Style="{DynamicResource TextBlock}"
-                               Margin="24,10,10,0"
+                               Margin="24,10,10,10"
                                TextWrapping="Wrap" 
                                FontWeight="Regular"
                                Text="
@@ -81,9 +81,42 @@ In the top left corner you have information about your profile (user id, usernam
 Beneath it there's a blue/grey progress bar: it indicates how many days you have left of your paid Epistle subscription.&#x0a;
 If you click on the progress bar, you're redirected to the Glitched Polygons page where you can buy additional Epistle access tokens (currently, one token gives you 30 days of subscription).&#x0a;
 The buttons in this area do what they say, but some of them need two-factor authentication as an additional security step.&#x0a;
-In the lower-left quadrant of the UI you have the list of conversations you have synced with this machine.&#x0a;&#x0a;
+In the lower-left quadrant of the UI you have the list of conversations that you have synced with this machine.&#x0a;&#x0a;
 On the right hand side of the window you have your active convo.&#x0a; When you join a conversation, the chatroom appears here in this area. If the sidebar on the left disturbs you, you can collapse it with the arrow button at the top of it and enjoy maximum focus on the active convo.&#x0a;
 In the top right corner you have three buttons: restore window, settings and help." />
+                </Expander>
+
+                <Expander Style="{DynamicResource Expander}" 
+                          FontWeight="Bold"
+                          Header="Joining and creating convos">
+                    <TextBlock Style="{DynamicResource TextBlock}"
+                               Margin="24,10,10,10"
+                               TextWrapping="Wrap" 
+                               FontWeight="Regular"
+                               Text="
+You can create a new convo with the Create Convo button in the upper-left region of the Epistle main window.&#x0a;
+Every convo needs a title. a short description (e.g. what the convo is about) and an expiration date. Expired convos are irreversibly deleted server-side and can NOT be recovered. You can look at the backups you might have of them locally, but you can't post new messages to an expired convo.&#x0a;&#x0a;
+The freshly created convo appears in the list on the left. Click on it to open it (enter the password that you defined). Everybody can join the conversation if he or she has its password and unique id (which you can copy to the clipboard by clicking on the clipboard icon at the top of the active convo's view).&#x0a;
+Be careful to whom you give this password!&#x0a;&#x0a;
+If you want to join a convo from another Epistle user who gave you the convo id + password, you can click on Join Convo and enter the data there. Note that the convo id textbox is programmed in a way that is best suited for pasting in an ID from the clipboard and immediately enter the password without making use of the tab key. So make sure to use the clipboard for this task!
+" />
+                </Expander>
+
+                <Expander Style="{DynamicResource Expander}" 
+                          FontWeight="Bold"
+                          Header="Editing convos">
+                    <TextBlock Style="{DynamicResource TextBlock}"
+                               Margin="24,10,10,10"
+                               TextWrapping="Wrap" 
+                               FontWeight="Regular"
+                               Text="
+If you're the admin of a convo (its creator), you can edit the metadata at any time.&#x0a;
+You can also ban annoying participants in the convo: just find out their unique anonymous user id and kick them from inside the edit convo dialog.&#x0a;
+To access the Edit Convo window, right-mouse click on the convo inside the list and select 'Edit Convo'.&#x0a;
+This settings menu gives you the option to delete the convo locally (without leaving server-side, which basically means that when you'll join back in you'll get delivered the messages that have been sent during your absence).&#x0a;
+If you want to leave a convo, you can do so, but you need to authenticate your request by entering the convo password at the bottom of the form. Also: if you're the convo admin, you need to elect a new admin first before leaving!&#x0a;
+
+" />
                 </Expander>
             </StackPanel>
         </ScrollViewer>
