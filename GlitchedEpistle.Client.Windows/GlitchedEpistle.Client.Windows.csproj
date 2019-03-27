@@ -75,14 +75,14 @@
     <Reference Include="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.1.0.2\lib\netstandard2.0\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll</HintPath>
     </Reference>
-    <Reference Include="GlitchedPolygons.Services.CompressionUtility, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GlitchedPolygons.Services.CompressionUtility.1.0.2\lib\netstandard2.0\GlitchedPolygons.Services.CompressionUtility.dll</HintPath>
+    <Reference Include="GlitchedPolygons.Services.CompressionUtility, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GlitchedPolygons.Services.CompressionUtility.1.0.3\lib\netstandard2.0\GlitchedPolygons.Services.CompressionUtility.dll</HintPath>
     </Reference>
     <Reference Include="GlitchedPolygons.Services.JwtService, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\GlitchedPolygons.Services.JwtService.1.1.4\lib\netstandard2.0\GlitchedPolygons.Services.JwtService.dll</HintPath>
     </Reference>
-    <Reference Include="GlitchedPolygons.Services.MethodQ, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\GlitchedPolygons.Services.MethodQ.1.0.2\lib\netstandard2.0\GlitchedPolygons.Services.MethodQ.dll</HintPath>
+    <Reference Include="GlitchedPolygons.Services.MethodQ, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GlitchedPolygons.Services.MethodQ.1.0.3\lib\netstandard2.0\GlitchedPolygons.Services.MethodQ.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>

@@ -13,17 +13,17 @@
   </SpellChecker>
 <HelpConfigurations selected="HelpFile">
   <HelpConfiguration name="HelpFile">
-    <OutputPath>..\..\..\..\Users\Raphael\Desktop</OutputPath>
+    <OutputPath>..\..\..\..\Users\Raphael\Desktop\New folder</OutputPath>
     <CleanupOutputPath>true</CleanupOutputPath>
     <HelpFileName>GlitchedEpistle.Client.Windows</HelpFileName>
     <HelpFileNamingMethod>MemberName</HelpFileNamingMethod>
     <ImageFolderPath />
     <Theme>FlatGray</Theme>
     <HtmlFormats>
-      <HtmlHelp>true</HtmlHelp>
+      <HtmlHelp>false</HtmlHelp>
       <MSHelpViewer>false</MSHelpViewer>
       <MSHelp2>false</MSHelp2>
-      <Website>false</Website>
+      <Website>true</Website>
       <VSIntelliSenseFile>false</VSIntelliSenseFile>
     </HtmlFormats>
     <IncludeScopes>
@@ -52,6 +52,7 @@
     </ConceptualContent>
     <SelectedProjects>
       <SelectedProject>GlitchedEpistle.Client</SelectedProject>
+      <SelectedProject>GlitchedEpistle.Client.Windows</SelectedProject>
     </SelectedProjects>
   </HelpConfiguration>
 </HelpConfigurations>
