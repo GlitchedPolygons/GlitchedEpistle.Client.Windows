@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
@@ -10,6 +11,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public HelpView()
         {
             InitializeComponent();
+        }
+
+        private void OnChangeSubject(object sender, MouseButtonEventArgs e)
+        {
+            
         }
     }
 }
