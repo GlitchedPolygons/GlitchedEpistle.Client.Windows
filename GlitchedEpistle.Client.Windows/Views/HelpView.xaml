@@ -8,8 +8,84 @@
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/help-icon-white.png"
-        Title="HelpView"
+        Title="Glitched Epistle - Help"
         Height="450"
-        Width="800">
-    <Grid />
+        Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10" Grid.Row="0">
+            <Label Content="About Glitched Epistle"
+                   FontWeight="Bold"
+                   FontSize="16" />
+            <Separator />
+        </StackPanel>
+        <ScrollViewer Grid.Row="1"
+                      Margin="10,10,5,10"
+                      VirtualizingStackPanel.ScrollUnit="Pixel"
+                      VirtualizingStackPanel.IsVirtualizing="True"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Visible">
+            <StackPanel>
+                <Expander Style="{DynamicResource Expander}"
+                          MouseDown="OnChangeSubject" 
+                          FontWeight="Bold"
+                          Header="First of all, what is Epistle?">
+                    <TextBlock Style="{DynamicResource TextBlock}"
+                               Margin="24,10,10,0"
+                               TextWrapping="Wrap" 
+                               FontWeight="Regular"
+                               Text="
+It's a messaging app, just like WhatsApp is.&#x0a;
+Except that its client apps are 100% open source (licensed under GPL v3).&#x0a;&#x0a;
+This way you can verify that the apps ACTUALLY encrypt your messages before they're sent to the backend, and that they don't secretly submit any analytics, shady metadata or anything without you knowing it.&#x0a;&#x0a;
+The Epistle server knows NOTHING about you, or what you send to whom. Because we believe it's everybody's right not to be monitored by advertising companies nor the government (or anybody else for that matter) when communicating to each other. &#x0a;When using free services always keep in mind: if you don't give those companies your money in exchange for a product, you ARE the product." />
+                </Expander>
+
+                <Expander Style="{DynamicResource Expander}" FontWeight="Bold"
+                          Header="Who is behind this project?">
+                    <TextBlock Style="{DynamicResource TextBlock}"
+                               Margin="24,10,10,0"
+                               TextWrapping="Wrap" 
+                               FontWeight="Regular"
+                               Text="
+Glitched Epistle was developed by Glitched Polygons, &#x0a; a tiny video game studio located in Basel, Switzerland.&#x0a; You can find out more about Glitched Polygons on glitchedpolygons.com" />
+                </Expander>
+
+                <Expander Style="{DynamicResource Expander}" 
+                          FontWeight="Bold"
+                          Header="How do I get started?">
+                    <TextBlock Style="{DynamicResource TextBlock}"
+                               Margin="24,10,10,0"
+                               TextWrapping="Wrap" 
+                               FontWeight="Regular"
+                               Text="
+When you run Epistle for the first time after installing, you're prompted to register for an account.&#x0a;&#x0a;
+If you already have an account that's been exported using the Export Backup option inside the settings, click on Import.&#x0a;
+Otherwise fill in the form and apply for a new Epistle account. The program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code).&#x0a;
+Please make sure to create both a backup (offline on a paper is safest) of your emergency 2FA codes and the actual secret that's needed for generating the TOTPs!&#x0a;
+&#x0a;Once you've done all this, you're ready to log in!" />
+                </Expander>
+
+                <Expander Style="{DynamicResource Expander}" 
+                          FontWeight="Bold"
+                          Header="User interface overview">
+                    <TextBlock Style="{DynamicResource TextBlock}"
+                               Margin="24,10,10,0"
+                               TextWrapping="Wrap" 
+                               FontWeight="Regular"
+                               Text="
+In the top left corner you have information about your profile (user id, username, etc...)&#x0a;
+Beneath it there's a blue/grey progress bar: it indicates how many days you have left of your paid Epistle subscription.&#x0a;
+If you click on the progress bar, you're redirected to the Glitched Polygons page where you can buy additional Epistle access tokens (currently, one token gives you 30 days of subscription).&#x0a;
+The buttons in this area do what they say, but some of them need two-factor authentication as an additional security step.&#x0a;
+In the lower-left quadrant of the UI you have the list of conversations you have synced with this machine.&#x0a;&#x0a;
+On the right hand side of the window you have your active convo.&#x0a; When you join a conversation, the chatroom appears here in this area. If the sidebar on the left disturbs you, you can collapse it with the arrow button at the top of it and enjoy maximum focus on the active convo.&#x0a;
+In the top right corner you have three buttons: restore window, settings and help." />
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </Window>
