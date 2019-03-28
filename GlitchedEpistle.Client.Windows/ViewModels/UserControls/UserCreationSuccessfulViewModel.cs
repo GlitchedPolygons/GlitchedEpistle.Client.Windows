@@ -125,10 +125,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish();
+                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish());
                 }
 
-                pendingAttempt = false;
+                Application.Current?.Dispatcher?.Invoke(() => pendingAttempt = false);
             });
         }
 
