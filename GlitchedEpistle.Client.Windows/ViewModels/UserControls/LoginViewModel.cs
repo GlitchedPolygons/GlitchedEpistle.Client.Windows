@@ -103,17 +103,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     failedAttempts++;
                     errorMessageTimer.Stop();
                     errorMessageTimer.Start();
-                    ErrorMessage = "Error! Invalid user id, password or 2FA.";
-                    if (failedAttempts > 3)
+                    Application.Current?.Dispatcher?.Invoke(() =>
                     {
-                        ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
-                    }
+                        ErrorMessage = "Error! Invalid user id, password or 2FA.";
+                        if (failedAttempts > 3)
+                        {
+                            ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
+                        }
+                    });
                 }
                 else
                 {
                     failedAttempts = 0;
                     user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
-                    eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
+                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<LoginSucceededEvent>().Publish());
                 }
 
                 Application.Current?.Dispatcher?.Invoke(() =>
