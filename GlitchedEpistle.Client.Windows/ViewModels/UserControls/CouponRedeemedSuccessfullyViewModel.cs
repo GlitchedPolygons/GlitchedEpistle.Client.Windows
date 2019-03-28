@@ -22,7 +22,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             ThankYouNote =
                 $@"You are awesome!
 
-By redeeming your access code you have successfully extended your Glitched Epistle membership by 30 days, which means it will now expire {userService.GetUserExpirationUTC(user.Id).Result:F} (UTC).
+By redeeming your access code you have successfully extended your Glitched Epistle membership by 30 days.
 
 To celebrate your decision of valuing privacy, here's a completely random quote:";
 
