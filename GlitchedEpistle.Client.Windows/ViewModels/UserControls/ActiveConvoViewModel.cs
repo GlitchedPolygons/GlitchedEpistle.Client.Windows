@@ -67,7 +67,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => canSend;
             set => Set(ref canSend, value);
         }
-        
+
         private bool pulling;
         public bool Pulling
         {
@@ -119,7 +119,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     LoadLocalMessages();
                     TransferQueuedMessagesToUI();
                     StartAutomaticPulling();
-                    CanSend = true;
+                    Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
                 });
             }
         }
@@ -196,6 +196,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 var messageViewModel = new MessageViewModel(methodQ)
                 {
+                    Id = message.Id,
                     SenderId = message.SenderId,
                     SenderName = message.SenderName,
                     TimestampDateTimeUTC = message.TimestampUTC,
@@ -292,7 +293,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 SenderId = user.Id,
                 SenderName = username,
                 TimestampUTC = DateTime.UtcNow,
-                Body = ownMessageBody.ToString()
+                Body = ownMessageBody.ToString(),
+                Id = (user.Id + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff")).MD5()
             };
 
             StopAutomaticPulling();
@@ -302,6 +304,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             var postParamsDto = new PostMessageParamsDto
             {
+                Id = message.Id,
                 UserId = user.Id,
                 SenderName = username,
                 Auth = user.Token.Item2,
@@ -309,7 +312,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ConvoPasswordSHA512 = ActiveConvo.PasswordSHA512,
                 MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
             };
-            
+
             bool success = convoService.PostMessage(ActiveConvo.Id, postParamsDto).GetAwaiter().GetResult();
 
             Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
@@ -334,7 +337,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             File.WriteAllText(
                 contents: JsonConvert.SerializeObject(message),
-                path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssff"))
+                path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssfff"))
             );
         }
 
@@ -349,7 +352,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                var i = 0;
+                int i = 0;
                 if (Messages.Count > 0)
                 {
                     i = await convoService.IndexOf(
@@ -421,7 +424,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                     errorView.ShowDialog();
                 }
-                
+
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     textBox.Clear();
@@ -475,8 +478,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            var border = (Border) VisualTreeHelper.GetChild(messagesListBox, 0);
-            var scrollViewer = (ScrollViewer) VisualTreeHelper.GetChild(border, 0);
+            var border = (Border)VisualTreeHelper.GetChild(messagesListBox, 0);
+            var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
             scrollViewer.ScrollToBottom();
         }
 

@@ -106,22 +106,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
         #endregion
 
-        private string id;
         /// <summary>
         /// Gets the message's unique identifier, which is <para> </para>
         /// md5( <see cref="SenderId"/> + UTC timestamp )
         /// </summary>
-        public string Id
-        {
-            get
-            {
-                if (id.NullOrEmpty())
-                {
-                    id = (SenderId + TimestampDateTimeUTC.ToString("u")).MD5();
-                }
-                return id;
-            }
-        }
+        public string Id { get; set; }
 
         private ulong? scheduledHideGreenTickIcon;
 
