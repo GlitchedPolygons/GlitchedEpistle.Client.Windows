@@ -165,7 +165,7 @@
                 <Button Grid.Row="3"
                         BorderThickness="0"
                         Content="Send Text"
-                        ToolTip="(Shift + Enter)"
+                        ToolTip="Click here or press (Enter) to send your text message. (Ctrl + Enter) opens the 'Send file' dialog. (Shift + Enter) inserts a line break."
                         IsEnabled="{Binding CanSend}"
                         Command="{Binding SendTextCommand}"
                         CommandParameter="{Binding ElementName=TextBox}" />
