@@ -125,7 +125,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     convo.Participants = metadata.Participants.Split(',').ToList();
                 }
 
-                Convo _convo = convoProvider[convo.Id];
+                var _convo = convoProvider[convo.Id];
                 if (_convo != null)
                 {
                     convoProvider.Convos.Remove(_convo);
