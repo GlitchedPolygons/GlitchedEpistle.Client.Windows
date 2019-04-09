@@ -393,7 +393,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            ActiveConvoViewModel viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
+            var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
             viewModel.ActiveConvo = convo;
             MainControl = new ActiveConvoView { DataContext = viewModel };
         }
