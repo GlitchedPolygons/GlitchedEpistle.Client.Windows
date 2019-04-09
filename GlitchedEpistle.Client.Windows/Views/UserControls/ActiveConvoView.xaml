@@ -127,7 +127,6 @@
                      PreviewDrop="TextBox_OnDrop">
                 <TextBox.InputBindings>
                     <KeyBinding Key="Enter"
-                                Modifiers="Shift"
                                 Command="{Binding SendTextCommand}"
                                 CommandParameter="{Binding ElementName=TextBox}" />
                     <KeyBinding Key="Enter"
