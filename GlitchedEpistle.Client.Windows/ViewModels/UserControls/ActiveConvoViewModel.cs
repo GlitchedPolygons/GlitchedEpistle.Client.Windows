@@ -421,8 +421,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                    errorView.ShowDialog();
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                        errorView.ShowDialog();
+                    });
                 }
 
                 Application.Current?.Dispatcher?.Invoke(() =>
