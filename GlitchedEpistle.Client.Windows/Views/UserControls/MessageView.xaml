@@ -97,7 +97,7 @@
                  GotKeyboardFocus="TextBox_SelectText"
                  PreviewMouseLeftButtonDown="TextBox_OnMouseDown"
                  Text="{Binding Text}"
-                 Style="{StaticResource MessageLabelTextBox}" />
+                 Style="{DynamicResource MessageLabelTextBox}" />
 
         <Separator Margin="0"
                    SnapsToDevicePixels="True" />
