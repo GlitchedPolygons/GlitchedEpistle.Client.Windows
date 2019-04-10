@@ -146,7 +146,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendFileCommand = new DelegateCommand(OnSendFile);
             PressedEscapeCommand = new DelegateCommand(OnPressedEscape);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
+
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
+            eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Subscribe(OnChangedConvoMetadata);
+
             settings.Load();
         }
 
@@ -170,6 +173,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             StopAutomaticPulling();
             scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
+        }
+
+        private void OnChangedConvoMetadata(string convoId)
+        {
+            var convo = convoProvider[convoId];
+            if (convo is null)
+            {
+                return;
+            }
+            // TODO: update title label here
         }
 
         private void TransferQueuedMessagesToUI()
@@ -352,6 +365,33 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
+                // Pull convo metadata first.
+                var convo = convoProvider[ActiveConvo.Id];
+                var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
+
+                if (metadata != null && !convo.Equals(metadata))
+                {
+                    convo.Name = metadata.Name;
+                    convo.CreatorId = metadata.CreatorId;
+                    convo.Description = metadata.Description;
+                    convo.ExpirationUTC = metadata.ExpirationUTC;
+                    convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
+                    convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
+                    convo.Participants = metadata.Participants.Split(',').ToList();
+
+                    var _convo = convoProvider[convo.Id];
+                    if (_convo != null)
+                    {
+                        convoProvider.Convos.Remove(_convo);
+                    }
+
+                    convoProvider.Convos.Add(convo);
+                    convoProvider.Save();
+
+                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id));
+                }
+
+                // Pull newest messages.
                 int i = 0;
                 if (Messages.Count > 0)
                 {
