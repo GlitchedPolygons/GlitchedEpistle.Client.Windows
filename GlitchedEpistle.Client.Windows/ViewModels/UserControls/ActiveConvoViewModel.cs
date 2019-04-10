@@ -348,10 +348,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void WriteMessageToDisk(Message message)
         {
-            File.WriteAllText(
-                contents: JsonConvert.SerializeObject(message),
-                path: Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssfff"))
-            );
+            string path = Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssfff"));
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(
+                    contents: JsonConvert.SerializeObject(message),
+                    path: path
+                );
+            }
         }
 
         private void PullNewestMessages()
