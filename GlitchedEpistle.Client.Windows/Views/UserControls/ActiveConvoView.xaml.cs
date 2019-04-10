@@ -33,8 +33,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
                 return;
             }
 
-            Border border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
-            ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+            var border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
+            var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
             scrollViewer.ScrollToBottom();
         }
 
