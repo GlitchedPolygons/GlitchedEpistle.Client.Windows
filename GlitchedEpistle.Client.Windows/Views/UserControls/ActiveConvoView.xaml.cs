@@ -12,6 +12,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
     /// </summary>
     public partial class ActiveConvoView : UserControl
     {
+        private bool scrolled = false;
+
         public ActiveConvoView()
         {
             InitializeComponent();
@@ -28,14 +30,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void ScrollToBottom()
         {
-            if (VisualTreeHelper.GetChildrenCount(MessagesListBox) <= 0)
+            if (VisualTreeHelper.GetChildrenCount(MessagesListBox) <= 0 || scrolled)
             {
                 return;
             }
 
-            Border border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
-            ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+            var border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
+            var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+            scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+            var off = scrollViewer.VerticalOffset;
             scrollViewer.ScrollToBottom();
+        }
+
+        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (sender is ScrollViewer s)
+            {
+                scrolled = true;
+                s.ScrollChanged -= ScrollViewer_ScrollChanged;
+            }
         }
 
         private void TextBox_OnTextChanged(object sender, TextChangedEventArgs e)

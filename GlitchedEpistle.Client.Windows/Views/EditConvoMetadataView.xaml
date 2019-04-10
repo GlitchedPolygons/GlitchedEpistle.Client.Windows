@@ -36,10 +36,42 @@
                    Foreground="{DynamicResource SuccessMessageColor}"
                    FontSize="14" />
 
+        <Expander Header="Request Authentication"
+                  Margin="0,0,0,0"
+                  Style="{DynamicResource Expander}"
+                  IsExpanded="True">
+            <StackPanel>
+                <Label Content="Current Convo Password"
+                       ToolTip="Enter the current convo's password here." />
+
+                <PasswordBox Name="OldPassword"
+                             Height="23"
+                             Margin="5,0,0,0"
+                             Style="{DynamicResource PasswordBox}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="PasswordChanged">
+                            <i:InvokeCommandAction Command="{Binding OldPasswordChangedCommand}"
+                                                   CommandParameter="{Binding ElementName=OldPassword}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </PasswordBox>
+
+
+                <Label Content="2FA TOTP"
+                       ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
+                <TextBox Name="TotpTextBox"
+                         Height="23"
+                         MaxLength="100"
+                         Margin="5,0,0,0"
+                         ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
+                         Style="{DynamicResource TextBox}" />
+            </StackPanel>
+        </Expander>
+
         <Expander Header="User Options"
                   IsExpanded="True"
                   IsEnabled="True"
-                  Margin="0,3,0,0"
+                  Margin="0,10,0,0"
                   ToolTip="Actions that a regular convo participant can perform.
                   If you're the convo's admin, leaving server-side is disabled because you'd need to define a new convo admin first before abandoning (under the Admin Options->Participants tab)."
                   Style="{DynamicResource Expander}">
@@ -223,38 +255,6 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </PasswordBox>
-                    </StackPanel>
-                </Expander>
-
-                <Expander Header="Request Authentication"
-                          Margin="15,0,0,0"
-                          Style="{DynamicResource Expander}"
-                          IsExpanded="True">
-                    <StackPanel>
-                        <Label Content="Current Convo Password"
-                               ToolTip="Enter the current convo's password here." />
-
-                        <PasswordBox Name="OldPassword"
-                                     Height="23"
-                                     Margin="5,0,0,0"
-                                     Style="{DynamicResource PasswordBox}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PasswordChanged">
-                                    <i:InvokeCommandAction Command="{Binding OldPasswordChangedCommand}"
-                                                           CommandParameter="{Binding ElementName=OldPassword}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </PasswordBox>
-
-
-                        <Label Content="2FA TOTP"
-                               ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
-                        <TextBox Name="TotpTextBox"
-                                 Height="23"
-                                 MaxLength="100"
-                                 Margin="5,0,0,0"
-                                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                                 Style="{DynamicResource TextBox}" />
                     </StackPanel>
                 </Expander>
 
