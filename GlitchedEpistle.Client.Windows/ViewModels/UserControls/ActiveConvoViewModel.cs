@@ -75,6 +75,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref pulling, value);
         }
 
+        private string name;
+        public string Name
+        {
+            get => name;
+            set => Set(ref name, value);
+        }
+
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility
         {
@@ -114,6 +121,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 StopAutomaticPulling();
                 Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;
+                Name = value?.Name;
                 Task.Run(() =>
                 {
                     LoadLocalMessages();
@@ -182,7 +190,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 return;
             }
-            // TODO: update title label here
+            Name = convo.Name;
         }
 
         private void TransferQueuedMessagesToUI()
