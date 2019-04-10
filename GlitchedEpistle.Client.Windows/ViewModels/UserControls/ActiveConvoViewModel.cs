@@ -383,13 +383,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 if (metadata != null && !convo.Equals(metadata))
                 {
-                    convo.Name = metadata.Name;
-                    convo.CreatorId = metadata.CreatorId;
-                    convo.Description = metadata.Description;
-                    convo.ExpirationUTC = metadata.ExpirationUTC;
-                    convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-                    convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-                    convo.Participants = metadata.Participants.Split(',').ToList();
+                    convo.Name = ActiveConvo.Name = metadata.Name;
+                    convo.CreatorId = ActiveConvo.CreatorId = metadata.CreatorId;
+                    convo.Description = ActiveConvo.Description = metadata.Description;
+                    convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadata.ExpirationUTC;
+                    convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadata.CreationTimestampUTC;
+                    convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
+                    convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
 
                     var _convo = convoProvider[convo.Id];
                     if (_convo != null)
