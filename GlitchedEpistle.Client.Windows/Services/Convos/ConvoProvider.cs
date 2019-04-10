@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 
@@ -54,7 +56,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
                     return null;
                 }
 
-                foreach (Convo convo in convos)
+                foreach (var convo in convos)
                 {
                     if (convo is null || convo.Id != id)
                     {
@@ -80,7 +82,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
 
             for (int i = 0; i < convos.Count; i++)
             {
-                Convo convo = convos[i];
+                var convo = convos[i];
                 if (convo is null || string.IsNullOrEmpty(convo.Id))
                 {
                     continue;
