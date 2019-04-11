@@ -26,6 +26,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly User user;
         private readonly IConvoService convoService;
         private readonly IConvoProvider convoProvider;
+        private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -61,12 +62,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, IConvoProvider convoProvider, User user)
+        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, IConvoProvider convoProvider, User user, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.convoService = convoService;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
+            this.convoPasswordProvider = convoPasswordProvider;
 
             JoinCommand = new DelegateCommand(OnClickedJoinConvo);
             CancelCommand = new DelegateCommand(_ => RequestedClose?.Invoke(this, EventArgs.Empty));
@@ -104,6 +106,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
+                        convoPasswordProvider.RemovePasswordSHA512(ConvoId);
                         ResetMessages();
                         ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
                         UIEnabled = true;

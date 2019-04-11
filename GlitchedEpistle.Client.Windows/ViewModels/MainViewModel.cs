@@ -50,6 +50,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
+        private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
 
         #region Commands
@@ -110,7 +111,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool reset;
         private ulong? scheduledAuthRefresh, scheduledExpirationDialog, scheduledHideGreenTickIcon;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.logger = logger;
@@ -121,6 +122,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
+            this.convoPasswordProvider = convoPasswordProvider;
 
             #region Button click commands
             ResetWindowButtonCommand = new DelegateCommand(_ =>
@@ -393,6 +395,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
+            convoPasswordProvider.SetPasswordSHA512(convo.Id, convo.PasswordSHA512);
             var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
             viewModel.ActiveConvo = convo;
             MainControl = new ActiveConvoView { DataContext = viewModel };
@@ -418,6 +421,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             eventAggregator.GetEvent<LogoutEvent>().Publish();
+            convoPasswordProvider.Clear();
         }
     }
 }
