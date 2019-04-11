@@ -118,6 +118,7 @@
                      AcceptsReturn="True"
                      IsEnabled="{Binding CanSend}"
                      TextChanged="TextBox_OnTextChanged"
+                     PreviewKeyDown="TextBox_OnKeyDown"
                      HorizontalAlignment="Stretch"
                      HorizontalContentAlignment="Stretch"
                      HorizontalScrollBarVisibility="Disabled"
@@ -166,6 +167,7 @@
                 <Button Grid.Row="1"
                         BorderThickness="0"
                         Content="Send File"
+                        Click="SendTextButton_OnClick"
                         IsEnabled="{Binding CanSend}"
                         Command="{Binding SendFileCommand}" />
 
@@ -179,6 +181,7 @@
                         Content="Send Text"
                         ToolTip="Click here or press (Enter) to send your text message. (Ctrl + Enter) opens the 'Send file' dialog. (Shift + Enter) inserts a line break."
                         IsEnabled="{Binding CanSend}"
+                        Click="SendTextButton_OnClick"
                         Command="{Binding SendTextCommand}"
                         CommandParameter="{Binding ElementName=TextBox}" />
 
