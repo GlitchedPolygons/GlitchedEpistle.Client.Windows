@@ -13,7 +13,7 @@
   </SpellChecker>
 <HelpConfigurations selected="HelpFile">
   <HelpConfiguration name="HelpFile">
-    <OutputPath>..\..\..\..\Users\Raphael\Desktop\New folder</OutputPath>
+    <OutputPath>.\Docs</OutputPath>
     <CleanupOutputPath>true</CleanupOutputPath>
     <HelpFileName>GlitchedEpistle.Client.Windows</HelpFileName>
     <HelpFileNamingMethod>MemberName</HelpFileNamingMethod>
@@ -40,8 +40,8 @@
     </IncludeScopes>
     <SyntaxLanguages>
       <CSharp>true</CSharp>
-      <VisualBasic>true</VisualBasic>
-      <CPlusPlus>true</CPlusPlus>
+      <VisualBasic>false</VisualBasic>
+      <CPlusPlus>false</CPlusPlus>
     </SyntaxLanguages>
     <ResolveCrefLinks>true</ResolveCrefLinks>
     <HeaderText />
