@@ -122,6 +122,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;
                 Name = value?.Name;
+                DateTime? exp = value?.ExpirationUTC;
+                if (exp.HasValue)
+                {
+                    if (DateTime.UtcNow > exp.Value)
+                    {
+                        Name += " (EXPIRED)";
+                    }
+                    else if ((exp.Value - DateTime.UtcNow).TotalDays < 3)
+                    {
+                        Name += " (EXPIRES SOON)";
+                    }
+                }
                 Task.Run(() =>
                 {
                     LoadLocalMessages();
