@@ -60,8 +60,8 @@
                             VerticalAlignment="Center">
 
                     <Label Content="{Binding UserId}"
-                           FontSize="11"
-                           Padding="0,0,0,5"
+                           FontSize="14"
+                           Padding="0,0,0,5.15"
                            Foreground="Gray"
                            FontStyle="Italic" />
 
