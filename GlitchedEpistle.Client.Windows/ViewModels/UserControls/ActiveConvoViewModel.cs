@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
-        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(1111);
+        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(1000);
 
         // Injections:
         private readonly User user;
@@ -274,11 +274,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
-            Application.Current?.Dispatcher?.Invoke(() =>
-            {
-                EncryptingVisibility = Visibility.Visible;
-                CanSend = false;
-            });
+            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = Visibility.Visible);
 
             var messageBodiesJson = new JObject();
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
@@ -303,7 +299,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody is null)
             {
-                Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
                 return false;
             }
 
@@ -318,11 +313,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Id = (user.Id + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff")).MD5()
             };
 
-            StopAutomaticPulling();
-
-            DecryptMessageAndAddToView(message);
-            WriteMessageToDisk(message);
-
             var postParamsDto = new PostMessageParamsDto
             {
                 Id = message.Id,
@@ -336,8 +326,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             bool success = convoService.PostMessage(ActiveConvo.Id, postParamsDto).GetAwaiter().GetResult();
 
-            Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
-            StartAutomaticPulling();
             return success;
         }
 
@@ -465,20 +453,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
 
-                if (SubmitMessage(messageBodyJson))
-                {
-                    TransferQueuedMessagesToUI();
-                    messageBodyJson["text"] = null;
-                    messageBodyJson = null;
-                }
-                else
+                if (!SubmitMessage(messageBodyJson))
                 {
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                         errorView.ShowDialog();
                     });
                 }
+
+                messageBodyJson["text"] = null;
+                messageBodyJson = null;
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
@@ -572,7 +557,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         });
                     }
 
-                    TransferQueuedMessagesToUI();
                     messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = null;
                 }
                 else
