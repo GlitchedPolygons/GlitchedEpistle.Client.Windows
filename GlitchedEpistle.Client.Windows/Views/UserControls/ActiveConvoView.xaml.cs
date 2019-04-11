@@ -12,13 +12,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
     /// </summary>
     public partial class ActiveConvoView : UserControl
     {
-        private bool scrolled = false;
-
         public ActiveConvoView()
         {
             InitializeComponent();
             Loaded += OnLoaded;
-            ((INotifyCollectionChanged)MessagesListBox.Items).CollectionChanged += (_, __) => ScrollToBottom();
+            ((INotifyCollectionChanged)MessagesListBox.Items).CollectionChanged += ActiveConvoView_CollectionChanged;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -28,9 +26,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             ScrollToBottom();
         }
 
+        private void ActiveConvoView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            ScrollToBottom();
+        }
+
         private void ScrollToBottom()
         {
-            if (VisualTreeHelper.GetChildrenCount(MessagesListBox) <= 0 || scrolled)
+            if (VisualTreeHelper.GetChildrenCount(MessagesListBox) <= 0)
             {
                 return;
             }
@@ -46,7 +49,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         {
             if (sender is ScrollViewer s)
             {
-                scrolled = true;
                 s.ScrollChanged -= ScrollViewer_ScrollChanged;
             }
         }
@@ -88,6 +90,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
                 (DataContext as ActiveConvoViewModel)?.OnDragAndDropFile(filePath);
             }
             e.Handled = true;
+        }
+
+        private void ScrollToBottomButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ScrollToBottom();
         }
     }
 }
