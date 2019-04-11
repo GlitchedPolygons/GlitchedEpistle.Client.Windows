@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
-        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(1000);
+        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(666);
 
         // Injections:
         private readonly User user;
