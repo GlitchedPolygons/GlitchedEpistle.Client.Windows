@@ -1,7 +1,9 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System;
+using System.Windows;
 using System.Windows.Media;
+using System.Windows.Controls;
 using System.Collections.Specialized;
+using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 
@@ -12,6 +14,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
     /// </summary>
     public partial class ActiveConvoView : UserControl
     {
+        private Border border;
+        private ScrollViewer scrollViewer;
+
         public ActiveConvoView()
         {
             InitializeComponent();
@@ -23,34 +28,38 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         {
             TextBox.Focus();
             TextBox.SelectAll();
-            ScrollToBottom();
+
+            if (VisualTreeHelper.GetChildrenCount(MessagesListBox) > 0)
+            {
+                border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
+                scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+                scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                scrollViewer?.ScrollToBottom();
+            }
         }
 
         private void ActiveConvoView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            ScrollToBottom();
+            if (AtBottom())
+            {
+                scrollViewer?.ScrollToBottom();
+            }
         }
 
-        private void ScrollToBottom()
+        private void ScrollToBottomButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (VisualTreeHelper.GetChildrenCount(MessagesListBox) <= 0)
-            {
-                return;
-            }
+            scrollViewer?.ScrollToBottom();
+        }
 
-            var border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
-            var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
-            scrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
-            var off = scrollViewer.VerticalOffset;
-            scrollViewer.ScrollToBottom();
+        private bool AtBottom()
+        {
+            if (scrollViewer is null) return false;
+            return Math.Abs(scrollViewer.VerticalOffset - scrollViewer.ScrollableHeight) < 0.5d;
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
-            if (sender is ScrollViewer s)
-            {
-                s.ScrollChanged -= ScrollViewer_ScrollChanged;
-            }
+            ScrollToBottomButton.Visibility = AtBottom() ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void TextBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -92,9 +101,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             e.Handled = true;
         }
 
-        private void ScrollToBottomButton_OnClick(object sender, RoutedEventArgs e)
+        private void TextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
-            ScrollToBottom();
+            if (e.Key == Key.Enter)
+            {
+                scrollViewer?.ScrollToBottom();
+            }
+        }
+
+        private void SendTextButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            scrollViewer?.ScrollToBottom();
         }
     }
 }
