@@ -26,8 +26,6 @@ using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.MethodQ;
 
-using Org.BouncyCastle.Crypto.Digests;
-
 using Prism.Events;
 
 using Unity;
@@ -88,9 +86,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConvoProvider, ConvoProvider>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConvoPasswordProvider, ConvoPasswordProvider>(new ContainerControlledLifetimeManager());
 
             // Open the main app's window.
-            MainView mainView = container.Resolve<MainView>();
+            var mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
             Current.MainWindow = mainView;
             Current.MainWindow?.Show();

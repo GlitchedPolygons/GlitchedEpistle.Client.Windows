@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
@@ -21,6 +22,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
         private readonly IConvoProvider convoProvider;
+        private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -39,12 +41,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
-        public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory)
+        public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider)
         {
             this.windowFactory = windowFactory;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
             this.viewModelFactory = viewModelFactory;
+            this.convoPasswordProvider = convoPasswordProvider;
 
             UpdateList();
 
@@ -69,6 +72,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             var convo = commandParam as Convo;
             if (convo is null)
             {
+                return;
+            }
+
+            string cachedPwSHA512 = convoPasswordProvider.GetPasswordSHA512(convo.Id);
+            if (cachedPwSHA512.NotNullNotEmpty())
+            {
+                // TODO: open convo with pw here
                 return;
             }
 
