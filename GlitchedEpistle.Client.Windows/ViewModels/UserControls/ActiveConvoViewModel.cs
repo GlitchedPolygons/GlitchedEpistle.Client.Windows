@@ -278,18 +278,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             var messageBodiesJson = new JObject();
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
-            var bag = new ConcurrentBag<Tuple<string, string>>();
+            var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
             List<Tuple<string, string>> keys = userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2).GetAwaiter().GetResult();
 
             Parallel.ForEach(keys, key =>
             {
                 if (key != null && key.Item1.NotNullNotEmpty() && key.Item2.NotNullNotEmpty())
                 {
-                    EncryptMessageBodyForUser(bag, key, messageBodyJsonString);
+                    EncryptMessageBodyForUser(encryptedMessagesBag, key, messageBodyJsonString);
                 }
             });
 
-            foreach (Tuple<string, string> encryptedMessage in bag)
+            foreach (Tuple<string, string> encryptedMessage in encryptedMessagesBag)
             {
                 messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
             }
@@ -304,22 +304,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             string username = settings["Username"];
 
-            var message = new Message
-            {
-                SenderId = user.Id,
-                SenderName = username,
-                TimestampUTC = DateTime.UtcNow,
-                Body = ownMessageBody.ToString(),
-                Id = (user.Id + DateTime.UtcNow.ToString("yyyyMMddHHmmssfff")).MD5()
-            };
-
             var postParamsDto = new PostMessageParamsDto
             {
-                Id = message.Id,
                 UserId = user.Id,
                 SenderName = username,
                 Auth = user.Token.Item2,
-                TimestampUTC = message.TimestampUTC,
                 ConvoPasswordSHA512 = ActiveConvo.PasswordSHA512,
                 MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
             };
