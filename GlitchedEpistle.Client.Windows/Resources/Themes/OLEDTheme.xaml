@@ -48,6 +48,10 @@
                 ImageSource="/Resources/Images/settings-icon-white.png" />
     <ImageBrush x:Key="SettingsIconSelected"
                 ImageSource="/Resources/Images/settings-icon-selected.png" />
+    <ImageBrush x:Key="ScrollToBottomIcon"
+                ImageSource="/Resources/Images/scroll-to-bottom-icon-white.png" />
+    <ImageBrush x:Key="ScrollToBottomIconSelected"
+                ImageSource="/Resources/Images/scroll-to-bottom-icon-selected.png" />
 
     <!-- Grid Splitter -->
     <Style TargetType="GridSplitter">
@@ -348,6 +352,44 @@
                                  Value="True">
                             <Setter Property="Background"
                                     Value="{DynamicResource ClipboardIconSelected}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Scroll to bottom Button -->
+    <Style x:Key="ScrollToBottomButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="{DynamicResource ScrollToBottomIcon}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="True"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="True">
+                            <Setter Property="Opacity"
+                                    Value="1.0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource ScrollToBottomIconSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
