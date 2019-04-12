@@ -410,7 +410,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="glitched-epistle-icon.ico" />
+    <Resource Include="glitched-epistle-icon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\glitched-polygons-blue-1080p.png" />
