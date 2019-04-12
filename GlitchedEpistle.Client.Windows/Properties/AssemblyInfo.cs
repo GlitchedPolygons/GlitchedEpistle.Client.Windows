@@ -6,7 +6,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Glitched Epistle")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Encrypted chat service. Simple, minimal and efficient.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Glitched Polygons")]
 [assembly: AssemblyProduct("Glitched Epistle")]
