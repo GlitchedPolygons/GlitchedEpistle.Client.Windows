@@ -26,3 +26,8 @@
 *.mdf filter=lfs diff=lfs merge=lfs -text
 *.kdbx filter=lfs diff=lfs merge=lfs -text
 *.chm filter=lfs diff=lfs merge=lfs -text
+*.msi filter=lfs diff=lfs merge=lfs -text
+*.EXE filter=lfs diff=lfs merge=lfs -text
+*.DLL filter=lfs diff=lfs merge=lfs -text
+*.MSI filter=lfs diff=lfs merge=lfs -text
+*.MSIX filter=lfs diff=lfs merge=lfs -text
