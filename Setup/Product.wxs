@@ -30,9 +30,7 @@
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
         <Directory Id="ManufacturerFolder" Name="Glitched Polygons">
-          <Directory Id="ProductFolder" Name="Glitched Epistle">
-            <Directory Id="INSTALLFOLDER" Name="1.0.0"/>
-          </Directory>
+          <Directory Id="INSTALLFOLDER" Name="Glitched Epistle"/>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
