@@ -12,8 +12,9 @@
              Compressed="yes"
              InstallScope="perMachine" />
     <Icon Id="icon.ico" SourceFile="$(var.GlitchedEpistle.Client.Windows.TargetDir)glitched-epistle-icon.ico" />
-    <Property Id="ARPPRODUCTICON" Value="glitched-epistle-icon.ico" />
-    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\LICENSE.rtf" />
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.ProjectDir)bg.bmp"/>
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)LICENSE.rtf" />
     <UIRef Id="WixUI_Minimal" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />
@@ -28,7 +29,11 @@
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="Glitched Epistle" />
+        <Directory Id="ManufacturerFolder" Name="Glitched Polygons">
+          <Directory Id="ProductFolder" Name="Glitched Epistle">
+            <Directory Id="INSTALLFOLDER" Name="1.0.0"/>
+          </Directory>
+        </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
         <Directory Id="ApplicationProgramsFolder" Name="Glitched Epistle" />
