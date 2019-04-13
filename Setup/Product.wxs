@@ -2,180 +2,244 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define GlitchedEpistle.Client.Windows_TargetDir=$(var.GlitchedEpistle.Client.Windows.TargetDir)?>
 
-	<Product Id="cc8c1b29-c470-4fa7-bd9a-a008098f1681" 
-           Name="Glitched Epistle" 
-           Language="1033" 
-           Version="1.0.0.0" 
-           Manufacturer="Glitched Polygons" 
+  <Product Id="cc8c1b29-c470-4fa7-bd9a-a008098f1681"
+           Name="Glitched Epistle"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="Glitched Polygons"
            UpgradeCode="1560508d-2419-4999-af48-37c7362f8ded">
-
-    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine" />
     <UIRef Id="WixUI_Minimal" />
-
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate EmbedCab="yes"/>
-
-		<Feature Id="ProductFeature" Title="Glitched Epistle" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+    <Feature Id="ProductFeature"
+             Title="Glitched Epistle"
+             Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
       <ComponentRef Id="ApplicationShortcut" />
       <ComponentRef Id="ApplicationShortcutDesktop" />
-		</Feature>
-	</Product>
-
-	<Fragment>
-		<Directory Id="TARGETDIR" Name="SourceDir">
-			<Directory Id="ProgramFilesFolder">
-				<Directory Id="INSTALLFOLDER" Name="Glitched Epistle" />
-			</Directory>
-      <Directory Id="ProgramMenuFolder">
-        <Directory Id="ApplicationProgramsFolder" Name="Glitched Epistle"/>
+    </Feature>
+  </Product>
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Glitched Epistle" />
       </Directory>
-      <Directory Id="DesktopFolder" Name="Desktop"/>
-		</Directory>
-	</Fragment>
-
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Glitched Epistle" />
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+  </Fragment>
   <Fragment>
     <DirectoryRef Id="ApplicationProgramsFolder">
-      <Component Id="ApplicationShortcut" Guid="66B92B04-8EAD-4A6D-8C03-8E126F5DEF04">
-        <Shortcut Id="ApplicationStartMenuShortcut" Name="Glitched Epistle" Description="Glitched Epistle" Target="[INSTALLFOLDER]Epistle.exe" WorkingDirectory="INSTALLFOLDER" />
-        <RemoveFolder Id="RemoveApplicationProgramsFolder" Directory="ApplicationProgramsFolder" On="uninstall" />
-        <RegistryValue Root="HKCU" Key="Software\GlitchedEpistle" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      <Component Id="ApplicationShortcut"
+                 Guid="66B92B04-8EAD-4A6D-8C03-8E126F5DEF04">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="Glitched Epistle"
+                  Description="Glitched Epistle"
+                  Target="[INSTALLFOLDER]Epistle.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="RemoveApplicationProgramsFolder"
+                      Directory="ApplicationProgramsFolder"
+                      On="uninstall" />
+        <RegistryValue Root="HKCU" 
+                       Key="Software\GlitchedEpistle" 
+                       Name="installed" 
+                       Type="integer" 
+                       Value="1"
+                       KeyPath="yes" />
       </Component>
     </DirectoryRef>
     <DirectoryRef Id="DesktopFolder">
-      <Component Id="ApplicationShortcutDesktop" Guid="3A790E7C-F73C-4154-BACA-7098A2B21A3C">
-        <Shortcut Id="ApplicationDesktopShortcut" Name="Glitched Epistle" Description="Crypto-chat service. Simple, minimal and secure." Target="[INSTALLFOLDER]Epistle.exe" WorkingDirectory="INSTALLFOLDER" />
-        <RemoveFolder Id="RemoveDesktopFolder" Directory="DesktopFolder" On="uninstall" />
-        <RegistryValue Root="HKCU" Key="Software\GlitchedEpistle" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      <Component Id="ApplicationShortcutDesktop" 
+                 Guid="3A790E7C-F73C-4154-BACA-7098A2B21A3C">
+        <Shortcut Id="ApplicationDesktopShortcut" 
+                  Name="Glitched Epistle"
+                  Description="Crypto-chat service. Simple, minimal and secure." 
+                  Target="[INSTALLFOLDER]Epistle.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RemoveFolder Id="RemoveDesktopFolder" 
+                      Directory="DesktopFolder" 
+                      On="uninstall" />
+        <RegistryValue Root="HKCU"
+                       Key="Software\GlitchedEpistle" 
+                       Name="installed" 
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
       </Component>
     </DirectoryRef>
   </Fragment>
-
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-			<Component Id="Epistle.exe" Guid="5faf5168-d696-4dd2-95a3-55b52c3b965c">
-			  <File Id="Epistle.exe" Name="Epistle.exe" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Epistle.exe" />
-			</Component>
-			<Component Id="Epistle.exe.config" Guid="c84093a7-c1b1-4813-a9eb-91b4988c04a6">
-			  <File Id="Epistle.exe.config" Name="Epistle.exe.config" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Epistle.exe.config" />
-			</Component>
-			<Component Id="System.Windows.Interactivity.dll" Guid="25717ff7-36a6-4b53-b031-8b61fd58acba">
-			  <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Windows.Interactivity.dll" />
-			</Component>
-			<Component Id="XamlAnimatedGif.dll" Guid="68dea904-bac3-4b1b-9f7d-3a89c67254a8">
-			  <File Id="XamlAnimatedGif.dll" Name="XamlAnimatedGif.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)XamlAnimatedGif.dll" />
-			</Component>
-			<Component Id="Unity.Abstractions.dll" Guid="252d19d8-c454-42af-940b-52ea09dd0afb">
-			  <File Id="Unity.Abstractions.dll" Name="Unity.Abstractions.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Unity.Abstractions.dll" />
-			</Component>
-			<Component Id="GlitchedPolygons.GlitchedEpistle.Client.dll" Guid="24f9f391-93f5-45e4-a4f4-b7e7b9e3df09">
-			  <File Id="GlitchedPolygons.GlitchedEpistle.Client.dll" Name="GlitchedPolygons.GlitchedEpistle.Client.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.GlitchedEpistle.Client.dll" />
-			</Component>
-			<Component Id="Prism.dll" Guid="49b87d6e-3bfe-4c0c-b248-777756c57abe">
-			  <File Id="Prism.dll" Name="Prism.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Prism.dll" />
-			</Component>
-			<Component Id="GlitchedPolygons.Services.MethodQ.dll" Guid="9b7e9b7a-3e43-4a3f-ac6e-e3d8be8e7f83">
-			  <File Id="GlitchedPolygons.Services.MethodQ.dll" Name="GlitchedPolygons.Services.MethodQ.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.Services.MethodQ.dll" />
-			</Component>
-			<Component Id="zxing.dll" Guid="2a00544a-12f6-479a-84eb-54fa4644eaa3">
-			  <File Id="zxing.dll" Name="zxing.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)zxing.dll" />
-			</Component>
-			<Component Id="Newtonsoft.Json.dll" Guid="47d1ff8c-0564-4d29-8944-660430a3a625">
-			  <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Newtonsoft.Json.dll" />
-			</Component>
-			<Component Id="RestSharp.dll" Guid="89d79daf-0b45-48e3-9447-5e2ee6aa04ce">
-			  <File Id="RestSharp.dll" Name="RestSharp.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)RestSharp.dll" />
-			</Component>
-			<Component Id="GlitchedPolygons.Services.CompressionUtility.dll" Guid="e35c4364-0da4-4974-aa3c-a37cf4f8bd57">
-			  <File Id="GlitchedPolygons.Services.CompressionUtility.dll" Name="GlitchedPolygons.Services.CompressionUtility.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.Services.CompressionUtility.dll" />
-			</Component>
-			<Component Id="GlitchedPolygons.Services.JwtService.dll" Guid="52fbb16b-955a-4951-b5a4-ed3689fee10b">
-			  <File Id="GlitchedPolygons.Services.JwtService.dll" Name="GlitchedPolygons.Services.JwtService.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.Services.JwtService.dll" />
-			</Component>
-			<Component Id="Unity.Container.dll" Guid="275c457c-07ff-4c32-9cb7-50c67bfd77e2">
-			  <File Id="Unity.Container.dll" Name="Unity.Container.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Unity.Container.dll" />
-			</Component>
-			<Component Id="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll" Guid="e93ab268-dfd9-45fc-ab33-4730b9665718">
-			  <File Id="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll" Name="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll" />
-			</Component>
-			<Component Id="zxing.presentation.dll" Guid="25a11eda-0d44-40d8-b3e5-d0b5e749c4ce">
-			  <File Id="zxing.presentation.dll" Name="zxing.presentation.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)zxing.presentation.dll" />
-			</Component>
-			<Component Id="Prism.Wpf.dll" Guid="9617ad2e-65bd-4a9f-966e-b73e2f9a22d2">
-			  <File Id="Prism.Wpf.dll" Name="Prism.Wpf.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Prism.Wpf.dll" />
-			</Component>
-			<Component Id="System.Net.Http.dll" Guid="f0f7593f-a605-4ffe-a4b5-c4a0bd297f3e">
-			  <File Id="System.Net.Http.dll" Name="System.Net.Http.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Net.Http.dll" />
-			</Component>
-			<Component Id="netstandard.dll" Guid="49164654-a983-4a49-8805-01c5570fb49b">
-			  <File Id="netstandard.dll" Name="netstandard.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)netstandard.dll" />
-			</Component>
-			<Component Id="System.Data.Common.dll" Guid="5ae4d87a-bab8-478b-867a-90c53a6661a2">
-			  <File Id="System.Data.Common.dll" Name="System.Data.Common.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Data.Common.dll" />
-			</Component>
-			<Component Id="System.Diagnostics.StackTrace.dll" Guid="8b689105-05db-4089-8171-c9af82e05284">
-			  <File Id="System.Diagnostics.StackTrace.dll" Name="System.Diagnostics.StackTrace.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Diagnostics.StackTrace.dll" />
-			</Component>
-			<Component Id="System.Diagnostics.Tracing.dll" Guid="6f326c7a-7992-4c41-83f1-ba41b91cd7f3">
-			  <File Id="System.Diagnostics.Tracing.dll" Name="System.Diagnostics.Tracing.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Diagnostics.Tracing.dll" />
-			</Component>
-			<Component Id="System.Globalization.Extensions.dll" Guid="3c18caf7-1f5d-4f9b-906f-cabcbb5b7b9e">
-			  <File Id="System.Globalization.Extensions.dll" Name="System.Globalization.Extensions.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Globalization.Extensions.dll" />
-			</Component>
-			<Component Id="System.IO.Compression.dll" Guid="1e228ce5-e79b-497e-8c52-f378bd53b8bc">
-			  <File Id="System.IO.Compression.dll" Name="System.IO.Compression.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.IO.Compression.dll" />
-			</Component>
-			<Component Id="System.Net.Sockets.dll" Guid="1c1b25e8-d62c-4517-836b-6fdf9d50392e">
-			  <File Id="System.Net.Sockets.dll" Name="System.Net.Sockets.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Net.Sockets.dll" />
-			</Component>
-			<Component Id="System.ValueTuple.dll" Guid="0972d8de-566c-439c-9316-ffb36c9e4d01">
-			  <File Id="System.ValueTuple.dll" Name="System.ValueTuple.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.ValueTuple.dll" />
-			</Component>
-			<Component Id="System.Runtime.InteropServices.RuntimeInformation.dll" Guid="171e9e88-3e6e-48f6-a166-b75403e9ac40">
-			  <File Id="System.Runtime.InteropServices.RuntimeInformation.dll" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.InteropServices.RuntimeInformation.dll" />
-			</Component>
-			<Component Id="System.Runtime.Serialization.Xml.dll" Guid="d137fc14-b6f3-417a-9a6d-f9aaebafefad">
-			  <File Id="System.Runtime.Serialization.Xml.dll" Name="System.Runtime.Serialization.Xml.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.Serialization.Xml.dll" />
-			</Component>
-			<Component Id="System.Runtime.Serialization.Primitives.dll" Guid="0654d50a-7fc7-4227-91f8-0c92edb0d1ef">
-			  <File Id="System.Runtime.Serialization.Primitives.dll" Name="System.Runtime.Serialization.Primitives.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.Serialization.Primitives.dll" />
-			</Component>
-			<Component Id="System.Security.Cryptography.Algorithms.dll" Guid="7ac93477-3d57-4392-b3a6-9b3fd620551e">
-			  <File Id="System.Security.Cryptography.Algorithms.dll" Name="System.Security.Cryptography.Algorithms.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Security.Cryptography.Algorithms.dll" />
-			</Component>
-			<Component Id="System.Security.SecureString.dll" Guid="3ac55bb6-caa9-49d7-9962-7e8d5ec287b2">
-			  <File Id="System.Security.SecureString.dll" Name="System.Security.SecureString.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Security.SecureString.dll" />
-			</Component>
-			<Component Id="System.Threading.Overlapped.dll" Guid="59c8cf03-7bd6-46ea-9b86-0a344537fd39">
-			  <File Id="System.Threading.Overlapped.dll" Name="System.Threading.Overlapped.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Threading.Overlapped.dll" />
-			</Component>
-			<Component Id="System.Xml.XPath.XDocument.dll" Guid="eb2bcb30-9c70-436f-8fec-765f49e01763">
-			  <File Id="System.Xml.XPath.XDocument.dll" Name="System.Xml.XPath.XDocument.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Xml.XPath.XDocument.dll" />
-			</Component>
-			<Component Id="BouncyCastle.Crypto.dll" Guid="5b0aef00-9abe-4304-90c5-1d39c9babcb5">
-			  <File Id="BouncyCastle.Crypto.dll" Name="BouncyCastle.Crypto.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)BouncyCastle.Crypto.dll" />
-			</Component>
-			<Component Id="Microsoft.IdentityModel.Tokens.dll" Guid="06b4053f-f9ff-4ad9-a6e8-77d0adf24932">
-			  <File Id="Microsoft.IdentityModel.Tokens.dll" Name="Microsoft.IdentityModel.Tokens.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Microsoft.IdentityModel.Tokens.dll" />
-			</Component>
-			<Component Id="Microsoft.IdentityModel.Logging.dll" Guid="abc432eb-bc5b-4e08-b299-b0014822ac9b">
-			  <File Id="Microsoft.IdentityModel.Logging.dll" Name="Microsoft.IdentityModel.Logging.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Microsoft.IdentityModel.Logging.dll" />
-			</Component>
-			<Component Id="System.IdentityModel.Tokens.Jwt.dll" Guid="fce8de36-f4c0-47fb-91ab-94cec050a7d6">
-			  <File Id="System.IdentityModel.Tokens.Jwt.dll" Name="System.IdentityModel.Tokens.Jwt.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.IdentityModel.Tokens.Jwt.dll" />
-			</Component>
-			<Component Id="Microsoft.IdentityModel.JsonWebTokens.dll" Guid="bbe76022-2f50-4c22-8a17-e899113d6987">
-			  <File Id="Microsoft.IdentityModel.JsonWebTokens.dll" Name="Microsoft.IdentityModel.JsonWebTokens.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Microsoft.IdentityModel.JsonWebTokens.dll" />
-			</Component>
-			<Component Id="System.Runtime.CompilerServices.Unsafe.dll" Guid="c35a22fa-c73c-4273-b8d2-aadba9fadea7">
-			  <File Id="System.Runtime.CompilerServices.Unsafe.dll" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.CompilerServices.Unsafe.dll" />
-			</Component>
-			<Component Id="System.Runtime.dll" Guid="6fd45480-e9bb-4446-8b72-7ec406379523">
-			  <File Id="System.Runtime.dll" Name="System.Runtime.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.dll" />
-			</Component>
-			<Component Id="CommonServiceLocator.dll" Guid="098595d7-6527-4dd6-b513-a2493fa1f646">
-			  <File Id="CommonServiceLocator.dll" Name="CommonServiceLocator.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)CommonServiceLocator.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="Epistle.exe" Guid="5faf5168-d696-4dd2-95a3-55b52c3b965c">
+        <File Id="Epistle.exe" Name="Epistle.exe" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Epistle.exe" />
+      </Component>
+      <Component Id="Epistle.exe.config" Guid="c84093a7-c1b1-4813-a9eb-91b4988c04a6">
+        <File Id="Epistle.exe.config" Name="Epistle.exe.config"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Epistle.exe.config" />
+      </Component>
+      <Component Id="System.Windows.Interactivity.dll" Guid="25717ff7-36a6-4b53-b031-8b61fd58acba">
+        <File Id="System.Windows.Interactivity.dll" Name="System.Windows.Interactivity.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Windows.Interactivity.dll" />
+      </Component>
+      <Component Id="XamlAnimatedGif.dll" Guid="68dea904-bac3-4b1b-9f7d-3a89c67254a8">
+        <File Id="XamlAnimatedGif.dll" Name="XamlAnimatedGif.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)XamlAnimatedGif.dll" />
+      </Component>
+      <Component Id="Unity.Abstractions.dll" Guid="252d19d8-c454-42af-940b-52ea09dd0afb">
+        <File Id="Unity.Abstractions.dll" Name="Unity.Abstractions.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Unity.Abstractions.dll" />
+      </Component>
+      <Component Id="GlitchedPolygons.GlitchedEpistle.Client.dll" Guid="24f9f391-93f5-45e4-a4f4-b7e7b9e3df09">
+        <File Id="GlitchedPolygons.GlitchedEpistle.Client.dll" Name="GlitchedPolygons.GlitchedEpistle.Client.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.GlitchedEpistle.Client.dll" />
+      </Component>
+      <Component Id="Prism.dll" Guid="49b87d6e-3bfe-4c0c-b248-777756c57abe">
+        <File Id="Prism.dll" Name="Prism.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Prism.dll" />
+      </Component>
+      <Component Id="GlitchedPolygons.Services.MethodQ.dll" Guid="9b7e9b7a-3e43-4a3f-ac6e-e3d8be8e7f83">
+        <File Id="GlitchedPolygons.Services.MethodQ.dll" Name="GlitchedPolygons.Services.MethodQ.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.Services.MethodQ.dll" />
+      </Component>
+      <Component Id="zxing.dll" Guid="2a00544a-12f6-479a-84eb-54fa4644eaa3">
+        <File Id="zxing.dll" Name="zxing.dll" Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)zxing.dll" />
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="47d1ff8c-0564-4d29-8944-660430a3a625">
+        <File Id="Newtonsoft.Json.dll" Name="Newtonsoft.Json.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Newtonsoft.Json.dll" />
+      </Component>
+      <Component Id="RestSharp.dll" Guid="89d79daf-0b45-48e3-9447-5e2ee6aa04ce">
+        <File Id="RestSharp.dll" Name="RestSharp.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)RestSharp.dll" />
+      </Component>
+      <Component Id="GlitchedPolygons.Services.CompressionUtility.dll" Guid="e35c4364-0da4-4974-aa3c-a37cf4f8bd57">
+        <File Id="GlitchedPolygons.Services.CompressionUtility.dll"
+              Name="GlitchedPolygons.Services.CompressionUtility.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.Services.CompressionUtility.dll" />
+      </Component>
+      <Component Id="GlitchedPolygons.Services.JwtService.dll" Guid="52fbb16b-955a-4951-b5a4-ed3689fee10b">
+        <File Id="GlitchedPolygons.Services.JwtService.dll" Name="GlitchedPolygons.Services.JwtService.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.Services.JwtService.dll" />
+      </Component>
+      <Component Id="Unity.Container.dll" Guid="275c457c-07ff-4c32-9cb7-50c67bfd77e2">
+        <File Id="Unity.Container.dll" Name="Unity.Container.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Unity.Container.dll" />
+      </Component>
+      <Component Id="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll"
+                 Guid="e93ab268-dfd9-45fc-ab33-4730b9665718">
+        <File Id="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll"
+              Name="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll" />
+      </Component>
+      <Component Id="zxing.presentation.dll" Guid="25a11eda-0d44-40d8-b3e5-d0b5e749c4ce">
+        <File Id="zxing.presentation.dll" Name="zxing.presentation.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)zxing.presentation.dll" />
+      </Component>
+      <Component Id="Prism.Wpf.dll" Guid="9617ad2e-65bd-4a9f-966e-b73e2f9a22d2">
+        <File Id="Prism.Wpf.dll" Name="Prism.Wpf.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Prism.Wpf.dll" />
+      </Component>
+      <Component Id="System.Net.Http.dll" Guid="f0f7593f-a605-4ffe-a4b5-c4a0bd297f3e">
+        <File Id="System.Net.Http.dll" Name="System.Net.Http.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Net.Http.dll" />
+      </Component>
+      <Component Id="netstandard.dll" Guid="49164654-a983-4a49-8805-01c5570fb49b">
+        <File Id="netstandard.dll" Name="netstandard.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)netstandard.dll" />
+      </Component>
+      <Component Id="System.Data.Common.dll" Guid="5ae4d87a-bab8-478b-867a-90c53a6661a2">
+        <File Id="System.Data.Common.dll" Name="System.Data.Common.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Data.Common.dll" />
+      </Component>
+      <Component Id="System.Diagnostics.StackTrace.dll" Guid="8b689105-05db-4089-8171-c9af82e05284">
+        <File Id="System.Diagnostics.StackTrace.dll" Name="System.Diagnostics.StackTrace.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Diagnostics.StackTrace.dll" />
+      </Component>
+      <Component Id="System.Diagnostics.Tracing.dll" Guid="6f326c7a-7992-4c41-83f1-ba41b91cd7f3">
+        <File Id="System.Diagnostics.Tracing.dll" Name="System.Diagnostics.Tracing.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Diagnostics.Tracing.dll" />
+      </Component>
+      <Component Id="System.Globalization.Extensions.dll" Guid="3c18caf7-1f5d-4f9b-906f-cabcbb5b7b9e">
+        <File Id="System.Globalization.Extensions.dll" Name="System.Globalization.Extensions.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Globalization.Extensions.dll" />
+      </Component>
+      <Component Id="System.IO.Compression.dll" Guid="1e228ce5-e79b-497e-8c52-f378bd53b8bc">
+        <File Id="System.IO.Compression.dll" Name="System.IO.Compression.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.IO.Compression.dll" />
+      </Component>
+      <Component Id="System.Net.Sockets.dll" Guid="1c1b25e8-d62c-4517-836b-6fdf9d50392e">
+        <File Id="System.Net.Sockets.dll" Name="System.Net.Sockets.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Net.Sockets.dll" />
+      </Component>
+      <Component Id="System.ValueTuple.dll" Guid="0972d8de-566c-439c-9316-ffb36c9e4d01">
+        <File Id="System.ValueTuple.dll" Name="System.ValueTuple.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.ValueTuple.dll" />
+      </Component>
+      <Component Id="System.Runtime.InteropServices.RuntimeInformation.dll" Guid="171e9e88-3e6e-48f6-a166-b75403e9ac40">
+        <File Id="System.Runtime.InteropServices.RuntimeInformation.dll"
+              Name="System.Runtime.InteropServices.RuntimeInformation.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.InteropServices.RuntimeInformation.dll" />
+      </Component>
+      <Component Id="System.Runtime.Serialization.Xml.dll" Guid="d137fc14-b6f3-417a-9a6d-f9aaebafefad">
+        <File Id="System.Runtime.Serialization.Xml.dll" Name="System.Runtime.Serialization.Xml.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.Serialization.Xml.dll" />
+      </Component>
+      <Component Id="System.Runtime.Serialization.Primitives.dll" Guid="0654d50a-7fc7-4227-91f8-0c92edb0d1ef">
+        <File Id="System.Runtime.Serialization.Primitives.dll" Name="System.Runtime.Serialization.Primitives.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.Serialization.Primitives.dll" />
+      </Component>
+      <Component Id="System.Security.Cryptography.Algorithms.dll" Guid="7ac93477-3d57-4392-b3a6-9b3fd620551e">
+        <File Id="System.Security.Cryptography.Algorithms.dll" Name="System.Security.Cryptography.Algorithms.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Security.Cryptography.Algorithms.dll" />
+      </Component>
+      <Component Id="System.Security.SecureString.dll" Guid="3ac55bb6-caa9-49d7-9962-7e8d5ec287b2">
+        <File Id="System.Security.SecureString.dll" Name="System.Security.SecureString.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Security.SecureString.dll" />
+      </Component>
+      <Component Id="System.Threading.Overlapped.dll" Guid="59c8cf03-7bd6-46ea-9b86-0a344537fd39">
+        <File Id="System.Threading.Overlapped.dll" Name="System.Threading.Overlapped.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Threading.Overlapped.dll" />
+      </Component>
+      <Component Id="System.Xml.XPath.XDocument.dll" Guid="eb2bcb30-9c70-436f-8fec-765f49e01763">
+        <File Id="System.Xml.XPath.XDocument.dll" Name="System.Xml.XPath.XDocument.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Xml.XPath.XDocument.dll" />
+      </Component>
+      <Component Id="BouncyCastle.Crypto.dll" Guid="5b0aef00-9abe-4304-90c5-1d39c9babcb5">
+        <File Id="BouncyCastle.Crypto.dll" Name="BouncyCastle.Crypto.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)BouncyCastle.Crypto.dll" />
+      </Component>
+      <Component Id="Microsoft.IdentityModel.Tokens.dll" Guid="06b4053f-f9ff-4ad9-a6e8-77d0adf24932">
+        <File Id="Microsoft.IdentityModel.Tokens.dll" Name="Microsoft.IdentityModel.Tokens.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Microsoft.IdentityModel.Tokens.dll" />
+      </Component>
+      <Component Id="Microsoft.IdentityModel.Logging.dll" Guid="abc432eb-bc5b-4e08-b299-b0014822ac9b">
+        <File Id="Microsoft.IdentityModel.Logging.dll" Name="Microsoft.IdentityModel.Logging.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Microsoft.IdentityModel.Logging.dll" />
+      </Component>
+      <Component Id="System.IdentityModel.Tokens.Jwt.dll" Guid="fce8de36-f4c0-47fb-91ab-94cec050a7d6">
+        <File Id="System.IdentityModel.Tokens.Jwt.dll" Name="System.IdentityModel.Tokens.Jwt.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.IdentityModel.Tokens.Jwt.dll" />
+      </Component>
+      <Component Id="Microsoft.IdentityModel.JsonWebTokens.dll" Guid="bbe76022-2f50-4c22-8a17-e899113d6987">
+        <File Id="Microsoft.IdentityModel.JsonWebTokens.dll" Name="Microsoft.IdentityModel.JsonWebTokens.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)Microsoft.IdentityModel.JsonWebTokens.dll" />
+      </Component>
+      <Component Id="System.Runtime.CompilerServices.Unsafe.dll" Guid="c35a22fa-c73c-4273-b8d2-aadba9fadea7">
+        <File Id="System.Runtime.CompilerServices.Unsafe.dll" Name="System.Runtime.CompilerServices.Unsafe.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.CompilerServices.Unsafe.dll" />
+      </Component>
+      <Component Id="System.Runtime.dll" Guid="6fd45480-e9bb-4446-8b72-7ec406379523">
+        <File Id="System.Runtime.dll" Name="System.Runtime.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)System.Runtime.dll" />
+      </Component>
+      <Component Id="CommonServiceLocator.dll" Guid="098595d7-6527-4dd6-b513-a2493fa1f646">
+        <File Id="CommonServiceLocator.dll" Name="CommonServiceLocator.dll"
+              Source="$(var.GlitchedEpistle.Client.Windows_TargetDir)CommonServiceLocator.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
 </Wix>
