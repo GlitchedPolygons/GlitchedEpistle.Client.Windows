@@ -11,6 +11,9 @@
     <Package InstallerVersion="200"
              Compressed="yes"
              InstallScope="perMachine" />
+    <Icon Id="icon.ico" SourceFile="$(var.GlitchedEpistle.Client.Windows.TargetDir)glitched-epistle-icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="glitched-epistle-icon.ico" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.ProjectDir)\LICENSE.rtf" />
     <UIRef Id="WixUI_Minimal" />
     <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
     <MediaTemplate EmbedCab="yes" />

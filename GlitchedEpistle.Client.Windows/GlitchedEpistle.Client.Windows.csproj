@@ -429,9 +429,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="glitched-epistle-icon.ico">
+    <Content Include="glitched-epistle-icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\glitched-polygons-blue-1080p.png" />
