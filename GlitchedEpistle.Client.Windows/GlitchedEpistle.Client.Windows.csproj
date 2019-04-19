@@ -392,10 +392,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="GlitchedEpistle.Client.Windows_TemporaryKey.pfx" />
-    <None Include="UserCreator.dat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\epistle-icon.png" />
