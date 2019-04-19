@@ -186,11 +186,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                             {
                                 PasswordSHA512 = password1.SHA512(),
                                 PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
-                                CreationSecret = Encoding.UTF8.GetString(
-                                    gzip.Decompress(
-                                        File.ReadAllBytes("UserCreator.dat"), COMPRESSION_SETTINGS
-                                    )
-                                )
+                                CreationSecret = "e5ca42HK-e4128cff.a2f603f8-451d440b"
                             }
                         );
 
