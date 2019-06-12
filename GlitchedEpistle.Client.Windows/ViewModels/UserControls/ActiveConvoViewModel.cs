@@ -110,6 +110,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set
             {
                 canSend = false;
+                
                 StopAutomaticPulling();
                 Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;

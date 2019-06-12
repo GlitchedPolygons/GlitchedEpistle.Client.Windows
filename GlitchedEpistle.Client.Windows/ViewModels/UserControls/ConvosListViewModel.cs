@@ -44,17 +44,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => convos;
             set => Set(ref convos, value);
         }
+
+        private bool canJoin = true;
+        public bool CanJoin
+        {
+            get => canJoin;
+            set => Set(ref canJoin, value);
+        }
         #endregion
 
         public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService)
         {
+            this.user = user;
+            this.convoService = convoService;
             this.windowFactory = windowFactory;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
             this.viewModelFactory = viewModelFactory;
             this.convoPasswordProvider = convoPasswordProvider;
-            this.convoService = convoService;
-            this.user = user;
 
             UpdateList();
 
@@ -77,10 +84,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void OnClickedOnConvo(object commandParam)
         {
             var _convo = commandParam as Convo;
-            if (_convo is null)
+            if (_convo is null || !CanJoin)
             {
                 return;
             }
+
+            Application.Current?.Dispatcher?.Invoke(() => CanJoin = false);
 
             string cachedPwSHA512 = convoPasswordProvider.GetPasswordSHA512(_convo.Id);
             if (cachedPwSHA512.NotNullNotEmpty())
@@ -92,6 +101,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         Application.Current?.Dispatcher?.Invoke(() =>
                         {
                             convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
+                            CanJoin = true;
                             var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/", Title = "Message upload failed" } };
                             errorView.ShowDialog();
                         });
@@ -123,6 +133,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
+                        CanJoin = true;
                         eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
                     });
                 });
@@ -139,6 +150,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
 
                 view.ShowDialog();
+                CanJoin = true;
             }
         }
 
