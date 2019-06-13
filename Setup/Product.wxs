@@ -2,12 +2,12 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?define GlitchedEpistle.Client.Windows_TargetDir=$(var.GlitchedEpistle.Client.Windows.TargetDir)?>
 
-  <Product Id="cc8c1b29-c470-4fa7-bd9a-a008098f1681"
+  <Product Id="CC948AC8-3B85-42A0-B591-33DE1A175A4A"
            Name="Glitched Epistle"
            Language="1033"
-           Version="1.0.0"
+           Version="1.0.1"
            Manufacturer="Glitched Polygons"
-           UpgradeCode="1560508d-2419-4999-af48-37c7362f8ded">
+           UpgradeCode="CC948AC8-3B85-42A0-B591-33DE1A175A4A">
     <Package InstallerVersion="200"
              Compressed="yes"
              InstallScope="perMachine" />
