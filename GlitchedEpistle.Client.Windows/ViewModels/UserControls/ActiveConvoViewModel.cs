@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
-        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(750);
+        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(666);
 
         // Injections:
         private readonly User user;
@@ -61,11 +61,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region UI Bindings
-        private volatile bool canSend;
-        public bool CanSend => canSend;
+        private bool canSend;
+        public bool CanSend
+        {
+            get => canSend;
+            set => Set(ref canSend, value);
+        }
 
-        private volatile bool pulling;
-        public bool Pulling => pulling;
+        private bool pulling;
+        public bool Pulling
+        {
+            get => pulling;
+            set => Set(ref pulling, value);
+        }
 
         private string name;
         public string Name
@@ -109,8 +117,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
-                canSend = false;
-                
+                CanSend = false;
                 StopAutomaticPulling();
                 Messages = new ObservableCollection<MessageViewModel>();
                 activeConvo = value;
@@ -130,17 +137,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Task.Run(() =>
                 {
                     LoadLocalMessages();
-                    TransferQueuedMessagesToUI();
                     StartAutomaticPulling();
-                    Application.Current?.Dispatcher?.Invoke(() => canSend = true);
+                    Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
                 });
             }
         }
 
         private ulong? scheduledUpdateRoutine;
         private ulong? scheduledHideGreenTickIcon;
-
-        private volatile ConcurrentBag<MessageViewModel> msgQueue = new ConcurrentBag<MessageViewModel>();
 
         public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger)
         {
@@ -199,30 +203,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
         }
 
-        private void TransferQueuedMessagesToUI()
-        {
-            Application.Current?.Dispatcher?.Invoke(() =>
-            {
-                if (msgQueue.Count > 0)
-                {
-                    Messages.AddRange(msgQueue.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
-                    msgQueue = new ConcurrentBag<MessageViewModel>();
-                }
-            });
-        }
-
-        private void DecryptMessageAndAddToView(Message message)
+        private MessageViewModel DecryptMessage(Message message)
         {
             if (message is null)
             {
-                return;
+                return null;
             }
 
-            string decryptedMessageBody = crypto.DecryptMessage(message.Body, user.PrivateKey);
-            JToken json = JToken.Parse(decryptedMessageBody);
+            JToken json = JToken.Parse(crypto.DecryptMessage(message.Body, user.PrivateKey));
             if (json == null)
             {
-                return;
+                return null;
             }
 
             var messageViewModel = new MessageViewModel(methodQ)
@@ -239,7 +230,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             string fileBase64 = json["fileBase64"]?.Value<string>();
             messageViewModel.FileBytes = fileBase64.NullOrEmpty() ? null : Convert.FromBase64String(fileBase64);
 
-            msgQueue.Add(messageViewModel);
+            return messageViewModel;
         }
 
         private void LoadLocalMessages()
@@ -255,8 +246,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            DecryptingVisibility = Visibility.Visible;
+            Application.Current?.Dispatcher?.Invoke(()=> DecryptingVisibility = Visibility.Visible);
 
+            var decryptedMessages = new ConcurrentBag<MessageViewModel>();
             Parallel.ForEach(Directory.GetFiles(dir), file =>
             {
                 try
@@ -264,7 +256,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
                     if (message != null)
                     {
-                        DecryptMessageAndAddToView(message);
+                        decryptedMessages.Add(DecryptMessage(message));
                     }
                 }
                 catch (Exception e)
@@ -273,7 +265,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
             });
 
-            DecryptingVisibility = Visibility.Hidden;
+            Application.Current?.Dispatcher?.Invoke(() =>
+            {
+                DecryptingVisibility = Visibility.Hidden;
+                Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+            });
         }
 
         private bool SubmitMessage(JObject messageBodyJson)
@@ -297,9 +293,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             // and put the result in a temporary concurrent bag.
             Parallel.ForEach(keys, key =>
             {
-                if (key != null && key.Item1.NotNullNotEmpty() && key.Item2.NotNullNotEmpty())
+                if (key != null && key.Item1.NotNullNotEmpty() && key.Item2.NotNullNotEmpty() && messageBodyJsonString.NotNullNotEmpty())
                 {
-                    EncryptMessageBodyForUser(encryptedMessagesBag, key, messageBodyJsonString);
+                    string encryptedMessage = crypto.EncryptMessage(
+                        messageJson: messageBodyJsonString,
+                        recipientPublicRsaKey: RSAParametersExtensions.FromXmlString(key.Item2)
+                    );
+
+                    encryptedMessagesBag.Add(new Tuple<string, string>(key.Item1, encryptedMessage));
                 }
             });
 
@@ -332,42 +333,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return success;
         }
 
-        private void EncryptMessageBodyForUser(ConcurrentBag<Tuple<string, string>> resultsBag, Tuple<string, string> userKeyPair, string messageBodyJson)
-        {
-            if (resultsBag is null || userKeyPair is null || messageBodyJson.NullOrEmpty())
-            {
-                return;
-            }
-
-            string encryptedMessage = crypto.EncryptMessage(
-                messageBodyJson,
-                RSAParametersExtensions.FromXmlString(userKeyPair.Item2)
-            );
-
-            resultsBag.Add(new Tuple<string, string>(userKeyPair.Item1, encryptedMessage));
-        }
-
-        private void WriteMessageToDisk(Message message)
-        {
-            string path = Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssfff"));
-
-            if (!File.Exists(path))
-            {
-                File.WriteAllText(
-                    contents: JsonConvert.SerializeObject(message),
-                    path: path
-                );
-            }
-        }
-
         private void PullNewestMessages()
         {
-            if (pulling || ActiveConvo is null || user is null)
+            Application.Current?.Dispatcher?.Invoke(() =>
             {
-                return;
-            }
-
-            Application.Current?.Dispatcher?.Invoke(() => pulling = true);
+                if (Pulling || ActiveConvo is null || user is null)
+                {
+                    return;
+                }
+                Pulling = true;
+            });
 
             Task.Run(async () =>
             {
@@ -416,12 +391,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                     if (retrievedMessages is null || retrievedMessages.Length == 0)
                     {
-                        Application.Current?.Dispatcher?.Invoke(() => pulling = false);
+                        Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
                         return;
                     }
 
                     Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = Visibility.Visible);
 
+                    var decryptedMessages = new ConcurrentBag<MessageViewModel>();
                     Parallel.ForEach(retrievedMessages, message =>
                     {
                         // Add the retrieved messages to the chatroom
@@ -429,16 +405,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         // (mistakes are always possible; safe is safe).
                         if (Messages.All(m => m.Id != message.Id))
                         {
-                            DecryptMessageAndAddToView(message);
-                            WriteMessageToDisk(message);
+                            decryptedMessages.Add(DecryptMessage(message));
+
+                            // Newly pulled messages should be
+                            // written out to a file on disk.
+                            string path = Path.Combine(
+                                Paths.CONVOS_DIRECTORY, 
+                                ActiveConvo.Id, 
+                                message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
+                            );
+
+                            if (!File.Exists(path))
+                            {
+                                string messageJson = JsonConvert.SerializeObject(message);
+                                File.WriteAllText(path, messageJson);
+                            }
                         }
                     });
 
-                    Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = Visibility.Hidden);
-                    TransferQueuedMessagesToUI();
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        DecryptingVisibility = Visibility.Hidden;
+                        Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                    });
                 }
 
-                Application.Current?.Dispatcher?.Invoke(() => pulling = false);
+                Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
             });
         }
 
@@ -456,6 +448,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
+            textBox.Clear();
+            textBox.Focus();
+            textBox.SelectAll();
+
             Task.Run(() =>
             {
                 var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
@@ -471,13 +467,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 messageBodyJson["text"] = null;
                 messageBodyJson = null;
-
-                Application.Current?.Dispatcher?.Invoke(() =>
-                {
-                    textBox.Clear();
-                    textBox.Focus();
-                    textBox.SelectAll();
-                });
             });
         }
 
