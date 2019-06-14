@@ -341,96 +341,97 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     return;
                 }
+
                 Pulling = true;
-            });
 
-            Task.Run(async () =>
-            {
-                // Pull convo metadata first.
-                var convo = convoProvider[ActiveConvo.Id];
-                var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
-
-                if (metadata != null && !convo.Equals(metadata))
+                Task.Run(async () =>
                 {
-                    convo.Name = ActiveConvo.Name = metadata.Name;
-                    convo.CreatorId = ActiveConvo.CreatorId = metadata.CreatorId;
-                    convo.Description = ActiveConvo.Description = metadata.Description;
-                    convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadata.ExpirationUTC;
-                    convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-                    convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-                    convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
+                    // Pull convo metadata first.
+                    var convo = convoProvider[ActiveConvo.Id];
+                    var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
 
-                    var _convo = convoProvider[convo.Id];
-                    if (_convo != null)
+                    if (metadata != null && !convo.Equals(metadata))
                     {
-                        convoProvider.Convos.Remove(_convo);
-                    }
+                        convo.Name = ActiveConvo.Name = metadata.Name;
+                        convo.CreatorId = ActiveConvo.CreatorId = metadata.CreatorId;
+                        convo.Description = ActiveConvo.Description = metadata.Description;
+                        convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadata.ExpirationUTC;
+                        convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadata.CreationTimestampUTC;
+                        convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
+                        convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
 
-                    convoProvider.Convos.Add(convo);
-                    convoProvider.Save();
-
-                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id));
-                }
-
-                // Pull newest messages.
-                int i = 0;
-                if (Messages.Count > 0)
-                {
-                    i = await convoService.IndexOf(
-                        convoId: ActiveConvo.Id,
-                        convoPasswordSHA512: ActiveConvo.PasswordSHA512,
-                        userId: user.Id,
-                        auth: user.Token.Item2,
-                        messageId: Messages.Last().Id
-                    );
-                }
-
-                if (i >= 0)
-                {
-                    Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
-
-                    if (retrievedMessages is null || retrievedMessages.Length == 0)
-                    {
-                        Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
-                        return;
-                    }
-
-                    Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = Visibility.Visible);
-
-                    var decryptedMessages = new ConcurrentBag<MessageViewModel>();
-                    Parallel.ForEach(retrievedMessages, message =>
-                    {
-                        // Add the retrieved messages to the chatroom
-                        // only if it does not contain them yet
-                        // (mistakes are always possible; safe is safe).
-                        if (Messages.All(m => m.Id != message.Id))
+                        var _convo = convoProvider[convo.Id];
+                        if (_convo != null)
                         {
-                            decryptedMessages.Add(DecryptMessage(message));
-
-                            // Newly pulled messages should be
-                            // written out to a file on disk.
-                            string path = Path.Combine(
-                                Paths.CONVOS_DIRECTORY, 
-                                ActiveConvo.Id, 
-                                message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
-                            );
-
-                            if (!File.Exists(path))
-                            {
-                                string messageJson = JsonConvert.SerializeObject(message);
-                                File.WriteAllText(path, messageJson);
-                            }
+                            convoProvider.Convos.Remove(_convo);
                         }
-                    });
 
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                        convoProvider.Convos.Add(convo);
+                        convoProvider.Save();
+
+                        Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id));
+                    }
+
+                    // Pull newest messages.
+                    int i = 0;
+                    if (Messages.Count > 0)
                     {
-                        DecryptingVisibility = Visibility.Hidden;
-                        Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
-                    });
-                }
+                        i = await convoService.IndexOf(
+                            convoId: ActiveConvo.Id,
+                            convoPasswordSHA512: ActiveConvo.PasswordSHA512,
+                            userId: user.Id,
+                            auth: user.Token.Item2,
+                            messageId: Messages.Last().Id
+                        );
+                    }
 
-                Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
+                    if (i >= 0)
+                    {
+                        Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
+
+                        if (retrievedMessages is null || retrievedMessages.Length == 0)
+                        {
+                            Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
+                            return;
+                        }
+
+                        Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = Visibility.Visible);
+
+                        var decryptedMessages = new ConcurrentBag<MessageViewModel>();
+                        Parallel.ForEach(retrievedMessages, message =>
+                        {
+                            // Add the retrieved messages to the chatroom
+                            // only if it does not contain them yet
+                            // (mistakes are always possible; safe is safe).
+                            if (Messages.All(m => m.Id != message.Id))
+                            {
+                                decryptedMessages.Add(DecryptMessage(message));
+
+                                // Newly pulled messages should be
+                                // written out to a file on disk.
+                                string path = Path.Combine(
+                                    Paths.CONVOS_DIRECTORY,
+                                    ActiveConvo.Id,
+                                    message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
+                                );
+
+                                if (!File.Exists(path))
+                                {
+                                    string messageJson = JsonConvert.SerializeObject(message);
+                                    File.WriteAllText(path, messageJson);
+                                }
+                            }
+                        });
+
+                        Application.Current?.Dispatcher?.Invoke(() =>
+                        {
+                            DecryptingVisibility = Visibility.Hidden;
+                            Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                        });
+                    }
+
+                    Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
+                });
             });
         }
 
