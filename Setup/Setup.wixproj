@@ -6,7 +6,7 @@
     <ProductVersion>3.10</ProductVersion>
     <ProjectGuid>f9abca1e-bca1-48f4-9006-8c4cb6347ff6</ProjectGuid>
     <SchemaVersion>2.0</SchemaVersion>
-    <OutputName>glitched-epistle-1.0.1</OutputName>
+    <OutputName>glitched-epistle-1.0.2</OutputName>
     <OutputType>Package</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
