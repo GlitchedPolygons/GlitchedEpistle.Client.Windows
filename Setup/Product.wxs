@@ -5,9 +5,9 @@
   <Product Id="CC948AC8-3B85-42A0-B591-33DE1A175A4A"
            Name="Glitched Epistle"
            Language="1033"
-           Version="1.0.1"
+           Version="1.0.2"
            Manufacturer="Glitched Polygons"
-           UpgradeCode="CC948AC8-3B85-42A0-B591-33DE1A175A4A">
+           UpgradeCode="3163A3BB-6B66-4EE6-9832-9506B9392CC6">
     <Package InstallerVersion="200"
              Compressed="yes"
              InstallScope="perMachine" />
