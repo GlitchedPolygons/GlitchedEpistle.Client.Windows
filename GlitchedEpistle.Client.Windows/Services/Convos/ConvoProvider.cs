@@ -80,18 +80,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
                 return;
             }
 
-            for (int i = 0; i < convos.Count; i++)
+            void SerializeAndWrite()
             {
-                var convo = convos[i];
-                if (convo is null || string.IsNullOrEmpty(convo.Id))
+                for (int i = 0; i < convos.Count; i++)
                 {
-                    continue;
+                    var convo = convos[i];
+                    if (convo is null || string.IsNullOrEmpty(convo.Id))
+                    {
+                        continue;
+                    }
+                    Directory.CreateDirectory(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id));
+                    File.WriteAllText(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id + ".json"), JsonConvert.SerializeObject(convo, Formatting.Indented));
                 }
-                Directory.CreateDirectory(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id));
-                File.WriteAllText(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id + ".json"), JsonConvert.SerializeObject(convo, Formatting.Indented));
+
+                Saved?.Invoke(this, EventArgs.Empty);
             }
 
-            Saved?.Invoke(this, EventArgs.Empty);
+            try
+            {
+                SerializeAndWrite();
+            }
+            catch (Exception)
+            {
+                System.Threading.Thread.Sleep(100);
+                try { SerializeAndWrite(); } catch (Exception) { }
+            }
         }
 
         /// <summary>
