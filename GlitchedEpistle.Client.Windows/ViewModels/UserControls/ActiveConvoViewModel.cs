@@ -279,7 +279,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             var convo = convoProvider[ActiveConvo.Id];
             var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
 
-            if (metadata == null || convo.Equals(metadata))
+            if (convo == null || metadata == null || convo.Equals(metadata))
             {
                 return false;
             }
@@ -426,6 +426,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             DecryptingVisibility = Visibility.Visible;
 
+            // Newly pulled messages should be
+            // written out to a file on disk.
+            foreach (var message in retrievedMessages)
+            {
+                string path = Path.Combine(
+                    Paths.CONVOS_DIRECTORY,
+                    ActiveConvo.Id,
+                    message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
+                );
+
+                if (!File.Exists(path))
+                {
+                    File.WriteAllText(path, JsonConvert.SerializeObject(message));
+                }
+            }
+
             var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
             Parallel.ForEach(retrievedMessages, message =>
@@ -436,19 +452,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (Messages.All(m => m.Id != message.Id))
                 {
                     decryptedMessages.Add(DecryptMessage(message));
-
-                    // Newly pulled messages should be
-                    // written out to a file on disk.
-                    string path = Path.Combine(
-                        Paths.CONVOS_DIRECTORY,
-                        ActiveConvo.Id,
-                        message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
-                    );
-
-                    if (!File.Exists(path))
-                    {
-                        File.WriteAllText(path, JsonConvert.SerializeObject(message));
-                    }
                 }
             });
 
