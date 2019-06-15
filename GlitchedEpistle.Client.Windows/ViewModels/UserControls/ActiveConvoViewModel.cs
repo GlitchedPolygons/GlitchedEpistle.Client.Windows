@@ -134,12 +134,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         Name += " (EXPIRES SOON)";
                     }
                 }
-                Task.Run(() =>
-                {
-                    LoadLocalMessages();
-                    StartAutomaticPulling();
-                    Application.Current?.Dispatcher?.Invoke(() => CanSend = true);
-                });
+                LoadLocalMessages();
+                StartAutomaticPulling();
+                CanSend = true;
             }
         }
 
@@ -173,10 +170,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         ~ActiveConvoViewModel()
         {
-            if (scheduledUpdateRoutine.HasValue)
-            {
-                methodQ?.Cancel(scheduledUpdateRoutine.Value);
-            }
+            StopAutomaticPulling();
         }
 
         private void OnChangedConvoMetadata(string convoId)
@@ -200,7 +194,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void StartAutomaticPulling()
         {
             StopAutomaticPulling();
-            scheduledUpdateRoutine = methodQ.Schedule(PullNewestMessages, MSG_PULL_FREQUENCY);
+            scheduledUpdateRoutine = methodQ.Schedule(async () => { await PullNewestMessages(); }, MSG_PULL_FREQUENCY);
         }
 
         private MessageViewModel DecryptMessage(Message message)
@@ -246,9 +240,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            Application.Current?.Dispatcher?.Invoke(()=> DecryptingVisibility = Visibility.Visible);
-
+            DecryptingVisibility = Visibility.Visible;
             var decryptedMessages = new ConcurrentBag<MessageViewModel>();
+
             Parallel.ForEach(Directory.GetFiles(dir), file =>
             {
                 try
@@ -265,14 +259,53 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
             });
 
-            Application.Current?.Dispatcher?.Invoke(() =>
-            {
-                DecryptingVisibility = Visibility.Hidden;
-                Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
-            });
+            DecryptingVisibility = Visibility.Hidden;
+            Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
         }
 
-        private bool SubmitMessage(JObject messageBodyJson)
+        /// <summary>
+        /// Updates the convo's metadata. Returns <c>true</c> if the metadata was updated (thus something changed), or <c>false</c> if nothing changed.
+        /// </summary>
+        /// <returns>Whether the convo metadata was updated or not.</returns>
+        private async Task<bool> UpdateConvoMetadata()
+        {
+            var convo = convoProvider[ActiveConvo.Id];
+            var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
+
+            if (metadata == null || convo.Equals(metadata))
+            {
+                return false;
+            }
+
+            convo.Name = ActiveConvo.Name = metadata.Name;
+            convo.CreatorId = ActiveConvo.CreatorId = metadata.CreatorId;
+            convo.Description = ActiveConvo.Description = metadata.Description;
+            convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadata.ExpirationUTC;
+            convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadata.CreationTimestampUTC;
+            convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
+            convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
+
+            var _convo = convoProvider[convo.Id];
+            if (_convo != null)
+            {
+                convoProvider.Convos.Remove(_convo);
+            }
+
+            convoProvider.Convos.Add(convo);
+            convoProvider.Save();
+
+            eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Submits the message body to the convo. 
+        /// Returns whether the message was submitted successfully or not.
+        /// </summary>
+        /// <param name="messageBodyJson">The message body's json.</param>
+        /// <returns>Whether the message was submitted successfully or not.</returns>
+        private async Task<bool> SubmitMessage(JObject messageBodyJson)
         {
             if (ActiveConvo is null)
             {
@@ -280,14 +313,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
-            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = Visibility.Visible);
+            EncryptingVisibility = Visibility.Visible;
 
-            JObject messageBodiesJson = new JObject();
-            string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
+            await UpdateConvoMetadata();
+            var messageBodiesJson = new JObject();
+            var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
             var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
 
             // Get the keys of all convo participants here.
-            List<Tuple<string, string>> keys = userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2).GetAwaiter().GetResult();
+            List<Tuple<string, string>> keys = await userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
 
             // Encrypt the message for every convo participant individually
             // and put the result in a temporary concurrent bag.
@@ -309,7 +343,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
             }
 
-            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = Visibility.Hidden);
+            EncryptingVisibility = Visibility.Hidden;
 
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody is null)
@@ -328,114 +362,98 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
             };
 
-            bool success = convoService.PostMessage(ActiveConvo.Id, postParamsDto).GetAwaiter().GetResult();
+            bool success = await convoService.PostMessage(ActiveConvo.Id, postParamsDto);
 
             return success;
         }
 
-        private void PullNewestMessages()
+        /// <summary>
+        /// Pulls the convo's newest messages from the server.
+        /// Returns whether any new messages were pulled successfully or not.
+        /// </summary>
+        /// <returns>Whether any new messages were pulled successfully or not.</returns>
+        private async Task<bool> PullNewestMessages()
         {
-            Application.Current?.Dispatcher?.Invoke(() =>
+            if (Pulling || ActiveConvo is null || user is null)
             {
-                if (Pulling || ActiveConvo is null || user is null)
+                return false;
+            }
+
+            Pulling = true;
+
+            // Pull convo metadata first.
+            await UpdateConvoMetadata();
+
+            // Pull newest messages.
+            int i = 0;
+            if (Messages.Count > 0)
+            {
+                i = await convoService.IndexOf(
+                    convoId: ActiveConvo.Id,
+                    convoPasswordSHA512: ActiveConvo.PasswordSHA512,
+                    userId: user.Id,
+                    auth: user.Token.Item2,
+                    messageId: Messages.Last().Id
+                );
+            }
+
+            if (i < 0)
+            {
+                Pulling = false;
+                return false;
+            }
+
+            Message[] retrievedMessages = await convoService.GetConvoMessages(
+                convoId: ActiveConvo.Id,
+                convoPasswordSHA512: ActiveConvo.PasswordSHA512,
+                userId: user?.Id,
+                auth: user?.Token?.Item2,
+                fromIndex: i
+            );
+
+            if (retrievedMessages is null || retrievedMessages.Length == 0)
+            {
+                Pulling = false;
+                return false;
+            }
+
+            DecryptingVisibility = Visibility.Visible;
+
+            var decryptedMessages = new ConcurrentBag<MessageViewModel>();
+
+            Parallel.ForEach(retrievedMessages, message =>
+            {
+                // Add the retrieved messages to the chatroom
+                // only if it does not contain them yet
+                // (mistakes are always possible; safe is safe).
+                if (Messages.All(m => m.Id != message.Id))
                 {
-                    return;
+                    decryptedMessages.Add(DecryptMessage(message));
+
+                    // Newly pulled messages should be
+                    // written out to a file on disk.
+                    string path = Path.Combine(
+                        Paths.CONVOS_DIRECTORY,
+                        ActiveConvo.Id,
+                        message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
+                    );
+
+                    if (!File.Exists(path))
+                    {
+                        File.WriteAllText(path, JsonConvert.SerializeObject(message));
+                    }
                 }
-
-                Pulling = true;
-
-                Task.Run(async () =>
-                {
-                    // Pull convo metadata first.
-                    var convo = convoProvider[ActiveConvo.Id];
-                    var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
-
-                    if (metadata != null && !convo.Equals(metadata))
-                    {
-                        convo.Name = ActiveConvo.Name = metadata.Name;
-                        convo.CreatorId = ActiveConvo.CreatorId = metadata.CreatorId;
-                        convo.Description = ActiveConvo.Description = metadata.Description;
-                        convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadata.ExpirationUTC;
-                        convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-                        convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-                        convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
-
-                        var _convo = convoProvider[convo.Id];
-                        if (_convo != null)
-                        {
-                            convoProvider.Convos.Remove(_convo);
-                        }
-
-                        convoProvider.Convos.Add(convo);
-                        convoProvider.Save();
-
-                        Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id));
-                    }
-
-                    // Pull newest messages.
-                    int i = 0;
-                    if (Messages.Count > 0)
-                    {
-                        i = await convoService.IndexOf(
-                            convoId: ActiveConvo.Id,
-                            convoPasswordSHA512: ActiveConvo.PasswordSHA512,
-                            userId: user.Id,
-                            auth: user.Token.Item2,
-                            messageId: Messages.Last().Id
-                        );
-                    }
-
-                    if (i >= 0)
-                    {
-                        Message[] retrievedMessages = await convoService.GetConvoMessages(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user?.Id, user?.Token?.Item2, i);
-
-                        if (retrievedMessages is null || retrievedMessages.Length == 0)
-                        {
-                            Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
-                            return;
-                        }
-
-                        Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = Visibility.Visible);
-
-                        var decryptedMessages = new ConcurrentBag<MessageViewModel>();
-                        Parallel.ForEach(retrievedMessages, message =>
-                        {
-                            // Add the retrieved messages to the chatroom
-                            // only if it does not contain them yet
-                            // (mistakes are always possible; safe is safe).
-                            if (Messages.All(m => m.Id != message.Id))
-                            {
-                                decryptedMessages.Add(DecryptMessage(message));
-
-                                // Newly pulled messages should be
-                                // written out to a file on disk.
-                                string path = Path.Combine(
-                                    Paths.CONVOS_DIRECTORY,
-                                    ActiveConvo.Id,
-                                    message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
-                                );
-
-                                if (!File.Exists(path))
-                                {
-                                    string messageJson = JsonConvert.SerializeObject(message);
-                                    File.WriteAllText(path, messageJson);
-                                }
-                            }
-                        });
-
-                        Application.Current?.Dispatcher?.Invoke(() =>
-                        {
-                            DecryptingVisibility = Visibility.Hidden;
-                            Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
-                        });
-                    }
-
-                    Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
-                });
             });
+
+            DecryptingVisibility = Visibility.Hidden;
+
+            Application.Current.Dispatcher.Invoke(() => Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray()));
+
+            Pulling = false;
+            return true;
         }
 
-        private void OnSendText(object commandParam)
+        private async void OnSendText(object commandParam)
         {
             var textBox = commandParam as TextBox;
             if (textBox is null)
@@ -453,22 +471,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             textBox.Focus();
             textBox.SelectAll();
 
-            Task.Run(() =>
+            var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
+
+            if (!await SubmitMessage(messageBodyJson))
             {
-                var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                errorView.ShowDialog();
+            }
 
-                if (!SubmitMessage(messageBodyJson))
-                {
-                    Application.Current?.Dispatcher?.Invoke(() =>
-                    {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                        errorView.ShowDialog();
-                    });
-                }
-
-                messageBodyJson["text"] = null;
-                messageBodyJson = null;
-            });
+            messageBodyJson["text"] = messageBodyJson = null;
         }
 
         private void OnSendFile(object commandParam)
@@ -526,45 +537,36 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             scheduledHideGreenTickIcon = null;
         }
 
-        public void OnDragAndDropFile(string filePath)
+        public async void OnDragAndDropFile(string filePath)
         {
-            Task.Run(() =>
+            if (filePath.NullOrEmpty())
             {
-                if (filePath.NullOrEmpty())
+                return;
+            }
+
+            byte[] file = File.ReadAllBytes(filePath);
+
+            if (file.LongLength < MAX_FILE_SIZE_BYTES)
+            {
+                var messageBodyJson = new JObject
                 {
-                    return;
+                    ["fileName"] = Path.GetFileName(filePath),
+                    ["fileBase64"] = Convert.ToBase64String(file)
+                };
+
+                if (!await SubmitMessage(messageBodyJson))
+                {
+                    var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                    errorView.ShowDialog();
                 }
 
-                byte[] file = File.ReadAllBytes(filePath);
-
-                if (file.LongLength < MAX_FILE_SIZE_BYTES)
-                {
-                    var messageBodyJson = new JObject
-                    {
-                        ["fileName"] = Path.GetFileName(filePath),
-                        ["fileBase64"] = Convert.ToBase64String(file)
-                    };
-
-                    if (!SubmitMessage(messageBodyJson))
-                    {
-                        Application.Current?.Dispatcher?.Invoke(() =>
-                        {
-                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                            errorView.ShowDialog();
-                        });
-                    }
-
-                    messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = messageBodyJson = null;
-                }
-                else
-                {
-                    Application.Current?.Dispatcher?.Invoke(() =>
-                    {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
-                        errorView.ShowDialog();
-                    });
-                }
-            });
+                messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = messageBodyJson = null;
+            }
+            else
+            {
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
+                errorView.ShowDialog();
+            }
         }
     }
 }

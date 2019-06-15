@@ -81,7 +81,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos.OrderBy(c => c.IsExpired).ThenBy(c => c.Name)) : new ObservableCollection<Convo>();
         }
 
-        private void OnClickedOnConvo(object commandParam)
+        private async void OnClickedOnConvo(object commandParam)
         {
             var _convo = commandParam as Convo;
             if (_convo is null || !CanJoin)
@@ -89,54 +89,45 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            Application.Current?.Dispatcher?.Invoke(() => CanJoin = false);
+            CanJoin = false;
 
             string cachedPwSHA512 = convoPasswordProvider.GetPasswordSHA512(_convo.Id);
             if (cachedPwSHA512.NotNullNotEmpty())
             {
-                Task.Run(async () =>
+                if (!await convoService.JoinConvo(_convo.Id, cachedPwSHA512, user.Id, user.Token.Item2))
                 {
-                    if (!await convoService.JoinConvo(_convo.Id, cachedPwSHA512, user.Id, user.Token.Item2))
-                    {
-                        Application.Current?.Dispatcher?.Invoke(() =>
-                        {
-                            convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
-                            CanJoin = true;
-                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/", Title = "Message upload failed" } };
-                            errorView.ShowDialog();
-                        });
-                        return;
-                    }
+                    convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
+                    CanJoin = true;
+                    var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/", Title = "Message upload failed" } };
+                    errorView.ShowDialog();
+                    return;
+                }
 
-                    var convo = new Convo { Id = _convo.Id, PasswordSHA512 = cachedPwSHA512 };
+                var convo = new Convo { Id = _convo.Id, PasswordSHA512 = cachedPwSHA512 };
 
-                    ConvoMetadataDto metadata = await convoService.GetConvoMetadata(convo.Id, convo.PasswordSHA512, user.Id, user.Token.Item2);
-                    if (metadata != null)
-                    {
-                        convo.Name = metadata.Name;
-                        convo.ExpirationUTC = metadata.ExpirationUTC;
-                        convo.CreatorId = metadata.CreatorId;
-                        convo.Description = metadata.Description;
-                        convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-                        convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-                        convo.Participants = metadata.Participants.Split(',').ToList();
-                    }
+                ConvoMetadataDto metadata = await convoService.GetConvoMetadata(convo.Id, convo.PasswordSHA512, user.Id, user.Token.Item2);
+                if (metadata != null)
+                {
+                    convo.Name = metadata.Name;
+                    convo.ExpirationUTC = metadata.ExpirationUTC;
+                    convo.CreatorId = metadata.CreatorId;
+                    convo.Description = metadata.Description;
+                    convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
+                    convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
+                    convo.Participants = metadata.Participants.Split(',').ToList();
+                }
 
-                    var temp = convoProvider[convo.Id];
-                    if (temp != null)
-                    {
-                        convoProvider.Convos.Remove(temp);
-                    }
+                var temp = convoProvider[convo.Id];
+                if (temp != null)
+                {
+                    convoProvider.Convos.Remove(temp);
+                }
 
-                    convoProvider.Convos.Add(convo);
-                    convoProvider.Save();
+                convoProvider.Convos.Add(convo);
+                convoProvider.Save();
 
-                    Application.Current?.Dispatcher?.Invoke(() =>
-                    {
-                        CanJoin = true;
-                        eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
-                    });
-                });
+                CanJoin = true;
+                eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
             }
             else // Password not yet stored in session's IConvoPasswordProvider
             {

@@ -41,7 +41,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// <summary>
         /// The client version number.
         /// </summary>
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.0.3";
 
         /// <summary>
         /// Gets the currently active GUI theme (appearance of the app).
@@ -53,6 +53,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// The IoC container.
         /// </summary>
         private readonly IUnityContainer container = new UnityContainer();
+
+        /// <summary>
+        /// MethodQ instance to inject (singleton) into DI container.
+        /// </summary>
+        private readonly IMethodQ methodQ = new MethodQ();
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
@@ -80,7 +85,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.
-            container.RegisterType<IMethodQ, MethodQ>(new ContainerControlledLifetimeManager());
+            container.RegisterInstance(methodQ, new ContainerControlledLifetimeManager());
             container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());

@@ -143,7 +143,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
-        private void OnClickedRedeem(object commandParam)
+        private async void OnClickedRedeem(object commandParam)
         {
             var couponCode = commandParam as string;
 
@@ -152,32 +152,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            Task.Run(async () =>
+            bool success = await couponService.UseCoupon(couponCode, user.Id, user.Token.Item2);
+
+            var dialogViewModel = viewModelFactory.Create<InfoDialogViewModel>();
+
+            if (success)
             {
-                bool success = await couponService.UseCoupon(couponCode, user.Id, user.Token.Item2);
+                dialogViewModel.Title = "Success!";
+                dialogViewModel.Text = $"Your coupon \"{couponCode}\" has been redeemed successfully; your Glitched Epistle membership has thus been extended. Thanks for choosing this service!";
+                logger.LogMessage($"Successfully redeemed Glitched Epistle coupon {couponCode}");
+                eventAggregator.GetEvent<CouponRedeemedEvent>().Publish();
+            }
+            else
+            {
+                dialogViewModel.Title = "Couldn't redeem coupon...";
+                dialogViewModel.Text = $"The coupon \"{couponCode}\" couldn't be redeemed, sorry... Please make sure that you have no typos in it, and keep in mind that its validity is case-sensitive!";
+                logger.LogError($"Unsuccessful coupon redeem attempt (ends with \"{couponCode.Substring(couponCode.Length / 4)}\")");
+            }
 
-                var dialogViewModel = viewModelFactory.Create<InfoDialogViewModel>();
-
-                if (success)
-                {
-                    dialogViewModel.Title = "Success!";
-                    dialogViewModel.Text = $"Your coupon \"{couponCode}\" has been redeemed successfully; your Glitched Epistle membership has thus been extended. Thanks for choosing this service!";
-                    logger.LogMessage($"Successfully redeemed Glitched Epistle coupon {couponCode}");
-                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<CouponRedeemedEvent>().Publish());
-                }
-                else
-                {
-                    dialogViewModel.Title = "Couldn't redeem coupon...";
-                    dialogViewModel.Text = $"The coupon \"{couponCode}\" couldn't be redeemed, sorry... Please make sure that you have no typos in it, and keep in mind that its validity is case-sensitive!";
-                    logger.LogError($"Unsuccessful coupon redeem attempt (ends with \"{couponCode.Substring(couponCode.Length / 4)}\")");
-                }
-
-                Application.Current?.Dispatcher?.Invoke(() =>
-                {
-                    var dialogView = new InfoDialogView { DataContext = dialogViewModel };
-                    dialogView.Show();
-                });
-            });
+            var dialogView = new InfoDialogView { DataContext = dialogViewModel };
+            dialogView.Show();
         }
 
         private void OnClickedDelete(object commandParam)

@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -130,19 +130,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void PrintMessage(string message, bool error)
         {
-            Application.Current?.Dispatcher?.Invoke(() =>
-            {
-                ResetMessages();
+            ResetMessages();
 
-                if (error)
-                {
-                    ErrorMessage = message;
-                }
-                else
-                {
-                    SuccessMessage = message;
-                }
-            });
+            if (error)
+            {
+                ErrorMessage = message;
+            }
+            else
+            {
+                SuccessMessage = message;
+            }
         }
 
         private void OnClosed(object commandParam)
@@ -155,7 +152,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             RequestedClose?.Invoke(null, EventArgs.Empty);
         }
 
-        private void OnSubmit(object commandParam)
+        private async void OnSubmit(object commandParam)
         {
             string totp = commandParam as string;
 
@@ -167,79 +164,76 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             CanSubmit = false;
 
-            Task.Run(async () =>
+            bool totpValid = await userService.Validate2FA(user.Id, totp);
+
+            if (!totpValid)
             {
-                bool totpValid = await userService.Validate2FA(user.Id, totp);
+                PrintMessage("Two-Factor Authentication failed! Convo creation request rejected.", true);
+                CanSubmit = true;
+                return;
+            }
 
-                if (!totpValid)
-                {
-                    PrintMessage("Two-Factor Authentication failed! Convo creation request rejected.", true);
-                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
-                    return;
-                }
+            if (pw != pw2)
+            {
+                PrintMessage("The password does not match its confirmation; please make sure that you re-type your password correctly!", true);
+                CanSubmit = true;
+                return;
+            }
 
-                if (pw != pw2)
-                {
-                    PrintMessage("The password does not match its confirmation; please make sure that you re-type your password correctly!", true);
-                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
-                    return;
-                }
+            if (pw.Length < 5)
+            {
+                PrintMessage("Your password is too weak; make sure that it has at least >5 characters!", true);
+                CanSubmit = true;
+                return;
+            }
 
-                if (pw.Length < 5)
-                {
-                    PrintMessage("Your password is too weak; make sure that it has at least >5 characters!", true);
-                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
-                    return;
-                }
+            var convoCreationDto = new ConvoCreationDto
+            {
+                Name = Name,
+                Description = Description,
+                ExpirationUTC = ExpirationUTC,
+                PasswordSHA512 = pw.SHA512()
+            };
 
-                var convoCreationDto = new ConvoCreationDto
+            string id = await convoService.CreateConvo(convoCreationDto, user.Id, user.Token.Item2);
+
+            if (id.NotNullNotEmpty())
+            {
+                // Create the convo model object and feed it into the convo provider.
+                var convo = new Convo
                 {
+                    Id = id,
                     Name = Name,
+                    CreatorId = user.Id,
+                    CreationTimestampUTC = DateTime.UtcNow,
                     Description = Description,
                     ExpirationUTC = ExpirationUTC,
-                    PasswordSHA512 = pw.SHA512()
+                    Participants = new List<string> { user.Id }
                 };
 
-                string id = await convoService.CreateConvo(convoCreationDto, user.Id, user.Token.Item2);
+                // Add the created convo to the convo 
+                // provider instance and write it out to disk.
+                convoProvider.Convos.Add(convo);
+                convoProvider.Save();
 
-                if (id.NotNullNotEmpty())
-                {
-                    // Create the convo model object and feed it into the convo provider.
-                    var convo = new Convo
-                    {
-                        Id = id,
-                        Name = Name,
-                        CreatorId = user.Id,
-                        CreationTimestampUTC = DateTime.UtcNow,
-                        Description = Description,
-                        ExpirationUTC = ExpirationUTC,
-                        Participants = new List<string> { user.Id }
-                    };
+                // Raise the convo created event application-wide (the main view will subscribe to this to update its list).
+                eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Publish(id);
 
-                    // Add the created convo to the convo 
-                    // provider instance and write it out to disk.
-                    convoProvider.Convos.Add(convo);
-                    convoProvider.Save();
+                // Record the convo creation into the user log.
+                logger.LogMessage($"Convo {Name} created successfully under the id {id}.");
 
-                    // Raise the convo created event application-wide (the main view will subscribe to this to update its list).
-                    eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Publish(id);
-
-                    // Record the convo creation into the user log.
-                    logger.LogMessage($"Convo {Name} created successfully under the id {id}.");
-
-                    // Display success message and keep UI disabled.
-                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = false);
-                    PrintMessage($"The convo {Name} has been created successfully under the id {id}. You can close this window now.", false);
-                }
-                else
-                {
-                    // If convo creation failed for some reason, the returned
-                    // id string is null and the user is notified accordingly.
-                    PrintMessage($"Convo {Name} couldn't be created.", true);
-                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
-                    logger.LogError($"Convo {Name} couldn't be created. Reason unknown.");
-                }
-            });
+                // Display success message and keep UI disabled.
+                CanSubmit = false;
+                PrintMessage($"The convo {Name} has been created successfully under the id {id}. You can close this window now.", false);
+            }
+            else
+            {
+                // If convo creation failed for some reason, the returned
+                // id string is null and the user is notified accordingly.
+                CanSubmit = true;
+                PrintMessage($"Convo {Name} couldn't be created.", true);
+                logger.LogError($"Convo {Name} couldn't be created. Reason unknown.");
+            }
         }
     }
 }
