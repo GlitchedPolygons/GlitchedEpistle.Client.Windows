@@ -117,15 +117,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     convo.Participants = metadata.Participants.Split(',').ToList();
                 }
 
-                var temp = convoProvider[convo.Id];
-                if (temp != null)
-                {
-                    convoProvider.Convos.Remove(temp);
-                }
-
-                convoProvider.Convos.Add(convo);
-                convoProvider.Save();
-
                 CanJoin = true;
                 eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
             }

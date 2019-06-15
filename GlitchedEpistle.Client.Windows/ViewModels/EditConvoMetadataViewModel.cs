@@ -344,7 +344,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         convoProvider.Save();
 
                         PrintMessage($"Success! The user {newAdminUserId} is now the new convo admin. You can now close this window...", false);
-                        Application.Current?.Dispatcher?.Invoke(() => UIEnabled = false);
+
+                        Application.Current?.Dispatcher?.Invoke(() =>
+                        {
+                            UIEnabled = false;
+                            eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id);
+                        });
                     });
                 }
             }
@@ -382,6 +387,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         }
                         convoProvider.Save();
                         RefreshParticipantLists();
+                        Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
                     });
                 }
             }
