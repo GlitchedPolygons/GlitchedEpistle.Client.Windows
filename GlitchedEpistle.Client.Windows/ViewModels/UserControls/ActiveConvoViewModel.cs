@@ -241,26 +241,33 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             DecryptingVisibility = Visibility.Visible;
-            var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
-            Parallel.ForEach(Directory.GetFiles(dir), file =>
+            Task.Run(() =>
             {
-                try
-                {
-                    var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
-                    if (message != null)
-                    {
-                        decryptedMessages.Add(DecryptMessage(message));
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
-                }
-            });
+                var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
-            DecryptingVisibility = Visibility.Hidden;
-            Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                Parallel.ForEach(Directory.GetFiles(dir), file =>
+                {
+                    try
+                    {
+                        var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
+                        if (message != null)
+                        {
+                            decryptedMessages.Add(DecryptMessage(message));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
+                    }
+                });
+
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    DecryptingVisibility = Visibility.Hidden;
+                    Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                });
+            });
         }
 
         /// <summary>
