@@ -113,26 +113,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
         /// </summary>
         public void Load()
         {
-            DirectoryInfo dir = new DirectoryInfo(Paths.CONVOS_DIRECTORY);
-            if (!dir.Exists)
+            try
             {
-                dir = Directory.CreateDirectory(Paths.CONVOS_DIRECTORY);
-            }
-
-            convos.Clear();
-
-            FileInfo[] files = dir.GetFiles();
-            for (int i = 0; i < files.Length; i++)
-            {
-                var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
-                if (convo != null)
+                DirectoryInfo dir = new DirectoryInfo(Paths.CONVOS_DIRECTORY);
+                if (!dir.Exists)
                 {
-                    convos.Add(convo);
+                    dir = Directory.CreateDirectory(Paths.CONVOS_DIRECTORY);
                 }
-            }
 
-            convos = convos.OrderBy(c => c.Name).ToList();
-            Loaded?.Invoke(this, EventArgs.Empty);
+                convos.Clear();
+
+                FileInfo[] files = dir.GetFiles();
+                for (int i = 0; i < files.Length; i++)
+                {
+                    var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
+                    if (convo != null)
+                    {
+                        convos.Add(convo);
+                    }
+                }
+
+                convos = convos.OrderBy(c => c.Name).ToList();
+                Loaded?.Invoke(this, EventArgs.Empty);
+            }
+            catch (Exception) { }
         }
     }
 }
