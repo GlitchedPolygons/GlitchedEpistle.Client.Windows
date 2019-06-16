@@ -135,7 +135,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 }
                 LoadLocalMessages();
-                StartAutomaticPulling();
                 CanSend = true;
             }
         }
@@ -266,6 +265,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     DecryptingVisibility = Visibility.Hidden;
                     Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                    StartAutomaticPulling();
                 });
             });
         }
@@ -412,19 +412,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             // written out to a file on disk.
             foreach (var message in retrievedMessages)
             {
-                string path = Path.Combine(
-                    Paths.CONVOS_DIRECTORY,
-                    ActiveConvo.Id,
-                    message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
-                );
+                string json = JsonConvert.SerializeObject(message);
+                string path = Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssfff"));
 
                 try
                 {
-                    File.WriteAllText(path, JsonConvert.SerializeObject(message));
+                    File.WriteAllText(path, json);
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
-                     return false;
+                    logger.LogError(e.ToString());
+                    try
+                    {
+                        await Task.Delay(new Random().Next(50, 150)).ContinueWith(t => File.WriteAllText(path, json));
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
                 }
             }
 
@@ -443,9 +448,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             DecryptingVisibility = Visibility.Hidden;
 
-            Application.Current.Dispatcher.Invoke(() => Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray()));
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                Pulling = false;
+            });
 
-            Pulling = false;
             return true;
         }
 
