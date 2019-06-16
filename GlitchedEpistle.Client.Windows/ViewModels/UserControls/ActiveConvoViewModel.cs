@@ -392,30 +392,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             await UpdateConvoMetadata();
 
             // Pull newest messages.
-            int i = 0;
-            if (Messages.Count > 0)
-            {
-                i = await convoService.IndexOf(
-                    convoId: ActiveConvo.Id,
-                    convoPasswordSHA512: ActiveConvo.PasswordSHA512,
-                    userId: user.Id,
-                    auth: user.Token.Item2,
-                    messageId: Messages.Last().Id
-                );
-            }
-
-            if (i < 0)
-            {
-                Pulling = false;
-                return false;
-            }
-
             Message[] retrievedMessages = await convoService.GetConvoMessages(
                 convoId: ActiveConvo.Id,
                 convoPasswordSHA512: ActiveConvo.PasswordSHA512,
                 userId: user?.Id,
                 auth: user?.Token?.Item2,
-                fromIndex: i
+                tailId: Messages.Count == 0 ? null : Messages.Last()?.Id
             );
 
             if (retrievedMessages is null || retrievedMessages.Length == 0)
@@ -436,9 +418,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     message.TimestampUTC.ToString("yyyyMMddHHmmssfff")
                 );
 
-                if (!File.Exists(path))
+                try
                 {
                     File.WriteAllText(path, JsonConvert.SerializeObject(message));
+                }
+                catch(Exception e)
+                {
+                     return false;
                 }
             }
 
