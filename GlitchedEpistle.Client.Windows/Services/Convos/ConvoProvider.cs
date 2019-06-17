@@ -1,15 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 
 using Newtonsoft.Json;
+using System.Collections.Concurrent;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
 {
@@ -20,8 +22,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
     /// <seealso cref="GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoProvider" />
     public class ConvoProvider : IConvoProvider
     {
-        private List<Convo> convos = new List<Convo>(4);
-        public ICollection<Convo> Convos => convos;
+        private readonly ILogger logger;
+        private readonly Dictionary<string, Convo> convos = new Dictionary<string, Convo>(4);
+
+        /// <summary>
+        /// Gets all the convos currently loaded.
+        /// </summary>
+        public ICollection<Convo> GetAllConvos() => convos.Values.ToArray();
 
         /// <summary>
         /// Occurs when the <see cref="IConvoProvider" /> has finished loading/refreshing <see cref="T:GlitchedPolygons.GlitchedEpistle.Client.Models.Convo" />s into the <see cref="P:GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoProvider.Convos" /> collection.
@@ -30,42 +37,40 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
 
         /// <summary>
         /// Shall be raised when the <see cref="IConvoProvider" /> has finished
-        /// saving the current state of the <see cref="Convos" /> out to persistent memory.
+        /// saving the current state of the convos out to persistent memory.
         /// </summary>
         public event EventHandler Saved;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConvoProvider"/> class.
         /// </summary>
-        public ConvoProvider()
+        public ConvoProvider(ILogger logger)
         {
+            this.logger = logger;
             Load();
         }
 
         /// <summary>
-        /// Gets the <see cref="Convo"/> with the specified identifier.
+        /// Gets or sets the <see cref="Convo"/> with the specified identifier.
         /// </summary>
-        /// <param name="id">The identifier.</param>
+        /// <param name="id">The convo identifier key.</param>
         /// <returns><see cref="Convo"/> instance if the id was found; <c>null</c> otherwise.</returns>
         public Convo this[string id]
         {
             get
             {
-                if (convos is null || convos.Count == 0)
+                if (convos.TryGetValue(id, out var convo))
                 {
-                    return null;
-                }
-
-                foreach (var convo in convos)
-                {
-                    if (convo is null || convo.Id != id)
-                    {
-                        continue;
-                    }
                     return convo;
                 }
-
                 return null;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    convos[id] = value;
+                }
             }
         }
 
@@ -80,31 +85,33 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
                 return;
             }
 
-            void SerializeAndWrite()
+            foreach (var kvp in convos)
             {
-                for (int i = 0; i < convos.Count; i++)
+                if (kvp.Value is null)
                 {
-                    var convo = convos[i];
-                    if (convo is null || string.IsNullOrEmpty(convo.Id))
-                    {
-                        continue;
-                    }
-                    Directory.CreateDirectory(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id));
-                    File.WriteAllText(Path.Combine(Paths.CONVOS_DIRECTORY, convo.Id + ".json"), JsonConvert.SerializeObject(convo, Formatting.Indented));
+                    logger.LogError($"ConvoProvider::{nameof(Save)}: The convo dictionary entry \"{kvp.Key}\" has a null value and could thus not be saved!");
                 }
-
-                Saved?.Invoke(this, EventArgs.Empty);
+                else if (kvp.Key != kvp.Value.Id)
+                {
+                    logger.LogError($"ConvoProvider::{nameof(Save)}: The dictionary key for the convo entry \"{kvp.Key}\" has a null value and could thus not be saved!");
+                }
+                else
+                {
+                    try
+                    {
+                        string path = Path.Combine(Paths.CONVOS_DIRECTORY, kvp.Key + ".json");
+                        string json = JsonConvert.SerializeObject(kvp.Value, Formatting.Indented);
+                        Directory.CreateDirectory(Path.Combine(Paths.CONVOS_DIRECTORY, kvp.Key));
+                        File.WriteAllText(path, json);
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError($"ConvoProvider::{nameof(Save)}: The convo \"{kvp.Key}\" could not be saved out to disk. Error message: {e.ToString()}");
+                    }
+                }
             }
 
-            try
-            {
-                SerializeAndWrite();
-            }
-            catch (Exception)
-            {
-                System.Threading.Thread.Sleep(100);
-                try { SerializeAndWrite(); } catch (Exception) { }
-            }
+            Saved?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -115,28 +122,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Convos
         {
             try
             {
-                DirectoryInfo dir = new DirectoryInfo(Paths.CONVOS_DIRECTORY);
+                var dir = new DirectoryInfo(Paths.CONVOS_DIRECTORY);
                 if (!dir.Exists)
                 {
-                    dir = Directory.CreateDirectory(Paths.CONVOS_DIRECTORY);
+                    dir.Create();
                 }
 
                 convos.Clear();
-
                 FileInfo[] files = dir.GetFiles();
+
                 for (int i = 0; i < files.Length; i++)
                 {
-                    var convo = JsonConvert.DeserializeObject<Convo>(File.ReadAllText(files[i].FullName));
-                    if (convo != null)
+                    string json = File.ReadAllText(files[i].FullName);
+                    var convo = JsonConvert.DeserializeObject<Convo>(json);
+
+                    if (convo != null && !string.IsNullOrEmpty(convo.Id))
                     {
-                        convos.Add(convo);
+                        convos[convo.Id] = convo;
                     }
                 }
 
-                convos = convos.OrderBy(c => c.Name).ToList();
                 Loaded?.Invoke(this, EventArgs.Empty);
             }
-            catch (Exception) { }
+            catch (Exception e)
+            {
+                logger.LogError($"ConvoProvider::{nameof(Load)}: One or more convos could not be loaded from disk. Error message: {e.ToString()}");
+            }
         }
     }
 }

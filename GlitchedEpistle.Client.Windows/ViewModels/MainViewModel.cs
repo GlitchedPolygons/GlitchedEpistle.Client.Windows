@@ -395,10 +395,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            var temp = convoProvider[convo.Id];
-            if (temp == null)
+            if (convoProvider[convo.Id] is null)
             {
-                convoProvider.Convos.Add(convo);
+                convoProvider[convo.Id] = convo;
                 convoProvider.Save();
             }
 
