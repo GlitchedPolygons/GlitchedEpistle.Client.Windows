@@ -236,7 +236,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             string dir = Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id);
             if (!Directory.Exists(dir))
             {
-                return;
+                Directory.CreateDirectory(dir);
             }
 
             DecryptingVisibility = Visibility.Visible;
