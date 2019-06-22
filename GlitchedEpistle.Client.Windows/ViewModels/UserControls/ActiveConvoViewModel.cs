@@ -279,7 +279,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             var convo = convoProvider[ActiveConvo.Id];
             var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
 
-            if (convo == null || metadata == null || convo.Equals(metadata))
+            if (convo is null || metadata is null || convo.Equals(metadata))
             {
                 return false;
             }
@@ -292,13 +292,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
             convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
 
-            var _convo = convoProvider[convo.Id];
-            if (_convo != null)
-            {
-                convoProvider.Convos.Remove(_convo);
-            }
-
-            convoProvider.Convos.Add(convo);
             convoProvider.Save();
 
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id);
@@ -408,6 +401,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             DecryptingVisibility = Visibility.Visible;
 
+            var decryptedMessages = new ConcurrentBag<MessageViewModel>();
+
+            Parallel.ForEach(retrievedMessages, message =>
+            {
+                // Add the retrieved messages to the chatroom
+                // only if it does not contain them yet
+                // (mistakes are always possible; safe is safe).
+                if (Messages.All(m => m.Id != message.Id))
+                {
+                    decryptedMessages.Add(DecryptMessage(message));
+                }
+            });
+
             // Newly pulled messages should be
             // written out to a file on disk.
             foreach (var message in retrievedMessages)
@@ -433,19 +439,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
             }
 
-            var decryptedMessages = new ConcurrentBag<MessageViewModel>();
-
-            Parallel.ForEach(retrievedMessages, message =>
-            {
-                // Add the retrieved messages to the chatroom
-                // only if it does not contain them yet
-                // (mistakes are always possible; safe is safe).
-                if (Messages.All(m => m.Id != message.Id))
-                {
-                    decryptedMessages.Add(DecryptMessage(message));
-                }
-            });
-
             DecryptingVisibility = Visibility.Hidden;
 
             Application.Current.Dispatcher.Invoke(() =>
@@ -457,7 +450,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return true;
         }
 
-        private async void OnSendText(object commandParam)
+        private void OnSendText(object commandParam)
         {
             var textBox = commandParam as TextBox;
             if (textBox is null)
@@ -475,15 +468,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             textBox.Focus();
             textBox.SelectAll();
 
-            var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
-
-            if (!await SubmitMessage(messageBodyJson))
+            Task.Run(async () =>
             {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                errorView.ShowDialog();
-            }
+                var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
 
-            messageBodyJson["text"] = messageBodyJson = null;
+                bool success = await SubmitMessage(messageBodyJson);
+
+                if (!success)
+                {
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                        errorView.ShowDialog();
+                    });
+                }
+
+                messageBodyJson["text"] = messageBodyJson = null;
+            });
         }
 
         private void OnSendFile(object commandParam)
@@ -541,36 +542,47 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             scheduledHideGreenTickIcon = null;
         }
 
-        public async void OnDragAndDropFile(string filePath)
+        public void OnDragAndDropFile(string filePath)
         {
             if (filePath.NullOrEmpty())
             {
                 return;
             }
 
-            byte[] file = File.ReadAllBytes(filePath);
-
-            if (file.LongLength < MAX_FILE_SIZE_BYTES)
+            Task.Run(async () =>
             {
-                var messageBodyJson = new JObject
-                {
-                    ["fileName"] = Path.GetFileName(filePath),
-                    ["fileBase64"] = Convert.ToBase64String(file)
-                };
+                byte[] file = File.ReadAllBytes(filePath);
 
-                if (!await SubmitMessage(messageBodyJson))
+                if (file.LongLength < MAX_FILE_SIZE_BYTES)
                 {
-                    var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                    errorView.ShowDialog();
+                    var messageBodyJson = new JObject
+                    {
+                        ["fileName"] = Path.GetFileName(filePath),
+                        ["fileBase64"] = Convert.ToBase64String(file)
+                    };
+
+                    bool success = await SubmitMessage(messageBodyJson);
+
+                    if (!success)
+                    {
+                        Application.Current?.Dispatcher?.Invoke(() =>
+                        {
+                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                            errorView.ShowDialog();
+                        });
+                    }
+
+                    messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = messageBodyJson = null;
                 }
-
-                messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = messageBodyJson = null;
-            }
-            else
-            {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
-                errorView.ShowDialog();
-            }
+                else
+                {
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
+                        errorView.ShowDialog();
+                    });
+                }
+            });
         }
     }
 }

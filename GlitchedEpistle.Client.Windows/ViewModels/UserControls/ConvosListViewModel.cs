@@ -78,7 +78,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void UpdateList()
         {
             convoProvider.Load();
-            Convos = convoProvider.Convos != null ? new ObservableCollection<Convo>(convoProvider.Convos.OrderBy(c => c.IsExpired()).ThenBy(c => c.Name)) : new ObservableCollection<Convo>();
+            var convos = convoProvider.GetAllConvos();
+            Convos = convos != null ? new ObservableCollection<Convo>(convos.OrderBy(c => c.IsExpired()).ThenBy(c => c.Name)) : new ObservableCollection<Convo>();
         }
 
         private async void OnClickedOnConvo(object commandParam)
