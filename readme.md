@@ -1,4 +1,4 @@
-[![API](https://img.shields.io/badge/api-docs-brightgreen.svg)](https://glitchedpolygons.github.io/GlitchedEpistle.Client.Windows)
+
 # Glitched Epistle
 ## Windows Client
 
@@ -21,3 +21,5 @@ Then, if after opening the solution in VS you can't build the Setup project due 
 
 ### Contributing
 Just fork & open a PR and I'll take a look at it ASAP :)
+
+[![API](https://img.shields.io/badge/api-docs-brightgreen.svg)](https://glitchedpolygons.github.io/GlitchedEpistle.Client.Windows)
