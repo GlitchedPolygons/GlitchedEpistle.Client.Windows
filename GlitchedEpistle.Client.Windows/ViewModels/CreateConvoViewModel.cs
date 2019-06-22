@@ -213,7 +213,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 // Add the created convo to the convo 
                 // provider instance and write it out to disk.
-                convoProvider.Convos.Add(convo);
+                convoProvider[id] = convo;
                 convoProvider.Save();
 
                 // Raise the convo created event application-wide (the main view will subscribe to this to update its list).

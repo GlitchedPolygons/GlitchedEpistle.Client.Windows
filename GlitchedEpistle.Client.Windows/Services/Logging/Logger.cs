@@ -36,6 +36,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
         /// <value>The error log file path.</value>
         public string ErrorLogFilePath { get; }
 
+        private object messageLock = new object();
+        private object warningLock = new object();
+        private object errorLock = new object();
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Logger"/> class (implements <see cref="ILogger"/>).
         /// </summary>
@@ -84,7 +88,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
         public void LogMessage(string msg)
         {
             CheckDirectory();
-            File.AppendAllText(MessageLogFilePath, Timestamp(msg));
+            lock (messageLock)
+            {
+                File.AppendAllText(MessageLogFilePath, Timestamp(msg));
+            }
         }
 
         /// <summary>
@@ -94,7 +101,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
         public void LogWarning(string msg)
         {
             CheckDirectory();
-            File.AppendAllText(WarningLogFilePath, Timestamp(msg));
+            lock (warningLock)
+            {
+                File.AppendAllText(WarningLogFilePath, Timestamp(msg));
+            }
         }
 
         /// <summary>
@@ -104,7 +114,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
         public void LogError(string msg)
         {
             CheckDirectory();
-            File.AppendAllText(ErrorLogFilePath, Timestamp(msg));
+            lock (errorLock)
+            {
+                File.AppendAllText(ErrorLogFilePath, Timestamp(msg));
+            }
         }
     }
 }

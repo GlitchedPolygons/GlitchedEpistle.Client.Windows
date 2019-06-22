@@ -135,6 +135,7 @@ The trash icon at the bottom of the settings menu is a button that allows you to
 PLEASE read every warning carefully in the dialog menu before you do something you might regret later!
 " />
                 </Expander>
+                <Label Content="{Binding VersionNumber}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
