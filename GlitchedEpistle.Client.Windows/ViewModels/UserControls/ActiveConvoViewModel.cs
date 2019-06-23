@@ -36,6 +36,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class ActiveConvoViewModel : ViewModel
     {
         #region Constants
+        private const bool PARALLEL_LOAD = true;
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
@@ -245,21 +246,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
-                Parallel.ForEach(Directory.GetFiles(dir), file =>
+                if (PARALLEL_LOAD)
                 {
-                    try
+                    Parallel.ForEach(Directory.GetFiles(dir), file =>
                     {
-                        var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
-                        if (message != null)
+                        try
                         {
-                            decryptedMessages.Add(DecryptMessage(message));
+                            var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
+                            if (message != null)
+                            {
+                                decryptedMessages.Add(DecryptMessage(message));
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
+                        }
+                    });
+                }
+                else
+                {
+                    foreach (var file in Directory.GetFiles(dir))
+                    {
+                        try
+                        {
+                            var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
+                            if (message != null)
+                            {
+                                decryptedMessages.Add(DecryptMessage(message));
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
                         }
                     }
-                    catch (Exception e)
-                    {
-                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
-                    }
-                });
+                }
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
