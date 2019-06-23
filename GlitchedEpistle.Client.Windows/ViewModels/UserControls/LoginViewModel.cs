@@ -49,9 +49,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
         #endregion
 
-        private string password;
-        private int failedAttempts;
-        private bool pendingAttempt;
+        private volatile string password;
+        private volatile int failedAttempts;
+        private volatile bool pendingAttempt;
 
         public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest)
         {
@@ -71,7 +71,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             errorMessageTimer.Start();
         }
 
-        private async void OnClickedLogin(object commandParam)
+        private void OnClickedLogin(object commandParam)
         {
             string totp = commandParam as string;
 
@@ -83,38 +83,53 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             pendingAttempt = true;
             UIEnabled = false;
 
-            if (!await connectionTest.TestConnection())
+            Task.Run(async () =>
             {
-                pendingAttempt = false;
-                UIEnabled = true;
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.", Title = "Epistle Server Unresponsive" } };
-                errorView.ShowDialog();
-                return;
-            }
-
-            string jwt = await userService.Login(UserId, password.SHA512(), totp);
-
-            if (jwt.NullOrEmpty())
-            {
-                failedAttempts++;
-                errorMessageTimer.Stop();
-                errorMessageTimer.Start();
-
-                ErrorMessage = "Error! Invalid user id, password or 2FA.";
-                if (failedAttempts > 3)
+                if (!await connectionTest.TestConnection())
                 {
-                    ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
+                    Application.Current?.Dispatcher?.Invoke(() => 
+                    {
+                        pendingAttempt = false;
+                        UIEnabled = true;
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.", Title = "Epistle Server Unresponsive" } };
+                        errorView.ShowDialog();
+                    });
+                    return;
                 }
-            }
-            else
-            {
-                failedAttempts = 0;
-                user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
-                eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
-            }
 
-            pendingAttempt = false;
-            UIEnabled = true;
+                string jwt = await userService.Login(UserId, password.SHA512(), totp);
+
+                if (jwt.NullOrEmpty())
+                {
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        failedAttempts++;
+                        errorMessageTimer.Stop();
+                        errorMessageTimer.Start();
+
+                        ErrorMessage = "Error! Invalid user id, password or 2FA.";
+                        if (failedAttempts > 3)
+                        {
+                            ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
+                        }
+                    });
+                }
+                else
+                {
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        failedAttempts = 0;
+                        user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
+                        eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
+                    });
+                }
+
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    pendingAttempt = false;
+                    UIEnabled = true;
+                });
+            });
         }
 
         private void OnClickedQuit(object commandParam)
