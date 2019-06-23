@@ -202,5 +202,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                    || FileName.EndsWith(".jpeg", true, CultureInfo.InvariantCulture)
                    || FileName.EndsWith(".tif", true, CultureInfo.InvariantCulture);
         }
+
+        private bool IsGif()
+        {
+            if (!HasAttachment())
+            {
+                return false;
+            }
+
+            return FileName.EndsWith(".gif", true, CultureInfo.InvariantCulture);
+        }
+
+        private bool IsAudio()
+        {
+            if (!HasAttachment())
+            {
+                return false;
+            }
+
+            return FileName.EndsWith(".mp3", true, CultureInfo.InvariantCulture)
+                   || FileName.EndsWith(".wav", true, CultureInfo.InvariantCulture)
+                   || FileName.EndsWith(".aac", true, CultureInfo.InvariantCulture)
+                   || FileName.EndsWith(".wma", true, CultureInfo.InvariantCulture);
+        }
     }
 }
