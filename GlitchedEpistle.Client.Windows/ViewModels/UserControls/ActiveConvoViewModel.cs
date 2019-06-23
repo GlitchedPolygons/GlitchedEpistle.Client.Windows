@@ -242,6 +242,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             DecryptingVisibility = Visibility.Visible;
 
+            void DecryptMessageIntoConcurrentBag(string file, ConcurrentBag<MessageViewModel> outputBag)
+            {
+                try
+                {
+                    var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
+                    if (message != null)
+                    {
+                        outputBag.Add(DecryptMessage(message));
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
+                }
+            }
+
             Task.Run(() =>
             {
                 var decryptedMessages = new ConcurrentBag<MessageViewModel>();
@@ -250,36 +266,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     Parallel.ForEach(Directory.GetFiles(dir), file =>
                     {
-                        try
-                        {
-                            var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
-                            if (message != null)
-                            {
-                                decryptedMessages.Add(DecryptMessage(message));
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
-                        }
+                        DecryptMessageIntoConcurrentBag(file, decryptedMessages);
                     });
                 }
                 else
                 {
-                    foreach (var file in Directory.GetFiles(dir))
+                    foreach (string file in Directory.GetFiles(dir))
                     {
-                        try
-                        {
-                            var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
-                            if (message != null)
-                            {
-                                decryptedMessages.Add(DecryptMessage(message));
-                            }
-                        }
-                        catch (Exception e)
-                        {
-                            logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
-                        }
+                        DecryptMessageIntoConcurrentBag(file, decryptedMessages);
                     }
                 }
 
