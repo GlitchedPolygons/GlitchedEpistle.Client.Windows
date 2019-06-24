@@ -349,11 +349,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (key != null && key.Item1.NotNullNotEmpty() && key.Item2.NotNullNotEmpty() && messageBodyJsonString.NotNullNotEmpty())
                 {
-                    string encryptedMessage = crypto.EncryptMessage(
-                        messageJson: messageBodyJsonString,
-                        recipientPublicRsaKey: RSAParametersExtensions.FromXmlString(key.Item2)
-                    );
-
+                    string encryptedMessage = crypto.EncryptMessage(messageBodyJsonString, RSAParametersExtensions.FromXmlString(key.Item2));
                     encryptedMessagesBag.Add(new Tuple<string, string>(key.Item1, encryptedMessage));
                 }
             });
