@@ -215,7 +215,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return null;
             }
 
-            JToken json = JToken.Parse(crypto.DecryptMessage(message.Body, user.PrivateKey));
+            string decryptedJson = crypto.DecryptMessage(message.Body, user.PrivateKey);
+            JToken json = JToken.Parse(decryptedJson);
+
             if (json == null)
             {
                 return null;
@@ -256,7 +258,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     try
                     {
-                        decryptedMessages.Add(DecryptMessage(message));
+                        var decryptedMessage = DecryptMessage(message);
+                        decryptedMessages.Add(decryptedMessage);
                     }
                     catch (Exception e)
                     {
