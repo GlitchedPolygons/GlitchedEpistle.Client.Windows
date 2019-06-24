@@ -119,12 +119,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
+                // Prevent the user from submitting new messages whilst changing convos.
                 CanSend = false;
                 StopAutomaticPulling();
+
+                // Reset the view's message collection and 
+                // load the local sqlite message repository.
                 Messages = new ObservableCollection<MessageViewModel>();
                 repo = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
+
                 activeConvo = value;
                 Name = value?.Name;
+
+                // Convo expiration check 
+                // (adapt the title label accordingly).
                 DateTime? exp = value?.ExpirationUTC;
                 if (exp.HasValue)
                 {
@@ -137,6 +145,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         Name += " (EXPIRES SOON)";
                     }
                 }
+
+                // Decrypt the messages that are already stored 
+                // locally on the device and load them into the view.
+                // Then, resume the user's ability to send messages once done.
                 LoadLocalMessages();
                 CanSend = true;
             }
