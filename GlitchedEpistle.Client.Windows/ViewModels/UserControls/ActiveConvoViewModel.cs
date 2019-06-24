@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿#define PARALLEL_LOAD
+
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls;
 
+using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
@@ -22,7 +25,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.Services.MethodQ;
 
 using Microsoft.Win32;
 
@@ -36,7 +38,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class ActiveConvoViewModel : ViewModel
     {
         #region Constants
-        private const bool PARALLEL_LOAD = true;
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
@@ -121,6 +122,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 CanSend = false;
                 StopAutomaticPulling();
                 Messages = new ObservableCollection<MessageViewModel>();
+                repo = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
                 activeConvo = value;
                 Name = value?.Name;
                 DateTime? exp = value?.ExpirationUTC;
@@ -142,6 +144,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private ulong? scheduledUpdateRoutine;
         private ulong? scheduledHideGreenTickIcon;
+
+        private MessageRepositorySQLite repo;
 
         public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger)
         {
@@ -166,21 +170,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Subscribe(OnChangedConvoMetadata);
 
             settings.Load();
+
+            if (!Directory.Exists(Paths.CONVOS_DIRECTORY))
+            {
+                Directory.CreateDirectory(Paths.CONVOS_DIRECTORY);
+            }
         }
 
         ~ActiveConvoViewModel()
         {
             StopAutomaticPulling();
-        }
-
-        private void OnChangedConvoMetadata(string convoId)
-        {
-            var convo = convoProvider[convoId];
-            if (convo is null)
-            {
-                return;
-            }
-            Name = convo.Name;
         }
 
         private void StopAutomaticPulling()
@@ -234,48 +233,37 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            string dir = Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id);
-            if (!Directory.Exists(dir))
-            {
-                Directory.CreateDirectory(dir);
-            }
-
             DecryptingVisibility = Visibility.Visible;
 
-            void DecryptMessageIntoConcurrentBag(string file, ConcurrentBag<MessageViewModel> outputBag)
-            {
-                try
-                {
-                    var message = JsonConvert.DeserializeObject<Message>(File.ReadAllText(file));
-                    if (message != null)
-                    {
-                        outputBag.Add(DecryptMessage(message));
-                    }
-                }
-                catch (Exception e)
-                {
-                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
-                }
-            }
-
-            Task.Run(() =>
+            Task.Run(async () =>
             {
                 var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
-                if (PARALLEL_LOAD)
+#if PARALLEL_LOAD
+                Parallel.ForEach(await repo.GetAll(), message =>
                 {
-                    Parallel.ForEach(Directory.GetFiles(dir), file =>
+                    try
                     {
-                        DecryptMessageIntoConcurrentBag(file, decryptedMessages);
-                    });
-                }
-                else
+                        decryptedMessages.Add(DecryptMessage(message));
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
+                    }
+                });
+#else
+                foreach (var message in await repo.GetAll())
                 {
-                    foreach (string file in Directory.GetFiles(dir))
+                    try
                     {
-                        DecryptMessageIntoConcurrentBag(file, decryptedMessages);
+                        decryptedMessages.Add(DecryptMessage(message));
+                    }
+                    catch (Exception e)
+                    {
+                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
                     }
                 }
+#endif
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
@@ -332,6 +320,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             EncryptingVisibility = Visibility.Visible;
 
             await UpdateConvoMetadata();
+
             var messageBodiesJson = new JObject();
             var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
             var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
@@ -432,28 +421,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             // Newly pulled messages should be
             // written out to a file on disk.
-            foreach (var message in retrievedMessages)
-            {
-                string json = JsonConvert.SerializeObject(message);
-                string path = Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id, message.TimestampUTC.ToString("yyyyMMddHHmmssfff"));
-
-                try
-                {
-                    File.WriteAllText(path, json);
-                }
-                catch (Exception e)
-                {
-                    logger.LogError(e.ToString());
-                    try
-                    {
-                        await Task.Delay(new Random().Next(50, 150)).ContinueWith(t => File.WriteAllText(path, json));
-                    }
-                    catch (Exception)
-                    {
-                        return false;
-                    }
-                }
-            }
+            bool success = await repo.AddRange(retrievedMessages);
 
             DecryptingVisibility = Visibility.Hidden;
 
@@ -463,7 +431,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Pulling = false;
             });
 
-            return true;
+            return success;
         }
 
         private void OnSendText(object commandParam)
@@ -552,10 +520,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             scrollViewer.ScrollToBottom();
         }
 
-        private void HideGreenTick()
+        private void OnChangedConvoMetadata(string convoId)
         {
-            ClipboardTickVisibility = Visibility.Hidden;
-            scheduledHideGreenTickIcon = null;
+            var convo = convoProvider[convoId];
+            if (convo != null)
+            {
+                Name = convo.Name;
+            }
         }
 
         public void OnDragAndDropFile(string filePath)
@@ -599,6 +570,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     });
                 }
             });
+        }
+
+        private void HideGreenTick()
+        {
+            ClipboardTickVisibility = Visibility.Hidden;
+            scheduledHideGreenTickIcon = null;
         }
     }
 }
