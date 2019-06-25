@@ -43,7 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
-        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(666);
+        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(420);
 
         // Injections:
         private readonly User user;
@@ -83,7 +83,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public string Name
         {
             get => name;
-            set => Set(ref name, value);
+            set
+            {
+                // Convo expiration check 
+                // (adapt the title label accordingly).
+                DateTime? exp = ActiveConvo?.ExpirationUTC;
+                if (exp.HasValue)
+                {
+                    if (DateTime.UtcNow > exp.Value)
+                    {
+                        value += " (EXPIRED)";
+                    }
+                    else if ((exp.Value - DateTime.UtcNow).TotalDays < 3)
+                    {
+                        value += " (EXPIRES SOON)";
+                    }
+                }
+                
+                Set(ref name, value);
+            }
         }
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
@@ -115,9 +133,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
-        private ulong? scheduledUpdateRoutine;
         private ulong? scheduledHideGreenTickIcon;
-        private IMessageRepository messageRepo;
+        private IMessageRepository messageRepository;
 
         private Convo activeConvo;
         public Convo ActiveConvo
@@ -125,29 +142,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
-                // Prevent the user from submitting new messages whilst changing convos.
+                // Prevent the user from both pulling and
+                // submitting new messages whilst changing convos.
                 CanSend = false;
                 StopAutomaticPulling();
 
                 // Reset the view's message collection and 
                 // load the local sqlite message repository.
                 Messages = new ObservableCollection<MessageViewModel>();
-                messageRepo = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
+                messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
 
                 activeConvo = value;
                 Name = value.Name;
-
-                // Convo expiration check 
-                // (adapt the title label accordingly).
-                DateTime exp = value.ExpirationUTC;
-                if (DateTime.UtcNow > exp)
-                {
-                    Name += " (EXPIRED)";
-                }
-                else if ((exp - DateTime.UtcNow).TotalDays < 3)
-                {
-                    Name += " (EXPIRES SOON)";
-                }
 
                 // Decrypt the messages that are already stored 
                 // locally on the device and load them into the view.
@@ -189,16 +195,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void StopAutomaticPulling()
         {
-            if (scheduledUpdateRoutine.HasValue)
-            {
-                methodQ.Cancel(scheduledUpdateRoutine.Value);
-            }
+            Pulling = false;
         }
 
         private void StartAutomaticPulling()
         {
             StopAutomaticPulling();
-            scheduledUpdateRoutine = methodQ.Schedule(async () => { await PullNewestMessages(); }, MSG_PULL_FREQUENCY);
+            Pulling = true;
+            Task.Run(async () =>
+            {
+                while (Pulling)
+                {
+                    await PullNewestMessages();
+                    await Task.Delay(MSG_PULL_FREQUENCY);
+                }
+            });
         }
 
         private MessageViewModel DecryptMessage(Message message)
@@ -233,6 +244,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return messageViewModel;
         }
 
+        /// <summary>
+        /// Loads the messages that are stored locally in the convo's sqlite db into the view.
+        /// </summary>
         private void LoadLocalMessages()
         {
             if (ActiveConvo is null || ActiveConvo.Id.NullOrEmpty())
@@ -247,7 +261,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
 #if PARALLEL_LOAD
-                Parallel.ForEach(await messageRepo.GetAll(), message =>
+                Parallel.ForEach(await messageRepository.GetAll(), message =>
                 {
                     try
                     {
@@ -260,7 +274,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 });
 #else
-                foreach (var message in await messageRepo.GetAll())
+                foreach (var message in await messageRepository.GetAll())
                 {
                     try
                     {
@@ -283,32 +297,94 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Updates the convo's metadata. Returns <c>true</c> if the metadata was updated (thus something changed), or <c>false</c> if nothing changed.
+        /// Pulls the convo's metadata and updates the local copy if something changed.<para> </para>
         /// </summary>
-        /// <returns>Whether the convo metadata was updated or not.</returns>
-        private async Task<bool> UpdateConvoMetadata()
+        /// <returns>Returns <c>true</c> if the metadata was updated (thus something changed), or <c>false</c> if nothing changed.</returns>
+        private async Task<bool> PullConvoMetadata()
         {
             var convo = await convoProvider.Get(ActiveConvo.Id);
-            var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
+            var metadataDto = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
 
-            if (convo is null || metadata is null || convo.Equals(metadata))
+            if (convo is null || metadataDto is null || convo.Equals(metadataDto))
             {
                 return false;
             }
 
-            convo.Name = ActiveConvo.Name = metadata.Name;
-            convo.CreatorId = ActiveConvo.CreatorId = metadata.CreatorId;
-            convo.Description = ActiveConvo.Description = metadata.Description;
-            convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadata.ExpirationUTC;
-            convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-            convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-            convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
-
-            bool success = await convoProvider.Update(convo);
+            convo.Name = ActiveConvo.Name = metadataDto.Name;
+            convo.CreatorId = ActiveConvo.CreatorId = metadataDto.CreatorId;
+            convo.Description = ActiveConvo.Description = metadataDto.Description;
+            convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadataDto.ExpirationUTC;
+            convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadataDto.CreationTimestampUTC;
+            convo.BannedUsers = ActiveConvo.BannedUsers = metadataDto.BannedUsers.Split(',').ToList();
+            convo.Participants = ActiveConvo.Participants = metadataDto.Participants.Split(',').ToList();
 
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id);
+            return await convoProvider.Update(convo);
+        }
 
-            return success;
+        /// <summary>
+        /// Pulls the convo's newest messages from the server.
+        /// Returns whether any new messages were pulled successfully or not.
+        /// </summary>
+        /// <returns>Whether any new messages were pulled successfully or not.</returns>
+        private async Task<bool> PullNewestMessages()
+        {
+            if (ActiveConvo is null || user is null)
+            {
+                return false;
+            }
+
+            // Pull convo metadata first.
+            await PullConvoMetadata();
+
+            // Pull newest messages.
+            Message[] retrievedMessages = await convoService.GetConvoMessages(
+                convoId: ActiveConvo.Id,
+                convoPasswordSHA512: ActiveConvo.PasswordSHA512,
+                userId: user?.Id,
+                auth: user?.Token?.Item2,
+                tailId: await messageRepository.GetLastMessageId()
+            );
+
+            if (retrievedMessages is null || retrievedMessages.Length == 0)
+            {
+                return false;
+            }
+
+            Application.Current?.Dispatcher?.Invoke(() => { DecryptingVisibility = Visibility.Visible; });
+
+            try
+            {
+                var decryptedMessages = new ConcurrentBag<MessageViewModel>();
+
+                Parallel.ForEach(retrievedMessages, message =>
+                {
+                    // Add the retrieved messages to the chatroom
+                    // only if it does not contain them yet
+                    // (mistakes are always possible; safe is safe).
+                    if (Messages.All(m => m.Id != message.Id))
+                    {
+                        decryptedMessages.Add(DecryptMessage(message));
+                    }
+                });
+
+                // Newly pulled messages should be
+                // written out to a file on disk.
+                bool success = await messageRepository.AddRange(retrievedMessages);
+
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    DecryptingVisibility = Visibility.Hidden;
+                    Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                });
+
+                return success;
+            }
+            catch (Exception e)
+            {
+                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: Pull failed. Thrown exception: " + e.ToString());
+                return false;
+            }
         }
 
         /// <summary>
@@ -327,7 +403,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             EncryptingVisibility = Visibility.Visible;
 
-            await UpdateConvoMetadata();
+            await PullConvoMetadata();
 
             var messageBodiesJson = new JObject();
             var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
@@ -355,7 +431,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             EncryptingVisibility = Visibility.Hidden;
 
             JToken ownMessageBody = messageBodiesJson[user.Id];
-            if (ownMessageBody is null)
+            if (ownMessageBody == null)
             {
                 return false;
             }
@@ -372,78 +448,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             };
 
             bool success = await convoService.PostMessage(ActiveConvo.Id, postParamsDto);
-
             return success;
-        }
-
-        /// <summary>
-        /// Pulls the convo's newest messages from the server.
-        /// Returns whether any new messages were pulled successfully or not.
-        /// </summary>
-        /// <returns>Whether any new messages were pulled successfully or not.</returns>
-        private async Task<bool> PullNewestMessages()
-        {
-            if (Pulling || ActiveConvo is null || user is null)
-            {
-                return false;
-            }
-
-            Pulling = true;
-
-            // Pull convo metadata first.
-            await UpdateConvoMetadata();
-
-            // Pull newest messages.
-            Message[] retrievedMessages = await convoService.GetConvoMessages(
-                convoId: ActiveConvo.Id,
-                convoPasswordSHA512: ActiveConvo.PasswordSHA512,
-                userId: user?.Id,
-                auth: user?.Token?.Item2,
-                tailId: await messageRepo.GetLastMessageId()
-            );
-
-            if (retrievedMessages is null || retrievedMessages.Length == 0)
-            {
-                Pulling = false;
-                return false;
-            }
-
-            DecryptingVisibility = Visibility.Visible;
-
-            try
-            {
-                var decryptedMessages = new ConcurrentBag<MessageViewModel>();
-
-                Parallel.ForEach(retrievedMessages, message =>
-                {
-                    // Add the retrieved messages to the chatroom
-                    // only if it does not contain them yet
-                    // (mistakes are always possible; safe is safe).
-                    if (Messages.All(m => m.Id != message.Id))
-                    {
-                        decryptedMessages.Add(DecryptMessage(message));
-                    }
-                });
-
-                // Newly pulled messages should be
-                // written out to a file on disk.
-                bool success = await messageRepo.AddRange(retrievedMessages);
-
-                DecryptingVisibility = Visibility.Hidden;
-
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
-                    Pulling = false;
-                });
-
-                return success;
-            }
-            catch (Exception e)
-            {
-                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: Pull failed. Thrown exception: " + e.ToString());
-                return false;
-            }
         }
 
         private void OnSendText(object commandParam)
@@ -501,46 +506,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             OnDragAndDropFile(dialog.FileName);
         }
 
-        private void OnClickedCopyConvoIdToClipboard(object commandParam)
-        {
-            Clipboard.SetText(ActiveConvo.Id);
-            ClipboardTickVisibility = Visibility.Visible;
-
-            if (scheduledHideGreenTickIcon.HasValue)
-            {
-                methodQ.Cancel(scheduledHideGreenTickIcon.Value);
-            }
-
-            scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
-        }
-
-        private void OnPressedEscape(object commandParam)
-        {
-            var messagesListBox = commandParam as ListBox;
-            if (messagesListBox is null)
-            {
-                return;
-            }
-
-            if (VisualTreeHelper.GetChildrenCount(messagesListBox) <= 0)
-            {
-                return;
-            }
-
-            var border = (Border)VisualTreeHelper.GetChild(messagesListBox, 0);
-            var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
-            scrollViewer.ScrollToBottom();
-        }
-
-        private void OnChangedConvoMetadata(string convoId)
-        {
-            var convo = convoProvider[convoId];
-            if (convo != null)
-            {
-                Name = convo.Name;
-            }
-        }
-
         public void OnDragAndDropFile(string filePath)
         {
             if (filePath.NullOrEmpty())
@@ -582,6 +547,46 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     });
                 }
             });
+        }
+
+        private void OnClickedCopyConvoIdToClipboard(object commandParam)
+        {
+            Clipboard.SetText(ActiveConvo.Id);
+            ClipboardTickVisibility = Visibility.Visible;
+
+            if (scheduledHideGreenTickIcon.HasValue)
+            {
+                methodQ.Cancel(scheduledHideGreenTickIcon.Value);
+            }
+
+            scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
+        }
+
+        private void OnPressedEscape(object commandParam)
+        {
+            var messagesListBox = commandParam as ListBox;
+            if (messagesListBox is null)
+            {
+                return;
+            }
+
+            if (VisualTreeHelper.GetChildrenCount(messagesListBox) <= 0)
+            {
+                return;
+            }
+
+            var border = (Border)VisualTreeHelper.GetChild(messagesListBox, 0);
+            var scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+            scrollViewer.ScrollToBottom();
+        }
+
+        private void OnChangedConvoMetadata(string convoId)
+        {
+            var convo = convoProvider[convoId];
+            if (convo != null)
+            {
+                Name = convo.Name;
+            }
         }
 
         private void HideGreenTick()
