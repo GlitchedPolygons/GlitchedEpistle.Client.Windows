@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.RepositoryPattern;
 
 using Prism.Events;
 
@@ -104,12 +102,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (!await convoService.JoinConvo(ConvoId, passwordSHA512, user.Id, user.Token.Item2))
                 {
                     convoPasswordProvider.RemovePasswordSHA512(ConvoId);
+
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         ResetMessages();
                         ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
                         UIEnabled = true;
                     });
+
                     return;
                 }
 
