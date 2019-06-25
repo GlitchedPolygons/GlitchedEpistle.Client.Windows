@@ -18,6 +18,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.RepositoryPattern;
 
 using Prism.Events;
 
@@ -29,8 +30,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly User user;
         private readonly IUserService userService;
         private readonly IConvoService convoService;
-        private readonly IConvoProvider convoProvider;
         private readonly IEventAggregator eventAggregator;
+        private readonly IRepository<Convo, string> convoProvider;
         private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
         #endregion
 
@@ -200,7 +201,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IConvoProvider convoProvider, IEventAggregator eventAggregator)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IRepository<Convo, string> convoProvider, IEventAggregator eventAggregator)
         {
             this.user = user;
             this.userService = userService;
@@ -254,10 +255,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void DeleteConvoLocally()
         {
-            var jsonFile = new FileInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id + ".json"));
-            if (jsonFile.Exists)
+            var sqliteDbFile = new FileInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id + ".db"));
+            if (sqliteDbFile.Exists)
             {
-                jsonFile.Delete();
+                sqliteDbFile.Delete();
             }
 
             var dir = new DirectoryInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id));
@@ -336,14 +337,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                             return;
                         }
 
-                        var convo = convoProvider[Convo.Id];
+                        var convo = await convoProvider.Get(Convo.Id);
                         if (convo != null)
                         {
                             convo.CreatorId = newAdminUserId;
+                            
+                            if (await convoProvider.Update(convo))
+                            {
+                                PrintMessage($"Success! The user {newAdminUserId} is now the new convo admin. You can now close this window...", false);
+                            }
+                            else
+                            {
+                                PrintMessage("The convo admin change request was accepted server-side but couldn't be applied locally. Try re-syncing the convo...", true);
+                            }
                         }
-                        convoProvider.Save();
-
-                        PrintMessage($"Success! The user {newAdminUserId} is now the new convo admin. You can now close this window...", false);
 
                         Application.Current?.Dispatcher?.Invoke(() =>
                         {
@@ -379,13 +386,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                         PrintMessage($"The user \"{userIdToKick}\" has been kicked out of the convo.", false);
 
-                        var convo = convoProvider[Convo.Id];
+                        var convo = await convoProvider.Get(Convo.Id);
                         if (convo != null)
                         {
                             convo.BannedUsers.Add(userIdToKick);
                             convo.Participants.Remove(userIdToKick);
+                            await convoProvider.Update(convo);
                         }
-                        convoProvider.Save();
+                        
                         RefreshParticipantLists();
                         Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
                     });
@@ -531,7 +539,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 PrintMessage("Convo metadata changed successfully. You can now close this window.", false);
 
-                var convo = convoProvider[Convo.Id];
+                var convo = await convoProvider.Get(Convo.Id);
                 if (convo != null)
                 {
                     if (dto.Name.NotNullNotEmpty())
@@ -550,7 +558,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         convo.PasswordSHA512 = dto.PasswordSHA512;
                     }
-                    convoProvider.Save();
+                    await convoProvider.Update(convo);
                 }
 
                 Application.Current?.Dispatcher?.Invoke(() =>

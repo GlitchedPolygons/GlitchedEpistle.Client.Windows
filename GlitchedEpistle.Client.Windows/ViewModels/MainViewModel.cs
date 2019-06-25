@@ -21,6 +21,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
+using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.Services.MethodQ;
 
 using Prism.Events;
@@ -46,7 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IMethodQ methodQ;
         private readonly ISettings settings;
         private readonly IUserService userService;
-        private readonly IConvoProvider convoProvider;
+        private readonly IRepository<Convo,string> convoProvider;
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
@@ -111,7 +112,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool reset;
         private ulong? scheduledAuthRefresh, scheduledExpirationDialog, scheduledHideGreenTickIcon;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider, IConvoPasswordProvider convoPasswordProvider)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IRepository<Convo,string> convoProvider, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.logger = logger;
@@ -362,7 +363,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings[nameof(UserId)] = UserId = user.Id = userCreationResponseDto.Id;
             settings.Save();
 
-            // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
+            // Create QR code containing the Authy/Google Auth setup link and open the RegistrationSuccessfulView.
             IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap> { Format = BarcodeFormat.QR_CODE, Renderer = new WriteableBitmapRenderer(), Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 } };
 
             UserCreationSuccessfulViewModel viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
@@ -376,7 +377,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private async void OnRefreshAuth()
         {
             // If there is no current token,
-            // instantly interrupt everything and prompt the user to log in.
+            // instantly interrupt everything
+            // and prompt the user to log in.
             if (user.Token is null || user.Token.Item2.NullOrEmpty())
             {
                 Logout();
@@ -395,16 +397,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            if (convoProvider[convo.Id] is null)
+            var c = convoProvider[convo.Id];
+            if (c is null)
             {
-                convoProvider[convo.Id] = convo;
-                convoProvider.Save();
+                convoProvider.Add(convo).GetAwaiter().GetResult();
             }
 
             convoPasswordProvider.SetPasswordSHA512(convo.Id, convo.PasswordSHA512);
 
             var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
             viewModel.ActiveConvo = convo;
+            
             MainControl = new ActiveConvoView { DataContext = viewModel };
         }
 
