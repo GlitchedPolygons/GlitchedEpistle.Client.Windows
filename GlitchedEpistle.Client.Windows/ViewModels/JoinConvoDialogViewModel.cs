@@ -83,7 +83,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ErrorMessage = null;
         }
 
-        private async void OnClickedJoinConvo(object commandParam)
+        private void OnClickedJoinConvo(object commandParam)
         {
             var passwordBox = commandParam as PasswordBox;
             if (passwordBox == null)
@@ -99,21 +99,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             UIEnabled = false;
 
-            if (!await convoService.JoinConvo(ConvoId, passwordSHA512, user.Id, user.Token.Item2))
+            Task.Run(async () =>
             {
-                convoPasswordProvider.RemovePasswordSHA512(ConvoId);
-                ResetMessages();
-                ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
-                UIEnabled = true;
-                return;
-            }
+                if (!await convoService.JoinConvo(ConvoId, passwordSHA512, user.Id, user.Token.Item2))
+                {
+                    convoPasswordProvider.RemovePasswordSHA512(ConvoId);
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        ResetMessages();
+                        ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
+                        UIEnabled = true;
+                    });
+                    return;
+                }
 
-            ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, passwordSHA512, user.Id, user.Token.Item2);
-            convoPasswordProvider.SetPasswordSHA512(ConvoId, passwordSHA512);
+                ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, passwordSHA512, user.Id, user.Token.Item2);
+                convoPasswordProvider.SetPasswordSHA512(ConvoId, passwordSHA512);
 
-            UIEnabled = true;
-            eventAggregator.GetEvent<JoinedConvoEvent>().Publish(metadata);
-            RequestedClose?.Invoke(this, EventArgs.Empty);
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    UIEnabled = true;
+                    eventAggregator.GetEvent<JoinedConvoEvent>().Publish(metadata);
+                    RequestedClose?.Invoke(this, EventArgs.Empty);
+                });
+            });
         }
     }
 }
