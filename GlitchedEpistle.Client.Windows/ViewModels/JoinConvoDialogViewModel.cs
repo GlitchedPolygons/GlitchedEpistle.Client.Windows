@@ -91,15 +91,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            string pw = passwordBox.Password?.SHA512();
-            if (pw.NullOrEmpty())
+            string passwordSHA512 = passwordBox.Password?.SHA512();
+            if (passwordSHA512.NullOrEmpty())
             {
                 return;
             }
 
             UIEnabled = false;
 
-            if (!await convoService.JoinConvo(ConvoId, pw, user.Id, user.Token.Item2))
+            if (!await convoService.JoinConvo(ConvoId, passwordSHA512, user.Id, user.Token.Item2))
             {
                 convoPasswordProvider.RemovePasswordSHA512(ConvoId);
                 ResetMessages();
@@ -108,23 +108,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            var convo = new Convo { Id = ConvoId, PasswordSHA512 = pw };
-
-            ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, pw, user.Id, user.Token.Item2);
-
-            if (metadata != null)
-            {
-                convo.Name = metadata.Name;
-                convo.ExpirationUTC = metadata.ExpirationUTC;
-                convo.CreatorId = metadata.CreatorId;
-                convo.Description = metadata.Description;
-                convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-                convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-                convo.Participants = metadata.Participants.Split(',').ToList();
-            }
+            ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, passwordSHA512, user.Id, user.Token.Item2);
+            convoPasswordProvider.SetPasswordSHA512(ConvoId, passwordSHA512);
 
             UIEnabled = true;
-            eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
+            eventAggregator.GetEvent<JoinedConvoEvent>().Publish(metadata);
             RequestedClose?.Invoke(this, EventArgs.Empty);
         }
     }

@@ -428,13 +428,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            var c = convoProvider[convo.Id];
-            if (c is null)
+            Convo local = convoProvider[convo.Id];
+            if (local is null)
             {
                 convoProvider.Add(convo).GetAwaiter().GetResult();
             }
-
-            convoPasswordProvider.SetPasswordSHA512(convo.Id, convo.PasswordSHA512);
 
             var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
             viewModel.ActiveConvo = convo;
