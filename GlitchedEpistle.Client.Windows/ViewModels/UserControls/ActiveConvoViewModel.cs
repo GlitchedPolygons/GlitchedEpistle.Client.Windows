@@ -1,4 +1,5 @@
 ﻿#define PARALLEL_LOAD
+// Comment out the above line to load messages synchronously when opening convos.
 
 using System;
 using System.IO;
@@ -13,18 +14,19 @@ using System.Windows.Media;
 using System.Windows.Controls;
 
 using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Microsoft.Win32;
 
@@ -50,9 +52,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IConvoService convoService;
-        private readonly IConvoProvider convoProvider;
         private readonly IMessageCryptography crypto;
         private readonly IEventAggregator eventAggregator;
+        private readonly IRepository<Convo, string> convoProvider;
         #endregion
 
         #region Commands
@@ -113,6 +115,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
+        private ulong? scheduledUpdateRoutine;
+        private ulong? scheduledHideGreenTickIcon;
+        private IRepository<Message, string> messageRepo;
+
         private Convo activeConvo;
         public Convo ActiveConvo
         {
@@ -126,24 +132,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 // Reset the view's message collection and 
                 // load the local sqlite message repository.
                 Messages = new ObservableCollection<MessageViewModel>();
-                repo = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
+                messageRepo = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
 
                 activeConvo = value;
-                Name = value?.Name;
+                Name = value.Name;
 
                 // Convo expiration check 
                 // (adapt the title label accordingly).
-                DateTime? exp = value?.ExpirationUTC;
-                if (exp.HasValue)
+                DateTime exp = value.ExpirationUTC;
+                if (DateTime.UtcNow > exp)
                 {
-                    if (DateTime.UtcNow > exp.Value)
-                    {
-                        Name += " (EXPIRED)";
-                    }
-                    else if ((exp.Value - DateTime.UtcNow).TotalDays < 3)
-                    {
-                        Name += " (EXPIRES SOON)";
-                    }
+                    Name += " (EXPIRED)";
+                }
+                else if ((exp - DateTime.UtcNow).TotalDays < 3)
+                {
+                    Name += " (EXPIRES SOON)";
                 }
 
                 // Decrypt the messages that are already stored 
@@ -154,12 +157,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        private ulong? scheduledUpdateRoutine;
-        private ulong? scheduledHideGreenTickIcon;
-
-        private MessageRepositorySQLite repo;
-
-        public ActiveConvoViewModel(User user, IConvoService convoService, IConvoProvider convoProvider, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger)
+        public ActiveConvoViewModel(User user, IConvoService convoService, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger, IRepository<Convo, string> convoProvider)
         {
             #region Injections
             this.user = user;
@@ -182,11 +180,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Subscribe(OnChangedConvoMetadata);
 
             settings.Load();
-
-            if (!Directory.Exists(Paths.CONVOS_DIRECTORY))
-            {
-                Directory.CreateDirectory(Paths.CONVOS_DIRECTORY);
-            }
         }
 
         ~ActiveConvoViewModel()
@@ -254,7 +247,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
 #if PARALLEL_LOAD
-                Parallel.ForEach(await repo.GetAll(), message =>
+                Parallel.ForEach(await messageRepo.GetAll(), message =>
                 {
                     try
                     {
@@ -267,7 +260,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 });
 #else
-                foreach (var message in await repo.GetAll())
+                foreach (var message in await messageRepo.GetAll())
                 {
                     try
                     {
@@ -295,7 +288,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// <returns>Whether the convo metadata was updated or not.</returns>
         private async Task<bool> UpdateConvoMetadata()
         {
-            var convo = convoProvider[ActiveConvo.Id];
+            var convo = await convoProvider.Get(ActiveConvo.Id);
             var metadata = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
 
             if (convo is null || metadata is null || convo.Equals(metadata))
@@ -311,11 +304,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             convo.BannedUsers = ActiveConvo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
             convo.Participants = ActiveConvo.Participants = metadata.Participants.Split(',').ToList();
 
-            convoProvider.Save();
+            bool success = await convoProvider.Update(convo);
 
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id);
 
-            return true;
+            return success;
         }
 
         /// <summary>
@@ -432,7 +425,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             // Newly pulled messages should be
             // written out to a file on disk.
-            bool success = await repo.AddRange(retrievedMessages);
+            bool success = await messageRepo.AddRange(retrievedMessages);
 
             DecryptingVisibility = Visibility.Hidden;
 

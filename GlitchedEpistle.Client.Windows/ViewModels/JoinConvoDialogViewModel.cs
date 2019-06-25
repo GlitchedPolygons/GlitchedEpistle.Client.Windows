@@ -12,6 +12,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.RepositoryPattern;
 
 using Prism.Events;
 
@@ -25,7 +26,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly IConvoService convoService;
-        private readonly IConvoProvider convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
         #endregion
@@ -62,11 +62,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, IConvoProvider convoProvider, User user, IConvoPasswordProvider convoPasswordProvider)
+        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, User user, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.convoService = convoService;
-            this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
 
