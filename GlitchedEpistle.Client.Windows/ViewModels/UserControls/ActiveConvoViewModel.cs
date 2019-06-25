@@ -410,32 +410,40 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             DecryptingVisibility = Visibility.Visible;
 
-            var decryptedMessages = new ConcurrentBag<MessageViewModel>();
-
-            Parallel.ForEach(retrievedMessages, message =>
+            try
             {
-                // Add the retrieved messages to the chatroom
-                // only if it does not contain them yet
-                // (mistakes are always possible; safe is safe).
-                if (Messages.All(m => m.Id != message.Id))
+                var decryptedMessages = new ConcurrentBag<MessageViewModel>();
+
+                Parallel.ForEach(retrievedMessages, message =>
                 {
-                    decryptedMessages.Add(DecryptMessage(message));
-                }
-            });
+                    // Add the retrieved messages to the chatroom
+                    // only if it does not contain them yet
+                    // (mistakes are always possible; safe is safe).
+                    if (Messages.All(m => m.Id != message.Id))
+                    {
+                        decryptedMessages.Add(DecryptMessage(message));
+                    }
+                });
 
-            // Newly pulled messages should be
-            // written out to a file on disk.
-            bool success = await messageRepo.AddRange(retrievedMessages);
+                // Newly pulled messages should be
+                // written out to a file on disk.
+                bool success = await messageRepo.AddRange(retrievedMessages);
 
-            DecryptingVisibility = Visibility.Hidden;
+                DecryptingVisibility = Visibility.Hidden;
 
-            Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                    Pulling = false;
+                });
+
+                return success;
+            }
+            catch (Exception e)
             {
-                Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
-                Pulling = false;
-            });
-
-            return success;
+                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: Pull failed. Thrown exception: " + e.ToString());
+                return false;
+            }
         }
 
         private void OnSendText(object commandParam)

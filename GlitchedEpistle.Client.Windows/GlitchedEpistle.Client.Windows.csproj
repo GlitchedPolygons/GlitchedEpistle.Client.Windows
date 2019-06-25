@@ -132,6 +132,7 @@
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
     <Compile Include="PubSubEvents\JoinedConvoEvent.cs" />
     <Compile Include="PubSubEvents\LogoutEvent.cs" />
+    <Compile Include="PubSubEvents\UpdatedUserConvos.cs" />
     <Compile Include="PubSubEvents\UserCreationVerifiedEvent.cs" />
     <Compile Include="PubSubEvents\UserCreationSucceededEvent.cs" />
     <Compile Include="PubSubEvents\ConvoCreationSucceededEvent.cs" />
