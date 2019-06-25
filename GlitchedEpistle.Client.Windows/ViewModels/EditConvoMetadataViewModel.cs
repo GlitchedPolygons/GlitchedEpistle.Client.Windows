@@ -32,6 +32,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
         private readonly IRepository<Convo, string> convoProvider;
+        private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
         #endregion
 
@@ -201,13 +202,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IRepository<Convo, string> convoProvider, IEventAggregator eventAggregator)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IRepository<Convo, string> convoProvider, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.userService = userService;
             this.convoService = convoService;
             this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
+            this.convoPasswordProvider = convoPasswordProvider;
 
             LeaveCommand = new DelegateCommand(OnLeave);
             SubmitCommand = new DelegateCommand(OnSubmit);
@@ -558,7 +560,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     }
                     if (dto.PasswordSHA512.NotNullNotEmpty())
                     {
-                        convo.PasswordSHA512 = dto.PasswordSHA512;
+                        convoPasswordProvider.SetPasswordSHA512(convo.Id, dto.PasswordSHA512);
                     }
                     await convoProvider.Update(convo);
                 }

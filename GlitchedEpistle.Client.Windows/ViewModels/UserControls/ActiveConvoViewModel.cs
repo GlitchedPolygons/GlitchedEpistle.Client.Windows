@@ -55,6 +55,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IMessageCryptography crypto;
         private readonly IEventAggregator eventAggregator;
         private readonly IRepository<Convo, string> convoProvider;
+        private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
 
         #region Commands
@@ -163,7 +164,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        public ActiveConvoViewModel(User user, IConvoService convoService, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger, IRepository<Convo, string> convoProvider)
+        public ActiveConvoViewModel(User user, IConvoService convoService, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger, IRepository<Convo, string> convoProvider, IConvoPasswordProvider convoPasswordProvider)
         {
             #region Injections
             this.user = user;
@@ -174,6 +175,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.userService = userService;
             this.convoService = convoService;
             this.convoProvider = convoProvider;
+            this.convoPasswordProvider = convoPasswordProvider;
             this.eventAggregator = eventAggregator;
             #endregion
 
@@ -303,7 +305,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private async Task<bool> PullConvoMetadata()
         {
             var convo = await convoProvider.Get(ActiveConvo.Id);
-            var metadataDto = await convoService.GetConvoMetadata(ActiveConvo.Id, ActiveConvo.PasswordSHA512, user.Id, user.Token.Item2);
+            var metadataDto = await convoService.GetConvoMetadata(ActiveConvo.Id, convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id), user.Id, user.Token.Item2);
 
             if (convo is null || metadataDto is null || convo.Equals(metadataDto))
             {
@@ -340,7 +342,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             // Pull newest messages.
             Message[] retrievedMessages = await convoService.GetConvoMessages(
                 convoId: ActiveConvo.Id,
-                convoPasswordSHA512: ActiveConvo.PasswordSHA512,
+                convoPasswordSHA512: convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
                 userId: user?.Id,
                 auth: user?.Token?.Item2,
                 tailId: await messageRepository.GetLastMessageId()
@@ -443,7 +445,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 UserId = user.Id,
                 SenderName = username,
                 Auth = user.Token.Item2,
-                ConvoPasswordSHA512 = ActiveConvo.PasswordSHA512,
+                ConvoPasswordSHA512 = convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
                 MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
             };
 
