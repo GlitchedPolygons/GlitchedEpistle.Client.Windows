@@ -117,7 +117,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private ulong? scheduledUpdateRoutine;
         private ulong? scheduledHideGreenTickIcon;
-        private IRepository<Message, string> messageRepo;
+        private IMessageRepository messageRepo;
 
         private Convo activeConvo;
         public Convo ActiveConvo
@@ -399,7 +399,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 convoPasswordSHA512: ActiveConvo.PasswordSHA512,
                 userId: user?.Id,
                 auth: user?.Token?.Item2,
-                tailId: Messages.Count == 0 ? null : Messages.Last()?.Id
+                tailId: await messageRepo.GetLastMessageId()
             );
 
             if (retrievedMessages is null || retrievedMessages.Length == 0)
