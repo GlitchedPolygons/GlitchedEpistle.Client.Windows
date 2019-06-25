@@ -70,6 +70,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             EditConvoCommand = new DelegateCommand(OnClickedEditConvo);
             CopyConvoIdCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
+            eventAggregator.GetEvent<UpdatedUserConvos>().Subscribe(UpdateList);
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => UpdateList());
             eventAggregator.GetEvent<DeletedConvoEvent>().Subscribe(_ => UpdateList());
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Subscribe(_ => UpdateList());

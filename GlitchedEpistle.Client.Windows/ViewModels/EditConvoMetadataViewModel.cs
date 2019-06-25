@@ -253,7 +253,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             });
         }
 
-        private void DeleteConvoLocally()
+        private async Task DeleteConvoLocally()
         {
             var sqliteDbFile = new FileInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id + ".db"));
             if (sqliteDbFile.Exists)
@@ -267,6 +267,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 dir.DeleteRecursively();
                 dir.Delete();
             }
+
+            await convoProvider.Remove(Convo);
         }
 
         private void OnCancel(object commandParam)
@@ -294,7 +296,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         return;
                     }
 
-                    DeleteConvoLocally();
+                    await DeleteConvoLocally();
 
                     PrintMessage($"You left the convo \"{Convo.Name}\" successfully! You are no longer a participant of it and can now close this window.", false);
                     Application.Current?.Dispatcher?.Invoke(() =>
@@ -407,9 +409,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             bool? confirmed = dialog.ShowDialog();
             if (confirmed.HasValue && confirmed.Value == true)
             {
-                Task.Run(() =>
+                Task.Run(async () =>
                 {
-                    DeleteConvoLocally();
+                    await DeleteConvoLocally();
 
                     PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
                     Application.Current?.Dispatcher?.Invoke(() =>
@@ -449,8 +451,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         return;
                     }
 
-                    DeleteConvoLocally();
-
+                    await DeleteConvoLocally();
+                    
                     PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
