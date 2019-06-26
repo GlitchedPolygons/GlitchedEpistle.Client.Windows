@@ -45,7 +45,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand CancelCommand { get; }
         public ICommand SubmitCommand { get; }
         public ICommand DeleteCommand { get; }
-        public ICommand DeleteLocallyCommand { get; }
         public ICommand OldPasswordChangedCommand { get; }
         public ICommand NewPasswordChangedCommand { get; }
         public ICommand NewPassword2ChangedCommand { get; }
@@ -99,6 +98,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             get => name;
             set => Set(ref name, value);
+        }
+
+        private string totp;
+        public string Totp
+        {
+            get => totp;
+            set => Set(ref totp, value);
         }
 
         private string description;
@@ -215,7 +221,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             SubmitCommand = new DelegateCommand(OnSubmit);
             CancelCommand = new DelegateCommand(OnCancel);
             DeleteCommand = new DelegateCommand(OnDelete);
-            DeleteLocallyCommand = new DelegateCommand(OnDeleteLocally);
             MakeAdminCommand = new DelegateCommand(OnMakeAdmin);
             KickAndBanUserCommand = new DelegateCommand(OnKickAndBanUser);
             OldPasswordChangedCommand = new DelegateCommand(pwBox => oldPw = (pwBox as PasswordBox)?.Password);
@@ -280,18 +285,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnLeave(object commandParam)
         {
-            if (oldPw.NullOrEmpty())
+            if (Totp.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing the current convo's password.", true);
+                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
                 return;
             }
 
             bool? confirmed = new ConfirmLeaveConvoView().ShowDialog();
+
             if (confirmed.HasValue && confirmed.Value == true)
             {
                 Task.Run(async () =>
                 {
-                    bool success = await convoService.LeaveConvo(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2);
+                    bool success = await convoService.LeaveConvo(Convo.Id, Totp, user.Id, user.Token.Item2);
+
                     if (!success)
                     {
                         PrintMessage("The request could not be fulfilled server-side; please double check the provided password and make sure that you actually are currently a participant of this convo.", true);
@@ -405,26 +412,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
-        private void OnDeleteLocally(object commandParam)
-        {
-            var dialog = new ConfirmDeleteConvoLocallyView();
-            bool? confirmed = dialog.ShowDialog();
-            if (confirmed.HasValue && confirmed.Value == true)
-            {
-                Task.Run(async () =>
-                {
-                    await DeleteConvoLocally();
-
-                    PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
-                    Application.Current?.Dispatcher?.Invoke(() =>
-                    {
-                        UIEnabled = false;
-                        eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
-                    });
-                });
-            }
-        }
-
         private void OnDelete(object commandParam)
         {
             CanSubmit = false;
@@ -476,9 +463,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            string totp = commandParam as string;
-
-            if (totp.NullOrEmpty())
+            if (Totp.NullOrEmpty())
             {
                 PrintMessage("No 2FA token provided - please take security seriously and authenticate your request!", true);
                 CanSubmit = true;
@@ -501,7 +486,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             Task.Run(async () =>
             {
-                bool totpValid = await userService.Validate2FA(user.Id, totp);
+                bool totpValid = await userService.Validate2FA(user.Id, Totp);
 
                 if (!totpValid)
                 {
