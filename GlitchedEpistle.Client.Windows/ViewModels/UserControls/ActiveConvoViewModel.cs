@@ -321,6 +321,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             convo.Participants = ActiveConvo.Participants = metadataDto.Participants.Split(',').ToList();
 
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id);
+
             return await convoProvider.Update(convo);
         }
 
