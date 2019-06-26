@@ -56,17 +56,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
 
         private static BitmapSource CreateBitmapSourceFromBitmap(Stream stream)
         {
-            BitmapDecoder bitmapDecoder = BitmapDecoder.Create(
+            var bitmapDecoder = BitmapDecoder.Create(
                 stream,
                 cacheOption: BitmapCacheOption.OnLoad,
                 createOptions: BitmapCreateOptions.PreservePixelFormat
             );
 
             // This will disconnect the stream from the image completely...
-            WriteableBitmap writable = new WriteableBitmap(bitmapDecoder.Frames.Single());
-            writable.Freeze();
+            var writeableBitmap = new WriteableBitmap(bitmapDecoder.Frames.Single());
+            writeableBitmap.Freeze();
 
-            return writable;
+            return writeableBitmap;
         }
     }
 }
