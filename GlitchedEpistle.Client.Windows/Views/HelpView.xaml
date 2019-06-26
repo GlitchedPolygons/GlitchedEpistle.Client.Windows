@@ -113,8 +113,8 @@ If you want to join a convo from another Epistle user who gave you the convo id 
 If you're the admin of a convo (its creator), you can edit the metadata at any time.&#x0a;&#x0a;
 You can also ban annoying participants in the convo: just find out their unique anonymous user id and kick them from inside the edit convo dialog.&#x0a;&#x0a;
 To access the Edit Convo window, right-mouse click on the convo inside the list and select 'Edit Convo'.&#x0a;&#x0a;
-This settings menu gives you the option to delete the convo locally (without leaving server-side, which basically means that when you'll join back in you'll get delivered the messages that have been sent during your absence).&#x0a;&#x0a;
-If you want to leave a convo, you can do so, but you need to authenticate your request by entering the convo password at the bottom of the form. Also: if you're the convo admin, you need to elect a new admin first before leaving!&#x0a;
+This settings menu gives you the option to leave the convo (or delete entirely for everybody, if you're the convo's admin).&#x0a;&#x0a;
+If you want to leave a convo, you can do so, but you need to authenticate your request by providing your two-factor authentication token. Also: if you're the convo admin, you need to elect a new admin first before leaving!&#x0a;
 " />
                 </Expander>
                 
