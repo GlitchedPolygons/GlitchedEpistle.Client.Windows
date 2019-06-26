@@ -416,9 +416,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             CanSubmit = false;
 
-            if (oldPw.NullOrEmpty())
+            if (Totp.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing the current convo's password.", true);
+                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
                 CanSubmit = true;
                 return;
             }
@@ -432,10 +432,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 Task.Run(async () =>
                 {
-                    bool success = await convoService.DeleteConvo(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2);
+                    bool success = await convoService.DeleteConvo(Convo.Id, Totp, user.Id, user.Token.Item2);
                     if (!success)
                     {
-                        PrintMessage("The convo deletion request could not be fulfilled server-side; please double check the provided password and make sure that you are actually the convo's admin.", true);
+                        PrintMessage("The convo deletion request could not be fulfilled server-side; please double check the provided 2FA token and try again.", true);
                         Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
                         return;
                     }
