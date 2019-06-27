@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Collections.Specialized;
-using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 
@@ -20,15 +20,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         public ActiveConvoView()
         {
             InitializeComponent();
+
             Loaded += OnLoaded;
+            MessagesListBox.SizeChanged += ActiveConvoView_SizeChanged;
             ((INotifyCollectionChanged)MessagesListBox.Items).CollectionChanged += ActiveConvoView_CollectionChanged;
+        }
+
+        private void ActiveConvoView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MessagesListBox.Dispatcher.Invoke(() => MessagesListBox.UpdateLayout());
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             TextBox.Focus();
             TextBox.SelectAll();
-
+            
             if (VisualTreeHelper.GetChildrenCount(MessagesListBox) > 0)
             {
                 border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);

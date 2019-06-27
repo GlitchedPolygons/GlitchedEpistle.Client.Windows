@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
@@ -80,6 +81,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 }
             }
+        }
+
+        private bool isOwn;
+        public bool IsOwn
+        {
+            get => isOwn;
+            set => Set(ref isOwn, value);
         }
 
         public string FileSize => $"({FileBytes.GetFileSizeString()})";

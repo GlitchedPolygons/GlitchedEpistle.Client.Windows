@@ -84,6 +84,10 @@
                 Value="Transparent" />
     </Style>
 
+    <!-- Message View Speech Bubble Color -->
+    <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#adadad"/>
+    <SolidColorBrush x:Key="MessageSpeechBubbleColorOwn" Color="#FF6DB7D7"/>
+
     <!-- TextBox (input field) -->
     <Style x:Key="TextBox"
            TargetType="TextBox">
