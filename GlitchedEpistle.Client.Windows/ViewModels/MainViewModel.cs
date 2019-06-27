@@ -1,12 +1,17 @@
 ﻿using System;
-using System.Globalization;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
+using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
@@ -21,7 +26,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
-using GlitchedPolygons.Services.MethodQ;
+using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 
 using Prism.Events;
 
@@ -46,10 +51,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IMethodQ methodQ;
         private readonly ISettings settings;
         private readonly IUserService userService;
-        private readonly IConvoProvider convoProvider;
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
+        private readonly IRepository<Convo,string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
 
@@ -111,7 +116,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool reset;
         private ulong? scheduledAuthRefresh, scheduledExpirationDialog, scheduledHideGreenTickIcon;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoProvider convoProvider, IConvoPasswordProvider convoPasswordProvider)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IRepository<Convo,string> convoProvider, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.logger = logger;
@@ -316,6 +321,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UIEnabled = !expired;
         }
 
+        private void UpdateUserConvosMetadata()
+        {
+            if (user.Token is null || user.Token.Item2.NullOrEmpty())
+            {
+                return;
+            }
+
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var userConvos = await userService.GetConvos(user.Id, user.Token.Item2);
+
+                    await convoProvider.RemoveAll();
+                    if (await convoProvider.AddRange(userConvos.Select(dto => (Convo)dto).Distinct()))
+                    {
+                        Application.Current.Dispatcher?.Invoke(() => eventAggregator.GetEvent<UpdatedUserConvosEvent>().Publish());
+                    }
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"{nameof(MainViewModel)}::{nameof(UpdateUserConvosMetadata)}: User convos sync failed! Thrown exception: "+ e.ToString());
+                }
+            });
+        }
+
         private void OnLoginSuccessful()
         {
             MainControl = null;
@@ -329,6 +360,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             UpdateUserExp();
+            UpdateUserConvosMetadata();
 
             // Load the user's RSA keys into the User instance.
             if (!File.Exists(Paths.PUBLIC_KEY_PATH))
@@ -362,7 +394,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             settings[nameof(UserId)] = UserId = user.Id = userCreationResponseDto.Id;
             settings.Save();
 
-            // Create QR code containing the Authy setup link and open the RegistrationSuccessfulView.
+            // Create QR code containing the Authy/Google Auth setup link and open the RegistrationSuccessfulView.
             IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap> { Format = BarcodeFormat.QR_CODE, Renderer = new WriteableBitmapRenderer(), Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 } };
 
             UserCreationSuccessfulViewModel viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
@@ -376,7 +408,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private async void OnRefreshAuth()
         {
             // If there is no current token,
-            // instantly interrupt everything and prompt the user to log in.
+            // instantly interrupt everything
+            // and prompt the user to log in.
             if (user.Token is null || user.Token.Item2.NullOrEmpty())
             {
                 Logout();
@@ -395,16 +428,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            if (convoProvider[convo.Id] is null)
+            Convo local = convoProvider[convo.Id];
+            if (local is null)
             {
-                convoProvider[convo.Id] = convo;
-                convoProvider.Save();
+                convoProvider.Add(convo).GetAwaiter().GetResult();
             }
-
-            convoPasswordProvider.SetPasswordSHA512(convo.Id, convo.PasswordSHA512);
 
             var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
             viewModel.ActiveConvo = convo;
+            
             MainControl = new ActiveConvoView { DataContext = viewModel };
         }
 

@@ -13,6 +13,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.RepositoryPattern;
 
 using Prism.Events;
 
@@ -25,7 +26,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
         private readonly IConvoService convoService;
-        private readonly IConvoProvider convoProvider;
+        private readonly IRepository<Convo, string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
         private readonly User user;
@@ -53,7 +54,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
-        public ConvosListViewModel(IConvoProvider convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService)
+        public ConvosListViewModel(IRepository<Convo, string> convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService)
         {
             this.user = user;
             this.convoService = convoService;
@@ -69,6 +70,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             EditConvoCommand = new DelegateCommand(OnClickedEditConvo);
             CopyConvoIdCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
+            eventAggregator.GetEvent<UpdatedUserConvosEvent>().Subscribe(UpdateList);
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => UpdateList());
             eventAggregator.GetEvent<DeletedConvoEvent>().Subscribe(_ => UpdateList());
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Subscribe(_ => UpdateList());
@@ -77,12 +79,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void UpdateList()
         {
-            convoProvider.Load();
-            var convos = convoProvider.GetAllConvos();
-            Convos = convos != null ? new ObservableCollection<Convo>(convos.OrderBy(c => c.IsExpired()).ThenBy(c => c.Name)) : new ObservableCollection<Convo>();
+            var convos = convoProvider.GetAll().GetAwaiter().GetResult();
+            Convos = convos != null ? new ObservableCollection<Convo>(convos.OrderBy(c => c.IsExpired()).ThenBy(c => c.Name.ToUpper())) : new ObservableCollection<Convo>();
         }
 
-        private async void OnClickedOnConvo(object commandParam)
+        private void OnClickedOnConvo(object commandParam)
         {
             var _convo = commandParam as Convo;
             if (_convo is null || !CanJoin)
@@ -91,35 +92,36 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             CanJoin = false;
-
             string cachedPwSHA512 = convoPasswordProvider.GetPasswordSHA512(_convo.Id);
+
             if (cachedPwSHA512.NotNullNotEmpty())
             {
-                if (!await convoService.JoinConvo(_convo.Id, cachedPwSHA512, user.Id, user.Token.Item2))
+                Task.Run(async () =>
                 {
-                    convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
-                    CanJoin = true;
-                    var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/", Title = "Message upload failed" } };
-                    errorView.ShowDialog();
-                    return;
-                }
+                    if (!await convoService.JoinConvo(_convo.Id, cachedPwSHA512, user.Id, user.Token.Item2))
+                    {
+                        convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
+                        Application.Current?.Dispatcher?.Invoke(() =>
+                        {
+                            CanJoin = true;
+                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/", Title = "Message upload failed" } };
+                            errorView.ShowDialog();
+                        });
+                        return;
+                    }
 
-                var convo = new Convo { Id = _convo.Id, PasswordSHA512 = cachedPwSHA512 };
+                    ConvoMetadataDto metadata = await convoService.GetConvoMetadata(_convo.Id, cachedPwSHA512, user.Id, user.Token.Item2);
+                    if (metadata is null)
+                    {
+                        return;
+                    }
 
-                ConvoMetadataDto metadata = await convoService.GetConvoMetadata(convo.Id, convo.PasswordSHA512, user.Id, user.Token.Item2);
-                if (metadata != null)
-                {
-                    convo.Name = metadata.Name;
-                    convo.ExpirationUTC = metadata.ExpirationUTC;
-                    convo.CreatorId = metadata.CreatorId;
-                    convo.Description = metadata.Description;
-                    convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-                    convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-                    convo.Participants = metadata.Participants.Split(',').ToList();
-                }
-
-                CanJoin = true;
-                eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        CanJoin = true;
+                        eventAggregator.GetEvent<JoinedConvoEvent>().Publish(metadata);
+                    });
+                });
             }
             else // Password not yet stored in session's IConvoPasswordProvider
             {

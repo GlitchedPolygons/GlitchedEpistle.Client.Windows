@@ -90,7 +90,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
             CheckDirectory();
             lock (messageLock)
             {
-                File.AppendAllText(MessageLogFilePath, Timestamp(msg));
+                Log(msg, MessageLogFilePath);
             }
         }
 
@@ -103,7 +103,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
             CheckDirectory();
             lock (warningLock)
             {
-                File.AppendAllText(WarningLogFilePath, Timestamp(msg));
+                Log(msg, WarningLogFilePath);
             }
         }
 
@@ -116,8 +116,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
             CheckDirectory();
             lock (errorLock)
             {
-                File.AppendAllText(ErrorLogFilePath, Timestamp(msg));
+                Log(msg, ErrorLogFilePath);
             }
+        }
+
+        private void Log(string msg, string path)
+        {
+            string log = string.Empty;
+            if (File.Exists(path))
+            {
+                log = File.ReadAllText(path);
+            }
+            File.WriteAllText(path, Timestamp(msg) + log);
         }
     }
 }

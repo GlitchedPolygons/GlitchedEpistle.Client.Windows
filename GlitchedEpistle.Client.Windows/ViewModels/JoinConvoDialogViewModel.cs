@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
@@ -25,7 +24,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly IConvoService convoService;
-        private readonly IConvoProvider convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
         #endregion
@@ -62,11 +60,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, IConvoProvider convoProvider, User user, IConvoPasswordProvider convoPasswordProvider)
+        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, User user, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.convoService = convoService;
-            this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
 
@@ -84,7 +81,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ErrorMessage = null;
         }
 
-        private async void OnClickedJoinConvo(object commandParam)
+        private void OnClickedJoinConvo(object commandParam)
         {
             var passwordBox = commandParam as PasswordBox;
             if (passwordBox == null)
@@ -92,41 +89,40 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            string pw = passwordBox.Password?.SHA512();
-            if (pw.NullOrEmpty())
+            string passwordSHA512 = passwordBox.Password?.SHA512();
+            if (passwordSHA512.NullOrEmpty())
             {
                 return;
             }
 
             UIEnabled = false;
 
-            if (!await convoService.JoinConvo(ConvoId, pw, user.Id, user.Token.Item2))
+            Task.Run(async () =>
             {
-                convoPasswordProvider.RemovePasswordSHA512(ConvoId);
-                ResetMessages();
-                ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
-                UIEnabled = true;
-                return;
-            }
+                if (!await convoService.JoinConvo(ConvoId, passwordSHA512, user.Id, user.Token.Item2))
+                {
+                    convoPasswordProvider.RemovePasswordSHA512(ConvoId);
 
-            var convo = new Convo { Id = ConvoId, PasswordSHA512 = pw };
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        ResetMessages();
+                        ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
+                        UIEnabled = true;
+                    });
 
-            ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, pw, user.Id, user.Token.Item2);
+                    return;
+                }
 
-            if (metadata != null)
-            {
-                convo.Name = metadata.Name;
-                convo.ExpirationUTC = metadata.ExpirationUTC;
-                convo.CreatorId = metadata.CreatorId;
-                convo.Description = metadata.Description;
-                convo.CreationTimestampUTC = metadata.CreationTimestampUTC;
-                convo.BannedUsers = metadata.BannedUsers.Split(',').ToList();
-                convo.Participants = metadata.Participants.Split(',').ToList();
-            }
+                ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, passwordSHA512, user.Id, user.Token.Item2);
+                convoPasswordProvider.SetPasswordSHA512(ConvoId, passwordSHA512);
 
-            UIEnabled = true;
-            eventAggregator.GetEvent<JoinedConvoEvent>().Publish(convo);
-            RequestedClose?.Invoke(this, EventArgs.Empty);
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    UIEnabled = true;
+                    eventAggregator.GetEvent<JoinedConvoEvent>().Publish(metadata);
+                    RequestedClose?.Invoke(this, EventArgs.Empty);
+                });
+            });
         }
     }
 }
