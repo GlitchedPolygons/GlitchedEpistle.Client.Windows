@@ -13,9 +13,13 @@
                            MinHeight="200" />
             <RowDefinition Height="150" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
         <!-- Header -->
         <StackPanel Grid.Row="0"
+                    Grid.Column="0"
                     Margin="0"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
@@ -55,6 +59,7 @@
 
         <!-- Chatroom -->
         <ListBox Grid.Row="1"
+                 Grid.Column="0"
                  Margin="0,0,0,4"
                  Name="MessagesListBox"
                  ItemsSource="{Binding Messages}"
@@ -100,6 +105,7 @@
 
         <!-- TextBox + Send Buttons -->
         <Grid Grid.Row="2"
+              Grid.Column="0"
               HorizontalAlignment="Stretch">
 
             <Grid.ColumnDefinitions>
