@@ -5,12 +5,37 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="{Binding HorizontalAlignment}" Margin="0,5,0,0">
+    <Grid Margin="0,5,0,0">
 
-        <Rectangle Fill="{DynamicResource MessageSpeechBubbleColorOwn}"
-                   Opacity="0.675"
+        <Grid.Style>
+            <Style>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsOwn}" Value="True">
+                        <Setter Property="Grid.HorizontalAlignment" Value="Right"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsOwn}" Value="False">
+                        <Setter Property="Grid.HorizontalAlignment" Value="Left"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+
+        <Rectangle Opacity="0.675"
                    RadiusX="25.00" 
-                   RadiusY="25.00" />
+                   RadiusY="25.00">
+            <Rectangle.Style>
+                <Style>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsOwn}" Value="True">
+                            <Setter Property="Rectangle.Fill" Value="{DynamicResource MessageSpeechBubbleColorOwn}"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsOwn}" Value="False">
+                            <Setter Property="Rectangle.Fill" Value="{DynamicResource MessageSpeechBubbleColor}"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Rectangle.Style>
+        </Rectangle>
 
         <StackPanel Margin="10" 
                     Orientation="Vertical" 

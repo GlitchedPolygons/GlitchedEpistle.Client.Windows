@@ -85,8 +85,8 @@
     </Style>
 
     <!-- Message View Speech Bubble Color -->
+    <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#adadad"/>
     <SolidColorBrush x:Key="MessageSpeechBubbleColorOwn" Color="#FF6DB7D7"/>
-    <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#FFB4B4B4"/>
 
     <!-- TextBox (input field) -->
     <Style x:Key="TextBox"
