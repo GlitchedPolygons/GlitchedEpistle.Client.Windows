@@ -20,8 +20,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         public ActiveConvoView()
         {
             InitializeComponent();
+
             Loaded += OnLoaded;
+            MessagesListBox.SizeChanged += ActiveConvoView_SizeChanged;
             ((INotifyCollectionChanged)MessagesListBox.Items).CollectionChanged += ActiveConvoView_CollectionChanged;
+        }
+
+        private void ActiveConvoView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MessagesListBox.Dispatcher.Invoke(() => MessagesListBox.UpdateLayout());
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)
