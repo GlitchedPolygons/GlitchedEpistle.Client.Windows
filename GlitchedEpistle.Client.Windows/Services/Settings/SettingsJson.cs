@@ -42,16 +42,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         /// <returns>Whether the settings were saved out to disk successfully or not.</returns>
         public bool Save()
         {
-            settings["Version"] = App.VERSION;
-            try
+            lock (settings)
             {
-                File.WriteAllText(FilePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
-                return true;
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e.Message);
-                return false;
+                settings["Version"] = App.VERSION;
+                try
+                {
+                    File.WriteAllText(FilePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    logger.LogError(e.Message);
+                    return false;
+                }
             }
         }
 
@@ -61,19 +64,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         /// <returns>Whether the loading procedure was successful or not.</returns>
         public bool Load()
         {
-            if (!File.Exists(FilePath))
+            lock (settings)
             {
-                return false;
-            }
-            try
-            {
-                settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.VERSION } };
-                return true;
-            }
-            catch (Exception e)
-            {
-                logger.LogError(e.Message);
-                return false;
+                if (!File.Exists(FilePath))
+                {
+                    return false;
+                }
+                try
+                {
+                    settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.VERSION } };
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    logger.LogError(e.Message);
+                    return false;
+                }
             }
         }
 

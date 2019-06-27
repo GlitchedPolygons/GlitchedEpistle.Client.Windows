@@ -63,6 +63,7 @@
                          Height="23"
                          MaxLength="100"
                          Margin="5,0,0,0"
+                         Text="{Binding Totp}"
                          ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
                          Style="{DynamicResource TextBox}" />
             </StackPanel>
@@ -80,12 +81,8 @@
                         IsEnabled="{Binding CanLeave}"
                         Command="{Binding LeaveCommand}"
                         ToolTip="This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side. 
-                        This action requires you to enter the convo's access password for confirmation."
-                        Content="Leave convo (server-side) and delete local data on this device" />
-                <Button Margin="0,10,0,0"
-                        Command="{Binding DeleteLocallyCommand}"
-                        ToolTip="This action will only delete the convo's data locally on this client device (you will stay a participant of the convo server-side)."
-                        Content="Delete convo on this device only (stay as participant in convo)" />
+                        This action requires 2FA for confirmation."
+                        Content="Leave convo and delete local data on this device" />
             </StackPanel>
         </Expander>
 

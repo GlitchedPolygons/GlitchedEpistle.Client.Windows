@@ -16,6 +16,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.RepositoryPattern;
 
 using Newtonsoft.Json;
 
@@ -32,7 +33,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly ILogger logger;
         private readonly IUserService userService;
         private readonly IConvoService convoService;
-        private readonly IConvoProvider convoProvider;
+        private readonly IRepository<Convo, string> convoProvider;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -102,7 +103,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string pw = string.Empty;
         private string pw2 = string.Empty;
 
-        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IUserService userService, IConvoService convoService, IConvoProvider convoProvider)
+        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IUserService userService, IConvoService convoService, IRepository<Convo, string> convoProvider)
         {
             this.user = user;
             this.logger = logger;
@@ -213,8 +214,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 // Add the created convo to the convo 
                 // provider instance and write it out to disk.
-                convoProvider[id] = convo;
-                convoProvider.Save();
+                await convoProvider.Add(convo);
 
                 // Raise the convo created event application-wide (the main view will subscribe to this to update its list).
                 eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Publish(id);
