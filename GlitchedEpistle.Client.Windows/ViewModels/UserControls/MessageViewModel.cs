@@ -82,6 +82,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
+        private HorizontalAlignment horizontalAlignment;
+        public HorizontalAlignment HorizontalAlignment
+        {
+            get => horizontalAlignment;
+            set => Set(ref horizontalAlignment, value);
+        }
+
         public string FileSize => $"({FileBytes.GetFileSizeString()})";
 
         public BitmapImage Image { get; set; }
