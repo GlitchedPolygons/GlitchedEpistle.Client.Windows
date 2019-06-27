@@ -408,7 +408,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             await PullConvoMetadata();
 
-            var messageBodiesJson = new JObject();
             var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
             var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
 
@@ -425,6 +424,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     encryptedMessagesBag.Add(new Tuple<string, string>(key.Item1, encryptedMessage));
                 }
             });
+
+            var messageBodiesJson = new JObject();
 
             foreach (Tuple<string, string> encryptedMessage in encryptedMessagesBag)
             {
@@ -518,14 +519,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                byte[] file = File.ReadAllBytes(filePath);
+                byte[] fileBytes = File.ReadAllBytes(filePath);
 
-                if (file.LongLength < MAX_FILE_SIZE_BYTES)
+                if (fileBytes.LongLength < MAX_FILE_SIZE_BYTES)
                 {
                     var messageBodyJson = new JObject
                     {
                         ["fileName"] = Path.GetFileName(filePath),
-                        ["fileBase64"] = Convert.ToBase64String(file)
+                        ["fileBase64"] = Convert.ToBase64String(fileBytes)
                     };
 
                     bool success = await SubmitMessage(messageBodyJson);
