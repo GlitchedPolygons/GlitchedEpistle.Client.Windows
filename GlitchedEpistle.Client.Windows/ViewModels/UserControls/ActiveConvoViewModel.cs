@@ -237,11 +237,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 TimestampDateTimeUTC = message.TimestampUTC,
                 Timestamp = message.TimestampUTC.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
                 Text = json["text"]?.Value<string>(),
-                FileName = json["fileName"]?.Value<string>()
+                FileName = json["fileName"]?.Value<string>(),
+                IsOwn = message.SenderId.Equals(user.Id),
             };
 
             string fileBase64 = json["fileBase64"]?.Value<string>();
-            messageViewModel.FileBytes = fileBase64.NullOrEmpty() ? null : Convert.FromBase64String(fileBase64);
+            messageViewModel.FileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
 
             return messageViewModel;
         }
