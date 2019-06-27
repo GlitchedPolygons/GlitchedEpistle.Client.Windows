@@ -78,43 +78,43 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent.html">ChangedConvoMetadataEvent</a></h4>
-      <section><p>This <span class="xref">Prism.Events.PubSubEvent</span> is raised whenever a the user has successfully modified a <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>'s metadata server-side.<p> </p>
+      <section><p>This <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully modified a <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>'s metadata server-side.<p> </p>
 The passed <code>string</code> parameter is the convo id.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ConvoCreationSucceededEvent.html">ConvoCreationSucceededEvent</a></h4>
-      <section><p>This <span class="xref">Prism.Events.PubSubEvent&lt;TPayload&gt;</span> (where <code>TPayload</code> is of type <span class="xref">langword_csharp_string</span>)
+      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;String>"></see> (where <code>TPayload</code> is of type <span class="xref">langword_csharp_string</span>)
 is raised whenever the user has successfully created a new <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent.html">CouponRedeemedEvent</a></h4>
-      <section><p>This parameterless <span class="xref">Prism.Events.PubSubEvent</span> is raised whenever the user has successfully redeemed a coupon code to extend his account.</p>
+      <section><p>This parameterless <see cref="!:PubSubEvent"></see> is raised whenever the user has successfully redeemed a coupon code to extend his account.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.DeletedConvoEvent.html">DeletedConvoEvent</a></h4>
-      <section><p>This <span class="xref">Prism.Events.PubSubEvent</span> is raised whenever a the user has successfully deleted a <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span> server-side.<p> </p>
+      <section><p>This <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully deleted a <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span> server-side.<p> </p>
 The passed <code>string</code> parameter is the deleted convo's id.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.JoinedConvoEvent.html">JoinedConvoEvent</a></h4>
-      <section><p>This <span class="xref">Prism.Events.PubSubEvent&lt;TPayload&gt;</span> (where <code>TPayload</code> is of type <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>)
+      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;TPayload>"></see> (where <code>TPayload</code> is of type <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>)
 is raised whenever the user has submitted the convo credentials form successfully, and has now joined the conversation successfully.<p> </p>
 The subscriber should be adding the convo data to the device in a persistent way (e.g. file IO).</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.LoginSucceededEvent.html">LoginSucceededEvent</a></h4>
-      <section><p>This parameterless <span class="xref">Prism.Events.PubSubEvent</span> is raised whenever a login attempt has succeeded.</p>
+      <section><p>This parameterless <see cref="!:PubSubEvent"></see> is raised whenever a login attempt has succeeded.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.LogoutEvent.html">LogoutEvent</a></h4>
       <section><p>This event is raised whenever the user has logged out.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ResetConfirmedEvent.html">ResetConfirmedEvent</a></h4>
-      <section><p>This parameterless <span class="xref">Prism.Events.PubSubEvent</span> is raised whenever a the user has successfully confirmed the deletion of his application data (user directory).</p>
+      <section><p>This parameterless <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully confirmed the deletion of his application data (user directory).</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationSucceededEvent.html">UserCreationSucceededEvent</a></h4>
-      <section><p>This <span class="xref">Prism.Events.PubSubEvent&lt;TPayload&gt;</span> (where <code>TPayload</code> is of type <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs.UserCreationResponseDto</span>)
+      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;UserCreationResponse>"></see> (where <code>TPayload</code> is of type <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs.UserCreationResponseDto</span>)
 is raised whenever the user has submitted the registration form successfully, and is now awaiting to receive his 2FA TOTP secret + backup codes to show on a QR and unordered list, respectively.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationVerifiedEvent.html">UserCreationVerifiedEvent</a></h4>
       <section><p>This event is raised whenever the user has submitted the registration form successfully, and has verified the procedure by submitting his 2FA code.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UsernameChangedEvent.html">UsernameChangedEvent</a></h4>
-      <section><p>This <span class="xref">Prism.Events.PubSubEvent&lt;TPayload&gt;</span> (where <code>TPayload</code> is of type <span class="xref">langword_csharp_string</span>)
+      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;String>"></see> (where <code>TPayload</code> is of type <span class="xref">langword_csharp_string</span>)
 is raised whenever the username setting has been changed and saved (usually when closing the user settings window).</p>
 </section>
 </article>

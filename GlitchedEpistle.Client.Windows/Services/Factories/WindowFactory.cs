@@ -28,7 +28,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
         /// <returns>The retrieved <see cref="Window" /> instance, ready to be shown (via <see cref="Window.Show" />).</returns>
         public T Create<T>(bool ensureSingleWindow) where T : Window
         {
-            App app = Application.Current as App;
+            var app = Application.Current as App;
             if (app is null)
             {
                 return null;
@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
                 return app.Resolve<T>();
             }
 
-            Type type = typeof(T);
+            var type = typeof(T);
             if (type == typeof(MainView))
             {
                 throw new ArgumentException($"{nameof(App)}::{nameof(Create)}: The provided {nameof(Window)} type parameter is of type {nameof(MainView)}, which is not allowed (since it's the main window, only the creating class instance should have control over it).", nameof(T));
@@ -92,7 +92,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
 
         private void OnWindowClosed(object sender, EventArgs e)
         {
-            Type type = sender.GetType();
+            var type = sender.GetType();
             windows[type] = null;
         }
     }
