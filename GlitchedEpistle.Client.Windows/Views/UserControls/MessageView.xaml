@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Right" Margin="0,5,0,0">
+    <Grid HorizontalAlignment="{Binding HorizontalAlignment}" Margin="0,5,0,0">
 
-        <Rectangle Fill="#356B82" 
+        <Rectangle Fill="{DynamicResource MessageSpeechBubbleColorOwn}"
                    Opacity="0.675"
                    RadiusX="25.00" 
                    RadiusY="25.00" />
