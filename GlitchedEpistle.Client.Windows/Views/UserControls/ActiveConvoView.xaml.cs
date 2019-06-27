@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Collections.Specialized;
-using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 
@@ -28,7 +28,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         {
             TextBox.Focus();
             TextBox.SelectAll();
-
+            
             if (VisualTreeHelper.GetChildrenCount(MessagesListBox) > 0)
             {
                 border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
