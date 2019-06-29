@@ -149,13 +149,15 @@
         <Button Grid.Column="1"
                 Grid.Row="0"
                 Style="{DynamicResource CollapseButton}"
+                Command="{Binding CollapsedSidebarCommand}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Content="&lt;"
                 Width="15"
                 Height="52.5"
                 Name="CollapseButton"
-                Click="CollapseButton_OnClick" />
+                Click="CollapseButton_OnClick">
+            &lt;
+        </Button>
 
         <Canvas Grid.Column="1"
                 Grid.Row="0">
