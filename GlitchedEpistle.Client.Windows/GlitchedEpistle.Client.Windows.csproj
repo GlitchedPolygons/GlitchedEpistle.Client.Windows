@@ -428,6 +428,15 @@
     <Content Include="glitched-epistle-icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\change-pw-icon-black.png" />
+    <Resource Include="Resources\Images\change-pw-icon-selected.png" />
+    <Resource Include="Resources\Images\change-pw-icon-white.png" />
+    <Resource Include="Resources\Images\join-icon-black.png" />
+    <Resource Include="Resources\Images\join-icon-selected.png" />
+    <Resource Include="Resources\Images\join-icon-white.png" />
+    <Resource Include="Resources\Images\logout-icon-black.png" />
+    <Resource Include="Resources\Images\logout-icon-selected.png" />
+    <Resource Include="Resources\Images\logout-icon-white.png" />
     <Resource Include="Resources\Images\plus-icon-black.png" />
     <Resource Include="Resources\Images\plus-icon-selected.png" />
     <Resource Include="Resources\Images\plus-icon-white.png" />
