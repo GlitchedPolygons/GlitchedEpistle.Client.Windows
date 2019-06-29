@@ -209,7 +209,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                    <Border TextBlock.Foreground="AliceBlue"
                             x:Name="Border">
                         <Border.Background>
                             <SolidColorBrush Color="#353535" />
