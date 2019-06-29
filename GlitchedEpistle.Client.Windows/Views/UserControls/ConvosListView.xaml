@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              mc:Ignorable="d">
 
     <ListBox Name="ConvosListBox"
@@ -71,6 +70,15 @@
                         Value="0" />
                 <Setter Property="HorizontalContentAlignment"
                         Value="Stretch" />
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="IsSelected" Value="{Binding Content.IsSelected, Mode=TwoWay, RelativeSource={RelativeSource Self}}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <ContentPresenter/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </ListBox.ItemContainerStyle>
     </ListBox>
