@@ -164,75 +164,81 @@
     <Color x:Key="DisabledControlColor">#888888</Color>
     <Color x:Key="DisabledForegroundColor">#FFBFBFBF</Color>
 
+    <!-- Button Templates -->
+    <ControlTemplate x:Key="DefaultButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="button"
+                Padding="16,6"
+                CornerRadius="16.00"
+                BorderBrush="Black"
+                BorderThickness="0.20"
+                Background="#FF343434">
+            <TextBlock Text="{TemplateBinding Button.Content}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF5798D8" />
+                <Setter TargetName="button" Property="Background" Value="#FF4C646C" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Foreground" Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="button" Property="Background" Value="#699BAD" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF282828" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#FF595959" />
+                <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                <Setter TargetName="button" Property="Background" Value="#FF212121" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="OnlyRightCornersRoundedButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="button"
+                Padding="16,6"
+                CornerRadius="0,16,16,0"
+                BorderBrush="Black"
+                BorderThickness="0.20"
+                Background="#FF343434">
+            <TextBlock Text="{TemplateBinding Button.Content}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF5798D8" />
+                <Setter TargetName="button" Property="Background" Value="#FF4C646C" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Foreground" Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="button" Property="Background" Value="#699BAD" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF282828" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#FF595959" />
+                <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                <Setter TargetName="button" Property="Background" Value="#FF212121" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
     <!-- Default Button -->
-    <Style TargetType="Button">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border TextBlock.Foreground="{TemplateBinding Foreground}"
-                            x:Name="Border">
-                        <Border.Background>
-                            <SolidColorBrush Color="{DynamicResource ControlNormalColor}" />
-                        </Border.Background>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.05" />
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Pressed" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{DynamicResource ControlMouseOverColor}" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{DynamicResource ControlPressedColor}" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{DynamicResource DisabledControlColor}" />
-                                        </ColorAnimationUsingKeyFrames>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="{DynamicResource DisabledForegroundColor}" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter Margin="7"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource ControlNormalForegroundColor}" />
-            </Setter.Value>
-        </Setter>
+    <Style TargetType="{x:Type Button}">
+        <Style.Setters>
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Template" Value="{DynamicResource DefaultButtonTemplate}"/>
+        </Style.Setters>
     </Style>
 
     <!-- Create Convo Button -->
@@ -394,11 +400,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border TextBlock.Foreground="{TemplateBinding Foreground}"
+                    <Border TextBlock.Foreground="AliceBlue"
                             x:Name="Border">
                         <Border.Background>
                             <SolidColorBrush Color="{DynamicResource ControlNormalColor}" />
                         </Border.Background>
+                        <Border.CornerRadius>0,0,9,0</Border.CornerRadius>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>
