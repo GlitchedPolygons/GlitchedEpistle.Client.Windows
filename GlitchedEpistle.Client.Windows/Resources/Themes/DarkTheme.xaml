@@ -5,8 +5,8 @@
     <SolidColorBrush x:Key="WindowBackgroundBrush"
                      Color="#101010" />
 
-    <SolidColorBrush x:Key="ErrorMessageColor" Color="Red"/>
-    <SolidColorBrush x:Key="SuccessMessageColor" Color="Lime"/>
+    <SolidColorBrush x:Key="ErrorMessageColor" Color="Red" />
+    <SolidColorBrush x:Key="SuccessMessageColor" Color="Lime" />
 
     <!-- ScrollBar colors -->
     <SolidColorBrush x:Key="ScrollBarThumbColor"
@@ -18,7 +18,7 @@
 
     <!-- Radio buttons -->
     <Style TargetType="RadioButton">
-        <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
 
     <!-- Background brush for chatroom -->
@@ -63,7 +63,7 @@
     <ImageBrush x:Key="ChangePasswordIconSelected"
                 ImageSource="/Resources/Images/change-pw-icon-selected.png" />
     <ImageBrush x:Key="LogoutIcon"
-                ImageSource="/Resources/Images/logout-icon-white.png"/>
+                ImageSource="/Resources/Images/logout-icon-white.png" />
     <ImageBrush x:Key="LogoutIconSelected"
                 ImageSource="/Resources/Images/logout-icon-selected.png" />
     <ImageBrush x:Key="ScrollToBottomIcon"
@@ -101,8 +101,8 @@
     </Style>
 
     <!-- Message View Speech Bubble Color -->
-    <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#FFA0A0A0"/>
-    <SolidColorBrush x:Key="MessageSpeechBubbleColorOwn" Color="#356B82"/>
+    <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#FFA0A0A0" />
+    <SolidColorBrush x:Key="MessageSpeechBubbleColorOwn" Color="#356B82" />
 
     <!-- TextBox (input field) -->
     <Style x:Key="TextBox"
@@ -155,50 +155,83 @@
 
     <!-- Expandable/collapsible group -->
     <Style x:Key="Expander" TargetType="Expander">
-        <Setter Property="Foreground" Value="AliceBlue"/>
+        <Setter Property="Foreground" Value="AliceBlue" />
     </Style>
+
+    <!-- Button Templates -->
+    <ControlTemplate x:Key="DefaultButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="button"
+                Padding="16,6"
+                CornerRadius="16.00"
+                BorderBrush="Black"
+                BorderThickness="0.20"
+                Background="#FF343434">
+            <TextBlock Text="{TemplateBinding Button.Content}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF5798D8" />
+                <Setter TargetName="button" Property="Background" Value="#FF4C646C" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Foreground" Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="button" Property="Background" Value="#699BAD" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF282828" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#FF595959" />
+                <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                <Setter TargetName="button" Property="Background" Value="#FF212121" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="OnlyRightCornersRoundedButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="button"
+                Padding="16,6"
+                CornerRadius="0,16,16,0"
+                BorderBrush="Black"
+                BorderThickness="0.20"
+                Background="#FF343434">
+            <TextBlock Text="{TemplateBinding Button.Content}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF5798D8" />
+                <Setter TargetName="button" Property="Background" Value="#FF4C646C" />
+                <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Foreground" Value="AliceBlue" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="button" Property="Background" Value="#699BAD" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter TargetName="button" Property="BorderBrush" Value="#FF282828" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="#FF595959" />
+                <Setter TargetName="button" Property="Opacity" Value="0.7" />
+                <Setter TargetName="button" Property="Background" Value="#FF212121" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
     <!-- Default Button -->
     <Style TargetType="{x:Type Button}">
         <Style.Setters>
-            <Setter Property="Height" Value="32"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="button" 
-                                CornerRadius="16.00" 
-                                Padding="16,6" 
-                                BorderBrush="Black" 
-                                BorderThickness="0.20"
-                                Background="#FF343434">
-                            <TextBlock Text="{TemplateBinding Button.Content}"
-                                       HorizontalAlignment="Center" 
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="button" Property="BorderBrush" Value="#FF5798D8" />
-                                <Setter TargetName="button" Property="Background"  Value="#FF4C646C"/>
-                                <Setter Property="Foreground" Value="White" />
-                            </Trigger>
-                            <Trigger Property="IsMouseOver" Value="False">
-                                <Setter Property="Foreground" Value="AliceBlue"></Setter>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="button"  Property="Background" Value="#699BAD"/>
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="button" Property="BorderBrush" Value="#FF282828" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter Property="Foreground" Value="#FF595959" />
-                                <Setter TargetName="button" Property="Opacity" Value="0.7" />
-                                <Setter TargetName="button" Property="Background" Value="#FF212121" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+            <Setter Property="Height" Value="32" />
+            <Setter Property="Template" Value="{DynamicResource DefaultButtonTemplate}"/>
         </Style.Setters>
     </Style>
 
@@ -214,6 +247,7 @@
                         <Border.Background>
                             <SolidColorBrush Color="#353535" />
                         </Border.Background>
+                        <Border.CornerRadius>0,0,9,0</Border.CornerRadius>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>

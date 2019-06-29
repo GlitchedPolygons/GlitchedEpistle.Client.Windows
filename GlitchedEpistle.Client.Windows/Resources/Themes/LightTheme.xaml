@@ -401,6 +401,7 @@
                         <Border.Background>
                             <SolidColorBrush Color="{DynamicResource ControlNormalColor}" />
                         </Border.Background>
+                        <Border.CornerRadius>0,0,9,0</Border.CornerRadius>
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualStateGroup.Transitions>

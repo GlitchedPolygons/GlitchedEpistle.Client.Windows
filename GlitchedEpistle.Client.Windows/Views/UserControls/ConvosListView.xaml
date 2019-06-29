@@ -30,31 +30,32 @@
                         Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
                     <Button.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="{Binding Id}" 
-                                      Focusable="False" 
-                                      IsEnabled="False" 
-                                      IsHitTestVisible="False"/>
-                            <Separator/>
+                            <MenuItem Header="{Binding Id}"
+                                      Focusable="False"
+                                      IsEnabled="False"
+                                      IsHitTestVisible="False" />
+                            <Separator />
                             <MenuItem Header="Open Convo"
                                       Command="{Binding PlacementTarget.Tag.OpenConvoCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      CommandParameter="{Binding}"/>
+                                      CommandParameter="{Binding}" />
                             <MenuItem Header="Edit Convo"
                                       Command="{Binding PlacementTarget.Tag.EditConvoCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      CommandParameter="{Binding}"/>
-                            <MenuItem Header="Copy Convo ID to Clipboard" 
+                                      CommandParameter="{Binding}" />
+                            <MenuItem Header="Copy Convo ID to Clipboard"
                                       Command="{Binding PlacementTarget.Tag.CopyConvoIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
-                                      CommandParameter="{Binding}"/>
+                                      CommandParameter="{Binding}" />
                         </ContextMenu>
                     </Button.ContextMenu>
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsExpired}" Value="true">
-                                    <Setter Property="ToolTip" Value="This convo is expired!"/>
-                                    <Setter Property="ContentStringFormat" Value="{}{0} (expired)"/>
-                                    <Setter Property="Foreground" Value="#FF8A8A8A"/>
+                                    <Setter Property="ToolTip" Value="This convo is expired!" />
+                                    <Setter Property="ContentStringFormat" Value="{}{0} (expired)" />
+                                    <Setter Property="Foreground" Value="#FF8A8A8A" />
                                 </DataTrigger>
                             </Style.Triggers>
+                            <Setter Property="Template" Value="{DynamicResource OnlyRightCornersRoundedButtonTemplate}"/>
                         </Style>
                     </Button.Style>
                 </Button>
