@@ -93,6 +93,12 @@
                            Orientation="Horizontal"
                            HorizontalAlignment="Center">
 
+                    <Button Width="40"
+                            Height="40" 
+                            IsEnabled="{Binding UIEnabled}"
+                            Style="{DynamicResource CreateConvoButton}"
+                            Command="{Binding CreateConvoButtonCommand}"
+                            ToolTip="Create a new conversation." />
                     <Button Content="Create Convo"
                             Padding="6 4 6 4"
                             ToolTip="Create a new conversation."

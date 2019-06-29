@@ -428,6 +428,9 @@
     <Content Include="glitched-epistle-icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\plus-icon-black.png" />
+    <Resource Include="Resources\Images\plus-icon-selected.png" />
+    <Resource Include="Resources\Images\plus-icon-white.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\glitched-polygons-blue-1080p.png" />
