@@ -93,40 +93,37 @@
                            Orientation="Horizontal"
                            HorizontalAlignment="Center">
 
-                    <Button Width="40"
-                            Height="40" 
+                    <Button Width="50"
+                            Height="50" 
+                            Margin="4,0"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource CreateConvoButton}"
                             Command="{Binding CreateConvoButtonCommand}"
                             ToolTip="Create a new conversation." />
-                    <Button Content="Create Convo"
-                            Padding="6 4 6 4"
-                            ToolTip="Create a new conversation."
-                            Command="{Binding CreateConvoButtonCommand}" />
-                    <Rectangle Width="1"
-                               Opacity="0.5"
-                               VerticalAlignment="Stretch"
-                               Stroke="{DynamicResource SeparatorColorBrush}" />
-                    <Button Content="Join Convo"
-                            Padding="6 4 6 4"
-                            ToolTip="Click here to join an existing conversation."
-                            Command="{Binding JoinConvoButtonCommand}" />
-                    <Rectangle Width="1"
-                               Opacity="0.5"
-                               VerticalAlignment="Stretch"
-                               Stroke="{DynamicResource SeparatorColorBrush}" />
-                    <Button Content="Change Password"
-                            Padding="6 4 6 4"
-                            ToolTip="Click here to change the password you use to access Glitched Epistle."
-                            Command="{Binding ChangePasswordButtonCommand}" />
-                    <Rectangle Width="1"
-                               Opacity="0.5"
-                               VerticalAlignment="Stretch"
-                               Stroke="{DynamicResource SeparatorColorBrush}" />
-                    <Button Content="Logout"
-                            Padding="6 4 6 4"
-                            ToolTip="Click here to log out of your Glitched Epistle account."
-                            Command="{Binding LogoutButtonCommand}" />
+
+                    <Button Width="50"
+                            Height="50" 
+                            Margin="4,0"
+                            IsEnabled="{Binding UIEnabled}"
+                            Style="{DynamicResource JoinConvoButton}"
+                            Command="{Binding JoinConvoButtonCommand}"
+                            ToolTip="Click here to join an existing conversation." />
+
+                    <Button Width="50"
+                            Height="50" 
+                            Margin="4,0"
+                            IsEnabled="{Binding UIEnabled}"
+                            Style="{DynamicResource ChangePasswordButton}"
+                            Command="{Binding ChangePasswordButtonCommand}"
+                            ToolTip="Click here to change the password you use to access Glitched Epistle." />
+
+                    <Button Width="50"
+                            Height="50" 
+                            Margin="4,0"
+                            IsEnabled="{Binding UIEnabled}"
+                            Style="{DynamicResource LogoutButton}"
+                            Command="{Binding LogoutButtonCommand}"
+                            ToolTip="Click here to log out of your Glitched Epistle account." />
                 </WrapPanel>
 
             </StackPanel>

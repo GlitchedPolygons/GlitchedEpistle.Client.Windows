@@ -56,6 +56,18 @@
                 ImageSource="/Resources/Images/plus-icon-white.png" />
     <ImageBrush x:Key="PlusIconSelected"
                 ImageSource="/Resources/Images/plus-icon-selected.png" />
+    <ImageBrush x:Key="JoinConvoIcon"
+                ImageSource="/Resources/Images/join-icon-white.png" />
+    <ImageBrush x:Key="JoinConvoIconSelected"
+                ImageSource="/Resources/Images/join-icon-selected.png" />
+    <ImageBrush x:Key="ChangePasswordIcon"
+                ImageSource="/Resources/Images/change-pw-icon-white.png" />
+    <ImageBrush x:Key="ChangePasswordIconSelected"
+                ImageSource="/Resources/Images/change-pw-icon-selected.png" />
+    <ImageBrush x:Key="LogoutIcon"
+                ImageSource="/Resources/Images/logout-icon-white.png"/>
+    <ImageBrush x:Key="LogoutIconSelected"
+                ImageSource="/Resources/Images/logout-icon-selected.png" />
 
     <!-- Grid Splitter -->
     <Style TargetType="GridSplitter">
@@ -254,6 +266,120 @@
                                  Value="True">
                             <Setter Property="Background"
                                     Value="{DynamicResource PlusIconSelected}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Join Convo Button -->
+    <Style x:Key="JoinConvoButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="{DynamicResource JoinConvoIcon}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="True"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="True">
+                            <Setter Property="Opacity"
+                                    Value="1.0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource JoinConvoIconSelected}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Change Pw Button -->
+    <Style x:Key="ChangePasswordButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="{DynamicResource ChangePasswordIcon}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="True"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="True">
+                            <Setter Property="Opacity"
+                                    Value="1.0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource ChangePasswordIconSelected}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Logout Button -->
+    <Style x:Key="LogoutButton"
+           TargetType="Button">
+        <Setter Property="Background"
+                Value="{DynamicResource LogoutIcon}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="True"
+                                          RecognizesAccessKey="True" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Opacity"
+                                    Value="0.3" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="True">
+                            <Setter Property="Opacity"
+                                    Value="1.0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    Value="{DynamicResource LogoutIconSelected}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
