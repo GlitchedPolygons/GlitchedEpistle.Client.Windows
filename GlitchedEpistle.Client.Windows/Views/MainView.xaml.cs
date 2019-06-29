@@ -1,11 +1,15 @@
 ﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+
+using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
@@ -19,9 +23,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         private static readonly SolidColorBrush PROGRESS_BAR_COLOR = new SolidColorBrush(new Color { R = 8, G = 175, B = 226, A = 255 });
         private static readonly SolidColorBrush PROGRESS_BAR_COLOR_HOVER = new SolidColorBrush(new Color { R = 100, G = 200, B = 226, A = 255 });
 
-        public MainView()
+        public MainView(IEventAggregator eventAggregator)
         {
+            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
             InitializeComponent();
+        }
+
+        private void OnJoinedConvo(Convo convo)
+        {
+            CollapseButton_OnClick(null, null);
         }
 
         /// <summary>
@@ -42,15 +52,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         private void CollapseButton_OnClick(object sender, RoutedEventArgs e)
         {
             double width = LeftColumn.ActualWidth;
-            if (width > 0)
+            bool expanded = width > 0;
+            if (expanded)
             {
                 sidebarWidth = width;
             }
 
-            LeftColumn.MinWidth = width > 0 ? 0 : MainViewModel.SIDEBAR_MIN_WIDTH;
-            LeftColumn.Width = new GridLength(width > 0 ? 0 : sidebarWidth);
+            LeftColumn.MinWidth = expanded ? 0 : MainViewModel.SIDEBAR_MIN_WIDTH;
+            LeftColumn.Width = new GridLength(expanded ? 0 : sidebarWidth);
 
-            UpdateCollapseButtonContent(sender as Button);
+            UpdateCollapseButtonContent(CollapseButton);
         }
 
         /// <summary>
