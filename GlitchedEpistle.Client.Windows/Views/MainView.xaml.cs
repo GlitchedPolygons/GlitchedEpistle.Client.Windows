@@ -25,7 +25,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         public MainView(IEventAggregator eventAggregator)
         {
-            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
+            eventAggregator?.GetEvent<JoinedConvoEvent>()?.Subscribe(OnJoinedConvo);
             InitializeComponent();
         }
 
