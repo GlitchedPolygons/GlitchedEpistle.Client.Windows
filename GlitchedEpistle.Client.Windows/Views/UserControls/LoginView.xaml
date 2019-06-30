@@ -29,7 +29,6 @@
                ToolTip="Your user ID." />
 
         <TextBox Name="UserIdTextBox"
-                 Height="23"
                  Margin="5,0,0,0"
                  MinWidth="250"
                  IsReadOnly="True"
@@ -41,7 +40,6 @@
                ToolTip="Your user password." />
 
         <PasswordBox Name="PasswordBox"
-                     Height="23"
                      Margin="5,0,0,0"
                      MinWidth="250"
                      Style="{DynamicResource PasswordBox}"
@@ -58,7 +56,6 @@
                ToolTip="Your user password." />
 
         <TextBox Name="TotpTextBox"
-                 Height="23"
                  Margin="5,0,0,0"
                  MinWidth="250"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"

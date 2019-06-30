@@ -40,7 +40,6 @@
         <Label Content="Backup decryption password (if applicable)" />
 
         <PasswordBox Name="PasswordBox"
-                     Height="23"
                      Style="{DynamicResource PasswordBox}" />
 
         <TextBlock Style="{DynamicResource TextBlock}"

@@ -27,17 +27,13 @@
                    Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
         <Label Content="Convo ID" />
-        <TextBox Height="23"
-                 Margin="5,0,0,0"
-                 Name="ConvoIdTextBox"
+        <TextBox Name="ConvoIdTextBox"
                  ToolTip="The conversation's unique identifier."
                  Text="{Binding ConvoId}"
                  Style="{DynamicResource TextBox}" />
         <Label Content="Convo Password" />
         <PasswordBox Style="{DynamicResource PasswordBox}"
-                     Name="ConvoPasswordBox"
-                     Height="23"
-                     Margin="5,0,0,0" />
+                     Name="ConvoPasswordBox"/>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0,10,0,0">
@@ -46,7 +42,7 @@
                     ToolTip="Cancel joining the convo."
                     Margin="0,0,10,0" />
             <Button Content="Join"
-                    MinWidth="50"
+                    MinWidth="64"
                     ToolTip="Submits the convo join request to the Epistle backend."
                     Command="{Binding JoinCommand}"
                     CommandParameter="{Binding ElementName=ConvoPasswordBox}" />

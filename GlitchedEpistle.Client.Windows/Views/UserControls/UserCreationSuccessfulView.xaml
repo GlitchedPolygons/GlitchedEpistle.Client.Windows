@@ -44,7 +44,6 @@
                  Name="SecretTextBox"
                  Padding="1"
                  Margin="5,0,0,0"
-                 Height="23"
                  IsReadOnly="True"
                  ToolTip="This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you'll need it if you happen to lose your 2FA device."
                  MouseDoubleClick="SecretTextBox_SelectText"
@@ -59,7 +58,6 @@
                ToolTip="Your user password." />
 
         <TextBox Name="TotpTextBox"
-                 Height="23"
                  Margin="5,0,0,0"
                  ToolTip="Your 2-Factor authentication token (from Google Authenticator, Authy or a similar app)"
                  Text="{Binding Totp}"
@@ -70,7 +68,7 @@
                     HorizontalAlignment="Right"
                     Margin="5,15,0,0">
 
-            <Button Width="135"
+            <Button Width="148"
                     Content="Export Backup Codes"
                     Command="{Binding ExportBackupCodesCommand}"
                     ToolTip="Exports your 2FA emergency backup codes to a text file, which you need to keep safe and SECRET at all costs and away from third parties!" />

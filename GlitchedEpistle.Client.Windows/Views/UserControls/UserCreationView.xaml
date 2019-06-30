@@ -30,7 +30,6 @@
                    ToolTip="Your user ID." />
 
             <TextBox Name="UsernameTextBox"
-                     Height="23"
                      Margin="5,0,0,0"
                      MinWidth="250"
                      Style="{DynamicResource TextBox}"
@@ -41,7 +40,6 @@
                    ToolTip="Your user password." />
 
             <PasswordBox Name="PasswordBox1"
-                         Height="23"
                          Margin="5,0,0,0"
                          MinWidth="250"
                          Style="{DynamicResource PasswordBox}"
@@ -58,7 +56,6 @@
                    ToolTip="Type your password again for safety's sake." />
 
             <PasswordBox Name="PasswordBox2"
-                         Height="23"
                          Margin="5,0,0,0"
                          MinWidth="250"
                          ToolTip="Type your password again for safety's sake."
