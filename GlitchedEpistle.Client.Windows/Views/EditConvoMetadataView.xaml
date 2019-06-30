@@ -45,7 +45,6 @@
                        ToolTip="Enter the current convo's password here." />
 
                 <PasswordBox Name="OldPassword"
-                             Height="23"
                              Margin="5,0,0,0"
                              Style="{DynamicResource PasswordBox}">
                     <i:Interaction.Triggers>
@@ -60,7 +59,6 @@
                 <Label Content="2FA TOTP"
                        ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
                 <TextBox Name="TotpTextBox"
-                         Height="23"
                          MaxLength="100"
                          Margin="5,0,0,0"
                          Text="{Binding Totp}"
@@ -99,11 +97,9 @@
                     <StackPanel>
                         <Label Content="Name"
                                ToolTip="Change the convo's title." />
-                        <TextBox Height="23"
-                                 MaxLength="25"
-                                 Margin="5,0,0,0"
-                                 Text="{Binding Name}"
+                        <TextBox MaxLength="25"
                                  ToolTip="The new convo's title."
+                                 Text="{Binding Name}"
                                  Style="{DynamicResource TextBox}" />
 
                         <Label Content="Description"
@@ -112,8 +108,7 @@
                         <TextBox Style="{DynamicResource TextBox}"
                                  AcceptsReturn="True"
                                  MaxLength="100"
-                                 Height="46"
-                                 Margin="5,0,0,0"
+                                 Height="64"
                                  TextWrapping="Wrap"
                                  ToolTip="Describe what this conversation is about."
                                  Text="{Binding Description}" />
@@ -122,7 +117,6 @@
                                ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly." />
 
                         <DatePicker Name="DatePicker"
-                                    Margin="5,0,0,0"
                                     ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly."
                                     DisplayDateStart="{Binding MinExpirationUTC}"
                                     SelectedDate="{Binding ExpirationUTC}"
@@ -227,8 +221,6 @@
                         <Label Content="New Convo Password"
                                ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: unless specifically banned, whoever has this password and your convo's id can join!" />
                         <PasswordBox Name="NewPassword"
-                                     Height="23"
-                                     Margin="5,0,0,0"
                                      Style="{DynamicResource PasswordBox}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PasswordChanged">
@@ -242,8 +234,6 @@
                                ToolTip="Confirm your new convo password by re-entering it here." />
 
                         <PasswordBox Name="NewPassword2"
-                                     Height="23"
-                                     Margin="5,0,0,0"
                                      Style="{DynamicResource PasswordBox}">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PasswordChanged">

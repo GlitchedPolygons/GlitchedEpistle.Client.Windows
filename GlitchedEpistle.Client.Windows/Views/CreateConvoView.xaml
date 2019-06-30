@@ -47,9 +47,7 @@
                ToolTip="Give your convo a meaningful and unique name!" />
 
         <TextBox Name="NameTextBox"
-                 Height="23"
                  MaxLength="25"
-                 Margin="5,0,0,0"
                  Text="{Binding Name}"
                  ToolTip="Give your convo a meaningful and unique name!"
                  Style="{DynamicResource TextBox}" />
@@ -61,8 +59,7 @@
                  AcceptsReturn="True"
                  MaxLength="100"
                  MaxWidth="315"
-                 Height="46"
-                 Margin="5,0,0,0"
+                 Height="64"
                  TextWrapping="Wrap"
                  ToolTip="Describe what this conversation is about."
                  Text="{Binding Description}" />
@@ -71,7 +68,6 @@
                ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly." />
 
         <DatePicker Name="DatePicker"
-                    Margin="5,0,0,0"
                     ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly."
                     DisplayDateStart="{Binding MinExpirationUTC}"
                     SelectedDate="{Binding ExpirationUTC}"
@@ -82,8 +78,6 @@
                ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!" />
 
         <PasswordBox Name="Password"
-                     Height="23"
-                     Margin="5,0,0,0"
                      Style="{DynamicResource PasswordBox}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
@@ -97,8 +91,6 @@
                ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!" />
 
         <PasswordBox Name="Password2"
-                     Height="23"
-                     Margin="5,0,0,0"
                      Style="{DynamicResource PasswordBox}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
@@ -112,9 +104,7 @@
                ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
 
         <TextBox Name="TotpTextBox"
-                 Height="23"
                  MaxLength="100"
-                 Margin="5,0,0,0"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
                  Style="{DynamicResource TextBox}" />
 
