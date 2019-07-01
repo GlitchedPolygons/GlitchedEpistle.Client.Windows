@@ -282,15 +282,10 @@
     <Style TargetType="{x:Type Button}">
         <Setter Property="Height" Value="32" />
         <Setter Property="Padding" Value="16,6" />
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Border.CornerRadius" Value="16"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template" Value="{DynamicResource DefaultButtonTemplate}" />
-    </Style>
-
-    <!-- Collapse Button -->
-    <Style x:Key="CollapseButton" TargetType="{x:Type Button}">
-        <Setter Property="Focusable" Value="False"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="Template" Value="{DynamicResource OnlyBottomRightCornerRoundedButtonTemplate}" />
     </Style>
 
     <!-- Reset Button -->
