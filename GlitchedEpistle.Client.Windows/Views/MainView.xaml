@@ -151,15 +151,22 @@
         <!-- Convos list collapse button -->
         <Button Grid.Column="1"
                 Grid.Row="0"
-                Style="{DynamicResource CollapseButton}"
+                Content="&lt;"
                 Command="{Binding CollapsedSidebarCommand}"
+                Template="{DynamicResource DefaultButtonTemplate}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Width="18"
                 Height="57"
+                Focusable="False"
+                BorderThickness="1.5"
                 Name="CollapseButton"
                 Click="CollapseButton_OnClick">
-            &lt;
+            <Button.Style>
+                <Style>
+                    <Setter Property="Border.CornerRadius" Value="0,0,9,0"/>
+                </Style>
+            </Button.Style>
         </Button>
 
         <Canvas Grid.Column="1"

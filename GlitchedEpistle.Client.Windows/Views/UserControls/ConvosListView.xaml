@@ -23,6 +23,7 @@
             <DataTemplate>
                 <Button Padding="16,6" 
                         Focusable="False"
+                        FocusVisualStyle="{x:Null}"
                         Content="{Binding Name}"
                         ToolTip="{Binding Description}"
                         IsEnabled="{Binding Path=CanJoin}"
@@ -49,6 +50,7 @@
                     </Button.ContextMenu>
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Border.CornerRadius" Value="0,16,16,0"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsExpired}" Value="true">
                                     <Setter Property="ToolTip" Value="This convo is expired!" />
@@ -56,7 +58,6 @@
                                     <Setter Property="Foreground" Value="#FF8A8A8A" />
                                 </DataTrigger>
                             </Style.Triggers>
-                            <Setter Property="Template" Value="{DynamicResource OnlyRightCornersRoundedButtonTemplate}"/>
                         </Style>
                     </Button.Style>
                 </Button>
