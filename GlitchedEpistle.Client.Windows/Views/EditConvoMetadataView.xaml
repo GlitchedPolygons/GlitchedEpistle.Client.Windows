@@ -46,8 +46,7 @@
                        ToolTip="Enter the current convo's password here." />
 
                 <PasswordBox Name="OldPassword"
-                             Margin="5,0,0,0"
-                             >
+                             Margin="5,0,0,0">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PasswordChanged">
                             <i:InvokeCommandAction Command="{Binding OldPasswordChangedCommand}"
@@ -63,8 +62,7 @@
                          MaxLength="100"
                          Margin="5,0,0,0"
                          Text="{Binding Totp}"
-                         ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                          />
+                         ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"/>
             </StackPanel>
         </Expander>
 

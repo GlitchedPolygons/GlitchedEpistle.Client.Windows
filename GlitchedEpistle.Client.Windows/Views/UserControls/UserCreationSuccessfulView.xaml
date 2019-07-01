@@ -63,12 +63,11 @@
                     HorizontalAlignment="Right"
                     Margin="0,15,0,0">
 
-            <Button Width="148"
-                    Content="Export Backup Codes"
+            <Button Content="Export Backup Codes"
                     Command="{Binding ExportBackupCodesCommand}"
                     ToolTip="Exports your 2FA emergency backup codes to a text file, which you need to keep safe and SECRET at all costs and away from third parties!" />
 
-            <Button Width="96"
+            <Button MinWidth="96"
                     Margin="15,0,0,0"
                     Content="Verify"
                     Name="VerifyButton"

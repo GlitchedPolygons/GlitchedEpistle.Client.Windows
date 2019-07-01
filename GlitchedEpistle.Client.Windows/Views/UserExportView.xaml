@@ -10,7 +10,7 @@
         Title="Export User"
         ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" MaxWidth="460">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
             <i:InvokeCommandAction Command="{Binding ClosedCommand}" />
@@ -60,8 +60,10 @@
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Content="Cancel"
-                    Command="{Binding CancelButtonCommand}" />
+                    Command="{Binding CancelButtonCommand}" 
+                    MinWidth="75" />
             <Button Content="Export"
+                    MinWidth="75" 
                     Margin="10,0,0,0"
                     Name="ExportButton"
                     IsEnabled="False"
