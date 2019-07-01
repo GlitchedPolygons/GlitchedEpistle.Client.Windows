@@ -147,6 +147,7 @@
                  HorizontalAlignment="Stretch"
                  HorizontalContentAlignment="Stretch"
                  HorizontalScrollBarVisibility="Disabled"
+                 VerticalContentAlignment="Top"
                  VerticalScrollBarVisibility="Auto"
                  PreviewDragOver="TextBox_OnDragEnter"
                  PreviewDrop="TextBox_OnDrop"
