@@ -43,6 +43,8 @@
         <!-- Left Column -->
         <StackPanel Grid.Row="0"
                     Grid.Column="0"
+                    Focusable="False"
+                    FocusVisualStyle="{x:Null}"
                     IsEnabled="{Binding UIEnabled}"
                     Background="{DynamicResource WindowBackgroundBrush}">
 
@@ -96,6 +98,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource CreateConvoButton}"
                             Command="{Binding CreateConvoButtonCommand}"
@@ -104,6 +108,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource JoinConvoButton}"
                             Command="{Binding JoinConvoButtonCommand}"
@@ -112,6 +118,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource ChangePasswordButton}"
                             Command="{Binding ChangePasswordButtonCommand}"
@@ -120,6 +128,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource LogoutButton}"
                             Command="{Binding LogoutButtonCommand}"
@@ -203,6 +213,8 @@
 
         <!-- Right Column -->
         <ContentControl Content="{Binding MainControl}"
+                        Focusable="False"
+                        FocusVisualStyle="{x:Null}"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch"
