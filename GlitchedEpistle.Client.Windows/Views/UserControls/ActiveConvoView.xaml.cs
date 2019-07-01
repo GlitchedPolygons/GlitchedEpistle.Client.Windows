@@ -61,7 +61,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         private bool AtBottom()
         {
             if (scrollViewer is null) return false;
-            return Math.Abs(scrollViewer.VerticalOffset - scrollViewer.ScrollableHeight) < 0.5d;
+            return Math.Abs(scrollViewer.VerticalOffset - scrollViewer.ScrollableHeight) < 0.75d;
         }
 
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
