@@ -28,21 +28,17 @@
         <Label Content="User ID"
                ToolTip="Your user ID." />
 
-        <TextBox Name="UserIdTextBox"
-                 Margin="5,0,0,0"
-                 MinWidth="250"
+        <TextBox MinWidth="250"
                  IsReadOnly="True"
+                 Name="UserIdTextBox"
                  Text="{Binding UserId}"
-                 Style="{DynamicResource TextBox}"
                  TextChanged="UserIdTextBox_OnTextChanged" />
 
         <Label Content="Password"
                ToolTip="Your user password." />
 
         <PasswordBox Name="PasswordBox"
-                     Margin="5,0,0,0"
                      MinWidth="250"
-                     Style="{DynamicResource PasswordBox}"
                      PasswordChanged="PasswordTextBox_OnTextChanged">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
@@ -55,16 +51,14 @@
         <Label Content="2FA TOTP"
                ToolTip="Your user password." />
 
-        <TextBox Name="TotpTextBox"
-                 Margin="5,0,0,0"
-                 MinWidth="250"
+        <TextBox MinWidth="250"
+                 Name="TotpTextBox"
                  ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                 Style="{DynamicResource TextBox}"
                  TextChanged="TotpTextBox_OnTextChanged" />
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    Margin="5,15,0,0">
+                    Margin="0,15,0,0">
 
             <Button Width="96"
                     Content="Quit"
@@ -72,7 +66,7 @@
                     ToolTip="Cancels the login procedure and thus quits the application." />
 
             <Button Width="96"
-                    Margin="15 0 0 0"
+                    Margin="15,0,0,0"
                     Content="Login"
                     Name="LoginButton"
                     Command="{Binding LoginCommand}"

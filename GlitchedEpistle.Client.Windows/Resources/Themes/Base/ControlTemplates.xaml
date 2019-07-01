@@ -1,0 +1,279 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- TextBox -->
+    <ControlTemplate x:Key="DefaultTextBoxTemplate" TargetType="{x:Type TextBox}">
+        <Border x:Name="TextBoxBorder"
+                CornerRadius="16.00"
+                BorderThickness="2.00"
+                Height="{TemplateBinding Height}"
+                Padding="{TemplateBinding Padding}"
+                BorderBrush="{DynamicResource InputFieldBorderColor}"
+                Background="{DynamicResource InputFieldBackgroundColor}">
+            <ScrollViewer x:Name="PART_ContentHost"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorMouseOver}" />
+                <Setter Property="Background"
+                        TargetName="TextBoxBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorMouseOver}" />
+                <Setter Property="BorderBrush"
+                        TargetName="TextBoxBorder"
+                        Value="{DynamicResource InputFieldBorderColorMouseOver}" />
+            </Trigger>
+
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorFocused}" />
+                <Setter Property="Background"
+                        TargetName="TextBoxBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorFocused}" />
+                <Setter Property="BorderBrush"
+                        TargetName="TextBoxBorder"
+                        Value="{DynamicResource InputFieldBorderColorFocused}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorDisabled}" />
+                <Setter Property="Background"
+                        TargetName="TextBoxBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorDisabled}" />
+                <Setter Property="BorderBrush"
+                        TargetName="TextBoxBorder"
+                        Value="{DynamicResource InputFieldBorderColorDisabled}" />
+                <Setter Property="Opacity"
+                        TargetName="TextBoxBorder"
+                        Value="0.70" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- PasswordBox -->
+    <ControlTemplate x:Key="DefaultPasswordBoxTemplate" TargetType="{x:Type PasswordBox}">
+        <Border x:Name="PasswordBoxBorder" 
+                CornerRadius="16.00"
+                BorderThickness="2.00"
+                Height="{TemplateBinding Height}"
+                Padding="{TemplateBinding Padding}"
+                BorderBrush="{DynamicResource InputFieldBorderColor}"
+                Background="{DynamicResource InputFieldBackgroundColor}">
+            <ScrollViewer x:Name="PART_ContentHost"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorMouseOver}" />
+                <Setter Property="Background"
+                        TargetName="PasswordBoxBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorMouseOver}" />
+                <Setter Property="BorderBrush"
+                        TargetName="PasswordBoxBorder"
+                        Value="{DynamicResource InputFieldBorderColorMouseOver}" />
+            </Trigger>
+
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorFocused}" />
+                <Setter Property="Background"
+                        TargetName="PasswordBoxBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorFocused}" />
+                <Setter Property="BorderBrush"
+                        TargetName="PasswordBoxBorder"
+                        Value="{DynamicResource InputFieldBorderColorFocused}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorDisabled}" />
+                <Setter Property="Background"
+                        TargetName="PasswordBoxBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorDisabled}" />
+                <Setter Property="BorderBrush"
+                        TargetName="PasswordBoxBorder"
+                        Value="{DynamicResource InputFieldBorderColorDisabled}" />
+                <Setter Property="Opacity"
+                        TargetName="PasswordBoxBorder"
+                        Value="0.70" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- DatePicker -->
+    <ControlTemplate x:Key="DefaultDatePickerTemplate" TargetType="{x:Type DatePickerTextBox}">
+        <Border x:Name="DatePickerBorder" 
+                CornerRadius="16.00"
+                BorderThickness="2.00"
+                Height="{TemplateBinding Height}"
+                Padding="{TemplateBinding Padding}"
+                BorderBrush="{DynamicResource InputFieldBorderColor}"
+                Background="{DynamicResource InputFieldBackgroundColor}">
+            <ScrollViewer x:Name="PART_ContentHost" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorMouseOver}" />
+                <Setter Property="Background"
+                        TargetName="DatePickerBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorMouseOver}" />
+                <Setter Property="BorderBrush"
+                        TargetName="DatePickerBorder"
+                        Value="{DynamicResource InputFieldBorderColorMouseOver}" />
+            </Trigger>
+
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorFocused}" />
+                <Setter Property="Background"
+                        TargetName="DatePickerBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorFocused}" />
+                <Setter Property="BorderBrush"
+                        TargetName="DatePickerBorder"
+                        Value="{DynamicResource InputFieldBorderColorFocused}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColorDisabled}" />
+                <Setter Property="Background"
+                        TargetName="DatePickerBorder"
+                        Value="{DynamicResource InputFieldBackgroundColorDisabled}" />
+                <Setter Property="BorderBrush"
+                        TargetName="DatePickerBorder"
+                        Value="{DynamicResource InputFieldBorderColorDisabled}" />
+                <Setter Property="Opacity"
+                        TargetName="DatePickerBorder"
+                        Value="0.70" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Button -->
+    <ControlTemplate x:Key="DefaultButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="ButtonBorder"
+                CornerRadius="16.00"
+                BorderThickness="2.00"
+                Height="{TemplateBinding Height}"
+                Padding="{TemplateBinding Padding}"
+                BorderBrush="{DynamicResource InputFieldBorderColor}"
+                Background="{DynamicResource InputFieldBackgroundColor}">
+            <TextBlock VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Text="{TemplateBinding Button.Content}" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="White" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="Background"
+                        Value="#FF4C646C" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="BorderBrush"
+                        Value="#FF5798D8" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="AliceBlue" />
+            </Trigger>
+
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter TargetName="ButtonBorder"
+                        Property="Background"
+                        Value="#699BAD" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="#FF595959" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="Opacity"
+                        Value="0.70" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="Background"
+                        Value="#FF212121" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="BorderBrush"
+                        Value="#FF292929" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Button (Convos List Entry) -->
+    <ControlTemplate x:Key="OnlyRightCornersRoundedButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="ConvoButtonBorder"
+                Padding="16,6"
+                BorderThickness="0.20"
+                BorderBrush="#FF404040"
+                Background="#FF343434"
+                CornerRadius="0.00,16.00,16.00,0.00">
+            <TextBlock Text="{TemplateBinding Button.Content}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" 
+                     Value="True">
+                <Setter TargetName="ConvoButtonBorder" 
+                        Property="BorderBrush" 
+                        Value="#FF5798D8" />
+
+                <Setter TargetName="ConvoButtonBorder" 
+                        Property="Background" 
+                        Value="#FF4C646C" />
+
+                <Setter Property="Foreground" 
+                        Value="White" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" 
+                     Value="False">
+                <Setter Property="Foreground" 
+                        Value="AliceBlue" />
+            </Trigger>
+
+            <Trigger Property="IsPressed" 
+                     Value="True">
+                <Setter TargetName="ConvoButtonBorder" 
+                        Property="Background" 
+                        Value="#699BAD" />
+            </Trigger>
+
+            <Trigger Property="IsFocused" 
+                     Value="True">
+                <Setter TargetName="ConvoButtonBorder" 
+                        Property="BorderBrush" 
+                        Value="#FF282828" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" 
+                     Value="False">
+                <Setter Property="Foreground" 
+                        Value="#FF595959" />
+
+                <Setter TargetName="ConvoButtonBorder" 
+                        Property="Opacity" 
+                        Value="0.7" />
+
+                <Setter TargetName="ConvoButtonBorder" 
+                        Property="Background" 
+                        Value="#FF212121" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+</ResourceDictionary>
+    

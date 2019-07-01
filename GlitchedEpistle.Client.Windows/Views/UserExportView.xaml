@@ -23,9 +23,9 @@
         <StackPanel Orientation="Horizontal">
             <TextBox Width="370"
                      TextWrapping="Wrap"
-                     UndoLimit="10"
+                     UndoLimit="10" 
+                     Margin="0,0,-28,0"
                      Name="OutputFilePathTextBox"
-                     Style="{DynamicResource TextBox}"
                      TextChanged="OutputFilePathTextBox_OnTextChanged"
                      Text="{Binding OutputFilePath}"
                      IsReadOnly="True" />
@@ -35,15 +35,16 @@
 
         <StackPanel Orientation="Horizontal"
                     Margin="0,15,0,0">
-            <Label Content="Password" />
-            <PasswordBox Style="{DynamicResource PasswordBox}"
-                         MinWidth="125"
+            <Label Content="Password" 
+                   VerticalAlignment="Center"/>
+            <PasswordBox MinWidth="125"
                          Name="PasswordBox"
                          PasswordChanged="PasswordBox_OnPasswordChanged"
                          Margin="0,0,0,0" />
             <Label Content="Retype Password"
-                   Margin="10,0,0,0" />
-            <PasswordBox Style="{DynamicResource PasswordBox}"
+                   Margin="10,0,0,0"
+                   VerticalAlignment="Center" />
+            <PasswordBox 
                          MinWidth="125"
                          PasswordChanged="PasswordBox2_OnPasswordChanged"
                          Name="PasswordBox2" />

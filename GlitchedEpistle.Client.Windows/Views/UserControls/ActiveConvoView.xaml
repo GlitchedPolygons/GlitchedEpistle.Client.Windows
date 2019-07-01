@@ -130,7 +130,7 @@
                      HorizontalContentAlignment="Stretch"
                      HorizontalScrollBarVisibility="Disabled"
                      VerticalScrollBarVisibility="Auto"
-                     Style="{DynamicResource TextBox}"
+                     
                      PreviewDragOver="TextBox_OnDragEnter"
                      PreviewDrop="TextBox_OnDrop">
                 <TextBox.InputBindings>

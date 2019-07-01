@@ -29,11 +29,9 @@
         <Label Content="Convo ID" />
         <TextBox Name="ConvoIdTextBox"
                  ToolTip="The conversation's unique identifier."
-                 Text="{Binding ConvoId}"
-                 Style="{DynamicResource TextBox}" />
+                 Text="{Binding ConvoId}" />
         <Label Content="Convo Password" />
-        <PasswordBox Style="{DynamicResource PasswordBox}"
-                     Name="ConvoPasswordBox"/>
+        <PasswordBox Name="ConvoPasswordBox"/>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
                     Margin="0,10,0,0">
