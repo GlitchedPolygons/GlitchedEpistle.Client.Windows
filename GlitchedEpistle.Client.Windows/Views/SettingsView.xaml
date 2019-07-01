@@ -11,7 +11,8 @@
         Title="Settings"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" 
+        MaxWidth="290">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -21,15 +22,14 @@
 
     <StackPanel Margin="10">
         <Label Content="Username"
-               Padding="0 0 0 5"
+               Padding="5,0,0,5"
                ToolTip="Your display name. Note that by changing this, the messages you sent using the previous username won't update their sender label." />
 
         <TextBox HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 Width="250"
+                 Width="252"
                  MaxLength="25"
                  Name="UsernameTextBox"
-                 Style="{DynamicResource TextBox}"
                  Text="{Binding Username}"
                  TextWrapping="Wrap"
                  MouseDoubleClick="UsernameTextBox_SelectText"
@@ -38,39 +38,39 @@
 
         <Label Content="Extend your Glitched Epistle membership now!"
                Margin="0,8,0,0"
-               Padding="0,0,0,5"
+               Padding="5,0,0,5"
                ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?" />
 
-        <StackPanel Orientation="Horizontal">
-            <TextBox Name="CouponTextBox"
-                     Width="205"
-                     FontSize="10"
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Grid.Column="0" 
                      MaxLength="42"
-                     TextWrapping="Wrap"
+                     Padding="5,0,17,0"
                      TextAlignment="Left"
-                     Style="{DynamicResource TextBox}"
-                     VerticalContentAlignment="Center"
-                     TextChanged="CouponTextBox_OnTextChanged"
+                     Name="CouponTextBox"
                      ToolTip="Enter your Epistle coupon here to extend your subscription." />
-            <Button Margin="-32,0,0,0"
-                    Width="78"
-                    Name="RedeemCouponButton"
+            <Button Grid.Column="1"
+                    Focusable="False"
+                    Margin="-35,0,1,0"
+                    Content="Redeem"
                     HorizontalAlignment="Right"
                     Command="{Binding RedeemButtonCommand}"
-                    CommandParameter="{Binding Text, ElementName=CouponTextBox}">
-                Redeem
-            </Button>
-        </StackPanel>
+                    CommandParameter="{Binding Text, ElementName=CouponTextBox}"/>
+        </Grid>
 
         <Button Content="Export User Account (Backup)"
-                Padding="6 4 6 4"
-                Margin="0,10,0,0"
+                Padding="6,4,6,4"
+                Margin="0,12,0,0"
                 ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
                 Command="{Binding ExportUserButtonCommand}" />
 
         <Label Content="Theme" 
                Margin="0,8,0,0"
-               Padding="0,0,0,5"/>
+               Padding="3,0,0,5"/>
 
         <StackPanel Orientation="Horizontal">
             <RadioButton Name="DarkThemeRadioButton" 
@@ -79,38 +79,30 @@
                          CommandParameter="{Binding ElementName=DarkThemeRadioButton, Path=Content}"/>
             <RadioButton Content="Light polygons" 
                          Name="LightThemeRadioButton" 
-                         Margin="2,0" 
+                         Margin="3,0" 
                          Command="{Binding ChangeThemeCommand}"
                          CommandParameter="{Binding ElementName=LightThemeRadioButton, Path=Content}"/>
             <RadioButton Content="OLED" 
-                         Margin="2,0"
                          Name="OLEDThemeRadioButton" 
                          Command="{Binding ChangeThemeCommand}"
                          CommandParameter="{Binding ElementName=OLEDThemeRadioButton, Path=Content}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0,10,0,0">
+                    Margin="0,10,0,0" HorizontalAlignment="Right">
 
             <Button Width="25"
                     Height="25"
-                    Margin="0,0,65,0"
+                    Margin="0,0,75,0"
                     Style="{DynamicResource TrashButton}"
                     Command="{Binding DeleteButtonCommand}"
                     ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this." />
 
-            <Button HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Width="75"
-                    Content="Cancel"
+            <Button Content="Cancel"
                     Command="{Binding CancelButtonCommand}"
                     ToolTip="Closes the window without saving the changes." />
 
-            <Button HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Width="75"
-                    Margin="10 0 0 0"
+            <Button Margin="10,0,0,0"
                     Content="Revert"
                     Command="{Binding RevertButtonCommand}"
                     ToolTip="Resets all user settings back to their default values." />

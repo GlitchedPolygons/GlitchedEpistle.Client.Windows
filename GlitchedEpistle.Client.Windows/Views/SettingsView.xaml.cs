@@ -30,8 +30,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             // Subscribe to the ICloseable.RequestedClose event
             // to close this view when requested to by the ViewModel.
             this.MakeCloseable();
-
-            RedeemCouponButton.IsEnabled = CouponTextBox.Text.NotNullNotEmpty();
         }
 
         // Select the text inside the username's textbox on click.
@@ -52,14 +50,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             var textBox = sender as TextBox;
             textBox?.SelectAll();
-        }
-
-        private void CouponTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                RedeemCouponButton.IsEnabled = textBox.Text.NotNullNotEmpty();
-            }
         }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿#region
+using System;
 using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
@@ -30,6 +31,7 @@ using Prism.Events;
 
 using Unity;
 using Unity.Lifetime;
+#endregion
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -41,7 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// <summary>
         /// The client version number.
         /// </summary>
-        public const string VERSION = "1.0.7";
+        public const string VERSION = "1.1.0";
 
         /// <summary>
         /// Gets the currently active GUI theme (appearance of the app).
@@ -62,6 +64,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
             var mutex = new Mutex(true, Assembly.GetCallingAssembly().GetName().Name, out bool newInstance);
+
             if (!newInstance)
             {
                 MessageBox.Show("There is already one instance of Glitched Epistle running!");

@@ -5,7 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             MinWidth="250" 
+             MaxWidth="350">
 
     <StackPanel HorizontalAlignment="Center">
 
@@ -30,9 +32,7 @@
                    ToolTip="Your user ID." />
 
             <TextBox Name="UsernameTextBox"
-                     Margin="5,0,0,0"
                      MinWidth="250"
-                     Style="{DynamicResource TextBox}"
                      ToolTip="Your username that will be displayed to other users. This is not the user id! The user id is the unique identifier that's assigned to you after registering, and does not change."
                      Text="{Binding Username}" />
 
@@ -40,9 +40,7 @@
                    ToolTip="Your user password." />
 
             <PasswordBox Name="PasswordBox1"
-                         Margin="5,0,0,0"
                          MinWidth="250"
-                         Style="{DynamicResource PasswordBox}"
                          ToolTip="Your desired login password.">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
@@ -56,10 +54,8 @@
                    ToolTip="Type your password again for safety's sake." />
 
             <PasswordBox Name="PasswordBox2"
-                         Margin="5,0,0,0"
                          MinWidth="250"
-                         ToolTip="Type your password again for safety's sake."
-                         Style="{DynamicResource PasswordBox}">
+                         ToolTip="Type your password again for safety's sake.">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
                         <i:InvokeCommandAction Command="{Binding PasswordChangedCommand2}"
@@ -70,20 +66,20 @@
 
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right"
-                        Margin="5,15,0,0">
+                        Margin="0,15,0,0">
 
-                <Button Width="96"
+                <Button MinWidth="96"
                         Content="Quit"
                         Command="{Binding QuitCommand}"
                         ToolTip="Cancels the registration procedure and quits the application." />
 
-                <Button Width="96"
+                <Button MinWidth="96"
                         Content="Import"
                         Margin="15 0 0 0"
                         Command="{Binding ImportCommand}"
                         ToolTip="Imports an account from a previously exported epistle backup file." />
 
-                <Button Width="96"
+                <Button MinWidth="96"
                         Name="RegisterButton"
                         Margin="15 0 0 0"
                         Content="Register"
