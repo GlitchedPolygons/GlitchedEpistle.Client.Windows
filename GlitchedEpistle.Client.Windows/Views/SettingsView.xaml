@@ -54,6 +54,7 @@
                      Name="CouponTextBox"
                      ToolTip="Enter your Epistle coupon here to extend your subscription." />
             <Button Grid.Column="1"
+                    Focusable="False"
                     Margin="-35,0,1,0"
                     Content="Redeem"
                     HorizontalAlignment="Right"
