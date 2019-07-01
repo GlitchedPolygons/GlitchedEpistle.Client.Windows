@@ -43,6 +43,8 @@
         <!-- Left Column -->
         <StackPanel Grid.Row="0"
                     Grid.Column="0"
+                    Focusable="False"
+                    FocusVisualStyle="{x:Null}"
                     IsEnabled="{Binding UIEnabled}"
                     Background="{DynamicResource WindowBackgroundBrush}">
 
@@ -96,6 +98,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource CreateConvoButton}"
                             Command="{Binding CreateConvoButtonCommand}"
@@ -104,6 +108,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource JoinConvoButton}"
                             Command="{Binding JoinConvoButtonCommand}"
@@ -112,6 +118,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource ChangePasswordButton}"
                             Command="{Binding ChangePasswordButtonCommand}"
@@ -120,6 +128,8 @@
                     <Button Width="50"
                             Height="50" 
                             Margin="4,0"
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource LogoutButton}"
                             Command="{Binding LogoutButtonCommand}"
@@ -151,15 +161,22 @@
         <!-- Convos list collapse button -->
         <Button Grid.Column="1"
                 Grid.Row="0"
-                Style="{DynamicResource CollapseButton}"
+                Content="&lt;"
                 Command="{Binding CollapsedSidebarCommand}"
+                Template="{DynamicResource DefaultButtonTemplate}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Width="18"
                 Height="57"
+                Focusable="False"
+                BorderThickness="1.5"
                 Name="CollapseButton"
                 Click="CollapseButton_OnClick">
-            &lt;
+            <Button.Style>
+                <Style>
+                    <Setter Property="Border.CornerRadius" Value="0,0,9,0"/>
+                </Style>
+            </Button.Style>
         </Button>
 
         <Canvas Grid.Column="1"
@@ -196,6 +213,8 @@
 
         <!-- Right Column -->
         <ContentControl Content="{Binding MainControl}"
+                        Focusable="False"
+                        FocusVisualStyle="{x:Null}"
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch"

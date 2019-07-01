@@ -2,24 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Background brush for all windows -->
-    <SolidColorBrush x:Key="WindowBackgroundBrush"
-                     Color="#101010" />
-
-    <SolidColorBrush x:Key="ErrorMessageColor" Color="Red" />
-    <SolidColorBrush x:Key="SuccessMessageColor" Color="Lime" />
-
-    <!-- ScrollBar colors -->
-    <SolidColorBrush x:Key="ScrollBarThumbColor"
-                     Color="#757575" />
-    <SolidColorBrush x:Key="ScrollBarThumbOnHoverColor"
-                     Color="#77B8C6" />
-    <SolidColorBrush x:Key="ScrollBarThumbOnDragColor"
-                     Color="#FF9ED4E0" />
-
-    <!-- Radio buttons -->
-    <Style TargetType="RadioButton">
-        <Setter Property="Foreground" Value="AliceBlue" />
-    </Style>
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#101010" />
 
     <!-- Background brush for chatroom -->
     <ImageBrush x:Key="ChatroomBackgroundBrush"
@@ -27,893 +10,108 @@
                 TileMode="Tile"
                 Stretch="UniformToFill" />
 
-    <SolidColorBrush x:Key="SeparatorColorBrush"
-                     Color="AliceBlue" />
+    <!-- Error and success messages color -->
+    <SolidColorBrush x:Key="ErrorMessageColor" Color="Red" />
+    <SolidColorBrush x:Key="SuccessMessageColor" Color="Lime" />
 
-    <ImageBrush x:Key="HelpIcon"
-                ImageSource="/Resources/Images/help-icon-white.png" />
-    <ImageBrush x:Key="HelpIconSelected"
-                ImageSource="/Resources/Images/help-icon-selected.png" />
-    <ImageBrush x:Key="ResetIcon"
-                ImageSource="/Resources/Images/reset-icon-white.png" />
-    <ImageBrush x:Key="ResetIconSelected"
-                ImageSource="/Resources/Images/reset-icon-selected.png" />
-    <ImageBrush x:Key="TrashIcon"
-                ImageSource="/Resources/Images/trash-icon-white.png" />
-    <ImageBrush x:Key="TrashIconSelected"
-                ImageSource="/Resources/Images/trash-icon-selected.png" />
-    <ImageBrush x:Key="ClipboardIcon"
-                ImageSource="/Resources/Images/clipboard-icon.png" />
-    <ImageBrush x:Key="ClipboardIconSelected"
-                ImageSource="/Resources/Images/clipboard-icon-selected.png" />
-    <ImageBrush x:Key="SettingsIcon"
-                ImageSource="/Resources/Images/settings-icon-white.png" />
-    <ImageBrush x:Key="SettingsIconSelected"
-                ImageSource="/Resources/Images/settings-icon-selected.png" />
-    <ImageBrush x:Key="PlusIcon"
-                ImageSource="/Resources/Images/plus-icon-white.png" />
-    <ImageBrush x:Key="PlusIconSelected"
-                ImageSource="/Resources/Images/plus-icon-selected.png" />
-    <ImageBrush x:Key="JoinConvoIcon"
-                ImageSource="/Resources/Images/join-icon-white.png" />
-    <ImageBrush x:Key="JoinConvoIconSelected"
-                ImageSource="/Resources/Images/join-icon-selected.png" />
-    <ImageBrush x:Key="ChangePasswordIcon"
-                ImageSource="/Resources/Images/change-pw-icon-white.png" />
-    <ImageBrush x:Key="ChangePasswordIconSelected"
-                ImageSource="/Resources/Images/change-pw-icon-selected.png" />
-    <ImageBrush x:Key="LogoutIcon"
-                ImageSource="/Resources/Images/logout-icon-white.png" />
-    <ImageBrush x:Key="LogoutIconSelected"
-                ImageSource="/Resources/Images/logout-icon-selected.png" />
-    <ImageBrush x:Key="ScrollToBottomIcon"
-                ImageSource="/Resources/Images/scroll-to-bottom-icon-white.png" />
-    <ImageBrush x:Key="ScrollToBottomIconSelected"
-                ImageSource="/Resources/Images/scroll-to-bottom-icon-selected.png" />
+    <!-- Input field caret color -->
+    <SolidColorBrush x:Key="InputFieldCaretColor" Color="White"/>
 
-    <!-- Grid Splitter -->
-    <Style TargetType="GridSplitter">
-        <Setter Property="Background"
-                Value="#262626" />
-    </Style>
+    <!-- Input field background color -->
+    <SolidColorBrush x:Key="InputFieldBackgroundColor" Color="#FF343434"/>
+    <SolidColorBrush x:Key="InputFieldBackgroundColorFocused" Color="#FF343434"/>
+    <SolidColorBrush x:Key="InputFieldBackgroundColorDisabled" Color="#FF212121"/>
+    <SolidColorBrush x:Key="InputFieldBackgroundColorMouseOver" Color="#FF3A3A3A"/>
 
-    <!-- Labels -->
-    <Style TargetType="Label">
-        <Setter Property="Foreground"
-                Value="AliceBlue" />
-    </Style>
+    <!-- Input field foreground color -->
+    <SolidColorBrush x:Key="InputFieldForegroundColor" Color="AliceBlue"/>
+    <SolidColorBrush x:Key="InputFieldForegroundColorFocused" Color="White"/>
+    <SolidColorBrush x:Key="InputFieldForegroundColorDisabled" Color="#FF595959"/>
+    <SolidColorBrush x:Key="InputFieldForegroundColorMouseOver" Color="White"/>
+    
+    <!-- Input field border color -->
+    <SolidColorBrush x:Key="InputFieldBorderColor" Color="#FF404040"/>
+    <SolidColorBrush x:Key="InputFieldBorderColorFocused" Color="#FF57A9D8"/>
+    <SolidColorBrush x:Key="InputFieldBorderColorDisabled" Color="#FF292929"/>
+    <SolidColorBrush x:Key="InputFieldBorderColorMouseOver" Color="#516C80"/>
 
-    <Style x:Key="TextBlock"
-           TargetType="TextBlock">
-        <Setter Property="Foreground"
-                Value="AliceBlue" />
-    </Style>
+    <!-- Button background color -->
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#FF343434"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorFocused" Color="#FF343434"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorDisabled" Color="#FF212121"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorMouseOver" Color="#FF4C646C"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorPressed" Color="#699BAD"/>
 
-    <!-- Message View Text (label) -->
-    <Style x:Key="MessageLabelTextBox"
-           TargetType="TextBox">
-        <Setter Property="Foreground"
-                Value="AliceBlue" />
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="BorderBrush"
-                Value="Transparent" />
-    </Style>
+    <!-- Button foreground color -->
+    <SolidColorBrush x:Key="ButtonForegroundColor" Color="AliceBlue"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorFocused" Color="White"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorDisabled" Color="#FF595959"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorMouseOver" Color="White"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorPressed" Color="White"/>
+
+    <!-- Button border color -->
+    <SolidColorBrush x:Key="ButtonBorderColor" Color="#FF404040"/>
+    <SolidColorBrush x:Key="ButtonBorderColorFocused" Color="#FF57A9D8"/>
+    <SolidColorBrush x:Key="ButtonBorderColorDisabled" Color="#FF292929"/>
+    <SolidColorBrush x:Key="ButtonBorderColorMouseOver" Color="#FF6297B6"/> 
+    <SolidColorBrush x:Key="ButtonBorderColorPressed" Color="#FF5798D8"/>
+
+    <!-- GridSplitter color -->
+    <SolidColorBrush x:Key="GridSplitterColor" Color="#262626" />
+
+    <!-- ScrollBar colors -->
+    <SolidColorBrush x:Key="ScrollBarThumbColor" Color="#757575" />
+    <SolidColorBrush x:Key="ScrollBarThumbOnHoverColor" Color="#77B8C6" />
+    <SolidColorBrush x:Key="ScrollBarThumbOnDragColor" Color="#FF9ED4E0" />
+
+    <!-- Separator wall color -->
+    <SolidColorBrush x:Key="SeparatorColorBrush" Color="AliceBlue" />
 
     <!-- Message View Speech Bubble Color -->
     <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#FFA0A0A0" />
     <SolidColorBrush x:Key="MessageSpeechBubbleColorOwn" Color="#356B82" />
 
-    <!-- TextBox (input field) -->
-    <Style x:Key="TextBox"
-           TargetType="TextBox">
-        <Setter Property="Background"
-                Value="#404040" />
-        <Setter Property="Foreground"
-                Value="AliceBlue" />
-        <Style.Triggers>
-            <Trigger Property="IsEnabled"
-                     Value="False">
-                <Setter Property="Cursor"
-                        Value="No" />
-                <Setter Property="Opacity"
-                        Value="1" />
-                <Setter Property="Background"
-                        Value="#707070" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- PasswordBox (input field) -->
-    <Style x:Key="PasswordBox"
-           TargetType="PasswordBox">
-        <Setter Property="Background"
-                Value="#404040" />
-        <Setter Property="Foreground"
-                Value="AliceBlue" />
-    </Style>
-
-    <!-- Checkboxes -->
-    <Style TargetType="CheckBox">
-        <Setter Property="Foreground"
-                Value="AliceBlue" />
-    </Style>
-
-    <!-- Image Attachment Preview -->
-    <Style x:Key="ImageAttachmentStyle"
-           TargetType="Image">
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver"
-                     Value="true">
-                <Setter Property="Cursor"
-                        Value="Hand" />
-                <Setter Property="Opacity"
-                        Value="0.75" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- Expandable/collapsible group -->
-    <Style x:Key="Expander" TargetType="Expander">
-        <Setter Property="Foreground" Value="AliceBlue" />
-    </Style>
-
-    <!-- Button Templates -->
-    <ControlTemplate x:Key="DefaultButtonTemplate" TargetType="{x:Type Button}">
-        <Border x:Name="button"
-                Padding="16,6"
-                CornerRadius="16.00"
-                BorderBrush="Black"
-                BorderThickness="0.20"
-                Background="#FF343434">
-            <TextBlock Text="{TemplateBinding Button.Content}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="button" Property="BorderBrush" Value="#FF5798D8" />
-                <Setter TargetName="button" Property="Background" Value="#FF4C646C" />
-                <Setter Property="Foreground" Value="White" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="False">
-                <Setter Property="Foreground" Value="AliceBlue" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter TargetName="button" Property="Background" Value="#699BAD" />
-            </Trigger>
-            <Trigger Property="IsFocused" Value="True">
-                <Setter TargetName="button" Property="BorderBrush" Value="#FF282828" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="#FF595959" />
-                <Setter TargetName="button" Property="Opacity" Value="0.7" />
-                <Setter TargetName="button" Property="Background" Value="#FF212121" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <ControlTemplate x:Key="OnlyRightCornersRoundedButtonTemplate" TargetType="{x:Type Button}">
-        <Border x:Name="button"
-                Padding="16,6"
-                CornerRadius="0,16,16,0"
-                BorderBrush="Black"
-                BorderThickness="0.20"
-                Background="#FF343434">
-            <TextBlock Text="{TemplateBinding Button.Content}"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
-        </Border>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="button" Property="BorderBrush" Value="#FF5798D8" />
-                <Setter TargetName="button" Property="Background" Value="#FF4C646C" />
-                <Setter Property="Foreground" Value="White" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="False">
-                <Setter Property="Foreground" Value="AliceBlue" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter TargetName="button" Property="Background" Value="#699BAD" />
-            </Trigger>
-            <Trigger Property="IsFocused" Value="True">
-                <Setter TargetName="button" Property="BorderBrush" Value="#FF282828" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="#FF595959" />
-                <Setter TargetName="button" Property="Opacity" Value="0.7" />
-                <Setter TargetName="button" Property="Background" Value="#FF212121" />
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
-
-    <!-- Default Button -->
-    <Style TargetType="{x:Type Button}">
-        <Style.Setters>
-            <Setter Property="Height" Value="32" />
-            <Setter Property="Template" Value="{DynamicResource DefaultButtonTemplate}"/>
-        </Style.Setters>
-    </Style>
-
-    <!-- Collapse Button -->
-    <Style x:Key="CollapseButton"
-           TargetType="Button"
-           BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border TextBlock.Foreground="AliceBlue"
-                            x:Name="Border">
-                        <Border.Background>
-                            <SolidColorBrush Color="#353535" />
-                        </Border.Background>
-                        <Border.CornerRadius>0,0,9,0</Border.CornerRadius>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.05" />
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Pressed" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#4f6066" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#699bad" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#888888" />
-                                        </ColorAnimationUsingKeyFrames>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#FFBFBFBF" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter Margin="2"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Reset Button -->
-    <Style x:Key="ResetMainWindowButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource ResetIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ResetIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Clipboard Button -->
-    <Style x:Key="CopyToClipboardButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource ClipboardIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ClipboardIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Scroll to bottom Button -->
-    <Style x:Key="ScrollToBottomButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource ScrollToBottomIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ScrollToBottomIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Settings Button -->
-    <Style x:Key="SettingsButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource SettingsIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource SettingsIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Create Convo Button -->
-    <Style x:Key="CreateConvoButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource PlusIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource PlusIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Join Convo Button -->
-    <Style x:Key="JoinConvoButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource JoinConvoIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource JoinConvoIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Change Pw Button -->
-    <Style x:Key="ChangePasswordButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource ChangePasswordIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ChangePasswordIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Logout Button -->
-    <Style x:Key="LogoutButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource LogoutIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource LogoutIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Trash Button -->
-    <Style x:Key="TrashButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource TrashIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource TrashIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Help Button -->
-    <Style x:Key="HelpButton"
-           TargetType="Button">
-        <Setter Property="Background"
-                Value="{DynamicResource HelpIcon}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="0">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          SnapsToDevicePixels="True"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled"
-                                 Value="False">
-                            <Setter Property="Opacity"
-                                    Value="0.3" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="True">
-                            <Setter Property="Opacity"
-                                    Value="1.0" />
-                        </Trigger>
-                        <Trigger Property="IsMouseOver"
-                                 Value="True">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource HelpIconSelected}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Date Picker -->
-    <Style TargetType="DatePicker">
-        <Setter Property="Foreground"
-                Value="AliceBlue" />
-        <Setter Property="Background"
-                Value="#404040" />
-        <Setter Property="BorderBrush"
-                Value="#BFF0F8FF" />
-    </Style>
-
-    <!-- Date Picker TextBox -->
-    <Style TargetType="{x:Type DatePickerTextBox}">
-        <Setter Property="Background"
-                Value="#404040" />
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate x:Name="dptext"
-                                 TargetType="{x:Type DatePickerTextBox}">
-                    <Grid>
-                        <Grid x:Name="WatermarkContent"
-                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Margin="0"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </Grid>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsEnabled"
-                     Value="False">
-                <Setter Property="Background"
-                        Value="Gray" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- Convos ListBox -->
-    <Style x:Key="ConvosListBox"
-           TargetType="{x:Type ListBox}">
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="Background"
-                Value="{DynamicResource WindowBackgroundBrush}" />
-        <Style.Triggers>
-            <Trigger Property="IsEnabled"
-                     Value="False">
-                <Setter Property="Visibility"
-                        Value="Hidden" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- Convos List Entry (Button) -->
-    <Style x:Key="ConvoListBoxEntryButton"
-           TargetType="Button"
-           BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Height"
-                Value="35" />
-        <Setter Property="Width"
-                Value="2000" />
-        <Setter Property="Margin"
-                Value="8,0,0,0" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border CornerRadius="0">
-                        <ContentPresenter HorizontalAlignment="Left"
-                                          VerticalAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- Messages ListBox -->
-    <Style x:Key="MessagesListBox"
-           TargetType="{x:Type ListBox}">
-        <Setter Property="BorderThickness"
-                Value="0" />
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Style.Triggers>
-            <Trigger Property="IsEnabled"
-                     Value="False">
-                <Setter Property="Visibility"
-                        Value="Hidden" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
-    <!-- ScrollBar -->
-    <Style x:Key="ScrollBarTrackThumb"
-           TargetType="{x:Type Thumb}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Grid x:Name="Grid">
-                        <Rectangle HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   Width="Auto"
-                                   Height="Auto"
-                                   Fill="Transparent" />
-                        <Border x:Name="CornerScrollBarRectangle"
-                                CornerRadius="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Width="Auto"
-                                Height="Auto"
-                                Margin="0"
-                                Padding="0"
-                                Background="{TemplateBinding Background}" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Tag"
-                                 Value="Horizontal">
-                            <Setter Property="Width"
-                                    Value="Auto"
-                                    TargetName="CornerScrollBarRectangle" />
-                            <Setter Property="Height"
-                                    Value="6"
-                                    TargetName="CornerScrollBarRectangle" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <Style TargetType="{x:Type ScrollBar}">
-        <Setter Property="Stylus.IsFlicksEnabled"
-                Value="false" />
-        <Setter Property="Foreground"
-                Value="{DynamicResource ScrollBarThumbColor}" />
-        <Setter Property="Background"
-                Value="Transparent" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ScrollBar}">
-                    <Grid x:Name="GridRoot"
-                          Width="4"
-                          Margin="0,0,4,0"
-                          HorizontalAlignment="Right">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="0.00001*" />
-                        </Grid.RowDefinitions>
-                        <Track x:Name="PART_Track"
-                               Grid.Row="0"
-                               IsDirectionReversed="true"
-                               Focusable="false">
-                            <Track.Thumb>
-                                <Thumb x:Name="Thumb"
-                                       Background="{TemplateBinding Foreground}"
-                                       Style="{DynamicResource ScrollBarTrackThumb}" />
-                            </Track.Thumb>
-                            <Track.IncreaseRepeatButton>
-                                <RepeatButton x:Name="PageUp"
-                                              Command="ScrollBar.PageDownCommand"
-                                              Opacity="0"
-                                              Focusable="false" />
-                            </Track.IncreaseRepeatButton>
-                            <Track.DecreaseRepeatButton>
-                                <RepeatButton x:Name="PageDown"
-                                              Command="ScrollBar.PageUpCommand"
-                                              Opacity="0"
-                                              Focusable="false" />
-                            </Track.DecreaseRepeatButton>
-                        </Track>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger SourceName="Thumb"
-                                 Property="IsMouseOver"
-                                 Value="true">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource ButtonSelectBrush}"
-                                    TargetName="Thumb" />
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource ScrollBarThumbOnHoverColor}" />
-                        </Trigger>
-                        <Trigger SourceName="Thumb"
-                                 Property="IsDragging"
-                                 Value="true">
-                            <Setter Property="Background"
-                                    Value="{DynamicResource DarkBrush}"
-                                    TargetName="Thumb" />
-                            <Setter Property="Foreground"
-                                    Value="{DynamicResource ScrollBarThumbOnDragColor}" />
-                        </Trigger>
-                        <Trigger Property="IsEnabled"
-                                 Value="false">
-                            <Setter TargetName="Thumb"
-                                    Property="Opacity"
-                                    Value="0.333" />
-                        </Trigger>
-                        <Trigger Property="Orientation"
-                                 Value="Horizontal">
-                            <Setter TargetName="GridRoot"
-                                    Property="LayoutTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="-90" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter TargetName="PART_Track"
-                                    Property="LayoutTransform">
-                                <Setter.Value>
-                                    <RotateTransform Angle="-90" />
-                                </Setter.Value>
-                            </Setter>
-                            <Setter Property="Width"
-                                    Value="Auto" />
-                            <Setter Property="Height"
-                                    Value="8" />
-                            <Setter Property="Tag"
-                                    Value="Horizontal"
-                                    TargetName="Thumb" />
-                            <Setter Property="Command"
-                                    Value="ScrollBar.PageLeftCommand"
-                                    TargetName="PageDown" />
-                            <Setter Property="Command"
-                                    Value="ScrollBar.PageRightCommand"
-                                    TargetName="PageUp" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <!-- Images -->
+    <ImageBrush x:Key="HelpIcon" 
+                ImageSource="/Resources/Images/help-icon-white.png" />
+    <ImageBrush x:Key="HelpIconSelected" 
+                ImageSource="/Resources/Images/help-icon-selected.png" />
+    <ImageBrush x:Key="ResetIcon" 
+                ImageSource="/Resources/Images/reset-icon-white.png" />
+    <ImageBrush x:Key="ResetIconSelected" 
+                ImageSource="/Resources/Images/reset-icon-selected.png" />
+    <ImageBrush x:Key="TrashIcon" 
+                ImageSource="/Resources/Images/trash-icon-white.png" />
+    <ImageBrush x:Key="TrashIconSelected" 
+                ImageSource="/Resources/Images/trash-icon-selected.png" />
+    <ImageBrush x:Key="ClipboardIcon" 
+                ImageSource="/Resources/Images/clipboard-icon.png" />
+    <ImageBrush x:Key="ClipboardIconSelected" 
+                ImageSource="/Resources/Images/clipboard-icon-selected.png" />
+    <ImageBrush x:Key="SettingsIcon" 
+                ImageSource="/Resources/Images/settings-icon-white.png" />
+    <ImageBrush x:Key="SettingsIconSelected" 
+                ImageSource="/Resources/Images/settings-icon-selected.png" />
+    <ImageBrush x:Key="PlusIcon" 
+                ImageSource="/Resources/Images/plus-icon-white.png" />
+    <ImageBrush x:Key="PlusIconSelected" 
+                ImageSource="/Resources/Images/plus-icon-selected.png" />
+    <ImageBrush x:Key="JoinConvoIcon" 
+                ImageSource="/Resources/Images/join-icon-white.png" />
+    <ImageBrush x:Key="JoinConvoIconSelected" 
+                ImageSource="/Resources/Images/join-icon-selected.png" />
+    <ImageBrush x:Key="ChangePasswordIcon" 
+                ImageSource="/Resources/Images/change-pw-icon-white.png" />
+    <ImageBrush x:Key="ChangePasswordIconSelected" 
+                ImageSource="/Resources/Images/change-pw-icon-selected.png" />
+    <ImageBrush x:Key="LogoutIcon" 
+                ImageSource="/Resources/Images/logout-icon-white.png" />
+    <ImageBrush x:Key="LogoutIconSelected" 
+                ImageSource="/Resources/Images/logout-icon-selected.png" />
+    <ImageBrush x:Key="ScrollToBottomIcon" 
+                ImageSource="/Resources/Images/scroll-to-bottom-icon-white.png" />
+    <ImageBrush x:Key="ScrollToBottomIconSelected" 
+                ImageSource="/Resources/Images/scroll-to-bottom-icon-selected.png" />
 
 </ResourceDictionary>
+    

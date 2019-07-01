@@ -8,7 +8,7 @@
         Background="{DynamicResource WindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Title="Create Convo"
+        Title="Create Convo" MaxWidth="355"
         SizeToContent="WidthAndHeight">
 
     <i:Interaction.Triggers>
@@ -49,18 +49,17 @@
         <TextBox Name="NameTextBox"
                  MaxLength="25"
                  Text="{Binding Name}"
-                 ToolTip="Give your convo a meaningful and unique name!"
-                 Style="{DynamicResource TextBox}" />
+                 ToolTip="Give your convo a meaningful and unique name!" />
 
         <Label Content="Description"
                ToolTip="Describe what this conversation is about." />
 
-        <TextBox Style="{DynamicResource TextBox}"
-                 AcceptsReturn="True"
-                 MaxLength="100"
-                 MaxWidth="315"
+        <TextBox AcceptsReturn="True"
+                 MaxLength="150"
+                 MaxWidth="320"
                  Height="64"
                  TextWrapping="Wrap"
+                 VerticalContentAlignment="Top"
                  ToolTip="Describe what this conversation is about."
                  Text="{Binding Description}" />
 
@@ -77,8 +76,7 @@
         <Label Content="Convo Password"
                ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!" />
 
-        <PasswordBox Name="Password"
-                     Style="{DynamicResource PasswordBox}">
+        <PasswordBox Name="Password">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
                     <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}"
@@ -90,8 +88,7 @@
         <Label Content="Confirm Password"
                ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!" />
 
-        <PasswordBox Name="Password2"
-                     Style="{DynamicResource PasswordBox}">
+        <PasswordBox Name="Password2">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="PasswordChanged">
                     <i:InvokeCommandAction Command="{Binding Password2ChangedCommand}"
@@ -105,8 +102,7 @@
 
         <TextBox Name="TotpTextBox"
                  MaxLength="100"
-                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
-                 Style="{DynamicResource TextBox}" />
+                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
