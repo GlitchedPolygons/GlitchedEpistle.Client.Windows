@@ -37,7 +37,7 @@
                    Foreground="{DynamicResource SuccessMessageColor}"
                    FontSize="14" />
 
-        <Label Content="Backup decryption password (if applicable)" />
+        <Label Content="Backup decryption password (if applicable)" Padding="10,5"/>
 
         <PasswordBox Name="PasswordBox" />
 
@@ -51,11 +51,11 @@
                     HorizontalAlignment="Right">
 
             <Button Content="Cancel"
-                    Width="75"
+                    MinWidth="75"
                     Command="{Binding CancelCommand}" />
 
             <Button Content="Import"
-                    Width="75"
+                    MinWidth="75"
                     Margin="5,0,0,0"
                     Command="{Binding ImportCommand}"
                     CommandParameter="{Binding ElementName=PasswordBox}" />
