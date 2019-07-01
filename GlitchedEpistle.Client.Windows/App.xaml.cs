@@ -43,7 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// <summary>
         /// The client version number.
         /// </summary>
-        public const string VERSION = "1.1.0";
+        public const string VERSION = "1.1.0.1";
 
         /// <summary>
         /// Gets the currently active GUI theme (appearance of the app).
