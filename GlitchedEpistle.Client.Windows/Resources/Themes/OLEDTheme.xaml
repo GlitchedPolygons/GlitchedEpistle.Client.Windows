@@ -169,8 +169,8 @@
         <Border x:Name="button"
                 Padding="16,6"
                 CornerRadius="16.00"
-                BorderBrush="Black"
                 BorderThickness="0.20"
+                BorderBrush="#FF404040"
                 Background="#FF343434">
             <TextBlock Text="{TemplateBinding Button.Content}"
                        HorizontalAlignment="Center"
@@ -203,7 +203,7 @@
         <Border x:Name="button"
                 Padding="16,6"
                 CornerRadius="0,16,16,0"
-                BorderBrush="Black"
+                BorderBrush="#FF404040"
                 BorderThickness="0.20"
                 Background="#FF343434">
             <TextBlock Text="{TemplateBinding Button.Content}"

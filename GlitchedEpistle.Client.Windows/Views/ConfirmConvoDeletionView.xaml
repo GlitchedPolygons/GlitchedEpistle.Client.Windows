@@ -43,8 +43,7 @@
                Content="Your convo can NOT be recovered in any way after this!" />
         <StackPanel Orientation="Horizontal"
                     Margin="0,10,0,0">
-            <TextBox Style="{DynamicResource TextBox}"
-                     Name="TextBox"
+            <TextBox Name="TextBox"
                      MaxLength="7"
                      FontSize="17"
                      MinWidth="150"

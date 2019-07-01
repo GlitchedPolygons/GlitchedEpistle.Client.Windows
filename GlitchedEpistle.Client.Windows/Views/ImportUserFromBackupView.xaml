@@ -39,8 +39,7 @@
 
         <Label Content="Backup decryption password (if applicable)" />
 
-        <PasswordBox Name="PasswordBox"
-                     Style="{DynamicResource PasswordBox}" />
+        <PasswordBox Name="PasswordBox" />
 
         <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
@@ -53,11 +52,11 @@
 
             <Button Content="Cancel"
                     Width="75"
-                    Margin="0,0,10,0"
                     Command="{Binding CancelCommand}" />
 
             <Button Content="Import"
                     Width="75"
+                    Margin="5,0,0,0"
                     Command="{Binding ImportCommand}"
                     CommandParameter="{Binding ElementName=PasswordBox}" />
         </StackPanel>

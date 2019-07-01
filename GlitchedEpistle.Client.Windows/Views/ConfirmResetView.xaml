@@ -40,8 +40,7 @@
                     Margin="0,50,0,0">
             <Label Content="Please confirm the DELETION of your user data." />
             <Label Content="Type DELETE! into the text box below to proceed..." />
-            <TextBox Style="{DynamicResource TextBox}"
-                     TextChanged="TextBox_TextChanged" />
+            <TextBox TextChanged="TextBox_TextChanged" />
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <Button Margin="0,10,0,0"

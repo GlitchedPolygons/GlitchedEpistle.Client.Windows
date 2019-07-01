@@ -29,7 +29,6 @@
                  Width="250"
                  MaxLength="25"
                  Name="UsernameTextBox"
-                 Style="{DynamicResource TextBox}"
                  Text="{Binding Username}"
                  TextWrapping="Wrap"
                  MouseDoubleClick="UsernameTextBox_SelectText"
@@ -43,18 +42,15 @@
 
         <StackPanel Orientation="Horizontal">
             <TextBox Name="CouponTextBox"
-                     Width="205"
+                     Width="208"
                      FontSize="10"
                      MaxLength="42"
                      TextWrapping="Wrap"
                      TextAlignment="Left"
-                     Style="{DynamicResource TextBox}"
                      VerticalContentAlignment="Center"
-                     TextChanged="CouponTextBox_OnTextChanged"
                      ToolTip="Enter your Epistle coupon here to extend your subscription." />
-            <Button Margin="-32,0,0,0"
-                    Width="78"
-                    Name="RedeemCouponButton"
+            <Button Width="78"
+                    Margin="-35,0,0,0"
                     HorizontalAlignment="Right"
                     Command="{Binding RedeemButtonCommand}"
                     CommandParameter="{Binding Text, ElementName=CouponTextBox}">
