@@ -14,7 +14,7 @@
             <RowDefinition Height="150" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MinWidth="200" />
         </Grid.ColumnDefinitions>
 
         <!-- Header -->
@@ -103,123 +103,109 @@
             </ListBox.ItemContainerStyle>
         </ListBox>
 
-        <!-- TextBox + Send Buttons -->
-        <Grid Grid.Row="2"
-              Grid.Column="0"
-              HorizontalAlignment="Stretch">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition Width="0.5" />
-            </Grid.ColumnDefinitions>
-
-            <TextBox Grid.Column="0"
-                     Name="TextBox"
-                     FontSize="14"
-                     MinWidth="200"
-                     AllowDrop="True"
-                     Height="150"
-                     TextWrapping="Wrap"
-                     Text="{Binding Text}"
-                     AcceptsReturn="True"
-                     IsEnabled="{Binding CanSend}"
-                     TextChanged="TextBox_OnTextChanged"
-                     PreviewKeyDown="TextBox_OnKeyDown"
-                     HorizontalAlignment="Stretch"
-                     HorizontalContentAlignment="Stretch"
-                     HorizontalScrollBarVisibility="Disabled"
-                     VerticalScrollBarVisibility="Auto"
-                     
-                     PreviewDragOver="TextBox_OnDragEnter"
-                     PreviewDrop="TextBox_OnDrop">
-                <TextBox.InputBindings>
-                    <KeyBinding Key="Enter"
-                                Command="{Binding SendTextCommand}"
-                                CommandParameter="{Binding ElementName=TextBox}" />
-                    <KeyBinding Key="Enter"
-                                Modifiers="Control"
-                                Command="{Binding SendFileCommand}" />
-                </TextBox.InputBindings>
-            </TextBox>
-
-            <Grid Grid.Column="1"
-                  MinWidth="80">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="1" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="1" />
-                </Grid.RowDefinitions>
-
-                <Rectangle Grid.Row="0"
-                           Opacity="0.65"
-                           HorizontalAlignment="Stretch"
-                           Stroke="{DynamicResource SeparatorColorBrush}" />
-
-                <Button Grid.Row="1" 
-                        Width="30" 
-                        Height="30" 
-                        FontSize="20"
-                        Margin="15,-40"
-                        Style="{DynamicResource ScrollToBottomButton}"
-                        ToolTip="Scroll to the bottom of the chat and check out the newest messages."
-                        VerticalAlignment="Top" 
-                        HorizontalAlignment="Right"
-                        Name="ScrollToBottomButton"
-                        Click="ScrollToBottomButton_OnClick"/>
-
-                <Button Grid.Row="1"
-                        BorderThickness="0"
-                        Content="Send File"
-                        Click="SendTextButton_OnClick"
-                        IsEnabled="{Binding CanSend}"
-                        Command="{Binding SendFileCommand}" />
-
-                <Rectangle Grid.Row="2"
-                           Opacity="0.65"
-                           HorizontalAlignment="Stretch"
-                           Stroke="{DynamicResource SeparatorColorBrush}" />
-
-                <Button Grid.Row="3"
-                        BorderThickness="0"
-                        Content="Send Text"
-                        ToolTip="Click here or press (Enter) to send your text message. (Ctrl + Enter) opens the 'Send file' dialog. (Shift + Enter) inserts a line break."
-                        IsEnabled="{Binding CanSend}"
-                        Click="SendTextButton_OnClick"
-                        Command="{Binding SendTextCommand}"
-                        CommandParameter="{Binding ElementName=TextBox}" />
-
-                <Rectangle Grid.Row="4"
-                           Opacity="0.65"
-                           HorizontalAlignment="Stretch"
-                           Stroke="{DynamicResource SeparatorColorBrush}" />
-            </Grid>
-
-            <Rectangle Grid.Column="2"
-                       Width="0.5"
-                       Opacity="0.65"
-                       VerticalAlignment="Stretch"
-                       Stroke="{DynamicResource SeparatorColorBrush}" />
-        </Grid>
+        <Label Grid.Row="2"
+               Margin="7.5,0,0,7.5"
+               Content="Encrypting..."
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Left"
+               Visibility="{Binding EncryptingVisibility}" />
 
         <!--
         <Label Grid.Row="2"
-               Margin="0,0"
+               Margin="7.5,0,0,38"
                Content="Decrypting..."
-               VerticalAlignment="Top"
-               HorizontalAlignment="Right"
+               VerticalAlignment="Bottom"
+               HorizontalAlignment="Left"
                Visibility="{Binding DecryptingVisibility}" />
         -->
 
-        <Label Grid.Row="2"
-               Margin="0,45,3,0"
-               Content="Encrypting..."
-               VerticalAlignment="Top"
-               HorizontalAlignment="Right"
-               Visibility="{Binding EncryptingVisibility}" />
+        <!-- Scroll-to-bottom Button -->
+        <Button Grid.Row="2" 
+                Width="30" 
+                Height="30" 
+                FontSize="20"
+                Margin="15,-40"
+                Style="{DynamicResource ScrollToBottomButton}"
+                ToolTip="Scroll to the bottom of the chat and check out the newest messages."
+                VerticalAlignment="Top" 
+                HorizontalAlignment="Right"
+                Name="ScrollToBottomButton"
+                Click="ScrollToBottomButton_OnClick"/>
+
+        <!-- TextBox + Send Buttons -->
+        <TextBox Grid.Row="2" 
+                 Height="150"
+                 FontSize="14"
+                 Name="TextBox"
+                 AllowDrop="True"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 Text="{Binding Text}"
+                 IsEnabled="{Binding CanSend}"
+                 TextChanged="TextBox_OnTextChanged"
+                 PreviewKeyDown="TextBox_OnKeyDown"
+                 HorizontalAlignment="Stretch"
+                 HorizontalContentAlignment="Stretch"
+                 HorizontalScrollBarVisibility="Disabled"
+                 VerticalScrollBarVisibility="Auto"
+                 PreviewDragOver="TextBox_OnDragEnter"
+                 PreviewDrop="TextBox_OnDrop"
+                 Template="{DynamicResource DefaultTextBoxTemplate}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter"
+                            Command="{Binding SendTextCommand}"
+                            CommandParameter="{Binding ElementName=TextBox}" />
+                <KeyBinding Key="Enter"
+                            Modifiers="Control"
+                            Command="{Binding SendFileCommand}" />
+            </TextBox.InputBindings>
+        </TextBox>
+
+        <!-- Send File Button -->
+        <Button Grid.Row="2" 
+                Width="85"
+                Height="77"
+                Margin="0,1.75,1.75,0"
+                Focusable="False"
+                Content="Send File"
+                BorderThickness="2"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Right"
+                Click="SendTextButton_OnClick"
+                IsEnabled="{Binding CanSend}"
+                Command="{Binding SendFileCommand}" 
+                Template="{DynamicResource DefaultButtonTemplate}">
+            <Button.Style>
+                <Style>
+                    <Setter Property="Border.CornerRadius" 
+                            Value="0,16,0,0"/>
+                </Style>
+            </Button.Style>
+        </Button>
+
+        <!-- Send Text Button -->
+        <Button Grid.Row="2" 
+                Width="85"
+                Height="75"
+                Margin="0,0,1.75,1.75"
+                Focusable="False"
+                Content="Send Text"
+                BorderThickness="2"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right"
+                ToolTip="Click here or press (Enter) to send your text message. (Ctrl + Enter) opens the 'Send file' dialog. (Shift + Enter) inserts a line break."
+                IsEnabled="{Binding CanSend}"
+                Click="SendTextButton_OnClick"
+                Command="{Binding SendTextCommand}"
+                CommandParameter="{Binding ElementName=TextBox}" 
+                Template="{DynamicResource DefaultButtonTemplate}">
+            <Button.Style>
+                <Style>
+                    <Setter Property="Border.CornerRadius" 
+                            Value="0,0,16,0"/>
+                </Style>
+            </Button.Style>
+        </Button>
     </Grid>
 
     <UserControl.InputBindings>
