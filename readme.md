@@ -15,10 +15,5 @@ git clone https://github.com/GlitchedPolygons/GlitchedEpistle.Client "GlitchedEp
 git clone https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows "GlitchedEpistle.Client.Windows"
 ```
 
-#### Installer project (.MSI)
-If you want to build the .msi installer yourself, make sure you have the [WiX toolset](http://wixtoolset.org/releases/) installed (>3.11).
-
-Then, if after opening the solution in VS you can't build the Setup project due to bad paths, set the `WixUIExtension.dll` project reference to the correct path on your system. Usually, that path defaults to `C:\Program Files (x86)\WiX Toolset v3.11\bin\WixUIExtension.dll`.
-
 ### Contributing
 Just fork & open a PR and I'll take a look at it ASAP :)
