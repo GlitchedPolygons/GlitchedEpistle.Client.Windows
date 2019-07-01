@@ -12,7 +12,7 @@
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize" 
-        MaxWidth="280">
+        MaxWidth="290">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
@@ -48,9 +48,10 @@
             </Grid.ColumnDefinitions>
 
             <TextBox Grid.Column="0" 
-                     Name="CouponTextBox"
                      MaxLength="42"
+                     Padding="5,0,17,0"
                      TextAlignment="Left"
+                     Name="CouponTextBox"
                      ToolTip="Enter your Epistle coupon here to extend your subscription." />
             <Button Grid.Column="1"
                     Margin="-35,0,1,0"
@@ -62,7 +63,7 @@
 
         <Button Content="Export User Account (Backup)"
                 Padding="6,4,6,4"
-                Margin="0,10,0,0"
+                Margin="0,12,0,0"
                 ToolTip="Click here to export your Glitched Epistle user account to a portable file that you can then reimport on a different device."
                 Command="{Binding ExportUserButtonCommand}" />
 

@@ -4,6 +4,12 @@
     <!-- Background brush for all windows -->
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#101010" />
 
+    <!-- Background brush for chatroom -->
+    <ImageBrush x:Key="ChatroomBackgroundBrush"
+                ImageSource="/Resources/Images/glitched-polygons-blue-1440p.png"
+                TileMode="Tile"
+                Stretch="UniformToFill" />
+
     <!-- Error and success messages color -->
     <SolidColorBrush x:Key="ErrorMessageColor" Color="Red" />
     <SolidColorBrush x:Key="SuccessMessageColor" Color="Lime" />
@@ -29,6 +35,27 @@
     <SolidColorBrush x:Key="InputFieldBorderColorDisabled" Color="#FF292929"/>
     <SolidColorBrush x:Key="InputFieldBorderColorMouseOver" Color="#516C80"/>
 
+    <!-- Button background color -->
+    <SolidColorBrush x:Key="ButtonBackgroundColor" Color="#FF343434"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorFocused" Color="#FF343434"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorDisabled" Color="#FF212121"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorMouseOver" Color="#FF4C646C"/>
+    <SolidColorBrush x:Key="ButtonBackgroundColorPressed" Color="#699BAD"/>
+
+    <!-- Button foreground color -->
+    <SolidColorBrush x:Key="ButtonForegroundColor" Color="AliceBlue"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorFocused" Color="White"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorDisabled" Color="#FF595959"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorMouseOver" Color="White"/>
+    <SolidColorBrush x:Key="ButtonForegroundColorPressed" Color="White"/>
+
+    <!-- Button border color -->
+    <SolidColorBrush x:Key="ButtonBorderColor" Color="#FF404040"/>
+    <SolidColorBrush x:Key="ButtonBorderColorFocused" Color="#FF57A9D8"/>
+    <SolidColorBrush x:Key="ButtonBorderColorDisabled" Color="#FF292929"/>
+    <SolidColorBrush x:Key="ButtonBorderColorMouseOver" Color="#FF6297B6"/> 
+    <SolidColorBrush x:Key="ButtonBorderColorPressed" Color="#FF5798D8"/>
+
     <!-- GridSplitter color -->
     <SolidColorBrush x:Key="GridSplitterColor" Color="#262626" />
 
@@ -36,12 +63,6 @@
     <SolidColorBrush x:Key="ScrollBarThumbColor" Color="#757575" />
     <SolidColorBrush x:Key="ScrollBarThumbOnHoverColor" Color="#77B8C6" />
     <SolidColorBrush x:Key="ScrollBarThumbOnDragColor" Color="#FF9ED4E0" />
-
-    <!-- Background brush for chatroom -->
-    <ImageBrush x:Key="ChatroomBackgroundBrush"
-                ImageSource="/Resources/Images/glitched-polygons-blue-1440p.png"
-                TileMode="Tile"
-                Stretch="UniformToFill" />
 
     <!-- Separator wall color -->
     <SolidColorBrush x:Key="SeparatorColorBrush" Color="AliceBlue" />

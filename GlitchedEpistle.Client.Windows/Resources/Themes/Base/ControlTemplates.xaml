@@ -24,6 +24,12 @@
                         Value="{DynamicResource InputFieldBorderColorMouseOver}" />
             </Trigger>
 
+            <Trigger Property="IsMouseOver"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColor}" />
+            </Trigger>
+
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
                 <Setter Property="Foreground"
                         Value="{DynamicResource InputFieldForegroundColorFocused}" />
@@ -72,6 +78,12 @@
                 <Setter Property="BorderBrush"
                         TargetName="PasswordBoxBorder"
                         Value="{DynamicResource InputFieldBorderColorMouseOver}" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColor}" />
             </Trigger>
 
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
@@ -124,6 +136,12 @@
                         Value="{DynamicResource InputFieldBorderColorMouseOver}" />
             </Trigger>
 
+            <Trigger Property="IsMouseOver"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource InputFieldForegroundColor}" />
+            </Trigger>
+
             <Trigger Property="IsKeyboardFocusWithin" Value="True">
                 <Setter Property="Foreground"
                         Value="{DynamicResource InputFieldForegroundColorFocused}" />
@@ -158,8 +176,8 @@
                 BorderThickness="2.00"
                 Height="{TemplateBinding Height}"
                 Padding="{TemplateBinding Padding}"
-                BorderBrush="{DynamicResource InputFieldBorderColor}"
-                Background="{DynamicResource InputFieldBackgroundColor}">
+                BorderBrush="{DynamicResource ButtonBorderColor}"
+                Background="{DynamicResource ButtonBackgroundColor}">
             <TextBlock VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Text="{TemplateBinding Button.Content}" />
@@ -168,46 +186,67 @@
             <Trigger Property="IsMouseOver"
                      Value="True">
                 <Setter Property="Foreground"
-                        Value="White" />
+                        Value="{DynamicResource ButtonForegroundColorMouseOver}" />
 
                 <Setter TargetName="ButtonBorder"
                         Property="Background"
-                        Value="#FF4C646C" />
+                        Value="{DynamicResource ButtonBackgroundColorMouseOver}" />
 
                 <Setter TargetName="ButtonBorder"
                         Property="BorderBrush"
-                        Value="#FF5798D8" />
+                        Value="{DynamicResource ButtonBorderColorMouseOver}" />
             </Trigger>
 
             <Trigger Property="IsMouseOver"
                      Value="False">
                 <Setter Property="Foreground"
-                        Value="AliceBlue" />
+                        Value="{DynamicResource ButtonForegroundColor}" />
             </Trigger>
 
             <Trigger Property="IsPressed"
                      Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorPressed}" />
+
                 <Setter TargetName="ButtonBorder"
                         Property="Background"
-                        Value="#699BAD" />
+                        Value="{DynamicResource ButtonBackgroundColorPressed}" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorPressed}" />
+            </Trigger>
+
+            <Trigger Property="IsFocused"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorFocused}" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorFocused}" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorFocused}" />
             </Trigger>
 
             <Trigger Property="IsEnabled"
                      Value="False">
                 <Setter Property="Foreground"
-                        Value="#FF595959" />
+                        Value="{DynamicResource ButtonForegroundColorDisabled}" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorDisabled}" />
+
+                <Setter TargetName="ButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorDisabled}" />
 
                 <Setter TargetName="ButtonBorder"
                         Property="Opacity"
                         Value="0.70" />
-
-                <Setter TargetName="ButtonBorder"
-                        Property="Background"
-                        Value="#FF212121" />
-
-                <Setter TargetName="ButtonBorder"
-                        Property="BorderBrush"
-                        Value="#FF292929" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -215,62 +254,163 @@
     <!-- Button (Convos List Entry) -->
     <ControlTemplate x:Key="OnlyRightCornersRoundedButtonTemplate" TargetType="{x:Type Button}">
         <Border x:Name="ConvoButtonBorder"
-                Padding="16,6"
-                BorderThickness="0.20"
-                BorderBrush="#FF404040"
-                Background="#FF343434"
-                CornerRadius="0.00,16.00,16.00,0.00">
-            <TextBlock Text="{TemplateBinding Button.Content}"
+                BorderThickness="2.00"
+                CornerRadius="0,16,16,0"
+                Height="{TemplateBinding Height}"
+                Padding="{TemplateBinding Padding}"
+                BorderBrush="{DynamicResource ButtonBorderColor}"
+                Background="{DynamicResource ButtonBackgroundColor}">
+            <TextBlock VerticalAlignment="Center"
                        HorizontalAlignment="Center"
-                       VerticalAlignment="Center" />
+                       Text="{TemplateBinding Button.Content}" />
         </Border>
         <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" 
+            <Trigger Property="IsMouseOver"
                      Value="True">
-                <Setter TargetName="ConvoButtonBorder" 
-                        Property="BorderBrush" 
-                        Value="#FF5798D8" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorMouseOver}" />
 
-                <Setter TargetName="ConvoButtonBorder" 
-                        Property="Background" 
-                        Value="#FF4C646C" />
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorMouseOver}" />
 
-                <Setter Property="Foreground" 
-                        Value="White" />
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorMouseOver}" />
             </Trigger>
 
-            <Trigger Property="IsMouseOver" 
+            <Trigger Property="IsMouseOver"
                      Value="False">
-                <Setter Property="Foreground" 
-                        Value="AliceBlue" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColor}" />
             </Trigger>
 
-            <Trigger Property="IsPressed" 
+            <Trigger Property="IsPressed"
                      Value="True">
-                <Setter TargetName="ConvoButtonBorder" 
-                        Property="Background" 
-                        Value="#699BAD" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorPressed}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorPressed}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorPressed}" />
             </Trigger>
 
-            <Trigger Property="IsFocused" 
+            <Trigger Property="IsFocused"
                      Value="True">
-                <Setter TargetName="ConvoButtonBorder" 
-                        Property="BorderBrush" 
-                        Value="#FF282828" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorFocused}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorFocused}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorFocused}" />
             </Trigger>
 
-            <Trigger Property="IsEnabled" 
+            <Trigger Property="IsEnabled"
                      Value="False">
-                <Setter Property="Foreground" 
-                        Value="#FF595959" />
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorDisabled}" />
 
-                <Setter TargetName="ConvoButtonBorder" 
-                        Property="Opacity" 
-                        Value="0.7" />
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorDisabled}" />
 
-                <Setter TargetName="ConvoButtonBorder" 
-                        Property="Background" 
-                        Value="#FF212121" />
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorDisabled}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Opacity"
+                        Value="0.70" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- Collapse Button -->
+    <ControlTemplate x:Key="OnlyBottomRightCornerRoundedButtonTemplate" TargetType="{x:Type Button}">
+        <Border x:Name="ConvoButtonBorder"
+                BorderThickness="2.00"
+                CornerRadius="0,0,9,0"
+                Height="{TemplateBinding Height}"
+                Padding="{TemplateBinding Padding}"
+                BorderBrush="{DynamicResource ButtonBorderColor}"
+                Background="{DynamicResource ButtonBackgroundColor}">
+            <TextBlock VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Text="{TemplateBinding Button.Content}" />
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorMouseOver}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorMouseOver}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorMouseOver}" />
+            </Trigger>
+
+            <Trigger Property="IsMouseOver"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColor}" />
+            </Trigger>
+
+            <Trigger Property="IsPressed"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorPressed}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorPressed}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorPressed}" />
+            </Trigger>
+
+            <Trigger Property="IsFocused"
+                     Value="True">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorFocused}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorFocused}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorFocused}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled"
+                     Value="False">
+                <Setter Property="Foreground"
+                        Value="{DynamicResource ButtonForegroundColorDisabled}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Background"
+                        Value="{DynamicResource ButtonBackgroundColorDisabled}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="BorderBrush"
+                        Value="{DynamicResource ButtonBorderColorDisabled}" />
+
+                <Setter TargetName="ConvoButtonBorder"
+                        Property="Opacity"
+                        Value="0.70" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
