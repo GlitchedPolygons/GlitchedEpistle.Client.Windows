@@ -21,7 +21,9 @@
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Button Content="{Binding Name}"
+                <Button Padding="16,6" 
+                        Focusable="False"
+                        Content="{Binding Name}"
                         ToolTip="{Binding Description}"
                         IsEnabled="{Binding Path=CanJoin}"
                         Command="{Binding DataContext.OpenConvoCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"

@@ -15,6 +15,7 @@
     <Style TargetType="TextBox">
         <Setter Property="Height" Value="32" />
         <Setter Property="Padding" Value="5,2,5,2" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CaretBrush" Value="{DynamicResource InputFieldCaretColor}" />
         <Setter Property="Foreground" Value="{DynamicResource InputFieldForegroundColor}" />
@@ -25,6 +26,7 @@
     <Style TargetType="PasswordBox">
         <Setter Property="Height" Value="32" />
         <Setter Property="Padding" Value="5,2,5,2" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CaretBrush" Value="{DynamicResource InputFieldCaretColor}" />
         <Setter Property="Foreground" Value="{DynamicResource InputFieldForegroundColor}" />
@@ -33,16 +35,19 @@
 
     <!-- CheckBox -->
     <Style TargetType="CheckBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Foreground" Value="{DynamicResource InputFieldForegroundColor}" />
     </Style>
 
     <!-- RadioButton -->
     <Style TargetType="RadioButton">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Foreground" Value="{DynamicResource InputFieldForegroundColor}" />
     </Style>
 
     <!-- GridSplitter -->
     <Style TargetType="GridSplitter">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="{DynamicResource GridSplitterColor}" />
     </Style>
 
@@ -71,6 +76,7 @@
     <!-- Date Picker -->
     <Style TargetType="DatePicker">
         <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="{DynamicResource InputFieldForegroundColor}" />
     </Style>
@@ -82,6 +88,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="CaretBrush" Value="{DynamicResource InputFieldCaretColor}" />
         <Setter Property="Template" Value="{DynamicResource DefaultDatePickerTemplate}" />
@@ -110,6 +117,7 @@
         <Setter Property="Height" Value="35" />
         <Setter Property="Width" Value="2000" />
         <Setter Property="Margin" Value="8,0,0,0" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -134,44 +142,8 @@
     </Style>
 
     <!-- ScrollBar -->
-    <Style x:Key="ScrollBarTrackThumb"
-           TargetType="{x:Type Thumb}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Grid x:Name="Grid">
-                        <Rectangle HorizontalAlignment="Stretch"
-                                   VerticalAlignment="Stretch"
-                                   Width="Auto"
-                                   Height="Auto"
-                                   Fill="Transparent" />
-                        <Border x:Name="CornerScrollBarRectangle"
-                                CornerRadius="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                Width="Auto"
-                                Height="Auto"
-                                Margin="0"
-                                Padding="0"
-                                Background="{TemplateBinding Background}" />
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="Tag"
-                                 Value="Horizontal">
-                            <Setter Property="Width"
-                                    Value="Auto"
-                                    TargetName="CornerScrollBarRectangle" />
-                            <Setter Property="Height"
-                                    Value="6"
-                                    TargetName="CornerScrollBarRectangle" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Foreground" Value="{DynamicResource ScrollBarThumbColor}" />
         <Setter Property="Background" Value="Transparent" />
@@ -267,80 +239,58 @@
         </Setter>
     </Style>
 
+    <!-- ScrollBar Thumb -->
+    <Style x:Key="ScrollBarTrackThumb"
+           TargetType="{x:Type Thumb}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid x:Name="Grid">
+                        <Rectangle HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch"
+                                   Width="Auto"
+                                   Height="Auto"
+                                   Fill="Transparent" />
+                        <Border x:Name="CornerScrollBarRectangle"
+                                CornerRadius="0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Width="Auto"
+                                Height="Auto"
+                                Margin="0"
+                                Padding="0"
+                                Background="{TemplateBinding Background}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Tag"
+                                 Value="Horizontal">
+                            <Setter Property="Width"
+                                    Value="Auto"
+                                    TargetName="CornerScrollBarRectangle" />
+                            <Setter Property="Height"
+                                    Value="6"
+                                    TargetName="CornerScrollBarRectangle" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- Default Button -->
     <Style TargetType="{x:Type Button}">
         <Setter Property="Height" Value="32" />
         <Setter Property="Padding" Value="16,6" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template" Value="{DynamicResource DefaultButtonTemplate}" />
     </Style>
 
     <!-- Collapse Button -->
-    <Style x:Key="CollapseButton"
-           TargetType="Button"
-           BasedOn="{StaticResource {x:Type Button}}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border TextBlock.Foreground="{DynamicResource InputFieldForegroundColor}"
-                            x:Name="Border">
-                        <Border.Background>
-                            <SolidColorBrush Color="#353535" />
-                        </Border.Background>
-                        <Border.CornerRadius>0,0,9,0</Border.CornerRadius>
-                        <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:0.05" />
-                                    <VisualTransition GeneratedDuration="0"
-                                                      To="Pressed" />
-                                </VisualStateGroup.Transitions>
-                                <VisualState x:Name="Normal" />
-                                <VisualState x:Name="MouseOver">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#4f6066" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Pressed">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#699bad" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                                <VisualState x:Name="Disabled">
-                                    <Storyboard>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#888888" />
-                                        </ColorAnimationUsingKeyFrames>
-                                        <ColorAnimationUsingKeyFrames
-                                            Storyboard.TargetProperty="(TextBlock.Foreground).(SolidColorBrush.Color)"
-                                            Storyboard.TargetName="Border">
-                                            <EasingColorKeyFrame KeyTime="0"
-                                                                 Value="#FFBFBFBF" />
-                                        </ColorAnimationUsingKeyFrames>
-                                    </Storyboard>
-                                </VisualState>
-                            </VisualStateGroup>
-                        </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter Margin="2"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          RecognizesAccessKey="True" />
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style x:Key="CollapseButton" TargetType="{x:Type Button}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template" Value="{DynamicResource OnlyBottomRightCornerRoundedButtonTemplate}" />
     </Style>
 
     <!-- Reset Button -->
