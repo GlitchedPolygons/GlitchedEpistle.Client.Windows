@@ -363,13 +363,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 Parallel.ForEach(retrievedMessages, message =>
                 {
-                    // Add the retrieved messages to the chatroom
-                    // only if it does not contain them yet
-                    // (mistakes are always possible; safe is safe).
-                    if (Messages.All(m => m.Id != message.Id))
-                    {
-                        decryptedMessages.Add(DecryptMessage(message));
-                    }
+                    decryptedMessages.Add(DecryptMessage(message));
                 });
 
                 // Newly pulled messages should be
@@ -379,7 +373,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     DecryptingVisibility = Visibility.Hidden;
-                    Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+
+                    // Add the retrieved messages to the chatroom.
+                    Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
                 });
 
                 return success;
