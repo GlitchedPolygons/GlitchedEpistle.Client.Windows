@@ -44,6 +44,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
         private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(420);
+        private static readonly TimeSpan METADATA_PULL_FREQUENCY = TimeSpan.FromSeconds(30);
 
         // Injections:
         private readonly User user;
@@ -134,6 +135,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
+        private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
         private IMessageRepository messageRepository;
 
@@ -339,7 +341,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             // Pull convo metadata first.
-            await PullConvoMetadata();
+            if (DateTime.UtcNow - lastMetadataPull > METADATA_PULL_FREQUENCY)
+            {
+                await PullConvoMetadata();
+                lastMetadataPull = DateTime.UtcNow;
+            }
 
             // Pull newest messages.
             Message[] retrievedMessages = await convoService.GetConvoMessages(
