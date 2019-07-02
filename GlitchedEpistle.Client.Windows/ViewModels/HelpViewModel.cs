@@ -10,7 +10,7 @@
         #endregion
 
         #region UI Bindings
-        public string VersionNumber => $"Glitched Epistle - Version {App.VERSION}";
+        public string VersionNumber => $"Glitched Epistle - Version {App.Version}";
         #endregion
     }
 }

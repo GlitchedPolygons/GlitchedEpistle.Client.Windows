@@ -16,7 +16,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
     /// <seealso cref="ISettings" />
     public class SettingsJson : ISettings
     {
-        private Dictionary<string, string> settings = new Dictionary<string, string>(16) { { "Version", App.VERSION } };
+        private Dictionary<string, string> settings = new Dictionary<string, string>(16) { { "Version", App.Version } };
 
         /// <summary>
         /// Absolute settings file path.
@@ -44,7 +44,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         {
             lock (settings)
             {
-                settings["Version"] = App.VERSION;
+                settings["Version"] = App.Version;
                 try
                 {
                     File.WriteAllText(FilePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
@@ -72,7 +72,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
                 }
                 try
                 {
-                    settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.VERSION } };
+                    settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.Version } };
                     return true;
                 }
                 catch (Exception e)
