@@ -67,7 +67,7 @@
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Right"
                     RenderTransformOrigin="0.5,0.5"
-                    Name="LoadPreviousMessagesButton">
+                    Name="LoadPreviousMessagesButton" Click="LoadPreviousMessagesButton_Click">
                 <Button.RenderTransform>
                     <ScaleTransform ScaleY="-1.0" ScaleX="1.0"/>
                 </Button.RenderTransform>
