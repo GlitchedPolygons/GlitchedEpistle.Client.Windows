@@ -81,12 +81,19 @@ references:
   fullName.vb: GlitchedPolygons.GlitchedEpistle.Client.Windows.App.Resolve(Of T)()
   nameWithType: App.Resolve<T>()
   nameWithType.vb: App.Resolve(Of T)()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.App.VERSION
-  name: VERSION
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.App.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_App_VERSION
-  commentId: F:GlitchedPolygons.GlitchedEpistle.Client.Windows.App.VERSION
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.App.VERSION
-  nameWithType: App.VERSION
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.App.Version
+  name: Version
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.App.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_App_Version
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.App.Version
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.App.Version
+  nameWithType: App.Version
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.App.Version*
+  name: Version
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.App.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_App_Version_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.App.Version
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.App.Version
+  nameWithType: App.Version
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands
   name: GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands.html
@@ -362,6 +369,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ResetConfirmedEvent
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ResetConfirmedEvent
   nameWithType: ResetConfirmedEvent
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UpdatedUserConvosEvent
+  name: UpdatedUserConvosEvent
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UpdatedUserConvosEvent.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UpdatedUserConvosEvent
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UpdatedUserConvosEvent
+  nameWithType: UpdatedUserConvosEvent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationSucceededEvent
   name: UserCreationSucceededEvent
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationSucceededEvent.html
@@ -1104,15 +1117,15 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel
   nameWithType: EditConvoMetadataViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String},IEventAggregator)
-  name: EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository<Convo, String>, IEventAggregator)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoService_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Services_Users_IUserService_IRepository_GlitchedPolygons_GlitchedEpistle_Client_Models_Convo_System_String__IEventAggregator_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String},IEventAggregator)
-  name.vb: EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository(Of Convo, String), IEventAggregator)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.EditConvoMetadataViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, IRepository<GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String>, IEventAggregator)
-  fullName.vb: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.EditConvoMetadataViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, IRepository(Of GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String), IEventAggregator)
-  nameWithType: EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository<Convo, String>, IEventAggregator)
-  nameWithType.vb: EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository(Of Convo, String), IEventAggregator)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String},IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  name: EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository<Convo, String>, IEventAggregator, IConvoPasswordProvider)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoService_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Services_Users_IUserService_IRepository_GlitchedPolygons_GlitchedEpistle_Client_Models_Convo_System_String__IEventAggregator_GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoPasswordProvider_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String},IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  name.vb: EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository(Of Convo, String), IEventAggregator, IConvoPasswordProvider)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.EditConvoMetadataViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, IRepository<GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String>, IEventAggregator, GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  fullName.vb: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.EditConvoMetadataViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, IRepository(Of GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String), IEventAggregator, GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  nameWithType: EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository<Convo, String>, IEventAggregator, IConvoPasswordProvider)
+  nameWithType.vb: EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IUserService, IRepository(Of Convo, String), IEventAggregator, IConvoPasswordProvider)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor*
   name: EditConvoMetadataViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel__ctor_
@@ -1224,19 +1237,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.DeleteCommand
   nameWithType: EditConvoMetadataViewModel.DeleteCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.DeleteLocallyCommand
-  name: DeleteLocallyCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel_DeleteLocallyCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.DeleteLocallyCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.DeleteLocallyCommand
-  nameWithType: EditConvoMetadataViewModel.DeleteLocallyCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.DeleteLocallyCommand*
-  name: DeleteLocallyCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel_DeleteLocallyCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.DeleteLocallyCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.DeleteLocallyCommand
-  nameWithType: EditConvoMetadataViewModel.DeleteLocallyCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.Description
   name: Description
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel_Description
@@ -1464,6 +1464,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.SuccessMessage
   nameWithType: EditConvoMetadataViewModel.SuccessMessage
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.Totp
+  name: Totp
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel_Totp
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.Totp
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.Totp
+  nameWithType: EditConvoMetadataViewModel.Totp
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.Totp*
+  name: Totp
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel_Totp_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.Totp
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.Totp
+  nameWithType: EditConvoMetadataViewModel.Totp
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.UIEnabled
   name: UIEnabled
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel_UIEnabled
@@ -2315,15 +2328,15 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel
   nameWithType: ActiveConvoViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,IEventAggregator,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography,GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String})
-  name: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository<Convo, String>)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoService_IEventAggregator_IMethodQ_GlitchedPolygons_GlitchedEpistle_Client_Services_Users_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Services_Cryptography_Messages_IMessageCryptography_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_IRepository_GlitchedPolygons_GlitchedEpistle_Client_Models_Convo_System_String__
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,IEventAggregator,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography,GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String})
-  name.vb: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository(Of Convo, String))
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, IEventAggregator, IMethodQ, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography, GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, IRepository<GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String>)
-  fullName.vb: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, IEventAggregator, IMethodQ, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography, GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, IRepository(Of GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String))
-  nameWithType: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository<Convo, String>)
-  nameWithType.vb: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository(Of Convo, String))
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,IEventAggregator,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography,GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String},GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  name: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository<Convo, String>, IConvoPasswordProvider)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoService_IEventAggregator_IMethodQ_GlitchedPolygons_GlitchedEpistle_Client_Services_Users_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Services_Cryptography_Messages_IMessageCryptography_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_IRepository_GlitchedPolygons_GlitchedEpistle_Client_Models_Convo_System_String__GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoPasswordProvider_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,IEventAggregator,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography,GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String},GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  name.vb: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository(Of Convo, String), IConvoPasswordProvider)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, IEventAggregator, IMethodQ, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography, GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, IRepository<GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String>, GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  fullName.vb: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService, IEventAggregator, IMethodQ, GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService, GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography, GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, IRepository(Of GlitchedPolygons.GlitchedEpistle.Client.Models.Convo, System.String), GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)
+  nameWithType: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository<Convo, String>, IConvoPasswordProvider)
+  nameWithType.vb: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository(Of Convo, String), IConvoPasswordProvider)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor*
   name: ActiveConvoViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_
@@ -2422,6 +2435,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Finalize
   nameWithType: ActiveConvoViewModel.Finalize
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.LoadPreviousMessagesCommand
+  name: LoadPreviousMessagesCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_LoadPreviousMessagesCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.LoadPreviousMessagesCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.LoadPreviousMessagesCommand
+  nameWithType: ActiveConvoViewModel.LoadPreviousMessagesCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.LoadPreviousMessagesCommand*
+  name: LoadPreviousMessagesCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_LoadPreviousMessagesCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.LoadPreviousMessagesCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.LoadPreviousMessagesCommand
+  nameWithType: ActiveConvoViewModel.LoadPreviousMessagesCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Messages
   name: Messages
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Messages
@@ -2487,6 +2513,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Pulling
   nameWithType: ActiveConvoViewModel.Pulling
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ScrollToBottomCommand
+  name: ScrollToBottomCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_ScrollToBottomCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ScrollToBottomCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ScrollToBottomCommand
+  nameWithType: ActiveConvoViewModel.ScrollToBottomCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ScrollToBottomCommand*
+  name: ScrollToBottomCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_ScrollToBottomCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ScrollToBottomCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ScrollToBottomCommand
+  nameWithType: ActiveConvoViewModel.ScrollToBottomCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.SendFileCommand
   name: SendFileCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_SendFileCommand
@@ -3033,6 +3072,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ImageVisibility
   nameWithType: MessageViewModel.ImageVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn
+  name: IsOwn
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_IsOwn
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn
+  nameWithType: MessageViewModel.IsOwn
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn*
+  name: IsOwn
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_IsOwn_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn
+  nameWithType: MessageViewModel.IsOwn
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.SenderId
   name: SenderId
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_SenderId
@@ -3985,12 +4037,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView
   nameWithType: MainView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.#ctor
-  name: MainView()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_MainView__ctor
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.#ctor
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.MainView()
-  nameWithType: MainView.MainView()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.#ctor(IEventAggregator)
+  name: MainView(IEventAggregator)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_MainView__ctor_IEventAggregator_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.#ctor(IEventAggregator)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.MainView(IEventAggregator)
+  nameWithType: MainView.MainView(IEventAggregator)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.#ctor*
   name: MainView
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_MainView__ctor_

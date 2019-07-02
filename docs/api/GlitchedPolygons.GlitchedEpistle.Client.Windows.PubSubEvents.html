@@ -79,10 +79,12 @@
   </h3>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent.html">ChangedConvoMetadataEvent</a></h4>
       <section><p>This <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully modified a <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>'s metadata server-side.<p> </p>
-The passed <code>string</code> parameter is the convo id.</p>
+The passed <code>string</code> parameter is the convo id.<p> </p>
+Can also be raised when you're a non-admin participant of a (currently open and active)
+<span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span> and the admin changed the metadata server-side.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ConvoCreationSucceededEvent.html">ConvoCreationSucceededEvent</a></h4>
-      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;String>"></see> (where <code>TPayload</code> is of type <span class="xref">langword_csharp_string</span>)
+      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;String>"></see> (where <code>TPayload</code> is of type <code>string</code>)
 is raised whenever the user has successfully created a new <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent.html">CouponRedeemedEvent</a></h4>
@@ -105,6 +107,10 @@ The subscriber should be adding the convo data to the device in a persistent way
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ResetConfirmedEvent.html">ResetConfirmedEvent</a></h4>
       <section><p>This parameterless <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully confirmed the deletion of his application data (user directory).</p>
+</section>
+      <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UpdatedUserConvosEvent.html">UpdatedUserConvosEvent</a></h4>
+      <section><p>This event is raised whenever the backend has provided one or more convos
+in which the logged in user is involved that were NOT YET on the local device (thus causing the convos list to be updated).</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationSucceededEvent.html">UserCreationSucceededEvent</a></h4>
       <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;UserCreationResponse>"></see> (where <code>TPayload</code> is of type <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs.UserCreationResponseDto</span>)
