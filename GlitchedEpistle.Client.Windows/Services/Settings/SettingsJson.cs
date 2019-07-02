@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
+using System.Collections.Generic;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
@@ -86,7 +86,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         public string this[string key]
         {
             get => settings.TryGetValue(key, out string setting) ? setting : null;
-            set => settings[key] = value;
+            set
+            {
+                lock (settings)
+                settings[key] = value;
+            }
         }
 
         public string this[string key, string defaultValue] => settings.TryGetValue(key, out string setting) ? setting : defaultValue;
