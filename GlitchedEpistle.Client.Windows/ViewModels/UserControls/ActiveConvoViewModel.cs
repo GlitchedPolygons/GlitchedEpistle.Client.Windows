@@ -1,5 +1,5 @@
 ﻿#define PARALLEL_LOAD
-// Comment out the above line to load messages synchronously when opening convos.
+// Comment out the above line to load/decrypt messages synchronously.
 
 using System;
 using System.IO;
