@@ -41,6 +41,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         private const long MAX_FILE_SIZE_BYTES = 20971520;
+        private const int MSG_COLLECTION_SIZE = 50;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
         private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(420);
@@ -150,6 +151,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 CanSend = false;
                 StopAutomaticPulling();
 
+                Messages = new ObservableCollection<MessageViewModel>();
                 messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
 
                 activeConvo = value;
@@ -159,6 +161,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 // locally on the device and load them into the view.
                 // Then, resume the user's ability to send messages once done.
                 LoadLocalMessages();
+
                 CanSend = true;
             }
         }
@@ -203,11 +206,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             StopAutomaticPulling();
             Pulling = true;
+
             Task.Run(async () =>
             {
                 while (Pulling)
                 {
-                    await PullNewestMessages();
+                    if (await PullNewestMessages())
+                    {
+                        int messageCount = Messages.Count;
+                        if (messageCount > MSG_COLLECTION_SIZE * 2)
+                        {
+                            lock (Messages)
+                            {
+                                Messages = new ObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
+                            }
+                        }
+                    }
+
                     await Task.Delay(MSG_PULL_FREQUENCY);
                 }
             });
@@ -260,10 +275,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
+                var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE);
                 var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
 #if PARALLEL_LOAD
-                Parallel.ForEach(await messageRepository.GetAll(), message =>
+                Parallel.ForEach(encryptedMessages, message =>
                 {
                     try
                     {
@@ -276,7 +292,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
                 });
 #else
-                foreach (var message in await messageRepository.GetAll())
+                foreach (var message in encryptedMessages)
                 {
                     try
                     {
@@ -291,7 +307,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
-                    Messages = new ObservableCollection<MessageViewModel>(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                    Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
                     DecryptingVisibility = Visibility.Hidden;
                     StartAutomaticPulling();
                 });
@@ -364,13 +380,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
+#if PARALLEL_LOAD
                 Parallel.ForEach(retrievedMessages, message =>
                 {
-                    decryptedMessages.Add(DecryptMessage(message));
+                    var decryptedMessage = DecryptMessage(message);
+                    decryptedMessages.Add(decryptedMessage);
                 });
+#else
+                foreach (var message in retrievedMessages)
+                {
+                    var decryptedMessage = DecryptMessage(message);
+                    decryptedMessages.Add(decryptedMessage);
+                }
+#endif
 
-                // Newly pulled messages should be
-                // written out to a file on disk.
+                // Newly pulled messages should be added to the local message db.
                 bool success = await messageRepository.AddRange(retrievedMessages);
 
                 Application.Current?.Dispatcher?.Invoke(() =>
@@ -378,7 +402,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     DecryptingVisibility = Visibility.Hidden;
 
                     // Add the retrieved messages to the chatroom.
-                    Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                    Messages.AddRange(decryptedMessages.OrderBy(m => m?.TimestampDateTimeUTC).ToArray());
                 });
 
                 return success;
