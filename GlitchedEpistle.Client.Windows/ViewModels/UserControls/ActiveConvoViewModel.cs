@@ -64,6 +64,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ICommand SendTextCommand { get; }
         public ICommand SendFileCommand { get; }
         public ICommand PressedEscapeCommand { get; }
+        public ICommand LoadPreviousMessagesCommand { get; }
         public ICommand CopyConvoIdToClipboardCommand { get; }
         #endregion
 
@@ -184,6 +185,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             PressedEscapeCommand = new DelegateCommand(OnPressedEscape);
+            LoadPreviousMessagesCommand = new DelegateCommand(OnClickedLoadPreviousMessages);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
@@ -574,6 +576,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     });
                 }
             });
+        }
+
+        private void OnClickedLoadPreviousMessages(object commandParam)
+        {
+            // TODO: load previous messages here
+            throw new NotImplementedException();
         }
 
         private void OnClickedCopyConvoIdToClipboard(object commandParam)
