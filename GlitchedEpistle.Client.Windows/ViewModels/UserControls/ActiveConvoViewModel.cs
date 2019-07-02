@@ -295,7 +295,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
                     DecryptingVisibility = Visibility.Hidden;
-                    Messages.AddRange(decryptedMessages.Where(m1 => Messages.All(m2 => m2.Id != m1.Id)).OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                    Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
                     StartAutomaticPulling();
                 });
             });
