@@ -412,7 +412,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
-                    Messages.AddRange(decryptedMessages.OrderBy(m => m?.TimestampDateTimeUTC));
+                    lock (Messages)
+                    {
+                        Messages.AddRange(decryptedMessages.OrderBy(m => m?.TimestampDateTimeUTC));
+                    }
                     ToggleDecryptingLabelVis(false);
                 });
 
