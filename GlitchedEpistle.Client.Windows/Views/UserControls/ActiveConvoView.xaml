@@ -83,6 +83,7 @@
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Right"
                     Name="ScrollToBottomButton"
+                    Command="{Binding ScrollToBottomCommand}"
                     Click="ScrollToBottomButton_OnClick"/>
 
         </StackPanel>

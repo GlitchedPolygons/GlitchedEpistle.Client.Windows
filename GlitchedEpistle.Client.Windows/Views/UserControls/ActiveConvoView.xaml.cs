@@ -16,6 +16,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
     {
         private Border border;
         private ScrollViewer scrollViewer;
+        private MessageViewModel lastItem;
+        private bool loadingPrevMsgs = false;
 
         public ActiveConvoView()
         {
@@ -51,6 +53,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             {
                 scrollViewer?.ScrollToBottom();
             }
+            else
+            {
+                if (loadingPrevMsgs)
+                {
+                    loadingPrevMsgs = false;
+                    MessagesListBox.ScrollIntoView(lastItem);
+                }
+            }
         }
 
         private void ScrollToBottomButton_OnClick(object sender, RoutedEventArgs e)
@@ -60,11 +70,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void LoadPreviousMessagesButton_Click(object sender, RoutedEventArgs e)
         {
-            //if (MessagesListBox.Items.GetItemAt(0) is MessageViewModel lastItem)
-            //{
-                //MessagesListBox.ScrollIntoView(MessagesListBox.Items[MessagesListBox.Items.Count-ActiveConvoViewModel.MSG_COLLECTION_SIZE]);
-                //MessagesListBox.ScrollIntoView(lastItem);
-            //}
+            loadingPrevMsgs = true;
+            lastItem = MessagesListBox?.Items?[0] as MessageViewModel;
         }
 
         private bool AtBottom()
@@ -130,11 +137,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             {
                 scrollViewer?.ScrollToBottom();
             }
-        }
-
-        private void SendTextButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            scrollViewer?.ScrollToBottom();
         }
     }
 }
