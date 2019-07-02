@@ -407,12 +407,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
-            EncryptingVisibility = Visibility.Visible;
-
             await PullConvoMetadata();
+            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = Visibility.Visible);
 
-            var messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
             var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
+            string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
 
             // Get the keys of all convo participants here.
             List<Tuple<string, string>> keys = await userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
@@ -435,7 +434,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
             }
 
-            EncryptingVisibility = Visibility.Hidden;
+            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = Visibility.Hidden);
 
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody == null)
