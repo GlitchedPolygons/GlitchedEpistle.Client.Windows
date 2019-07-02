@@ -16,6 +16,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
     {
         private Border border;
         private ScrollViewer scrollViewer;
+        private MessageViewModel lastItem;
+        private bool loadingPrevMsgs = false;
 
         public ActiveConvoView()
         {
@@ -51,11 +53,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             {
                 scrollViewer?.ScrollToBottom();
             }
+            else
+            {
+                if (loadingPrevMsgs)
+                {
+                    loadingPrevMsgs = false;
+                    MessagesListBox.ScrollIntoView(lastItem);
+                }
+            }
         }
 
         private void ScrollToBottomButton_OnClick(object sender, RoutedEventArgs e)
         {
             scrollViewer?.ScrollToBottom();
+        }
+
+        private void LoadPreviousMessagesButton_Click(object sender, RoutedEventArgs e)
+        {
+            loadingPrevMsgs = true;
+            lastItem = MessagesListBox?.Items?[0] as MessageViewModel;
         }
 
         private bool AtBottom()
@@ -64,9 +80,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             return Math.Abs(scrollViewer.VerticalOffset - scrollViewer.ScrollableHeight) < 0.75d;
         }
 
+        private bool AtTop()
+        {
+            if (scrollViewer is null) return false;
+            return Math.Abs(scrollViewer.VerticalOffset) < 0.01d;
+        }
+
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             ScrollToBottomButton.Visibility = AtBottom() ? Visibility.Hidden : Visibility.Visible;
+            LoadPreviousMessagesButton.Visibility = AtTop() ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void TextBox_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -114,11 +137,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             {
                 scrollViewer?.ScrollToBottom();
             }
-        }
-
-        private void SendTextButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            scrollViewer?.ScrollToBottom();
         }
     }
 }

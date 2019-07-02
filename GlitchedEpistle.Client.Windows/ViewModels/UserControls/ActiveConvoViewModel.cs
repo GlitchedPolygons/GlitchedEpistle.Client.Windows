@@ -1,5 +1,5 @@
 ﻿#define PARALLEL_LOAD
-// Comment out the above line to load messages synchronously when opening convos.
+// Comment out the above line to load/decrypt messages synchronously.
 
 using System;
 using System.IO;
@@ -41,6 +41,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         private const long MAX_FILE_SIZE_BYTES = 20971520;
+        private const int MSG_COLLECTION_SIZE = 25;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
         private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(420);
@@ -63,6 +64,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ICommand SendTextCommand { get; }
         public ICommand SendFileCommand { get; }
         public ICommand PressedEscapeCommand { get; }
+        public ICommand ScrollToBottomCommand { get; }
+        public ICommand LoadPreviousMessagesCommand { get; }
         public ICommand CopyConvoIdToClipboardCommand { get; }
         #endregion
 
@@ -101,7 +104,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         value += " (EXPIRES SOON)";
                     }
                 }
-                
+
                 Set(ref name, value);
             }
         }
@@ -135,6 +138,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
+        private volatile int pageIndex;
         private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
         private IMessageRepository messageRepository;
@@ -150,16 +154,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 CanSend = false;
                 StopAutomaticPulling();
 
+                Messages = new ObservableCollection<MessageViewModel>();
                 messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
 
                 activeConvo = value;
                 Name = value.Name;
 
+                ToggleDecryptingLabelVis(true);
+
                 // Decrypt the messages that are already stored 
                 // locally on the device and load them into the view.
                 // Then, resume the user's ability to send messages once done.
-                LoadLocalMessages();
-                CanSend = true;
+                Task.Run(async () =>
+                {
+                    var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE);
+                    var decryptedMessages = DecryptMessages(encryptedMessages);
+
+                    ToggleDecryptingLabelVis(false);
+
+                    Application.Current?.Dispatcher?.Invoke(() =>
+                    {
+                        Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                        StartAutomaticPulling();
+                        CanSend = true;
+                    });
+                });
             }
         }
 
@@ -181,6 +200,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             PressedEscapeCommand = new DelegateCommand(OnPressedEscape);
+            ScrollToBottomCommand = new DelegateCommand(OnScrollToBottom);
+            LoadPreviousMessagesCommand = new DelegateCommand(OnClickedLoadPreviousMessages);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
@@ -194,25 +215,60 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             StopAutomaticPulling();
         }
 
+        /// <summary>
+        /// Stops the <see cref="ActiveConvoViewModel"/> from automatically pulling messages.
+        /// </summary>
         private void StopAutomaticPulling()
         {
-            Pulling = false;
+            Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
         }
 
+        /// <summary>
+        /// Starts the automatic message pull cycle,
+        /// which also truncates the view's message collection size when needed.
+        /// </summary>
         private void StartAutomaticPulling()
         {
             StopAutomaticPulling();
-            Pulling = true;
+
+            Application.Current?.Dispatcher?.Invoke(() => Pulling = true);
+
+            // Start message pull cycle:
             Task.Run(async () =>
             {
                 while (Pulling)
                 {
-                    await PullNewestMessages();
+                    if (pageIndex == 0 && await PullNewestMessages())
+                    {
+                        TruncateMessagesCollection();
+                    }
+
                     await Task.Delay(MSG_PULL_FREQUENCY);
                 }
             });
         }
 
+        /// <summary>
+        /// If there are too many messages loaded into the view,
+        /// truncate the messages collection to the latest ones.
+        /// </summary>
+        private void TruncateMessagesCollection()
+        {
+            lock (Messages)
+            {
+                int messageCount = Messages.Count;
+                if (messageCount > MSG_COLLECTION_SIZE * 2)
+                {
+                    Messages = new ObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
+                }
+            }
+        }
+
+        /// <summary>
+        /// Decrypts a single <see cref="Message"/> into a <see cref="MessageViewModel"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="Message"/> to decrypt.</param>
+        /// <returns>The decrypted <see cref="MessageViewModel"/>, ready to be added to the view.</returns>
         private MessageViewModel DecryptMessage(Message message)
         {
             if (message is null)
@@ -247,55 +303,41 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Loads the messages that are stored locally in the convo's sqlite db into the view.
+        /// Decrypts multiple <see cref="Message"/>s.
         /// </summary>
-        private void LoadLocalMessages()
+        /// <param name="encryptedMessages">The <see cref="Message"/>s to decrypt.</param>
+        /// <returns>The decrypted <see cref="MessageViewModel"/>s, ready to be added to the view.</returns>
+        private IEnumerable<MessageViewModel> DecryptMessages(IEnumerable<Message> encryptedMessages)
         {
-            if (ActiveConvo is null || ActiveConvo.Id.NullOrEmpty())
-            {
-                return;
-            }
-
-            DecryptingVisibility = Visibility.Visible;
-
-            Task.Run(async () =>
-            {
-                var decryptedMessages = new ConcurrentBag<MessageViewModel>();
+            var decryptedMessages = new ConcurrentBag<MessageViewModel>();
 
 #if PARALLEL_LOAD
-                Parallel.ForEach(await messageRepository.GetAll(), message =>
+            Parallel.ForEach(encryptedMessages, message =>
+            {
+                try
                 {
-                    try
-                    {
-                        var decryptedMessage = DecryptMessage(message);
-                        decryptedMessages.Add(decryptedMessage);
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
-                    }
-                });
-#else
-                foreach (var message in await messageRepository.GetAll())
-                {
-                    try
-                    {
-                        decryptedMessages.Add(DecryptMessage(message));
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(LoadLocalMessages)}: Failed to load message into convo chatroom view. Error message: {e}");
-                    }
+                    var decryptedMessage = DecryptMessage(message);
+                    decryptedMessages.Add(decryptedMessage);
                 }
-#endif
-
-                Application.Current?.Dispatcher?.Invoke(() =>
+                catch (Exception e)
                 {
-                    Messages = new ObservableCollection<MessageViewModel>(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
-                    DecryptingVisibility = Visibility.Hidden;
-                    StartAutomaticPulling();
-                });
+                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessages)}: Failed to decrypt message {message?.Id}. Error message: {e}");
+                }
             });
+#else
+            foreach (var message in encryptedMessages)
+            {
+                try
+                {
+                    decryptedMessages.Add(DecryptMessage(message));
+                }
+                catch (Exception e)
+                {
+                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessages)}: Failed to decrypt message {message?.Id}. Error message: {e}");
+                }
+            }
+#endif
+            return decryptedMessages;
         }
 
         /// <summary>
@@ -326,7 +368,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Pulls the convo's newest messages from the server.
+        /// Pulls the convo's newest messages from the server.<para> </para>
         /// Returns whether any new messages were pulled successfully or not.
         /// </summary>
         /// <returns>Whether any new messages were pulled successfully or not.</returns>
@@ -358,27 +400,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
-            Application.Current?.Dispatcher?.Invoke(() => { DecryptingVisibility = Visibility.Visible; });
+            ToggleDecryptingLabelVis(true);
 
             try
             {
-                var decryptedMessages = new ConcurrentBag<MessageViewModel>();
-
-                Parallel.ForEach(retrievedMessages, message =>
-                {
-                    decryptedMessages.Add(DecryptMessage(message));
-                });
-
-                // Newly pulled messages should be
-                // written out to a file on disk.
+                // Newly pulled messages should be added to the local message db.
                 bool success = await messageRepository.AddRange(retrievedMessages);
+
+                // Decrypt and add the retrieved messages to the chatroom.
+                IEnumerable<MessageViewModel> decryptedMessages = DecryptMessages(retrievedMessages);
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
-                    DecryptingVisibility = Visibility.Hidden;
-
-                    // Add the retrieved messages to the chatroom.
-                    Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                    Messages.AddRange(decryptedMessages.OrderBy(m => m?.TimestampDateTimeUTC));
+                    ToggleDecryptingLabelVis(false);
                 });
 
                 return success;
@@ -391,11 +426,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Submits the message body to the convo. 
-        /// Returns whether the message was submitted successfully or not.
+        /// Encrypts and submits a <see cref="Message"/> body to the server.<para> </para>
+        /// Returns whether the <see cref="Message"/> was submitted successfully or not.
         /// </summary>
-        /// <param name="messageBodyJson">The message body's json.</param>
-        /// <returns>Whether the message was submitted successfully or not.</returns>
+        /// <param name="messageBodyJson">The <see cref="Message"/> body's json.</param>
+        /// <returns>Whether the <see cref="Message"/> was submitted successfully or not.</returns>
         private async Task<bool> SubmitMessage(JObject messageBodyJson)
         {
             if (ActiveConvo is null)
@@ -404,8 +439,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return false;
             }
 
+            pageIndex = 0;
             await PullConvoMetadata();
-            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = Visibility.Visible);
+
+            ToggleEncryptingLabelVis(true);
 
             var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
@@ -431,7 +468,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
             }
 
-            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = Visibility.Hidden);
+            ToggleEncryptingLabelVis(false);
 
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody == null)
@@ -454,6 +491,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return success;
         }
 
+        /// <summary>
+        /// Called when the user submitted a text message
+        /// (either via UI button click or by pressing Enter).
+        /// </summary>
         private void OnSendText(object commandParam)
         {
             var textBox = commandParam as TextBox;
@@ -491,6 +532,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             });
         }
 
+        /// <summary>
+        /// Called when the user initiated a file upload via the UI.
+        /// </summary>
         private void OnSendFile(object commandParam)
         {
             var dialog = new OpenFileDialog { Multiselect = false, Title = "Epistle - Select the file you want to send", InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
@@ -498,6 +542,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             dialog.ShowDialog();
         }
 
+        /// <summary>
+        /// Called when the user selected and confirmed
+        /// the upload of an attachment file via the dialog box.
+        /// </summary>
+        /// <param name="sender">The origin <see cref="OpenFileDialog"/>.</param>
+        /// <param name="e"><see cref="EventArgs"/></param>
         private void OnSelectedFile(object sender, EventArgs e)
         {
             var dialog = sender as OpenFileDialog;
@@ -509,6 +559,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             OnDragAndDropFile(dialog.FileName);
         }
 
+        /// <summary>
+        /// Called when the user drag-n-dropped an attachment file.
+        /// </summary>
         public void OnDragAndDropFile(string filePath)
         {
             if (filePath.NullOrEmpty())
@@ -549,6 +602,46 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         errorView.ShowDialog();
                     });
                 }
+            });
+        }
+
+        /// <summary>
+        /// Called when the user clicks on the
+        /// scroll-to-bottom arrow button or presses escape.
+        /// </summary>
+        private void OnScrollToBottom(object commandParam)
+        {
+            TruncateMessagesCollection();
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the up-arrow button that loads the previous messages.
+        /// </summary>
+        private void OnClickedLoadPreviousMessages(object commandParam)
+        {
+            if (ActiveConvo is null || ActiveConvo.Id.NullOrEmpty())
+            {
+                return;
+            }
+
+            ToggleDecryptingLabelVis(true);
+
+            Task.Run(async () =>
+            {
+                var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE, MSG_COLLECTION_SIZE * ++pageIndex);
+                var decryptedMessages = DecryptMessages(encryptedMessages);
+
+                ToggleDecryptingLabelVis(false);
+
+                Application.Current?.Dispatcher?.Invoke(() =>
+                {
+                    lock (Messages)
+                    {
+                        var newCollection = Messages.ToList();
+                        newCollection.InsertRange(0, decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC));
+                        Messages = new ObservableCollection<MessageViewModel>(newCollection);
+                    }
+                });
             });
         }
 
@@ -596,6 +689,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             ClipboardTickVisibility = Visibility.Hidden;
             scheduledHideGreenTickIcon = null;
+        }
+
+        private void ToggleDecryptingLabelVis(bool visible)
+        {
+            Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
+        }
+
+        private void ToggleEncryptingLabelVis(bool visible)
+        {
+            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
         }
     }
 }
