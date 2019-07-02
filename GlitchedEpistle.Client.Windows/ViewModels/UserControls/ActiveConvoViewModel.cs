@@ -150,9 +150,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 CanSend = false;
                 StopAutomaticPulling();
 
-                // Reset the view's message collection and 
-                // load the local sqlite message repository.
-                Messages = new ObservableCollection<MessageViewModel>();
                 messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
 
                 activeConvo = value;
@@ -294,8 +291,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 Application.Current?.Dispatcher?.Invoke(() =>
                 {
+                    Messages = new ObservableCollection<MessageViewModel>(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
                     DecryptingVisibility = Visibility.Hidden;
-                    Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
                     StartAutomaticPulling();
                 });
             });
