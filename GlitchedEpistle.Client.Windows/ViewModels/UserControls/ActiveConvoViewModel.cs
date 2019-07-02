@@ -238,7 +238,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 while (Pulling)
                 {
-                    if (pageIndex == 0 && await PullNewestMessages())
+                    if (await PullNewestMessages() && pageIndex == 0)
                     {
                         TruncateMessagesCollection();
                     }
