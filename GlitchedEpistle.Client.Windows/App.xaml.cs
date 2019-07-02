@@ -61,9 +61,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// </summary>
         private readonly IMethodQ methodQ = new MethodQ();
 
+        private static Mutex mutex;
+
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            var mutex = new Mutex(true, Assembly.GetCallingAssembly().GetName().Name, out bool newInstance);
+            mutex = new Mutex(true, $"GlitchedEpistle_{Version}", out bool newInstance);
 
             if (!newInstance)
             {
