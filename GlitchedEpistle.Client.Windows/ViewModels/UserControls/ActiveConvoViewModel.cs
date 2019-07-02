@@ -64,6 +64,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ICommand SendTextCommand { get; }
         public ICommand SendFileCommand { get; }
         public ICommand PressedEscapeCommand { get; }
+        public ICommand ScrollToBottomCommand { get; }
         public ICommand LoadPreviousMessagesCommand { get; }
         public ICommand CopyConvoIdToClipboardCommand { get; }
         #endregion
@@ -199,6 +200,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
             PressedEscapeCommand = new DelegateCommand(OnPressedEscape);
+            ScrollToBottomCommand = new DelegateCommand(OnScrollToBottom);
             LoadPreviousMessagesCommand = new DelegateCommand(OnClickedLoadPreviousMessages);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
@@ -262,6 +264,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
+        /// <summary>
+        /// Decrypts a single <see cref="Message"/> into a <see cref="MessageViewModel"/>.
+        /// </summary>
+        /// <param name="message">The <see cref="Message"/> to decrypt.</param>
+        /// <returns>The decrypted <see cref="MessageViewModel"/>, ready to be added to the view.</returns>
         private MessageViewModel DecryptMessage(Message message)
         {
             if (message is null)
@@ -295,6 +302,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return messageViewModel;
         }
 
+        /// <summary>
+        /// Decrypts multiple <see cref="Message"/>s.
+        /// </summary>
+        /// <param name="encryptedMessages">The <see cref="Message"/>s to decrypt.</param>
+        /// <returns>The decrypted <see cref="MessageViewModel"/>s, ready to be added to the view.</returns>
         private IEnumerable<MessageViewModel> DecryptMessages(IEnumerable<Message> encryptedMessages)
         {
             var decryptedMessages = new ConcurrentBag<MessageViewModel>();
@@ -356,7 +368,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Pulls the convo's newest messages from the server.
+        /// Pulls the convo's newest messages from the server.<para> </para>
         /// Returns whether any new messages were pulled successfully or not.
         /// </summary>
         /// <returns>Whether any new messages were pulled successfully or not.</returns>
@@ -414,11 +426,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Submits the message body to the convo. 
-        /// Returns whether the message was submitted successfully or not.
+        /// Encrypts and submits a <see cref="Message"/> body to the server.<para> </para>
+        /// Returns whether the <see cref="Message"/> was submitted successfully or not.
         /// </summary>
-        /// <param name="messageBodyJson">The message body's json.</param>
-        /// <returns>Whether the message was submitted successfully or not.</returns>
+        /// <param name="messageBodyJson">The <see cref="Message"/> body's json.</param>
+        /// <returns>Whether the <see cref="Message"/> was submitted successfully or not.</returns>
         private async Task<bool> SubmitMessage(JObject messageBodyJson)
         {
             if (ActiveConvo is null)
@@ -479,6 +491,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             return success;
         }
 
+        /// <summary>
+        /// Called when the user submitted a text message
+        /// (either via UI button click or by pressing Enter).
+        /// </summary>
         private void OnSendText(object commandParam)
         {
             var textBox = commandParam as TextBox;
@@ -516,6 +532,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             });
         }
 
+        /// <summary>
+        /// Called when the user initiated a file upload via the UI.
+        /// </summary>
         private void OnSendFile(object commandParam)
         {
             var dialog = new OpenFileDialog { Multiselect = false, Title = "Epistle - Select the file you want to send", InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
@@ -523,6 +542,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             dialog.ShowDialog();
         }
 
+        /// <summary>
+        /// Called when the user selected and confirmed
+        /// the upload of an attachment file via the dialog box.
+        /// </summary>
+        /// <param name="sender">The origin <see cref="OpenFileDialog"/>.</param>
+        /// <param name="e"><see cref="EventArgs"/></param>
         private void OnSelectedFile(object sender, EventArgs e)
         {
             var dialog = sender as OpenFileDialog;
@@ -534,6 +559,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             OnDragAndDropFile(dialog.FileName);
         }
 
+        /// <summary>
+        /// Called when the user drag-n-dropped an attachment file.
+        /// </summary>
         public void OnDragAndDropFile(string filePath)
         {
             if (filePath.NullOrEmpty())
@@ -577,6 +605,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             });
         }
 
+        /// <summary>
+        /// Called when the user clicks on the
+        /// scroll-to-bottom arrow button or presses escape.
+        /// </summary>
+        private void OnScrollToBottom(object commandParam)
+        {
+            TruncateMessagesCollection();
+        }
+
+        /// <summary>
+        /// Called when the user clicked on the up-arrow button that loads the previous messages.
+        /// </summary>
         private void OnClickedLoadPreviousMessages(object commandParam)
         {
             if (ActiveConvo is null || ActiveConvo.Id.NullOrEmpty())
