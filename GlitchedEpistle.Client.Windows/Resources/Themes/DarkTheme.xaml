@@ -68,7 +68,7 @@
     <SolidColorBrush x:Key="SeparatorColorBrush" Color="AliceBlue" />
 
     <!-- Message View Speech Bubble Color -->
-    <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#FFA0A0A0" />
+    <SolidColorBrush x:Key="MessageSpeechBubbleColor" Color="#FF8E8E8E" />
     <SolidColorBrush x:Key="MessageSpeechBubbleColorOwn" Color="#356B82" />
 
     <!-- Images -->
