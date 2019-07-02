@@ -58,15 +58,31 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             scrollViewer?.ScrollToBottom();
         }
 
+        private void LoadPreviousMessagesButton_Click(object sender, RoutedEventArgs e)
+        {
+            //if (MessagesListBox.Items.GetItemAt(0) is MessageViewModel lastItem)
+            //{
+                //MessagesListBox.ScrollIntoView(MessagesListBox.Items[MessagesListBox.Items.Count-ActiveConvoViewModel.MSG_COLLECTION_SIZE]);
+                //MessagesListBox.ScrollIntoView(lastItem);
+            //}
+        }
+
         private bool AtBottom()
         {
             if (scrollViewer is null) return false;
             return Math.Abs(scrollViewer.VerticalOffset - scrollViewer.ScrollableHeight) < 0.75d;
         }
 
+        private bool AtTop()
+        {
+            if (scrollViewer is null) return false;
+            return Math.Abs(scrollViewer.VerticalOffset) < 0.01d;
+        }
+
         private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
         {
             ScrollToBottomButton.Visibility = AtBottom() ? Visibility.Hidden : Visibility.Visible;
+            LoadPreviousMessagesButton.Visibility = AtTop() ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void TextBox_OnTextChanged(object sender, TextChangedEventArgs e)
