@@ -648,6 +648,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             });
         }
 
+        /// <summary>
+        /// User clicked on the copy convo id icon.
+        /// </summary>
         private void OnClickedCopyConvoIdToClipboard(object commandParam)
         {
             Clipboard.SetText(ActiveConvo.Id);
@@ -661,6 +664,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             scheduledHideGreenTickIcon = methodQ.Schedule(HideGreenTick, DateTime.UtcNow.AddSeconds(3));
         }
 
+        /// <summary>
+        /// Invoked when the user pressed escape whilst the message textbox was active.
+        /// </summary>
         private void OnPressedEscape(object commandParam)
         {
             var messagesListBox = commandParam as ListBox;
@@ -679,6 +685,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             scrollViewer.ScrollToBottom();
         }
 
+        /// <summary>
+        /// Invoked when the convo's metadata changed in some way
+        /// (usually due to somebody joining the <see cref="Convo"/>
+        /// or due to the admin changing title, description, etc...).
+        /// </summary>
         private void OnChangedConvoMetadata(string convoId)
         {
             var convo = convoProvider[convoId];
@@ -688,17 +699,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
+        /// <summary>
+        /// Hides the green "copied" confirmation label.
+        /// </summary>
         private void HideGreenTick()
         {
             ClipboardTickVisibility = Visibility.Hidden;
             scheduledHideGreenTickIcon = null;
         }
 
+        /// <summary>
+        /// Toggles the "Decrypting..." info label on or off.
+        /// </summary>
         private void ToggleDecryptingLabelVis(bool visible)
         {
             Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
         }
 
+        /// <summary>
+        /// Toggles the "Encrypting..." info label on or off.
+        /// </summary>
         private void ToggleEncryptingLabelVis(bool visible)
         {
             Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
