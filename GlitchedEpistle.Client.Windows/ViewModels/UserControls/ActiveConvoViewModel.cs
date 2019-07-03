@@ -8,9 +8,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -239,25 +236,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 while (pulling)
                 {
+                    await Task.Delay(MSG_PULL_FREQUENCY);
+
                     var pulledMessages = await PullNewestMessages();
-
-                    if (pulledMessages.Length > 0)
+                    if (pulledMessages.Length == 0)
                     {
-                        // Decrypt and add the retrieved messages to the chatroom.
-                        var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC);
-
-                        ExecUI(() =>
-                        {
-                            Messages.AddRange(decryptedMessages);
-
-                            if (pageIndex == 0)
-                            {
-                                TruncateMessagesCollection();
-                            }
-                        });
+                        continue;
                     }
 
-                    await Task.Delay(MSG_PULL_FREQUENCY);
+                    if (!await messageRepository.AddRange(pulledMessages))
+                    {
+                        logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: The retrieved messages (from message id {pulledMessages[0]?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
+                        continue;
+                    }
+
+                    // Decrypt and add the retrieved messages to the chatroom.
+                    var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC).ToArray();
+
+                    ExecUI(() =>
+                    {
+                        Messages.AddRange(decryptedMessages);
+
+                        if (pageIndex == 0)
+                        {
+                            TruncateMessagesCollection();
+                        }
+                    }, DispatcherPriority.Send);
                 }
             });
         }
@@ -380,7 +384,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Pulls the convo's newest messages from the server and writes them out to disk (sqlite db).<para> </para>
+        /// Pulls the convo's newest messages from the server.<para> </para>
         /// Returns the pulled <see cref="Message"/>s (or an empty array if no new messages were found).
         /// </summary>
         /// <returns>The pulled <see cref="Message"/>s (or an empty array if no new messages were found).</returns>
@@ -391,38 +395,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return Array.Empty<Message>();
             }
 
-            // Pull convo metadata first.
-            if (DateTime.UtcNow - lastMetadataPull > METADATA_PULL_FREQUENCY)
-            {
-                await PullConvoMetadata();
-                lastMetadataPull = DateTime.UtcNow;
-            }
-
-            // Pull newest messages.
-            Message[] retrievedMessages = await convoService.GetConvoMessages(
-                convoId: ActiveConvo.Id,
-                convoPasswordSHA512: convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
-                userId: user?.Id,
-                auth: user?.Token?.Item2,
-                tailId: await messageRepository.GetLastMessageId()
-            );
-
-            if (retrievedMessages is null || retrievedMessages.Length == 0)
-            {
-                return Array.Empty<Message>();
-            }
-
             try
             {
-                // Newly pulled messages should be added to the local message db.
-                retrievedMessages = retrievedMessages.OrderBy(m => m.TimestampUTC).ToArray();
-                if (await messageRepository.AddRange(retrievedMessages))
+                // Pull convo metadata first.
+                if (DateTime.UtcNow - lastMetadataPull > METADATA_PULL_FREQUENCY)
                 {
-                    return retrievedMessages;
+                    await PullConvoMetadata();
+                    lastMetadataPull = DateTime.UtcNow;
                 }
 
-                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: The retrieved messages could not be added to the local sqlite db on disk. Reason unknown...");
-                return Array.Empty<Message>();
+                // Pull newest messages.
+                Message[] retrievedMessages = await convoService.GetConvoMessages(
+                    convoId: ActiveConvo.Id,
+                    convoPasswordSHA512: convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
+                    userId: user?.Id,
+                    auth: user?.Token?.Item2,
+                    tailId: await messageRepository.GetLastMessageId()
+                );
+
+                if (retrievedMessages is null || retrievedMessages.Length == 0)
+                {
+                    return Array.Empty<Message>();
+                }
+
+                return retrievedMessages.OrderBy(m => m.TimestampUTC).ToArray();
             }
             catch (Exception e)
             {
@@ -631,10 +627,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE, MSG_COLLECTION_SIZE * ++pageIndex);
                 var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.TimestampDateTimeUTC);
 
+                var newCollection = Messages.ToList();
+                newCollection.InsertRange(0, decryptedMessages);
+
                 ExecUI(() =>
                 {
-                    var newCollection = Messages.ToList();
-                    newCollection.InsertRange(0, decryptedMessages);
                     Messages = new ObservableCollection<MessageViewModel>(newCollection);
                 });
             });
