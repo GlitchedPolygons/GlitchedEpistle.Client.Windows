@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{D704EC6D-7913-4796-88E1-A4BFAFB4DF2B}
 AppName=Glitched Epistle
-AppVersion=1.1.0.5
-;AppVerName=Glitched Epistle 1.1.0.5
+AppVersion=1.1.0.6
+;AppVerName=Glitched Epistle 1.1.0.6
 AppPublisher=Glitched Polygons
 AppPublisherURL=glitchedpolygons.com
 AppSupportURL=glitchedpolygons.com
@@ -17,7 +17,7 @@ DefaultDirName={pf}\Glitched Polygons\Glitched Epistle
 DefaultGroupName=Glitched Epistle
 LicenseFile=LICENSE.txt 
 OutputDir=bin
-OutputBaseFilename=glitched-epistle-1.1.0.5
+OutputBaseFilename=glitched-epistle-1.1.0.6
 SetupIconFile=GlitchedEpistle.Client.Windows\glitched-epistle-icon.ico
 Compression=lzma
 ArchitecturesAllowed=x64
