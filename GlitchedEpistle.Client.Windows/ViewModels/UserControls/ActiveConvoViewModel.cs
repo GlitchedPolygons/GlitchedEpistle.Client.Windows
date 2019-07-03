@@ -248,7 +248,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     // Add the pulled messages to the local sqlite db.
                     if (!await messageRepository.AddRange(pulledMessages))
                     {
-                        logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: The retrieved messages (from message id {pulledMessages[0]?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
+                        logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {pulledMessages[0]?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
                         continue;
                     }
 
@@ -424,7 +424,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
             catch (Exception e)
             {
-                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: Pull failed. Thrown exception: " + e.ToString());
+                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: Pull failed (ConvoId = {ActiveConvo?.Id}). Thrown exception: " + e.ToString());
                 return Array.Empty<Message>();
             }
         }
