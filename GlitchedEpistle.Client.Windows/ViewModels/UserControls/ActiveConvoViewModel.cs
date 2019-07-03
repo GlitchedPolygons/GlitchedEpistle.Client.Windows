@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 using System.Windows.Input;
@@ -39,8 +41,35 @@ using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
+
     public class ActiveConvoViewModel : ViewModel
     {
+        public class GlitchedObservableCollection<T> : ObservableCollection<T>
+        {
+            public GlitchedObservableCollection() : base() { }
+            public GlitchedObservableCollection(List<T> list) : base(list) { }
+            public GlitchedObservableCollection(IEnumerable<T> collection) : base(collection) { }
+
+            public void Reset(IEnumerable<T> range)
+            {
+                this.Items.Clear();
+
+                AddRange(range);
+            }
+
+            public void AddRange(IEnumerable<T> range)
+            {
+                foreach (var item in range)
+                {
+                    Items.Add(item);
+                }
+
+                this.OnPropertyChanged(new PropertyChangedEventArgs("Count"));
+                this.OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
+                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
+
         #region Constants
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const int MSG_COLLECTION_SIZE = 20;
@@ -79,13 +108,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref canSend, value);
         }
 
-        private bool pulling;
-        public bool Pulling
-        {
-            get => pulling;
-            set => Set(ref pulling, value);
-        }
-
         private string name;
         public string Name
         {
@@ -118,14 +140,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref clipboardTickVisibility, value);
         }
 
-        private ObservableCollection<MessageViewModel> messages = new ObservableCollection<MessageViewModel>();
-        public ObservableCollection<MessageViewModel> Messages
+        private GlitchedObservableCollection<MessageViewModel> messages = new GlitchedObservableCollection<MessageViewModel>();
+        public GlitchedObservableCollection<MessageViewModel> Messages
         {
             get => messages;
             set => Set(ref messages, value);
         }
         #endregion
 
+        private volatile bool pulling;
         private volatile int pageIndex;
         private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
@@ -142,7 +165,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 CanSend = false;
                 StopAutomaticPulling();
 
-                Messages = new ObservableCollection<MessageViewModel>();
+                Messages = new GlitchedObservableCollection<MessageViewModel>();
                 messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
 
                 activeConvo = value;
@@ -224,7 +247,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         private void StopAutomaticPulling()
         {
-            ExecUI(() => Pulling = false);
+            pulling = false;
         }
 
         /// <summary>
@@ -235,7 +258,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             StopAutomaticPulling();
 
-            Set(ref pulling, true);
+            pulling = true;
 
             // Start message pull cycle:
             Task.Run(async () =>
@@ -249,14 +272,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         // Decrypt and add the retrieved messages to the chatroom.
                         var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC);
 
-                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
+                        ExecUI(() =>
                         {
                             Messages.AddRange(decryptedMessages);
+
                             if (pageIndex == 0)
                             {
                                 TruncateMessagesCollection();
                             }
-                        }));
+                        });
                     }
 
                     await Task.Delay(MSG_PULL_FREQUENCY);
@@ -274,7 +298,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             int messageCount = Messages.Count;
             if (messageCount > MSG_COLLECTION_SIZE * 2)
             {
-                Messages = new ObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
+                Messages = new GlitchedObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
             }
         }
 
@@ -499,7 +523,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// Called when the user submitted a text message
         /// (either via UI button click or by pressing Enter).
         /// </summary>
-        private void OnSendText(object commandParam)
+        private async void OnSendText(object commandParam)
         {
             var textBox = commandParam as TextBox;
             if (textBox is null)
@@ -517,23 +541,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             textBox.Focus();
             textBox.SelectAll();
 
-            Task.Run(async () =>
+            var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
+
+            bool success = await SubmitMessage(messageBodyJson);
+            if (!success)
             {
-                var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                errorView.ShowDialog();
+            }
 
-                bool success = await SubmitMessage(messageBodyJson);
-
-                if (!success)
-                {
-                    ExecUI(() =>
-                    {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                        errorView.ShowDialog();
-                    });
-                }
-
-                messageBodyJson["text"] = messageBodyJson = null;
-            });
+            messageBodyJson["text"] = messageBodyJson = null;
         }
 
         /// <summary>
@@ -637,7 +654,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     var newCollection = Messages.ToList();
                     newCollection.InsertRange(0, decryptedMessages);
-                    Messages = new ObservableCollection<MessageViewModel>(newCollection);
+                    Messages = new GlitchedObservableCollection<MessageViewModel>(newCollection);
                 });
             });
         }
