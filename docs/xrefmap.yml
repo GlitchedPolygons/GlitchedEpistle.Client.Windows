@@ -2396,32 +2396,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.CopyConvoIdToClipboardCommand
   nameWithType: ActiveConvoViewModel.CopyConvoIdToClipboardCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.DecryptingVisibility
-  name: DecryptingVisibility
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_DecryptingVisibility
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.DecryptingVisibility
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.DecryptingVisibility
-  nameWithType: ActiveConvoViewModel.DecryptingVisibility
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.DecryptingVisibility*
-  name: DecryptingVisibility
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_DecryptingVisibility_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.DecryptingVisibility
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.DecryptingVisibility
-  nameWithType: ActiveConvoViewModel.DecryptingVisibility
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.EncryptingVisibility
-  name: EncryptingVisibility
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_EncryptingVisibility
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.EncryptingVisibility
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.EncryptingVisibility
-  nameWithType: ActiveConvoViewModel.EncryptingVisibility
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.EncryptingVisibility*
-  name: EncryptingVisibility
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_EncryptingVisibility_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.EncryptingVisibility
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.EncryptingVisibility
-  nameWithType: ActiveConvoViewModel.EncryptingVisibility
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Finalize
   name: Finalize()
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Finalize
@@ -2500,19 +2474,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PressedEscapeCommand
   nameWithType: ActiveConvoViewModel.PressedEscapeCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Pulling
-  name: Pulling
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Pulling
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Pulling
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Pulling
-  nameWithType: ActiveConvoViewModel.Pulling
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Pulling*
-  name: Pulling
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Pulling_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Pulling
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Pulling
-  nameWithType: ActiveConvoViewModel.Pulling
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ScrollToBottomCommand
   name: ScrollToBottomCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_ScrollToBottomCommand
