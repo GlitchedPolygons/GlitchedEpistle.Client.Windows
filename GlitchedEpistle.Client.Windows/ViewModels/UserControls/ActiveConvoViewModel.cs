@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.RepositoryPattern;
@@ -142,6 +143,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
         private IMessageRepository messageRepository;
+        private readonly object messageCollectionLock = new object();
 
         private Convo activeConvo;
         public Convo ActiveConvo
@@ -172,7 +174,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                     ToggleDecryptingLabelVis(false);
 
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
                         StartAutomaticPulling();
@@ -216,11 +218,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
+        /// Shorthand for <c>Application.Current?.Dispatcher?.Invoke(Action, DispatcherPriority);</c>
+        /// </summary>
+        /// <param name="action">What you want to execute on the UI thread.</param>
+        /// <param name="priority">The <see cref="DispatcherPriority"/> with which to execute the <see cref="Action"/> on the UI thread.</param>
+        private static void ExecUI(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        {
+            Application.Current?.Dispatcher?.Invoke(action, priority);
+        }
+
+        /// <summary>
         /// Stops the <see cref="ActiveConvoViewModel"/> from automatically pulling messages.
         /// </summary>
         private void StopAutomaticPulling()
         {
-            Application.Current?.Dispatcher?.Invoke(() => Pulling = false);
+            ExecUI(() => Pulling = false);
         }
 
         /// <summary>
@@ -231,16 +243,29 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             StopAutomaticPulling();
 
-            Application.Current?.Dispatcher?.Invoke(() => Pulling = true);
+            ExecUI(() => Pulling = true);
 
             // Start message pull cycle:
             Task.Run(async () =>
             {
                 while (Pulling)
                 {
-                    if (await PullNewestMessages() && pageIndex == 0)
+                    var pulledMessages = await PullNewestMessages();
+
+                    if (pulledMessages.Length > 0)
                     {
-                        TruncateMessagesCollection();
+                        // Decrypt and add the retrieved messages to the chatroom.
+                        var decryptedMessages = DecryptMessages(pulledMessages).ToArray();
+
+                        ExecUI(() =>
+                        {
+                            Messages.AddRange(decryptedMessages.OrderBy(m => m?.TimestampDateTimeUTC));
+                            ToggleDecryptingLabelVis(false);
+                            if (pageIndex == 0)
+                            {
+                                TruncateMessagesCollection();
+                            }
+                        });
                     }
 
                     await Task.Delay(MSG_PULL_FREQUENCY);
@@ -254,14 +279,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         private void TruncateMessagesCollection()
         {
-            lock (Messages)
+            ExecUI(() =>
             {
                 int messageCount = Messages.Count;
                 if (messageCount > MSG_COLLECTION_SIZE * 2)
                 {
                     Messages = new ObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
                 }
-            }
+            });
         }
 
         /// <summary>
@@ -372,11 +397,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// Returns whether any new messages were pulled successfully or not.
         /// </summary>
         /// <returns>Whether any new messages were pulled successfully or not.</returns>
-        private async Task<bool> PullNewestMessages()
+        private async Task<Message[]> PullNewestMessages()
         {
             if (ActiveConvo is null || user is null)
             {
-                return false;
+                return Array.Empty<Message>();
             }
 
             // Pull convo metadata first.
@@ -397,7 +422,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             if (retrievedMessages is null || retrievedMessages.Length == 0)
             {
-                return false;
+                return Array.Empty<Message>();
             }
 
             ToggleDecryptingLabelVis(true);
@@ -405,26 +430,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             try
             {
                 // Newly pulled messages should be added to the local message db.
-                bool success = await messageRepository.AddRange(retrievedMessages);
-
-                // Decrypt and add the retrieved messages to the chatroom.
-                IEnumerable<MessageViewModel> decryptedMessages = DecryptMessages(retrievedMessages);
-
-                Application.Current?.Dispatcher?.Invoke(() =>
+                if (await messageRepository.AddRange(retrievedMessages))
                 {
-                    lock (Messages)
-                    {
-                        Messages.AddRange(decryptedMessages.OrderBy(m => m?.TimestampDateTimeUTC));
-                    }
-                    ToggleDecryptingLabelVis(false);
-                });
-
-                return success;
+                    return retrievedMessages;
+                }
+                else
+                {
+                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: The retrieved messages could not be added to the local sqlite db on disk. Reason unknown...");
+                    return Array.Empty<Message>();
+                }
             }
             catch (Exception e)
             {
                 logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: Pull failed. Thrown exception: " + e.ToString());
-                return false;
+                return Array.Empty<Message>();
             }
         }
 
@@ -524,7 +543,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 if (!success)
                 {
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                         errorView.ShowDialog();
@@ -588,7 +607,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                     if (!success)
                     {
-                        Application.Current?.Dispatcher?.Invoke(() =>
+                        ExecUI(() =>
                         {
                             var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
                             errorView.ShowDialog();
@@ -599,7 +618,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
                         errorView.ShowDialog();
@@ -636,14 +655,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 ToggleDecryptingLabelVis(false);
 
-                Application.Current?.Dispatcher?.Invoke(() =>
+                ExecUI(() =>
                 {
-                    lock (Messages)
-                    {
-                        var newCollection = Messages.ToList();
-                        newCollection.InsertRange(0, decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC));
-                        Messages = new ObservableCollection<MessageViewModel>(newCollection);
-                    }
+                    var newCollection = Messages.ToList();
+                    newCollection.InsertRange(0, decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC));
+                    Messages = new ObservableCollection<MessageViewModel>(newCollection);
                 });
             });
         }
@@ -713,7 +729,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         private void ToggleDecryptingLabelVis(bool visible)
         {
-            Application.Current?.Dispatcher?.Invoke(() => DecryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
+            ExecUI(() => DecryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
         }
 
         /// <summary>
@@ -721,7 +737,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         private void ToggleEncryptingLabelVis(bool visible)
         {
-            Application.Current?.Dispatcher?.Invoke(() => EncryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
+            ExecUI(() => EncryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
         }
     }
 }
