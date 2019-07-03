@@ -44,32 +44,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
     public class ActiveConvoViewModel : ViewModel
     {
-        public class GlitchedObservableCollection<T> : ObservableCollection<T>
-        {
-            public GlitchedObservableCollection() : base() { }
-            public GlitchedObservableCollection(List<T> list) : base(list) { }
-            public GlitchedObservableCollection(IEnumerable<T> collection) : base(collection) { }
-
-            public void Reset(IEnumerable<T> range)
-            {
-                this.Items.Clear();
-
-                AddRange(range);
-            }
-
-            public void AddRange(IEnumerable<T> range)
-            {
-                foreach (var item in range)
-                {
-                    Items.Add(item);
-                }
-
-                this.OnPropertyChanged(new PropertyChangedEventArgs("Count"));
-                this.OnPropertyChanged(new PropertyChangedEventArgs("Item[]"));
-                this.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-            }
-        }
-
         #region Constants
         private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const int MSG_COLLECTION_SIZE = 20;
@@ -140,8 +114,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref clipboardTickVisibility, value);
         }
 
-        private GlitchedObservableCollection<MessageViewModel> messages = new GlitchedObservableCollection<MessageViewModel>();
-        public GlitchedObservableCollection<MessageViewModel> Messages
+        private ObservableCollection<MessageViewModel> messages = new ObservableCollection<MessageViewModel>();
+        public ObservableCollection<MessageViewModel> Messages
         {
             get => messages;
             set => Set(ref messages, value);
@@ -165,7 +139,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 CanSend = false;
                 StopAutomaticPulling();
 
-                Messages = new GlitchedObservableCollection<MessageViewModel>();
+                Messages = new ObservableCollection<MessageViewModel>();
                 messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
 
                 activeConvo = value;
@@ -298,7 +272,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             int messageCount = Messages.Count;
             if (messageCount > MSG_COLLECTION_SIZE * 2)
             {
-                Messages = new GlitchedObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
+                Messages = new ObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
             }
         }
 
@@ -654,7 +628,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     var newCollection = Messages.ToList();
                     newCollection.InsertRange(0, decryptedMessages);
-                    Messages = new GlitchedObservableCollection<MessageViewModel>(newCollection);
+                    Messages = new ObservableCollection<MessageViewModel>(newCollection);
                 });
             });
         }
