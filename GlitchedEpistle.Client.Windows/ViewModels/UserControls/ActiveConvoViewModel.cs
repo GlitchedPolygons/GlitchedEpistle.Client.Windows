@@ -380,7 +380,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Pulls the convo's newest messages from the server.<para> </para>
+        /// Pulls the convo's newest messages from the server and writes them out to disk (sqlite db).<para> </para>
         /// Returns the pulled <see cref="Message"/>s (or an empty array if no new messages were found).
         /// </summary>
         /// <returns>The pulled <see cref="Message"/>s (or an empty array if no new messages were found).</returns>
@@ -446,6 +446,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             pageIndex = 0;
+
             await PullConvoMetadata();
 
             var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
@@ -497,7 +498,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// Called when the user submitted a text message
         /// (either via UI button click or by pressing Enter).
         /// </summary>
-        private async void OnSendText(object commandParam)
+        private void OnSendText(object commandParam)
         {
             var textBox = commandParam as TextBox;
             if (textBox is null)
@@ -515,16 +516,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             textBox.Focus();
             textBox.SelectAll();
 
-            var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
-
-            bool success = await SubmitMessage(messageBodyJson);
-            if (!success)
+            Task.Run(async () =>
             {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                errorView.ShowDialog();
-            }
+                var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
 
-            messageBodyJson["text"] = messageBodyJson = null;
+                bool success = await SubmitMessage(messageBodyJson);
+
+                if (!success)
+                {
+                    ExecUI(() =>
+                    {
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                        errorView.ShowDialog();
+                    });
+                }
+                messageBodyJson["text"] = messageBodyJson = null;
+            });
         }
 
         /// <summary>
