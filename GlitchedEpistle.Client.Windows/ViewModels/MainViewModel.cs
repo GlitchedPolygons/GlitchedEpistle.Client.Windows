@@ -40,7 +40,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public const double SIDEBAR_MIN_WIDTH = 345;
         public const double SIDEBAR_MAX_WIDTH = 420;
         public const double MAIN_WINDOW_MIN_WIDTH = 800;
-        public const double MAIN_WINDOW_MIN_HEIGHT = 530;
+        public const double MAIN_WINDOW_MIN_HEIGHT = 540;
         private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
 
         // Injections:
