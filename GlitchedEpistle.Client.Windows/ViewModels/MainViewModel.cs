@@ -432,9 +432,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 convoProvider.Add(convo).GetAwaiter().GetResult();
             }
 
+            // In case there was a convo view already open, dispose that.
+            (MainControl?.DataContext as ActiveConvoViewModel)?.Dispose();
+
             var viewModel = viewModelFactory.Create<ActiveConvoViewModel>();
             viewModel.ActiveConvo = convo;
-            
+            viewModel.Init();
+
             MainControl = new ActiveConvoView { DataContext = viewModel };
         }
 

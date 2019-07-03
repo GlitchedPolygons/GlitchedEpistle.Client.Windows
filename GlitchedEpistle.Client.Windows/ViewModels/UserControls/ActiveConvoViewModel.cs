@@ -40,7 +40,7 @@ using Prism.Events;
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
 
-    public class ActiveConvoViewModel : ViewModel
+    public class ActiveConvoViewModel : ViewModel, IDisposable
     {
         #region Constants
         private const long MAX_FILE_SIZE_BYTES = 20971520;
@@ -121,6 +121,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         private volatile bool pulling;
+        private volatile bool disposed;
         private volatile int pageIndex;
         private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
@@ -132,32 +133,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => activeConvo;
             set
             {
-                // Prevent the user from both pulling and
-                // submitting new messages whilst changing convos.
-                CanSend = false;
-                StopAutomaticPulling();
-
-                Messages = new ObservableCollection<MessageViewModel>();
-                messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, value.Id + ".db")};Version=3;");
-
                 activeConvo = value;
                 Name = value.Name;
-
-                // Decrypt the messages that are already stored 
-                // locally on the device and load them into the view.
-                // Then, resume the user's ability to send messages once done.
-                Task.Run(async () =>
-                {
-                    var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE);
-                    var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.TimestampDateTimeUTC);
-
-                    ExecUI(() =>
-                    {
-                        Messages.AddRange(decryptedMessages);
-                        StartAutomaticPulling();
-                        CanSend = true;
-                    });
-                });
             }
         }
 
@@ -193,25 +170,58 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             LoadPreviousMessagesCommand = new DelegateCommand(OnClickedLoadPreviousMessages);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
-            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnClosed);
-            eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
+            eventAggregator.GetEvent<LogoutEvent>().Subscribe(Dispose);
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Subscribe(OnChangedConvoMetadata);
+
+            // When switching to another convo, dispose this viewmodel.
+            // The subscribed Dispose method should stop the automatic pulling.
+            // Last thing you'd wanna have to debug is some background thread trying to pull from a convo that you already closed...
+            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => Dispose());
 
             settings.Load();
         }
 
-        ~ActiveConvoViewModel()
+        public void Init()
         {
+            if (ActiveConvo is null || ActiveConvo.Id.NullOrEmpty())
+            {
+                throw new NullReferenceException($"{nameof(ActiveConvoViewModel)}::{nameof(Init)}: Tried to initialize a convo viewmodel without assigning it an {nameof(ActiveConvo)} first. Please assign that before calling init.");
+            }
+
+            // Prevent the user from both pulling and
+            // submitting new messages whilst changing convos.
+            CanSend = false;
             StopAutomaticPulling();
+
+            Messages = new ObservableCollection<MessageViewModel>();
+            messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id + ".db")};Version=3;");
+
+            // Decrypt the messages that are already stored 
+            // locally on the device and load them into the view.
+            // Then, resume the user's ability to send messages once done.
+            Task.Run(async () =>
+            {
+                var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE);
+                var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.TimestampDateTimeUTC);
+
+                ExecUI(() =>
+                {
+                    Messages.AddRange(decryptedMessages);
+                    StartAutomaticPulling();
+                    CanSend = true;
+                });
+            });
         }
 
-        /// <summary>
-        /// Called when the convo view is closed (when switching to another convo).<para> </para>
-        /// Should stop the automatic pulling.<para> </para>
-        /// Last thing you'd wanna have to debug is some background thread trying to pull from a convo that you already closed...
-        /// </summary>
-        private void OnClosed(object commandParam)
+        ~ActiveConvoViewModel()
         {
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            if (disposed) return;
+            disposed = true;
             StopAutomaticPulling();
         }
 
