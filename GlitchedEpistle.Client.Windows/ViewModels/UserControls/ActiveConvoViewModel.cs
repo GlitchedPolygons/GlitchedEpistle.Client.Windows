@@ -193,6 +193,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             LoadPreviousMessagesCommand = new DelegateCommand(OnClickedLoadPreviousMessages);
             CopyConvoIdToClipboardCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
+            eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnClosed);
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(StopAutomaticPulling);
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Subscribe(OnChangedConvoMetadata);
 
@@ -205,13 +206,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Shorthand for <c>Application.Current?.Dispatcher?.Invoke(Action, DispatcherPriority);</c>
+        /// Called when the convo view is closed (when switching to another convo).<para> </para>
+        /// Should stop the automatic pulling.<para> </para>
+        /// Last thing you'd wanna have to debug is some background thread trying to pull from a convo that you already closed...
         /// </summary>
-        /// <param name="action">What you want to execute on the UI thread.</param>
-        /// <param name="priority">The <see cref="DispatcherPriority"/> with which to execute the <see cref="Action"/> on the UI thread.</param>
-        private static void ExecUI(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        private void OnClosed(object commandParam)
         {
-            Application.Current?.Dispatcher?.Invoke(action, priority);
+            StopAutomaticPulling();
         }
 
         /// <summary>
@@ -698,5 +699,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             ClipboardTickVisibility = Visibility.Hidden;
             scheduledHideGreenTickIcon = null;
         }
+
+        /// <summary>
+        /// Shorthand for <c>Application.Current?.Dispatcher?.Invoke(Action, DispatcherPriority);</c>
+        /// </summary>
+        /// <param name="action">What you want to execute on the UI thread.</param>
+        /// <param name="priority">The <see cref="DispatcherPriority"/> with which to execute the <see cref="Action"/> on the UI thread.</param>
+        private static void ExecUI(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        {
+            Application.Current?.Dispatcher?.Invoke(action, priority);
+        }
+
     }
 }
