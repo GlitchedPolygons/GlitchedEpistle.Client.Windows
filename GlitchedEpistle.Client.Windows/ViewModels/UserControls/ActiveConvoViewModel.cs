@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -236,7 +237,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 while (pulling)
                 {
-                    await Task.Delay(MSG_PULL_FREQUENCY);
+                    Thread.Sleep(MSG_PULL_FREQUENCY);
 
                     var pulledMessages = await PullNewestMessages();
                     if (pulledMessages.Length == 0)
@@ -262,7 +263,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         {
                             TruncateMessagesCollection();
                         }
-                    }, DispatcherPriority.Send);
+                    });
                 }
             });
         }
