@@ -525,7 +525,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html",
-          "hash": "I7q8hAsYjw83oifdncM1eQ=="
+          "hash": "PIlxmhY1HSSzC+4/TGr+qA=="
         }
       },
       "is_incremental": false,
@@ -549,7 +549,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html",
-          "hash": "IUgzcpl9fvyE0oohmT3tlQ=="
+          "hash": "QM/tMCHyn8C+unhJChU99w=="
         }
       },
       "is_incremental": false,
@@ -1156,11 +1156,12 @@
         "skipped_file_count": 0
       },
       "processors": {
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
-          "total_file_count": 88,
-          "skipped_file_count": 87
+          "total_file_count": 0,
+          "skipped_file_count": 0
         },
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
@@ -1168,12 +1169,11 @@
           "total_file_count": 3,
           "skipped_file_count": 3
         },
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
+          "total_file_count": 88,
+          "skipped_file_count": 86
         }
       }
     },
