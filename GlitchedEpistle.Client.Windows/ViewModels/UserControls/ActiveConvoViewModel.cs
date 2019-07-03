@@ -252,7 +252,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     }
 
                     // Decrypt and add the retrieved messages to the chatroom UI.
-                    var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC).ToArray();
+                    var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC);
 
                     ExecUI(() =>
                     {
