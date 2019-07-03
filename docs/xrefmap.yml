@@ -2396,6 +2396,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.CopyConvoIdToClipboardCommand
   nameWithType: ActiveConvoViewModel.CopyConvoIdToClipboardCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose
+  name: Dispose()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Dispose
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose()
+  nameWithType: ActiveConvoViewModel.Dispose()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose*
+  name: Dispose
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Dispose_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose
+  nameWithType: ActiveConvoViewModel.Dispose
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Finalize
   name: Finalize()
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Finalize
@@ -2409,6 +2422,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Finalize
   nameWithType: ActiveConvoViewModel.Finalize
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init
+  name: Init()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Init
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init()
+  nameWithType: ActiveConvoViewModel.Init()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init*
+  name: Init
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Init_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init
+  nameWithType: ActiveConvoViewModel.Init
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.LoadPreviousMessagesCommand
   name: LoadPreviousMessagesCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_LoadPreviousMessagesCommand

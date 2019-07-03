@@ -84,6 +84,7 @@
   <div classs="implements">
     <h5>Implements</h5>
     <div><span class="xref">System.ComponentModel.INotifyPropertyChanged</span></div>
+    <div><span class="xref">System.IDisposable</span></div>
   </div>
   <div class="inheritedMembers">
     <h5>Inherited Members</h5>
@@ -119,7 +120,7 @@
   <h6><strong>Assembly</strong>: Epistle.dll</h6>
   <h5 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class ActiveConvoViewModel : ViewModel, INotifyPropertyChanged</code></pre>
+    <pre><code class="lang-csharp hljs">public class ActiveConvoViewModel : ViewModel, INotifyPropertyChanged, IDisposable</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
@@ -128,7 +129,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoService_IEventAggregator_IMethodQ_GlitchedPolygons_GlitchedEpistle_Client_Services_Users_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Services_Cryptography_Messages_IMessageCryptography_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_IRepository_GlitchedPolygons_GlitchedEpistle_Client_Models_Convo_System_String__GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoPasswordProvider_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.%23ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User%2CGlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService%2CIEventAggregator%2CIMethodQ%2CGlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService%2CGlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography%2CGlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings%2CGlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger%2CIRepository%7BGlitchedPolygons.GlitchedEpistle.Client.Models.Convo%2CSystem.String%7D%2CGlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L164">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L141">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoService_IEventAggregator_IMethodQ_GlitchedPolygons_GlitchedEpistle_Client_Services_Users_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Services_Cryptography_Messages_IMessageCryptography_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_IRepository_GlitchedPolygons_GlitchedEpistle_Client_Models_Convo_System_String__GlitchedPolygons_GlitchedEpistle_Client_Services_Convos_IConvoPasswordProvider_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoService,IEventAggregator,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages.IMessageCryptography,GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,IRepository{GlitchedPolygons.GlitchedEpistle.Client.Models.Convo,System.String},GlitchedPolygons.GlitchedEpistle.Client.Services.Convos.IConvoPasswordProvider)">ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IUserService, IMessageCryptography, ISettings, ILogger, IRepository&lt;Convo, String&gt;, IConvoPasswordProvider)</h4>
@@ -207,7 +208,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_ActiveConvo.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvo%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L130">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L131">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_ActiveConvo_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvo*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_ActiveConvo" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvo">ActiveConvo</h4>
@@ -536,10 +537,25 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Dispose.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L221">View Source</a>
+  </span>
+  <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Dispose_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose*"></a>
+  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Dispose" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Dispose">Dispose()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Dispose()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Finalize.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Finalize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L202">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L216">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Finalize_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Finalize*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Finalize" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Finalize">Finalize()</h4>
@@ -551,10 +567,25 @@
   </div>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Init.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L184">View Source</a>
+  </span>
+  <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Init_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init*"></a>
+  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_Init" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.Init">Init()</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void Init()</code></pre>
+  </div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_OnDragAndDropFile_System_String_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.OnDragAndDropFile(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L565">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/GlitchedEpistle.Client.Windows/ViewModels/UserControls/ActiveConvoViewModel.cs/#L576">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_OnDragAndDropFile_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.OnDragAndDropFile*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_OnDragAndDropFile_System_String_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.OnDragAndDropFile(System.String)">OnDragAndDropFile(String)</h4>
@@ -585,6 +616,9 @@
   <h3 id="implements">Implements</h3>
   <div>
       <span class="xref">System.ComponentModel.INotifyPropertyChanged</span>
+  </div>
+  <div>
+      <span class="xref">System.IDisposable</span>
   </div>
 </article>
           </div>
