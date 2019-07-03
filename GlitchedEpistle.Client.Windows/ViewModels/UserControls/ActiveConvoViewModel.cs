@@ -244,13 +244,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         continue;
                     }
 
+                    // Add the pulled messages to the local sqlite db.
                     if (!await messageRepository.AddRange(pulledMessages))
                     {
                         logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: The retrieved messages (from message id {pulledMessages[0]?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
                         continue;
                     }
 
-                    // Decrypt and add the retrieved messages to the chatroom.
+                    // Decrypt and add the retrieved messages to the chatroom UI.
                     var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC).ToArray();
 
                     ExecUI(() =>
