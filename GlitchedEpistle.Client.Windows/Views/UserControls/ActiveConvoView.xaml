@@ -20,7 +20,7 @@
         <!-- Header -->
         <StackPanel Grid.Row="0"
                     Grid.Column="0"
-                    Margin="0,0,0,0"
+                    Margin="70,0,0,0"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top">
