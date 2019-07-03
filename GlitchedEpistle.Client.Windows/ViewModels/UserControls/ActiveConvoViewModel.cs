@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -42,11 +43,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         private const long MAX_FILE_SIZE_BYTES = 20971520;
-        private const int MSG_COLLECTION_SIZE = 25;
+        private const int MSG_COLLECTION_SIZE = 20;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
         private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(420);
-        private static readonly TimeSpan METADATA_PULL_FREQUENCY = TimeSpan.FromSeconds(30);
+        private static readonly TimeSpan METADATA_PULL_FREQUENCY = TimeSpan.FromMilliseconds(30000);
 
         // Injections:
         private readonly User user;
@@ -117,20 +118,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref clipboardTickVisibility, value);
         }
 
-        private Visibility encryptingVisibility = Visibility.Hidden;
-        public Visibility EncryptingVisibility
-        {
-            get => encryptingVisibility;
-            set => Set(ref encryptingVisibility, value);
-        }
-
-        private Visibility decryptingVisibility = Visibility.Hidden;
-        public Visibility DecryptingVisibility
-        {
-            get => decryptingVisibility;
-            set => Set(ref decryptingVisibility, value);
-        }
-
         private ObservableCollection<MessageViewModel> messages = new ObservableCollection<MessageViewModel>();
         public ObservableCollection<MessageViewModel> Messages
         {
@@ -143,7 +130,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
         private IMessageRepository messageRepository;
-        private readonly object messageCollectionLock = new object();
 
         private Convo activeConvo;
         public Convo ActiveConvo
@@ -162,21 +148,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 activeConvo = value;
                 Name = value.Name;
 
-                ToggleDecryptingLabelVis(true);
-
                 // Decrypt the messages that are already stored 
                 // locally on the device and load them into the view.
                 // Then, resume the user's ability to send messages once done.
                 Task.Run(async () =>
                 {
                     var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE);
-                    var decryptedMessages = DecryptMessages(encryptedMessages);
-
-                    ToggleDecryptingLabelVis(false);
+                    var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.TimestampDateTimeUTC);
 
                     ExecUI(() =>
                     {
-                        Messages.AddRange(decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC).ToArray());
+                        Messages.AddRange(decryptedMessages);
                         StartAutomaticPulling();
                         CanSend = true;
                     });
@@ -184,7 +166,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        public ActiveConvoViewModel(User user, IConvoService convoService, IEventAggregator eventAggregator, IMethodQ methodQ, IUserService userService, IMessageCryptography crypto, ISettings settings, ILogger logger, IRepository<Convo, string> convoProvider, IConvoPasswordProvider convoPasswordProvider)
+        public ActiveConvoViewModel(
+            User user,
+            IConvoService convoService,
+            IEventAggregator eventAggregator,
+            IMethodQ methodQ,
+            IUserService userService,
+            IMessageCryptography crypto,
+            ISettings settings,
+            ILogger logger,
+            IRepository<Convo, string> convoProvider,
+            IConvoPasswordProvider convoPasswordProvider)
         {
             #region Injections
             this.user = user;
@@ -243,29 +235,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             StopAutomaticPulling();
 
-            ExecUI(() => Pulling = true);
+            Set(ref pulling, true);
 
             // Start message pull cycle:
             Task.Run(async () =>
             {
-                while (Pulling)
+                while (pulling)
                 {
                     var pulledMessages = await PullNewestMessages();
 
                     if (pulledMessages.Length > 0)
                     {
                         // Decrypt and add the retrieved messages to the chatroom.
-                        var decryptedMessages = DecryptMessages(pulledMessages).ToArray();
+                        var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC);
 
-                        ExecUI(() =>
+                        Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() =>
                         {
-                            Messages.AddRange(decryptedMessages.OrderBy(m => m?.TimestampDateTimeUTC));
-                            ToggleDecryptingLabelVis(false);
+                            Messages.AddRange(decryptedMessages);
                             if (pageIndex == 0)
                             {
                                 TruncateMessagesCollection();
                             }
-                        });
+                        }));
                     }
 
                     await Task.Delay(MSG_PULL_FREQUENCY);
@@ -275,18 +266,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         /// <summary>
         /// If there are too many messages loaded into the view,
-        /// truncate the messages collection to the latest ones.
+        /// truncate the messages collection to the latest ones.<para> </para>
+        /// Only call this method from the UI thread!
         /// </summary>
         private void TruncateMessagesCollection()
         {
-            ExecUI(() =>
+            int messageCount = Messages.Count;
+            if (messageCount > MSG_COLLECTION_SIZE * 2)
             {
-                int messageCount = Messages.Count;
-                if (messageCount > MSG_COLLECTION_SIZE * 2)
-                {
-                    Messages = new ObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
-                }
-            });
+                Messages = new ObservableCollection<MessageViewModel>(Messages.SkipWhile((msg, i) => i < messageCount - MSG_COLLECTION_SIZE).ToArray());
+            }
         }
 
         /// <summary>
@@ -328,7 +317,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Decrypts multiple <see cref="Message"/>s.
+        /// Decrypts multiple <see cref="Message"/>s. Does not guarantee correct order!
         /// </summary>
         /// <param name="encryptedMessages">The <see cref="Message"/>s to decrypt.</param>
         /// <returns>The decrypted <see cref="MessageViewModel"/>s, ready to be added to the view.</returns>
@@ -394,9 +383,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         /// <summary>
         /// Pulls the convo's newest messages from the server.<para> </para>
-        /// Returns whether any new messages were pulled successfully or not.
+        /// Returns the pulled <see cref="Message"/>s (or an empty array if no new messages were found).
         /// </summary>
-        /// <returns>Whether any new messages were pulled successfully or not.</returns>
+        /// <returns>The pulled <see cref="Message"/>s (or an empty array if no new messages were found).</returns>
         private async Task<Message[]> PullNewestMessages()
         {
             if (ActiveConvo is null || user is null)
@@ -425,20 +414,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return Array.Empty<Message>();
             }
 
-            ToggleDecryptingLabelVis(true);
-
             try
             {
                 // Newly pulled messages should be added to the local message db.
+                retrievedMessages = retrievedMessages.OrderBy(m => m.TimestampUTC).ToArray();
                 if (await messageRepository.AddRange(retrievedMessages))
                 {
                     return retrievedMessages;
                 }
-                else
-                {
-                    logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: The retrieved messages could not be added to the local sqlite db on disk. Reason unknown...");
-                    return Array.Empty<Message>();
-                }
+
+                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: The retrieved messages could not be added to the local sqlite db on disk. Reason unknown...");
+                return Array.Empty<Message>();
             }
             catch (Exception e)
             {
@@ -464,8 +450,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             pageIndex = 0;
             await PullConvoMetadata();
 
-            ToggleEncryptingLabelVis(true);
-
             var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
 
@@ -489,8 +473,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
             }
-
-            ToggleEncryptingLabelVis(false);
 
             JToken ownMessageBody = messageBodiesJson[user.Id];
             if (ownMessageBody == null)
@@ -633,7 +615,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         private void OnScrollToBottom(object commandParam)
         {
-            TruncateMessagesCollection();
+            ExecUI(TruncateMessagesCollection);
         }
 
         /// <summary>
@@ -646,19 +628,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            ToggleDecryptingLabelVis(true);
-
             Task.Run(async () =>
             {
                 var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE, MSG_COLLECTION_SIZE * ++pageIndex);
-                var decryptedMessages = DecryptMessages(encryptedMessages);
-
-                ToggleDecryptingLabelVis(false);
+                var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.TimestampDateTimeUTC);
 
                 ExecUI(() =>
                 {
                     var newCollection = Messages.ToList();
-                    newCollection.InsertRange(0, decryptedMessages.OrderBy(m => m.TimestampDateTimeUTC));
+                    newCollection.InsertRange(0, decryptedMessages);
                     Messages = new ObservableCollection<MessageViewModel>(newCollection);
                 });
             });
@@ -722,22 +700,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             ClipboardTickVisibility = Visibility.Hidden;
             scheduledHideGreenTickIcon = null;
-        }
-
-        /// <summary>
-        /// Toggles the "Decrypting..." info label on or off.
-        /// </summary>
-        private void ToggleDecryptingLabelVis(bool visible)
-        {
-            ExecUI(() => DecryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
-        }
-
-        /// <summary>
-        /// Toggles the "Encrypting..." info label on or off.
-        /// </summary>
-        private void ToggleEncryptingLabelVis(bool visible)
-        {
-            ExecUI(() => EncryptingVisibility = visible ? Visibility.Visible : Visibility.Hidden);
         }
     }
 }
