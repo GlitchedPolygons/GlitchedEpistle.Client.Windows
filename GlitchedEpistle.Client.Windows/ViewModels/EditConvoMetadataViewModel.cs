@@ -332,7 +332,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     Task.Run(async() =>
                     {
-                        var dto = new ConvoChangeMetadataDto
+                        var dto = new ConvoChangeMetadataRequestDto
                         {
                             Name = null,
                             Description = null,
@@ -495,7 +495,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     return;
                 }
 
-                var dto = new ConvoChangeMetadataDto();
+                var dto = new ConvoChangeMetadataRequestDto();
 
                 if (Name.NotNullNotEmpty() && Name != Convo.Name)
                 {

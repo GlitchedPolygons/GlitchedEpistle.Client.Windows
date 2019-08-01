@@ -24,7 +24,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands
         /// Initializes a new instance of the <see cref="DelegateCommand"/> class.
         /// </summary>
         /// <param name="execution">The <see cref="ICommand.Execute"/> action.</param>
-        /// <param name="executionCheck">The <see cref="ICommand.CanExecute"/> check delegate (can be <see langword="null"/>; in that case <see cref="ICommand.CanExecute"/> is always <see langword="true"/>).</param>
+        /// <param name="executionCheck">The <see cref="ICommand.CanExecute"/> check delegate (can be <c>null</c>; in that case <see cref="ICommand.CanExecute"/> is always <see langword="true"/>).</param>
         public DelegateCommand(Action<object> execution, Func<object, bool> executionCheck = null)
         {
             this.execution = execution;
@@ -34,7 +34,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands
         /// <summary>
         /// Defines the method to be called when the command is invoked.
         /// </summary>
-        /// <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <see langword="null"/>.</param>
+        /// <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <c>null</c>.</param>
         public void Execute(object parameter)
         {
             execution?.Invoke(parameter);

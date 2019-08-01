@@ -188,7 +188,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            var convoCreationDto = new ConvoCreationDto
+            var convoCreationDto = new ConvoCreationRequestDto
             {
                 Name = Name,
                 Description = Description,
