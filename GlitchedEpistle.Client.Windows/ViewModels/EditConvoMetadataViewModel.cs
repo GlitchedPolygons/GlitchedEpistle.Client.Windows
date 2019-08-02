@@ -31,10 +31,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
-        private readonly IRepository<Convo, string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
         #endregion
+
+        private readonly IRepository<Convo, string> convoProvider;
 
         #region Events
         public event EventHandler<EventArgs> RequestedClose;
@@ -208,14 +209,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IRepository<Convo, string> convoProvider, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.userService = userService;
             this.convoService = convoService;
-            this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
+
+            convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
             LeaveCommand = new DelegateCommand(OnLeave);
             SubmitCommand = new DelegateCommand(OnSubmit);
@@ -262,13 +264,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private async Task DeleteConvoLocally()
         {
-            var sqliteDbFile = new FileInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id + ".db"));
+            var sqliteDbFile = new FileInfo(Path.Combine(Paths.GetConvosDirectory(user.Id), Convo.Id + ".db"));
             if (sqliteDbFile.Exists)
             {
                 sqliteDbFile.Delete();
             }
 
-            var dir = new DirectoryInfo(Path.Combine(Paths.CONVOS_DIRECTORY, Convo.Id));
+            var dir = new DirectoryInfo(Path.Combine(Paths.GetConvosDirectory(user.Id), Convo.Id));
             if (dir.Exists)
             {
                 dir.DeleteRecursively();

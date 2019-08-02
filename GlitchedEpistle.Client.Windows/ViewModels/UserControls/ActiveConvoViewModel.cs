@@ -147,7 +147,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             IMessageCryptography crypto,
             ISettings settings,
             ILogger logger,
-            IRepository<Convo, string> convoProvider,
             IConvoPasswordProvider convoPasswordProvider)
         {
             #region Injections
@@ -158,10 +157,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.settings = settings;
             this.userService = userService;
             this.convoService = convoService;
-            this.convoProvider = convoProvider;
             this.convoPasswordProvider = convoPasswordProvider;
             this.eventAggregator = eventAggregator;
             #endregion
+
+            convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
             SendTextCommand = new DelegateCommand(OnSendText);
             SendFileCommand = new DelegateCommand(OnSendFile);
@@ -194,7 +194,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             StopAutomaticPulling();
 
             Messages = new ObservableCollection<MessageViewModel>();
-            messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, ActiveConvo.Id + ".db")};Version=3;");
+            messageRepository = new MessageRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), ActiveConvo.Id + ".db")};Version=3;");
 
             // Decrypt the messages that are already stored 
             // locally on the device and load them into the view.
