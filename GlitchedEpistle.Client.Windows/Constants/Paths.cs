@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
+
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants
 {
     /// <summary>
@@ -18,8 +20,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants
         );
 
         /// <summary>
-        /// The directory path where convos will be stored.
+        /// Get the convos storage directory for a specific user account.
         /// </summary>
-        public static readonly string CONVOS_DIRECTORY = Path.Combine(ROOT_DIRECTORY, "Convos");
+        /// <param name="userId"><see cref="User.Id"/></param>
+        /// <returns>The path to the convos directory.</returns>
+        public static string GetConvosDirectory(string userId) => Path.Combine(ROOT_DIRECTORY, userId, "Convos");
     }
 }
