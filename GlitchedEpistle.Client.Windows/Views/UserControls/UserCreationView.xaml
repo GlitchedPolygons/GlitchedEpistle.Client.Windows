@@ -9,7 +9,7 @@
              MinWidth="250" 
              MaxWidth="350">
 
-    <StackPanel HorizontalAlignment="Center">
+    <StackPanel HorizontalAlignment="Center" MaxWidth="250">
 
         <Label Content="Welcome to Glitched Epistle."
                FontWeight="Bold"
@@ -65,28 +65,30 @@
             </PasswordBox>
 
             <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right"
+                        HorizontalAlignment="Center"
                         Margin="0,15,0,0">
 
-                <Button MinWidth="96"
+                <Button Width="117"
                         Content="Quit"
                         Command="{Binding QuitCommand}"
                         ToolTip="Cancels the registration procedure and quits the application." />
 
-                <Button MinWidth="96"
-                        Content="Import"
-                        Margin="15 0 0 0"
-                        Command="{Binding ImportCommand}"
-                        ToolTip="Imports an account from a previously exported epistle backup file." />
-
-                <Button MinWidth="96"
+                <Button Width="117"
                         Name="RegisterButton"
-                        Margin="15 0 0 0"
+                        Margin="15,0,0,0"
                         Content="Register"
                         Command="{Binding RegisterCommand}"
                         ToolTip="Sends your desired login credentials to the Glitched Epistle server for registration."
                         IsEnabled="{Binding FormValid}" />
             </StackPanel>
+
+
+            <Button Width="250"
+                    HorizontalAlignment="Center"
+                    Content="I already have an account"
+                    Margin="0,15,0,0"
+                    Command="{Binding LoginCommand}"
+                    ToolTip="Have a new device? Neat! Just log in using your User ID, Password and 2-Factor Authentication." />
 
         </StackPanel>
     </StackPanel>

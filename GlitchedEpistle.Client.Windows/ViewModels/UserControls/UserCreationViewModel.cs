@@ -1,25 +1,25 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
 
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
+using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.Services.CompressionUtility;
 
 using Microsoft.Win32;
 
@@ -35,6 +35,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IAsymmetricKeygen keygen;
+        private readonly ISymmetricCryptography crypto;
         private readonly ICompressionUtility gzip;
         private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
@@ -46,7 +47,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Commands
         public ICommand PasswordChangedCommand1 { get; }
         public ICommand PasswordChangedCommand2 { get; }
-        public ICommand ImportCommand { get; }
+        public ICommand LoginCommand { get; }
         public ICommand RegisterCommand { get; }
         public ICommand QuitCommand { get; }
         #endregion
@@ -84,7 +85,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory)
+        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory, ISymmetricCryptography crypto)
         {
             this.gzip = gzip;
             this.logger = logger;
@@ -92,6 +93,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.settings = settings;
             this.userService = userService;
             this.windowFactory = windowFactory;
+            this.crypto = crypto;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
 
@@ -113,9 +115,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ValidateForm();
             });
 
-            ImportCommand = new DelegateCommand(OnClickedImport);
             RegisterCommand = new DelegateCommand(OnClickedRegister);
-            QuitCommand = new DelegateCommand(_ => { Application.Current.Shutdown(); });
+            LoginCommand = new DelegateCommand(OnClickedAlreadyHaveAnAccount);
+            QuitCommand = new DelegateCommand(_ => Application.Current.Shutdown());
 
             errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
             errorMessageTimer.Start();
@@ -127,34 +129,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             password2 = null;
         }
 
-        private void OnClickedImport(object commandParam)
+        private void OnClickedAlreadyHaveAnAccount(object commandParam)
         {
-            var dialog = new OpenFileDialog
-            {
-                Title = "Epistle backup file path",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                DefaultExt = ".dat",
-                AddExtension = true,
-                Filter = "Epistle Backup File|*.dat"
-            };
-
-            dialog.FileOk += (sender, e) =>
-            {
-                if (sender is OpenFileDialog _dialog && _dialog.FileName.NotNullNotEmpty())
-                {
-                    var view = windowFactory.Create<ImportUserFromBackupView>(true);
-                    if (view.DataContext is null)
-                    {
-                        var viewModel = viewModelFactory.Create<ImportUserFromBackupViewModel>();
-                        viewModel.BackupFilePath = _dialog.FileName;
-                        view.DataContext = viewModel;
-                    }
-                    view.ShowDialog();
-                    view.Activate();
-                }
-            };
-
-            dialog.ShowDialog();
+            eventAggregator.GetEvent<LogoutEvent>().Publish();
         }
 
         private void OnClickedRegister(object commandParam)
@@ -176,19 +153,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                bool keyGenerationSuccessful = await keygen.GenerateKeyPair(Paths.KEYS_DIRECTORY);
-                if (keyGenerationSuccessful)
+                var keyPair = await keygen.GenerateKeyPair();
+                if (keyPair != null)
                 {
                     try
                     {
-                        var userCreationResponse = await userService.CreateUser(
-                            new UserCreationRequestDto
-                            {
-                                PasswordSHA512 = password1.SHA512(),
-                                PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml(),
-                                CreationSecret = "e5ca42HK-e4128cff.a2f603f8-451d440b"
-                            }
-                        );
+                        var userCreationResponse = await userService.CreateUser(new UserCreationRequestDto
+                        {
+                            PasswordSHA512 = password1.SHA512(),
+                            PublicKeyXml = keyPair.Item1.ToXmlString(),
+                            PrivateKeyXmlEncryptedBytesBase64 = crypto.EncryptRSAParameters(keyPair.Item2, password1),
+                            CreationSecret = "e5ca42HK-e4128cff.a2f603f8-451d440b"
+                        });
 
                         if (userCreationResponse is null)
                         {
@@ -228,7 +204,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     pendingAttempt = false;
                     loadingScreen?.Close();
                 });
-                
+
                 password1 = password2 = null;
             });
         }

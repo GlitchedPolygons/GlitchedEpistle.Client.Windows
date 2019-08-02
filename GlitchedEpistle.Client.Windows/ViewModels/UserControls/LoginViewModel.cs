@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -7,6 +8,9 @@ using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
@@ -26,14 +30,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         // Injections:
         private readonly User user;
+        private readonly ILogger logger;
         private readonly ISettings settings;
         private readonly IUserService userService;
+        private readonly ISymmetricCryptography crypto;
         private readonly IEventAggregator eventAggregator;
         private readonly IServerConnectionTest connectionTest;
         #endregion
 
         #region Commands
         public ICommand LoginCommand { get; }
+        public ICommand RegisterCommand { get; }
         public ICommand QuitCommand { get; }
         public ICommand PasswordChangedCommand { get; }
         #endregion
@@ -53,9 +60,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private volatile int failedAttempts;
         private volatile bool pendingAttempt;
 
-        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest)
+        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest, ILogger logger, ISymmetricCryptography crypto)
         {
             this.user = user;
+            this.logger = logger;
+            this.crypto = crypto;
             this.settings = settings;
             this.userService = userService;
             this.connectionTest = connectionTest;
@@ -63,7 +72,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             QuitCommand = new DelegateCommand(OnClickedQuit);
             LoginCommand = new DelegateCommand(OnClickedLogin);
-            
+            RegisterCommand = new DelegateCommand(_ => eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Publish());
+
             // Bind the password box to the password field.
             PasswordChangedCommand = new DelegateCommand(o => password = (o as PasswordBox)?.Password);
 
@@ -96,10 +106,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     });
                     return;
                 }
+                
+                UserLoginSuccessResponseDto response = await userService.Login(new UserLoginRequestDto
+                {
+                    UserId = UserId,
+                    PasswordSHA512 = password.SHA512(),
+                    Totp = totp
+                });
 
-                string jwt = await userService.Login(UserId, password.SHA512(), totp);
-
-                if (jwt.NullOrEmpty())
+                if (response is null || response.Auth.NullOrEmpty() || response.PrivateKeyXmlEncryptedBytesBase64.NullOrEmpty())
                 {
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
@@ -119,8 +134,27 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
                         failedAttempts = 0;
-                        user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, jwt);
-                        eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
+
+                        try
+                        {
+                            user.Id = settings[nameof(UserId)] = UserId;
+                            settings.Save();
+
+                            user.PublicKeyXml = response.PublicKeyXml;
+                            user.PublicKey = RSAParametersExtensions.FromXmlString(response.PublicKeyXml);
+                            user.PrivateKey = crypto.DecryptRSAParameters(response.PrivateKeyXmlEncryptedBytesBase64, password);
+                            user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, response.Auth);
+
+                            eventAggregator.GetEvent<LoginSucceededEvent>().Publish();
+                        }
+                        catch (Exception e)
+                        {
+                            failedAttempts++;
+                            logger.LogError(e.ToString());
+                            errorMessageTimer.Stop();
+                            errorMessageTimer.Start();
+                            ErrorMessage = "Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure). Thrown exception was logged to the log file.";
+                        }
                     });
                 }
 
