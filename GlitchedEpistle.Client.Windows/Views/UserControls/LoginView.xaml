@@ -7,7 +7,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Center"
+    <StackPanel HorizontalAlignment="Center" MaxWidth="250"
                 IsEnabled="{Binding UIEnabled}">
 
         <Label Content="Welcome to Glitched Epistle."
@@ -29,7 +29,6 @@
                ToolTip="Your user ID." />
 
         <TextBox MinWidth="250"
-                 IsReadOnly="True"
                  Name="UserIdTextBox"
                  Text="{Binding UserId}"
                  TextChanged="UserIdTextBox_OnTextChanged" />
@@ -57,23 +56,30 @@
                  TextChanged="TotpTextBox_OnTextChanged" />
 
         <StackPanel Orientation="Horizontal"
-                    HorizontalAlignment="Right"
+                    HorizontalAlignment="Center"
                     Margin="0,15,0,0">
 
-            <Button Width="96"
-                    Content="Quit"
+            <Button Content="Quit"
+                    Width="117"
                     Command="{Binding QuitCommand}"
                     ToolTip="Cancels the login procedure and thus quits the application." />
 
-            <Button Width="96"
+            <Button Content="Register" 
+                    Width="117"
                     Margin="15,0,0,0"
-                    Content="Login"
-                    Name="LoginButton"
-                    Command="{Binding LoginCommand}"
-                    CommandParameter="{Binding Text, ElementName=TotpTextBox }"
-                    ToolTip="Sends the login credentials to the Glitched Epistle server for authentication."
-                    IsEnabled="False" />
+                    Name="RegisterButton"
+                    Command="{Binding RegisterCommand}" 
+                    ToolTip="Don't have an account yet? No worries, click here and create one now!"/>
         </StackPanel>
+
+        <Button Width="250" 
+                Margin="0,15,0,0"
+                Content="Login"
+                Name="LoginButton"
+                Command="{Binding LoginCommand}"
+                CommandParameter="{Binding Text, ElementName=TotpTextBox }"
+                ToolTip="Sends the login credentials to the Glitched Epistle server for authentication."
+                IsEnabled="False" />
     </StackPanel>
 
     <UserControl.InputBindings>

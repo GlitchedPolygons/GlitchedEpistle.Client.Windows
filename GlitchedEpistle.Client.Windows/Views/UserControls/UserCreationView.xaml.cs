@@ -12,6 +12,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         {
             InitializeComponent();
             Loaded += OnLoaded;
+
+            UsernameTextBox.GotFocus += (_, __) => UsernameTextBox.SelectAll();
+            PasswordBox1.GotFocus += (_, __) => PasswordBox1.SelectAll();
+            PasswordBox2.GotFocus += (_, __) => PasswordBox2.SelectAll();
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e)

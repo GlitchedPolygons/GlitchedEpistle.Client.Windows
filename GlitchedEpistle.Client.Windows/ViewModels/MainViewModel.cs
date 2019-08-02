@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Globalization;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -127,6 +128,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
 
+            eventAggregator.GetEvent<LogoutEvent>().Subscribe(Logout);
+
             #region Button click commands
             ResetWindowButtonCommand = new DelegateCommand(_ =>
             {
@@ -141,7 +144,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CreateConvoButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<CreateConvoView, CreateConvoViewModel>(true, true));
             JoinConvoButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<JoinConvoDialogView, JoinConvoDialogViewModel>(true, true));
             ChangePasswordButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<ChangePasswordView, ChangePasswordViewModel>(true, true));
-            LogoutButtonCommand = new DelegateCommand(_ => Logout());
+            LogoutButtonCommand = new DelegateCommand(_ => eventAggregator.GetEvent<LogoutEvent>().Publish());
             CopyUserIdToClipboardCommand = new DelegateCommand(_ =>
             {
                 Clipboard.SetText(UserId);
@@ -174,6 +177,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // After a successful user creation, show the login screen.
             eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(ShowLoginControl);
 
+            // Connect the "Register" button to its callback.
+            eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Subscribe(ShowRegisterControl);
+
             // If the user agreed to delete all of his data on the local machine, respect his will
             // and get rid of everything (even preventing new settings to be written out on app shutdown too).
             eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(() =>
@@ -203,14 +209,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
             }
 
-            if (string.IsNullOrEmpty(UserId))
-            {
-                ShowRegisterControl();
-            }
-            else
-            {
-                ShowLoginControl();
-            }
+            ShowLoginControl();
 
             ConvosListControl = new ConvosListView { DataContext = viewModelFactory.Create<ConvosListViewModel>() };
         }
@@ -359,24 +358,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             UpdateUserExp();
             UpdateUserConvosMetadata();
-
-            // Load the user's RSA keys into the User instance.
-            if (!File.Exists(Paths.PUBLIC_KEY_PATH))
-            {
-                logger.LogError("Login was successful but no public key was found on disk! Did you delete/modify that key file manually?");
-                throw new FileNotFoundException("No public key found on disk!");
-            }
-
-            user.PublicKeyXml = File.ReadAllText(Paths.PUBLIC_KEY_PATH).PemToXml();
-            user.PublicKey = RSAParametersExtensions.FromXmlString(user.PublicKeyXml);
-
-            if (!File.Exists(Paths.PRIVATE_KEY_PATH))
-            {
-                logger.LogError("Login was successful but no private key was found on disk! Did you delete/modify that key file manually?");
-                throw new FileNotFoundException("No private key found on disk!");
-            }
-
-            user.PrivateKey = RSAParametersExtensions.FromXmlString(File.ReadAllText(Paths.PRIVATE_KEY_PATH).PemToXml());
         }
 
         private void OnCouponRedeemedSuccessfully()
@@ -450,7 +431,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             user.Token = null;
-            user.PasswordSHA512 = null;
+            user.PasswordSHA512 = user.PublicKeyXml = null;
+            user.PublicKey = user.PrivateKey = default(RSAParameters);
 
             UIEnabled = false;
             ShowLoginControl();
@@ -461,7 +443,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 scheduledAuthRefresh = null;
             }
 
-            eventAggregator.GetEvent<LogoutEvent>().Publish();
             convoPasswordProvider.Clear();
         }
     }
