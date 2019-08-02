@@ -53,9 +53,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
-        private readonly IRepository<Convo,string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
+
+        private IRepository<Convo,string> convoProvider;
 
         #region Commands
         public ICommand ClosedCommand { get; }
@@ -115,14 +116,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool reset;
         private ulong? scheduledAuthRefresh, scheduledExpirationDialog, scheduledHideGreenTickIcon;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IRepository<Convo,string> convoProvider, IConvoPasswordProvider convoPasswordProvider)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger,IConvoPasswordProvider convoPasswordProvider)
         {
             this.user = user;
             this.logger = logger;
             this.methodQ = methodQ;
             this.settings = settings;
             this.userService = userService;
-            this.convoProvider = convoProvider;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
@@ -348,8 +348,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             MainControl = null;
             UIEnabled = true;
+
             settings.Load();
             Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
+
+            convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
             if (!scheduledAuthRefresh.HasValue)
             {
@@ -443,6 +446,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 scheduledAuthRefresh = null;
             }
 
+            convoProvider = null;
             convoPasswordProvider.Clear();
         }
     }

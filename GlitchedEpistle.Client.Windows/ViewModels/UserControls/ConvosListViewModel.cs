@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,6 +11,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
@@ -26,11 +28,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
         private readonly IConvoService convoService;
-        private readonly IRepository<Convo, string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
         private readonly User user;
         #endregion
+
+        private readonly IRepository<Convo, string> convoProvider;
 
         #region Commands
         public ICommand OpenConvoCommand { get; }
@@ -54,15 +57,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
-        public ConvosListViewModel(IRepository<Convo, string> convoProvider, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService)
+        public ConvosListViewModel(IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService)
         {
+            #region Injections
             this.user = user;
             this.convoService = convoService;
             this.windowFactory = windowFactory;
-            this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
             this.viewModelFactory = viewModelFactory;
             this.convoPasswordProvider = convoPasswordProvider;
+            #endregion
+
+            convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
             UpdateList();
 

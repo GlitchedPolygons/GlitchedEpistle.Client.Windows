@@ -28,14 +28,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
+
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
         private readonly IUserService userService;
         private readonly IConvoService convoService;
-        private readonly IRepository<Convo, string> convoProvider;
         private readonly IEventAggregator eventAggregator;
         #endregion
+
+        private readonly IRepository<Convo, string> convoProvider;
 
         #region Events
         public event EventHandler<EventArgs> RequestedClose;
@@ -103,14 +105,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string pw = string.Empty;
         private string pw2 = string.Empty;
 
-        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IUserService userService, IConvoService convoService, IRepository<Convo, string> convoProvider)
+        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IUserService userService, IConvoService convoService)
         {
             this.user = user;
             this.logger = logger;
             this.userService = userService;
             this.convoService = convoService;
-            this.convoProvider = convoProvider;
             this.eventAggregator = eventAggregator;
+
+            convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
             SubmitCommand = new DelegateCommand(OnSubmit);
             CancelCommand = new DelegateCommand(OnClickedCancel);

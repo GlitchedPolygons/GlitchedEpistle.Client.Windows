@@ -20,10 +20,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants
         );
 
         /// <summary>
-        /// Get the convos storage directory for a specific user account (creates the directory if it doesn't exist).
+        /// Get the convos storage directory for a specific user account's convos (creates the directory if it doesn't exist).
         /// </summary>
         /// <param name="userId"><see cref="User.Id"/></param>
         /// <returns>The path to the convos directory.</returns>
-        public static string GetConvosDirectory(string userId) => Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId, "Convos"))?.FullName;
+        public static string GetConvosDirectory(string userId) => Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId, "Convos")).FullName;
     }
 }
