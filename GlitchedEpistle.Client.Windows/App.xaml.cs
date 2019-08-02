@@ -74,7 +74,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             }
 
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
-            Directory.CreateDirectory(Paths.CONVOS_DIRECTORY);
             
             // Register transient types:
             container.RegisterType<JwtService>();
@@ -97,7 +96,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConvoPasswordProvider, ConvoPasswordProvider>(new ContainerControlledLifetimeManager());
-            container.RegisterInstance<IRepository<Convo, string>>(new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.CONVOS_DIRECTORY, "_metadata.db")};Version=3;"), new ContainerControlledLifetimeManager());
 
             // Open the main app's window.
             var mainView = container.Resolve<MainView>();
