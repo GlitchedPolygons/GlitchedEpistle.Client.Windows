@@ -40,8 +40,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Constants
         public const double SIDEBAR_MIN_WIDTH = 345;
         public const double SIDEBAR_MAX_WIDTH = 420;
-        public const double MAIN_WINDOW_MIN_WIDTH = 800;
-        public const double MAIN_WINDOW_MIN_HEIGHT = 540;
+        public const double MAIN_WINDOW_MIN_WIDTH = 900;
+        public const double MAIN_WINDOW_MIN_HEIGHT = 600;
         private static readonly TimeSpan AUTH_REFRESH_INTERVAL = TimeSpan.FromMinutes(15);
 
         // Injections:
@@ -55,8 +55,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IViewModelFactory viewModelFactory;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
-
-        private IRepository<Convo,string> convoProvider;
 
         #region Commands
         public ICommand ClosedCommand { get; }
@@ -114,6 +112,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         private bool reset;
+        private IRepository<Convo, string> convoProvider;
         private ulong? scheduledAuthRefresh, scheduledExpirationDialog, scheduledHideGreenTickIcon;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger,IConvoPasswordProvider convoPasswordProvider)
