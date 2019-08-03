@@ -33,7 +33,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly User user;
         #endregion
 
-        private readonly IRepository<Convo, string> convoProvider;
+        private IRepository<Convo, string> convoProvider;
 
         #region Commands
         public ICommand OpenConvoCommand { get; }
@@ -68,9 +68,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.convoPasswordProvider = convoPasswordProvider;
             #endregion
 
-            convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
-
-            UpdateList();
+            if (user.Id.NotNullNotEmpty())
+            {
+                convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
+                UpdateList();
+            }
 
             OpenConvoCommand = new DelegateCommand(OnClickedOnConvo);
             EditConvoCommand = new DelegateCommand(OnClickedEditConvo);
@@ -85,6 +87,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void UpdateList()
         {
+            convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
             var convos = convoProvider.GetAll().GetAwaiter().GetResult();
             Convos = convos != null ? new ObservableCollection<Convo>(convos.OrderBy(c => c.IsExpired()).ThenBy(c => c.Name.ToUpper())) : new ObservableCollection<Convo>();
         }

@@ -8,7 +8,9 @@ using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.Services.CompressionUtility;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -20,7 +22,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly IUserService userService;
-        private readonly ISymmetricCryptography crypto;
         #endregion
 
         #region Events
@@ -55,10 +56,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string newPw = string.Empty;
         private string newPw2 = string.Empty;
 
-        public ChangePasswordViewModel(IUserService userService, User user, ISymmetricCryptography crypto)
+        public ChangePasswordViewModel(IUserService userService, User user)
         {
             this.user = user;
-            this.crypto = crypto;
             this.userService = userService;
 
             SubmitCommand = new DelegateCommand(SubmitChangePassword);
@@ -118,13 +118,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
+            if (user.PrivateKeyPem.NullOrEmpty())
+            {
+                throw new ApplicationException("The user's in-memory private key seems to be null or empty; can't change passwords without re-encrypting a new copy of the user key!");
+            }
+
             var dto = new UserChangePasswordRequestDto
             {
                 UserId = user.Id,
                 Auth = user.Token.Item2,
                 OldPwSHA512 = oldPw.SHA512(),
                 NewPwSHA512 = newPw.SHA512(),
-                NewPrivateKeyXmlEncryptedBytesBase64 = crypto.EncryptRSAParameters(user.PrivateKey, newPw)
+                NewPrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(user.PrivateKeyPem, newPw)
             };
 
             bool success = await userService.ChangeUserPassword(dto);

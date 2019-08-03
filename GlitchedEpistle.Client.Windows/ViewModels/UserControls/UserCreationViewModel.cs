@@ -15,6 +15,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -153,16 +154,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                var keyPair = await keygen.GenerateKeyPair();
+                Tuple<string, string> keyPair = await keygen.GenerateKeyPair();
+                
                 if (keyPair != null)
                 {
                     try
                     {
+                        string publicKeyPem = keyPair.Item1;
+                        string privateKeyPem = keyPair.Item2;
+
                         var userCreationResponse = await userService.CreateUser(new UserCreationRequestDto
                         {
                             PasswordSHA512 = password1.SHA512(),
-                            PublicKeyXml = keyPair.Item1.ToXmlString(),
-                            PrivateKeyXmlEncryptedBytesBase64 = crypto.EncryptRSAParameters(keyPair.Item2, password1),
+                            PublicKey = KeyExchangeUtility.CompressPublicKey(publicKeyPem),
+                            PrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(privateKeyPem, password1),
                             CreationSecret = "e5ca42HK-e4128cff.a2f603f8-451d440b"
                         });
 

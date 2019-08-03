@@ -25,6 +25,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
+using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -47,7 +48,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const int MSG_COLLECTION_SIZE = 20;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
         private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
-        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(420);
+        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(314.159265);
         private static readonly TimeSpan METADATA_PULL_FREQUENCY = TimeSpan.FromMilliseconds(30000);
 
         // Injections:
@@ -305,7 +306,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return null;
             }
 
-            string decryptedJson = crypto.DecryptMessage(message.Body, user.PrivateKey);
+            string decryptedJson = crypto.DecryptMessage(message.Body, user.PrivateKeyPem);
             JToken json = JToken.Parse(decryptedJson);
 
             if (json == null)
@@ -462,7 +463,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
 
             // Get the keys of all convo participants here.
-            List<Tuple<string, string>> keys = await userService.GetUserPublicKeyXml(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
+            List<Tuple<string, string>> keys = await userService.GetUserPublicKey(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
 
             // Encrypt the message for every convo participant individually
             // and put the result in a temporary concurrent bag.
@@ -470,7 +471,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (key != null && key.Item1.NotNullNotEmpty() && key.Item2.NotNullNotEmpty() && messageBodyJsonString.NotNullNotEmpty())
                 {
-                    string encryptedMessage = crypto.EncryptMessage(messageBodyJsonString, RSAParametersExtensions.FromXmlString(key.Item2));
+                    string encryptedMessage = crypto.EncryptMessage(messageBodyJsonString, KeyExchangeUtility.DecompressPublicKey(key.Item2));
                     encryptedMessagesBag.Add(new Tuple<string, string>(key.Item1, encryptedMessage));
                 }
             });

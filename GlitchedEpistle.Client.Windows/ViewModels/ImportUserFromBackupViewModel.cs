@@ -30,7 +30,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Events        
         /// <summary>
         /// Occurs when the <see cref="ImportUserFromBackupViewModel"/> is requested to be closed
-        /// (raise this <see langword="event"/> in this <see langword="class"/> here to request the related <see cref="Window"/>'s closure).
+        /// (raise this <c>event</c> in this <c>class</c> here to request the related <see cref="Window"/>'s closure).
         /// </summary>
         public event EventHandler<EventArgs> RequestedClose;
         #endregion

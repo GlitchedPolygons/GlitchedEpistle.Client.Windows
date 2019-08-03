@@ -336,14 +336,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         var dto = new ConvoChangeMetadataRequestDto
                         {
+                            UserId = user.Id,
+                            Auth = user.Token.Item2,
+                            ConvoId = Convo.Id,
+                            ConvoPasswordSHA512 = oldPw.SHA512(),
+                            NewConvoPasswordSHA512 = null,
                             Name = null,
                             Description = null,
                             ExpirationUTC = null,
-                            PasswordSHA512 = null,
                             CreatorId = newAdminUserId
                         };
 
-                        bool success = await convoService.ChangeConvoMetadata(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, dto);
+                        bool success = await convoService.ChangeConvoMetadata(dto);
                         if (!success)
                         {
                             PrintMessage("The convo admin change request was rejected server-side! Perhaps double-check the provided convo password?",true);
@@ -497,7 +501,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     return;
                 }
 
-                var dto = new ConvoChangeMetadataRequestDto();
+                var dto = new ConvoChangeMetadataRequestDto
+                {
+                    ConvoId = Convo.Id,
+                    ConvoPasswordSHA512 = oldPw.SHA512(),
+                    UserId = user.Id,
+                    Auth = user.Token.Item2
+                };
 
                 if (Name.NotNullNotEmpty() && Name != Convo.Name)
                 {
@@ -516,10 +526,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 if (newPw.NotNullNotEmpty())
                 {
-                    dto.PasswordSHA512 = newPw.SHA512();
+                    dto.NewConvoPasswordSHA512 = newPw.SHA512();
                 }
 
-                bool successful = await convoService.ChangeConvoMetadata(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, dto);
+                bool successful = await convoService.ChangeConvoMetadata(dto);
 
                 if (!successful)
                 {
@@ -545,9 +555,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         convo.ExpirationUTC = dto.ExpirationUTC.Value;
                     }
-                    if (dto.PasswordSHA512.NotNullNotEmpty())
+                    if (dto.NewConvoPasswordSHA512.NotNullNotEmpty())
                     {
-                        convoPasswordProvider.SetPasswordSHA512(convo.Id, dto.PasswordSHA512);
+                        convoPasswordProvider.SetPasswordSHA512(convo.Id, dto.NewConvoPasswordSHA512);
                     }
                     await convoProvider.Update(convo);
                 }
