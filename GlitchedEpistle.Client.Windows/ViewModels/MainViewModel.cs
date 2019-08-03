@@ -434,8 +434,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             user.Token = null;
-            user.PasswordSHA512 = user.PublicKeyXml = null;
-            user.PublicKey = user.PrivateKey = default(RSAParameters);
+            user.PasswordSHA512 = user.PublicKeyPem = user.PrivateKeyPem = null;
 
             UIEnabled = false;
             ShowLoginControl();

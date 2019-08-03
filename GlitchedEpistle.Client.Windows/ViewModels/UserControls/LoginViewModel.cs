@@ -14,6 +14,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
@@ -114,7 +115,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     Totp = totp
                 });
 
-                if (response is null || response.Auth.NullOrEmpty() || response.PrivateKeyXmlEncryptedBytesBase64.NullOrEmpty())
+                if (response is null || response.Auth.NullOrEmpty() || response.PrivateKey.NullOrEmpty())
                 {
                     Application.Current?.Dispatcher?.Invoke(() =>
                     {
@@ -140,9 +141,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                             user.Id = settings[nameof(UserId)] = UserId;
                             settings.Save();
 
-                            user.PublicKeyXml = response.PublicKeyXml;
-                            user.PublicKey = RSAParametersExtensions.FromXmlString(response.PublicKeyXml);
-                            user.PrivateKey = crypto.DecryptRSAParameters(response.PrivateKeyXmlEncryptedBytesBase64, password);
+                            user.PublicKeyPem = KeyExchangeUtility.DecompressPublicKey(response.PublicKey);
+                            user.PrivateKeyPem = KeyExchangeUtility.DecompressAndDecryptPrivateKey(response.PrivateKey, password);
                             user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, response.Auth);
 
                             eventAggregator.GetEvent<LoginSucceededEvent>().Publish();

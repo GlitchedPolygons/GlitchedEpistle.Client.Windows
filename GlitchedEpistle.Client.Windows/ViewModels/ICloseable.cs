@@ -9,7 +9,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         /// <summary>
         /// Occurs when some <see cref="ViewModel"/> requested a view's closure
-        /// (code-behind should react to this <see langword="event"/> and close itself when it's raised).
+        /// (code-behind should react to this <c>event</c> and close itself when it's raised).
         /// </summary>
         event EventHandler<EventArgs> RequestedClose;
     }

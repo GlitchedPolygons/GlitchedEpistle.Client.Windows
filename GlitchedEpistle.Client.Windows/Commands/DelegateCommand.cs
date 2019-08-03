@@ -43,7 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands
         /// <summary>
         /// Defines the method that determines whether the command can execute in its current state.
         /// </summary>
-        /// <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <see langword="null" />.</param>
+        /// <param name="parameter">Data used by the command. If the command does not require data to be passed, this object can be set to <c>null</c>.</param>
         /// <returns><see langword="true" /> if this command can be executed; otherwise, <see langword="false"/>.</returns>
         public bool CanExecute(object parameter)
         {
@@ -51,7 +51,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands
         }
 
         /// <summary>
-        /// Invokes the <see cref="CanExecuteChanged"/> <see langword="event"/> (should be done when the command execution conditions have changed).
+        /// Invokes the <see cref="CanExecuteChanged"/> <c>event</c> (should be done when the command execution conditions have changed).
         /// </summary>
         public void InvokeCanExecuteChanged()
         {

@@ -108,7 +108,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         }
 
         /// <summary>
-        /// Resolves a <see langword="class"/> instance through the IoC container. Only call this method from factories!
+        /// Resolves a <c>class</c> instance through the IoC container. Only call this method from factories!
         /// </summary>
         /// <typeparam name="T">The class to resolve/create.</typeparam>
         /// <returns>Instantiated/resolved class.</returns>
