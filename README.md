@@ -1,4 +1,4 @@
-[![API](https://img.shields.io/badge/api-docs-brightgreen.svg)](https://glitchedpolygons.github.io/GlitchedEpistle.Client.Windows)
+[![API](https://img.shields.io/badge/api-docs-informational.svg)](https://glitchedpolygons.github.io/GlitchedEpistle.Client.Windows)
 
 # Glitched Epistle
 ## Windows Client
