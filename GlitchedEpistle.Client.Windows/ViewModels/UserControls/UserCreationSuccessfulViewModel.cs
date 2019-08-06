@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 

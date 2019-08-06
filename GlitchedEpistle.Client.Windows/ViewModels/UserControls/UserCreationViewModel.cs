@@ -12,7 +12,7 @@ using GlitchedPolygons.Services.Cryptography.Symmetric;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;

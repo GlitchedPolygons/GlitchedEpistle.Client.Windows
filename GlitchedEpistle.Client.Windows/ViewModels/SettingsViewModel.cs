@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;

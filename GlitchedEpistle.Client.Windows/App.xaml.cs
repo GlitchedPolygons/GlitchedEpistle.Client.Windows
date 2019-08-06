@@ -7,13 +7,13 @@ using System.Windows;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Coupons;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.ServerHealth;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
