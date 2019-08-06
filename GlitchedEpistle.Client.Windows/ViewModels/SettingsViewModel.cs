@@ -53,7 +53,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand CancelButtonCommand { get; }
         public ICommand RevertButtonCommand { get; }
         public ICommand RedeemButtonCommand { get; }
-        public ICommand ExportUserButtonCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -83,7 +82,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
             RedeemButtonCommand = new DelegateCommand(OnClickedRedeem);
-            ExportUserButtonCommand = new DelegateCommand(_ => windowFactory.OpenWindow<UserExportView, UserExportViewModel>(true, true));
 
             if (!settings.Load())
             {

@@ -168,7 +168,6 @@
     <Compile Include="ViewModels\UserControls\UserCreationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationSuccessfulViewModel.cs" />
-    <Compile Include="ViewModels\UserExportViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\ChangePasswordView.xaml.cs">
@@ -255,9 +254,6 @@
     </Compile>
     <Compile Include="Views\UserControls\UserCreationSuccessfulView.xaml.cs">
       <DependentUpon>UserCreationSuccessfulView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserExportView.xaml.cs">
-      <DependentUpon>UserExportView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Themes\Base\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -384,10 +380,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\UserCreationSuccessfulView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserExportView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
