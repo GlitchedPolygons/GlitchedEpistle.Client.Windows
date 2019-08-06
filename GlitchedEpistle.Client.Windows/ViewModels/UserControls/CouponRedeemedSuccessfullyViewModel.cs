@@ -1,5 +1,5 @@
 ﻿using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 
 using Newtonsoft.Json;
 
