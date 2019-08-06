@@ -33,7 +33,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ILogger logger;
         private readonly ISettings settings;
         private readonly IUserService userService;
-        private readonly ISymmetricCryptography crypto;
         private readonly IEventAggregator eventAggregator;
         private readonly IServerConnectionTest connectionTest;
         #endregion
@@ -60,11 +59,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private volatile int failedAttempts;
         private volatile bool pendingAttempt;
 
-        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest, ILogger logger, ISymmetricCryptography crypto)
+        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest, ILogger logger)
         {
             this.user = user;
             this.logger = logger;
-            this.crypto = crypto;
             this.settings = settings;
             this.userService = userService;
             this.connectionTest = connectionTest;

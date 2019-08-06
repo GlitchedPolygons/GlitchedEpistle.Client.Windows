@@ -13,17 +13,17 @@ using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 
 using Prism.Events;
 
@@ -351,6 +351,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UIEnabled = true;
 
             settings.Load();
+            UserId = user.Id;
             Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
