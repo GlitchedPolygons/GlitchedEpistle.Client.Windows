@@ -332,6 +332,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     var userConvos = await userService.GetConvos(user.Id, user.Token.Item2);
 
                     await convoProvider.RemoveAll();
+
                     if (await convoProvider.AddRange(userConvos.Select(dto => (Convo)dto).Distinct()))
                     {
                         Application.Current.Dispatcher?.Invoke(() => eventAggregator.GetEvent<UpdatedUserConvosEvent>().Publish());
