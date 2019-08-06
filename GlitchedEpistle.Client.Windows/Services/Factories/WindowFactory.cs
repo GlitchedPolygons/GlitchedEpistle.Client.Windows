@@ -9,7 +9,9 @@ using Unity;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// <see cref="IWindowFactory"/> implementation for creating <see cref="Window"/>s.
+    /// </summary>
     public class WindowFactory : IWindowFactory
     {
         private readonly IViewModelFactory viewModelFactory;

@@ -6,7 +6,9 @@ using Unity;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// <see cref="IViewModelFactory"/> implementation for creating view models using Unity DI.
+    /// </summary>
     public class ViewModelFactory : IViewModelFactory
     {
         /// <summary>
