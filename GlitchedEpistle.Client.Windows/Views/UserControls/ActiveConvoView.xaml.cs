@@ -70,8 +70,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void LoadPreviousMessagesButton_Click(object sender, RoutedEventArgs e)
         {
-            loadingPrevMsgs = true;
-            lastItem = MessagesListBox?.Items?[0] as MessageViewModel;
+            if (MessagesListBox.HasItems)
+            {
+                loadingPrevMsgs = true;
+                lastItem = MessagesListBox?.Items?[0] as MessageViewModel;
+            }
         }
 
         private bool AtBottom()
