@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Globalization;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -25,7 +24,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
-using GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter;
 
 using Prism.Events;
 
@@ -35,6 +33,9 @@ using ZXing.Rendering;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
+    /// <summary>
+    /// Main application view model.
+    /// </summary>
     public class MainViewModel : ViewModel
     {
         #region Constants
