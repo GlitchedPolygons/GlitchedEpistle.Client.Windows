@@ -8,17 +8,16 @@ using System.Windows.Input;
 using System.Windows.Controls;
 
 using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.Cryptography.Symmetric;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Asymmetric;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Symmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 
@@ -32,16 +31,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         private const double ERROR_MESSAGE_INTERVAL = 7000;
+
         private readonly ILogger logger;
         private readonly ISettings settings;
         private readonly IUserService userService;
-        private readonly IAsymmetricKeygen keygen;
+        private readonly IAsymmetricKeygenRSA keygen;
         private readonly ISymmetricCryptography crypto;
         private readonly ICompressionUtility gzip;
         private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
+        private static readonly RSAKeySize RSA_KEY_SIZE = new RSA4096();
         private static readonly CompressionSettings COMPRESSION_SETTINGS = new CompressionSettings();
         #endregion
 
@@ -86,7 +87,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygen keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory, ISymmetricCryptography crypto)
+        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygenRSA keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory, ISymmetricCryptography crypto)
         {
             this.gzip = gzip;
             this.logger = logger;
@@ -154,7 +155,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                Tuple<string, string> keyPair = await keygen.GenerateKeyPair();
+                Tuple<string, string> keyPair = await keygen.GenerateKeyPair(RSA_KEY_SIZE);
                 
                 if (keyPair != null)
                 {
