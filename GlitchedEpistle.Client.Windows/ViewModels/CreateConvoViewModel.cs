@@ -17,6 +17,8 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.RepositoryPattern;
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
 using Newtonsoft.Json;
 
@@ -35,6 +37,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
+        private readonly ICompressionUtility gzip;
+        private readonly IAsymmetricCryptographyRSA crypto;
         #endregion
 
         private readonly IRepository<Convo, string> convoProvider;
@@ -105,10 +109,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string pw = string.Empty;
         private string pw2 = string.Empty;
 
-        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IUserService userService, IConvoService convoService)
+        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IUserService userService, IConvoService convoService, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
+            this.gzip = gzip;
             this.logger = logger;
+            this.crypto = crypto;
             this.userService = userService;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
@@ -199,7 +205,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 PasswordSHA512 = pw.SHA512()
             };
 
-            string id = await convoService.CreateConvo(convoCreationDto, user.Id, user.Token.Item2);
+            var body = new EpistleRequestBody
+            {
+                UserId = user.Id,
+                Auth = user.Token.Item2,
+                Body = gzip.Compress(JsonConvert.SerializeObject(convoCreationDto))
+            };
+
+            string id = await convoService.CreateConvo(body.Sign(crypto, user.PrivateKeyPem));
 
             if (id.NotNullNotEmpty())
             {
