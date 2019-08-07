@@ -19,6 +19,10 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.RepositoryPattern;
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
+
+using Newtonsoft.Json;
 
 using Prism.Events;
 
@@ -28,14 +32,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         private readonly User user;
+        private readonly ICompressionUtility gzip;
         private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
+        private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
         #endregion
-
-        private readonly IRepository<Convo, string> convoProvider;
 
         #region Events
         public event EventHandler<EventArgs> RequestedClose;
@@ -186,6 +190,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
         }
 
+        private readonly IRepository<Convo, string> convoProvider;
+
         private void RefreshParticipantLists()
         {
             Participants = new ObservableCollection<string>();
@@ -209,9 +215,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto, ICompressionUtility gzip)
         {
             this.user = user;
+            this.gzip = gzip;
+            this.crypto = crypto;
             this.userService = userService;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
@@ -299,7 +307,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 Task.Run(async () =>
                 {
-                    bool success = await convoService.LeaveConvo(Convo.Id, Totp, user.Id, user.Token.Item2);
+                    var dto = new ConvoLeaveRequestDto
+                    {
+                        ConvoId = Convo.Id,
+                        Totp = Totp
+                    };
+
+                    var body = new EpistleRequestBody
+                    {
+                        UserId = user.Id,
+                        Auth = user.Token.Item2,
+                        Body = JsonConvert.SerializeObject(dto)
+                    };
+
+                    bool success = await convoService.LeaveConvo(body.Sign(crypto, user.PrivateKeyPem));
 
                     if (!success)
                     {
@@ -323,7 +344,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (oldPw.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing the current convo's password (at the bottom of the form).", true);
+                PrintMessage("Please authenticate your request by providing the current convo's password (at the top of the form).", true);
                 return;
             }
 
@@ -336,8 +357,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         var dto = new ConvoChangeMetadataRequestDto
                         {
-                            UserId = user.Id,
-                            Auth = user.Token.Item2,
                             ConvoId = Convo.Id,
                             ConvoPasswordSHA512 = oldPw.SHA512(),
                             NewConvoPasswordSHA512 = null,
@@ -347,7 +366,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                             CreatorId = newAdminUserId
                         };
 
-                        bool success = await convoService.ChangeConvoMetadata(dto);
+                        var body = new EpistleRequestBody
+                        {
+                            UserId = user.Id,
+                            Auth = user.Token.Item2,
+                            Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+                        };
+
+                        bool success = await convoService.ChangeConvoMetadata(body.Sign(crypto, user.PrivateKeyPem));
                         if (!success)
                         {
                             PrintMessage("The convo admin change request was rejected server-side! Perhaps double-check the provided convo password?",true);
@@ -394,7 +420,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     Task.Run(async () =>
                     {
-                        bool success = await convoService.KickUser(Convo.Id, oldPw.SHA512(), user.Id, user.Token.Item2, userIdToKick, true);
+                        var dto = new ConvoKickUserRequestDto
+                        {
+                            ConvoId = Convo.Id,
+                            ConvoPasswordSHA512 = oldPw.SHA512(),
+                            UserIdToKick = userIdToKick,
+                            PermaBan = true
+                        };
+
+                        var body = new EpistleRequestBody
+                        {
+                            UserId = user.Id,
+                            Auth = user.Token.Item2,
+                            Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+                        };
+
+                        bool success = await convoService.KickUser(body.Sign(crypto, user.PrivateKeyPem));
                         if (!success)
                         {
                             PrintMessage($"The user \"{userIdToKick}\" could not be kicked and banned from the convo. Perhaps double-check the provided convo password?", true);
@@ -408,6 +449,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         {
                             convo.BannedUsers.Add(userIdToKick);
                             convo.Participants.Remove(userIdToKick);
+
                             await convoProvider.Update(convo);
                         }
                         
@@ -438,7 +480,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 Task.Run(async () =>
                 {
-                    bool success = await convoService.DeleteConvo(Convo.Id, Totp, user.Id, user.Token.Item2);
+                    var dto = new ConvoDeletionRequestDto
+                    {
+                        ConvoId = Convo.Id,
+                        Totp = Totp
+                    };
+
+                    var body = new EpistleRequestBody
+                    {
+                        UserId = user.Id,
+                        Auth = user.Token.Item2,
+                        Body = JsonConvert.SerializeObject(dto)
+                    };
+
+                    bool success = await convoService.DeleteConvo(body.Sign(crypto, user.PrivateKeyPem));
                     if (!success)
                     {
                         PrintMessage("The convo deletion request could not be fulfilled server-side; please double check the provided 2FA token and try again.", true);
@@ -505,8 +560,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     ConvoId = Convo.Id,
                     ConvoPasswordSHA512 = oldPw.SHA512(),
-                    UserId = user.Id,
-                    Auth = user.Token.Item2
                 };
 
                 if (Name.NotNullNotEmpty() && Name != Convo.Name)
@@ -529,7 +582,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     dto.NewConvoPasswordSHA512 = newPw.SHA512();
                 }
 
-                bool successful = await convoService.ChangeConvoMetadata(dto);
+                var body = new EpistleRequestBody
+                {
+                    UserId = user.Id,
+                    Auth = user.Token.Item2,
+                    Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+                };
+
+                bool successful = await convoService.ChangeConvoMetadata(body.Sign(crypto, user.PrivateKeyPem));
 
                 if (!successful)
                 {
