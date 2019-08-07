@@ -348,6 +348,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
+            if (Totp.NullOrEmpty())
+            {
+                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
+                return;
+            }
+
             if (commandParam is string newAdminUserId)
             {
                 bool? confirmed = new ConfirmChangeConvoAdminView().ShowDialog();
@@ -357,6 +363,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         var dto = new ConvoChangeMetadataRequestDto
                         {
+                            Totp = Totp,
                             ConvoId = Convo.Id,
                             ConvoPasswordSHA512 = oldPw.SHA512(),
                             NewConvoPasswordSHA512 = null,
@@ -547,17 +554,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             Task.Run(async () =>
             {
-                bool totpValid = await userService.Validate2FA(user.Id, Totp);
-
-                if (!totpValid)
-                {
-                    PrintMessage("Two-Factor Authentication failed! Convo creation request rejected.", true);
-                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
-                    return;
-                }
-
                 var dto = new ConvoChangeMetadataRequestDto
                 {
+                    Totp = Totp,
                     ConvoId = Convo.Id,
                     ConvoPasswordSHA512 = oldPw.SHA512(),
                 };
