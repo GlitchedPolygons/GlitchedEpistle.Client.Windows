@@ -722,16 +722,5 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             ClipboardTickVisibility = Visibility.Hidden;
             scheduledHideGreenTickIcon = null;
         }
-
-        /// <summary>
-        /// Shorthand for <c>Application.Current?.Dispatcher?.Invoke(Action, DispatcherPriority);</c>
-        /// </summary>
-        /// <param name="action">What you want to execute on the UI thread.</param>
-        /// <param name="priority">The <see cref="DispatcherPriority"/> with which to execute the <see cref="Action"/> on the UI thread.</param>
-        private static void ExecUI(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
-        {
-            Application.Current?.Dispatcher?.Invoke(action, priority);
-        }
-
     }
 }

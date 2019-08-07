@@ -242,7 +242,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void ShowCouponRedeemedSuccessfullyControl()
         {
-            CouponRedeemedSuccessfullyViewModel viewModel = viewModelFactory.Create<CouponRedeemedSuccessfullyViewModel>();
+            var viewModel = viewModelFactory.Create<CouponRedeemedSuccessfullyViewModel>();
             MainControl = new CouponRedeemedSuccessfullyView { DataContext = viewModel };
         }
         #endregion
@@ -381,7 +381,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Create QR code containing the Authy/Google Auth setup link and open the RegistrationSuccessfulView.
             IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap> { Format = BarcodeFormat.QR_CODE, Renderer = new WriteableBitmapRenderer(), Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 } };
 
-            UserCreationSuccessfulViewModel viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
+            var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
             viewModel.Secret = userCreationResponseDto.TotpSecret;
             viewModel.QR = qrWriter.Write($"otpauth://totp/GlitchedEpistle:{userCreationResponseDto.Id}?secret={userCreationResponseDto.TotpSecret}");
             viewModel.BackupCodes = userCreationResponseDto.TotpEmergencyBackupCodes;

@@ -1,9 +1,6 @@
-﻿using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
-
+﻿using RestSharp;
 using Newtonsoft.Json;
-
-using RestSharp;
+using System.Threading.Tasks;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -17,24 +14,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public string Quote { get => quote; set => Set(ref quote, value); }
         #endregion
 
-        public CouponRedeemedSuccessfullyViewModel(User user, IUserService userService)
+        public CouponRedeemedSuccessfullyViewModel()
         {
             ThankYouNote =
-                $@"You are awesome!
+
+$@"You are awesome!
 
 By redeeming your access code you have successfully extended your Glitched Epistle membership by 30 days.
 
 To celebrate your decision of valuing privacy, here's a completely random quote:";
 
-            RestRequest request = new RestRequest(Method.GET);
-            RestClient restClient = new RestClient("http://quotes.rest/qod.json");
+            Quote = "(retrieving quote from server)";
 
-            dynamic qodJson = JsonConvert.DeserializeObject(restClient.Get(request)?.Content);
-            if (qodJson != null)
+            Task.Run(() =>
             {
-                dynamic qod = qodJson.contents.quotes[0];
-                Quote = $"{qod.quote}\n\n- {qod.author}";
-            }
+                RestRequest request = new RestRequest(Method.GET);
+                RestClient restClient = new RestClient("http://quotes.rest/qod.json");
+
+                dynamic qodJson = JsonConvert.DeserializeObject(restClient.Get(request)?.Content);
+                if (qodJson != null)
+                {
+                    dynamic qod = qodJson.contents.quotes[0];
+                    ExecUI(() => Quote = $"{qod.quote}\n\n- {qod.author}");
+                }
+            });
         }
     }
 }

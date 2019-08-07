@@ -162,7 +162,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             RequestedClose?.Invoke(null, EventArgs.Empty);
         }
 
-        private async void OnSubmit(object commandParam)
+        private void OnSubmit(object commandParam)
         {
             string totp = commandParam as string;
 
@@ -188,60 +188,69 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            var convoCreationDto = new ConvoCreationRequestDto
+            Task.Run(async() =>
             {
-                Totp = totp,
-                Name = Name,
-                Description = Description,
-                ExpirationUTC = ExpirationUTC,
-                PasswordSHA512 = pw.SHA512()
-            };
-
-            var body = new EpistleRequestBody
-            {
-                UserId = user.Id,
-                Auth = user.Token.Item2,
-                Body = gzip.Compress(JsonConvert.SerializeObject(convoCreationDto))
-            };
-
-            string id = await convoService.CreateConvo(body.Sign(crypto, user.PrivateKeyPem));
-
-            if (id.NotNullNotEmpty())
-            {
-                // Create the convo model object and feed it into the convo provider.
-                var convo = new Convo
+                var convoCreationDto = new ConvoCreationRequestDto
                 {
-                    Id = id,
+                    Totp = totp,
                     Name = Name,
-                    CreatorId = user.Id,
-                    CreationTimestampUTC = DateTime.UtcNow,
                     Description = Description,
                     ExpirationUTC = ExpirationUTC,
-                    Participants = new List<string> { user.Id }
+                    PasswordSHA512 = pw.SHA512()
                 };
 
-                // Add the created convo to the convo 
-                // provider instance and write it out to disk.
-                await convoProvider.Add(convo);
+                var body = new EpistleRequestBody
+                {
+                    UserId = user.Id,
+                    Auth = user.Token.Item2,
+                    Body = gzip.Compress(JsonConvert.SerializeObject(convoCreationDto))
+                };
 
-                // Raise the convo created event application-wide (the main view will subscribe to this to update its list).
-                eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Publish(id);
+                string id = await convoService.CreateConvo(body.Sign(crypto, user.PrivateKeyPem));
 
-                // Record the convo creation into the user log.
-                logger.LogMessage($"Convo {Name} created successfully under the id {id}.");
+                if (id.NotNullNotEmpty())
+                {
+                    // Create the convo model object and feed it into the convo provider.
+                    var convo = new Convo
+                    {
+                        Id = id,
+                        Name = Name,
+                        CreatorId = user.Id,
+                        CreationTimestampUTC = DateTime.UtcNow,
+                        Description = Description,
+                        ExpirationUTC = ExpirationUTC,
+                        Participants = new List<string> { user.Id }
+                    };
 
-                // Display success message and keep UI disabled.
-                CanSubmit = false;
-                PrintMessage($"The convo {Name} has been created successfully under the id {id}. You can close this window now.", false);
-            }
-            else
-            {
-                // If convo creation failed for some reason, the returned
-                // id string is null and the user is notified accordingly.
-                CanSubmit = true;
-                PrintMessage($"Convo {Name} couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.", true);
-                logger.LogError($"Convo {Name} couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
-            }
+                    // Add the created convo to the convo 
+                    // provider instance and write it out to disk.
+                    await convoProvider.Add(convo);
+
+                    // Raise the convo created event application-wide (the main view will subscribe to this to update its list).
+                    ExecUI(() =>
+                    {
+                        eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Publish(id);
+
+                        // Display success message and keep UI disabled.
+                        CanSubmit = false;
+                        PrintMessage($"The convo {Name} has been created successfully under the id {id}. You can close this window now.", false);
+                    });
+
+                    // Record the convo creation into the user log.
+                    logger.LogMessage($"Convo {Name} created successfully under the id {id}.");
+                }
+                else
+                {
+                    ExecUI(() =>
+                    {
+                        // If convo creation failed for some reason, the returned
+                        // id string is null and the user is notified accordingly.
+                        CanSubmit = true;
+                        PrintMessage($"Convo {Name} couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.", true);
+                        logger.LogError($"Convo {Name} couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
+                    });
+                }
+            });
         }
     }
 }
