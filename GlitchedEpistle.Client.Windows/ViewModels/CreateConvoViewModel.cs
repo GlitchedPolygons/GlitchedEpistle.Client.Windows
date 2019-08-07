@@ -174,15 +174,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             CanSubmit = false;
 
-            bool totpValid = await userService.Validate2FA(user.Id, totp);
-
-            if (!totpValid)
-            {
-                PrintMessage("Two-Factor Authentication failed! Convo creation request rejected.", true);
-                CanSubmit = true;
-                return;
-            }
-
             if (pw != pw2)
             {
                 PrintMessage("The password does not match its confirmation; please make sure that you re-type your password correctly!", true);
@@ -199,6 +190,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             var convoCreationDto = new ConvoCreationRequestDto
             {
+                Totp = totp,
                 Name = Name,
                 Description = Description,
                 ExpirationUTC = ExpirationUTC,
@@ -247,8 +239,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 // If convo creation failed for some reason, the returned
                 // id string is null and the user is notified accordingly.
                 CanSubmit = true;
-                PrintMessage($"Convo {Name} couldn't be created.", true);
-                logger.LogError($"Convo {Name} couldn't be created. Reason unknown.");
+                PrintMessage($"Convo {Name} couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.", true);
+                logger.LogError($"Convo {Name} couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
             }
         }
     }
