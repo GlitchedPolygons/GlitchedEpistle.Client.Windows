@@ -98,16 +98,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             UIEnabled = false;
 
-            bool totpValid = await userService.Validate2FA(user.Id, totp);
-
-            if (!totpValid)
-            {
-                ResetMessages();
-                ErrorMessage = "Two-Factor Authentication failed! Password change request rejected.";
-                UIEnabled = true;
-                return;
-            }
-
             if (oldPw.NullOrEmpty() || newPw.NullOrEmpty() || newPw != newPw2)
             {
                 ResetMessages();
@@ -131,6 +121,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             var dto = new UserChangePasswordRequestDto
             {
+                Totp = totp,
                 OldPwSHA512 = oldPw.SHA512(),
                 NewPwSHA512 = newPw.SHA512(),
                 NewPrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(user.PrivateKeyPem, newPw)
@@ -153,7 +144,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             else
             {
                 ResetMessages();
-                ErrorMessage = "An unknown error occurred whilst trying to change your password.";
+                ErrorMessage = "Password change request rejected server-side: perhaps invalid 2FA token?";
             }
 
             oldPw = newPw = newPw2 = totp = null;
