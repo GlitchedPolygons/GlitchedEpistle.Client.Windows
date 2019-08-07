@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -34,6 +37,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             field = newValue;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             return true;
+        }
+
+        /// <summary>
+        /// Shorthand for <c>Application.Current?.Dispatcher?.Invoke(Action, DispatcherPriority);</c>
+        /// </summary>
+        /// <param name="action">What you want to execute on the UI thread.</param>
+        /// <param name="priority">The <see cref="DispatcherPriority"/> with which to execute the <see cref="Action"/> on the UI thread.</param>
+        protected static void ExecUI(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
+        {
+            Application.Current?.Dispatcher?.Invoke(action, priority);
         }
     }
 }

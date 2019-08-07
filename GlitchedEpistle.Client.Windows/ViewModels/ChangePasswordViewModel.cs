@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Timers;
-using System.Windows.Controls;
+using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
@@ -23,6 +25,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         // Injections:
         private readonly User user;
+        private readonly ILogger logger;
         private readonly IUserService userService;
         private readonly ICompressionUtility gzip;
         private readonly IAsymmetricCryptographyRSA crypto;
@@ -60,11 +63,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string newPw = string.Empty;
         private string newPw2 = string.Empty;
 
-        public ChangePasswordViewModel(IUserService userService, User user, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
+        public ChangePasswordViewModel(IUserService userService, User user, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto, ILogger logger)
         {
             this.user = user;
             this.gzip = gzip;
             this.crypto = crypto;
+            this.logger = logger;
             this.userService = userService;
 
             SubmitCommand = new DelegateCommand(SubmitChangePassword);
@@ -85,7 +89,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             ErrorMessage = SuccessMessage = null;
         }
 
-        private async void SubmitChangePassword(object commandParam)
+        private void SubmitChangePassword(object commandParam)
         {
             string totp = commandParam as string;
 
@@ -98,56 +102,73 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             UIEnabled = false;
 
-            if (oldPw.NullOrEmpty() || newPw.NullOrEmpty() || newPw != newPw2)
+            Task.Run(async () =>
             {
-                ResetMessages();
-                ErrorMessage = "The old password is wrong or the new ones don't match.";
-                UIEnabled = true;
-                return;
-            }
+                if (oldPw.NullOrEmpty() || newPw.NullOrEmpty() || newPw != newPw2)
+                {
+                    ExecUI(() =>
+                    {
+                        ResetMessages();
+                        ErrorMessage = "The old password is wrong or the new ones don't match.";
+                        UIEnabled = true;
+                    });
+                    return;
+                }
 
-            if (newPw.Length < 7)
-            {
-                ResetMessages();
-                ErrorMessage = "Your password is too weak; make sure that it has at least >7 characters!";
-                UIEnabled = true;
-                return;
-            }
+                if (newPw.Length < 7)
+                {
+                    ExecUI(() =>
+                    {
+                        ResetMessages();
+                        ErrorMessage = "Your password is too weak; make sure that it has at least >7 characters!";
+                        UIEnabled = true;
+                    });
+                    return;
+                }
 
-            if (user.PrivateKeyPem.NullOrEmpty())
-            {
-                throw new ApplicationException("The user's in-memory private key seems to be null or empty; can't change passwords without re-encrypting a new copy of the user key!");
-            }
+                if (user.PrivateKeyPem.NullOrEmpty())
+                {
+                    string msg = "The user's in-memory private key seems to be null or empty; can't change passwords without re-encrypting a new copy of the user key!";
+                    logger?.LogError(msg);
+                    throw new ApplicationException(msg);
+                }
 
-            var dto = new UserChangePasswordRequestDto
-            {
-                Totp = totp,
-                OldPwSHA512 = oldPw.SHA512(),
-                NewPwSHA512 = newPw.SHA512(),
-                NewPrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(user.PrivateKeyPem, newPw)
-            };
+                var dto = new UserChangePasswordRequestDto
+                {
+                    Totp = totp,
+                    OldPwSHA512 = oldPw.SHA512(),
+                    NewPwSHA512 = newPw.SHA512(),
+                    NewPrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(user.PrivateKeyPem, newPw)
+                };
 
-            var requestBody = new EpistleRequestBody
-            {
-                UserId = user.Id,
-                Auth = user.Token.Item2,
-                Body = gzip.Compress(JsonConvert.SerializeObject(dto))
-            };
+                var requestBody = new EpistleRequestBody
+                {
+                    UserId = user.Id,
+                    Auth = user.Token.Item2,
+                    Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+                };
 
-            bool success = await userService.ChangeUserPassword(requestBody.Sign(crypto, user.PrivateKeyPem));
+                bool success = await userService.ChangeUserPassword(requestBody.Sign(crypto, user.PrivateKeyPem));
 
-            if (success)
-            {
-                ResetMessages();
-                SuccessMessage = "Congrats! Your password's been changed successfully.";
-            }
-            else
-            {
-                ResetMessages();
-                ErrorMessage = "Password change request rejected server-side: perhaps invalid 2FA token?";
-            }
-
-            oldPw = newPw = newPw2 = totp = null;
+                if (success)
+                {
+                    oldPw = newPw = newPw2 = totp = null;
+                    ExecUI(() =>
+                    {
+                        ResetMessages();
+                        SuccessMessage = "Congrats! Your password's been changed successfully.";
+                    });
+                }
+                else
+                {
+                    ExecUI(() =>
+                    {
+                        ResetMessages();
+                        ErrorMessage = "Password change request rejected server-side: perhaps invalid 2FA token?";
+                        UIEnabled = true;
+                    });
+                }
+            });
         }
     }
 }

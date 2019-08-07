@@ -41,7 +41,7 @@
                Padding="5,0,0,5"
                ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?" />
 
-        <Grid>
+        <Grid IsEnabled="{Binding CanRedeem}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
