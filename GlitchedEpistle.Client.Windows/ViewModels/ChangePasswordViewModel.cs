@@ -9,6 +9,10 @@ using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
+
+using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -20,6 +24,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly IUserService userService;
+        private readonly ICompressionUtility gzip;
+        private readonly IAsymmetricCryptographyRSA crypto;
         #endregion
 
         #region Events
@@ -54,9 +60,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string newPw = string.Empty;
         private string newPw2 = string.Empty;
 
-        public ChangePasswordViewModel(IUserService userService, User user)
+        public ChangePasswordViewModel(IUserService userService, User user, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
+            this.gzip = gzip;
+            this.crypto = crypto;
             this.userService = userService;
 
             SubmitCommand = new DelegateCommand(SubmitChangePassword);
@@ -123,14 +131,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             var dto = new UserChangePasswordRequestDto
             {
-                UserId = user.Id,
-                Auth = user.Token.Item2,
                 OldPwSHA512 = oldPw.SHA512(),
                 NewPwSHA512 = newPw.SHA512(),
                 NewPrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(user.PrivateKeyPem, newPw)
             };
 
-            bool success = await userService.ChangeUserPassword(dto);
+            var requestBody = new EpistleRequestBody
+            {
+                UserId = user.Id,
+                Auth = user.Token.Item2,
+                Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+            };
+
+            bool success = await userService.ChangeUserPassword(requestBody.Sign(crypto, user.PrivateKeyPem));
 
             if (success)
             {

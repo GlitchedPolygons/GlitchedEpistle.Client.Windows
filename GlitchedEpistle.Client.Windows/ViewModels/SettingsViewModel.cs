@@ -14,6 +14,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
 using Prism.Events;
 
@@ -30,6 +31,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly ISettings settings;
         private readonly ICouponService couponService;
         private readonly IEventAggregator eventAggregator;
+        private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IWindowFactory windowFactory;
         private readonly IViewModelFactory viewModelFactory;
         #endregion
@@ -66,10 +68,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldTheme, newTheme;
 
-        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory)
+        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
             this.logger = logger;
+            this.crypto = crypto;
             this.settings = settings;
             this.couponService = couponService;
             this.eventAggregator = eventAggregator;
@@ -150,7 +153,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            bool success = await couponService.UseCoupon(couponCode, user.Id, user.Token.Item2);
+            var requestBody = new EpistleRequestBody { UserId = user.Id, Auth = user.Token.Item2, Body = couponCode };
+            bool success = await couponService.UseCoupon(requestBody.Sign(crypto, user.PrivateKeyPem));
 
             var dialogViewModel = viewModelFactory.Create<InfoDialogViewModel>();
 
