@@ -30,6 +30,8 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
 using Microsoft.Win32;
 
@@ -56,9 +58,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly ILogger logger;
         private readonly IMethodQ methodQ;
         private readonly ISettings settings;
+        private readonly ICompressionUtility gzip;
         private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IMessageCryptography crypto;
+        private readonly IAsymmetricCryptographyRSA rsa;
         private readonly IEventAggregator eventAggregator;
         private readonly IRepository<Convo, string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
@@ -148,10 +152,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             IMessageCryptography crypto,
             ISettings settings,
             ILogger logger,
-            IConvoPasswordProvider convoPasswordProvider)
+            IConvoPasswordProvider convoPasswordProvider, ICompressionUtility gzip, IAsymmetricCryptographyRSA rsa)
         {
             #region Injections
+            this.rsa = rsa;
             this.user = user;
+            this.gzip = gzip;
             this.logger = logger;
             this.crypto = crypto;
             this.methodQ = methodQ;
@@ -493,14 +499,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             var postParamsDto = new PostMessageParamsDto
             {
-                UserId = user.Id,
                 SenderName = username,
-                Auth = user.Token.Item2,
+                ConvoId = ActiveConvo.Id,
                 ConvoPasswordSHA512 = convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
                 MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
             };
 
-            bool success = await convoService.PostMessage(ActiveConvo.Id, postParamsDto);
+            var body = new EpistleRequestBody
+            {
+                UserId = user.Id,
+                Auth = user.Token.Item2,
+                Body = gzip.Compress(JsonConvert.SerializeObject(postParamsDto))
+            };
+
+            bool success = await convoService.PostMessage(body.Sign(rsa, user.PrivateKeyPem));
             return success;
         }
 

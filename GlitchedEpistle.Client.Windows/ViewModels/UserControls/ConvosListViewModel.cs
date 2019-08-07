@@ -16,6 +16,9 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.RepositoryPattern;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
+
+using Newtonsoft.Json;
 
 using Prism.Events;
 
@@ -30,10 +33,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IConvoService convoService;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
+        private readonly IAsymmetricCryptographyRSA crypto;
         private readonly User user;
         #endregion
-
-        private IRepository<Convo, string> convoProvider;
 
         #region Commands
         public ICommand OpenConvoCommand { get; }
@@ -57,11 +59,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
-        public ConvosListViewModel(IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService)
+        private IRepository<Convo, string> convoProvider;
+
+        public ConvosListViewModel(IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService, IAsymmetricCryptographyRSA crypto)
         {
             #region Injections
             this.user = user;
             this.convoService = convoService;
+            this.crypto = crypto;
             this.windowFactory = windowFactory;
             this.eventAggregator = eventAggregator;
             this.viewModelFactory = viewModelFactory;
@@ -108,7 +113,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 Task.Run(async () =>
                 {
-                    if (!await convoService.JoinConvo(_convo.Id, cachedPwSHA512, user.Id, user.Token.Item2))
+                    var dto = new ConvoJoinRequestDto
+                    {
+                        ConvoId = _convo.Id,
+                        ConvoPasswordSHA512 = cachedPwSHA512
+                    };
+
+                    var body = new EpistleRequestBody
+                    {
+                        UserId = user.Id,
+                        Auth = user.Token.Item2,
+                        Body = JsonConvert.SerializeObject(dto)
+                    };
+
+                    if (!await convoService.JoinConvo(body.Sign(crypto,user.PrivateKeyPem)))
                     {
                         convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
                         Application.Current?.Dispatcher?.Invoke(() =>
@@ -160,11 +178,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             var view = windowFactory.Create<EditConvoMetadataView>(true);
             var viewModel = viewModelFactory.Create<EditConvoMetadataViewModel>();
             viewModel.Convo = convo;
-
-            if (view.DataContext is null)
-            {
-                view.DataContext = viewModel;
-            }
+            view.DataContext = viewModel;
 
             view.Show();
             view.Focus();

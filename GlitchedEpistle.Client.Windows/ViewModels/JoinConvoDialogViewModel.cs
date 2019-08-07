@@ -11,6 +11,10 @@ using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.Services.CompressionUtility;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
+
+using Newtonsoft.Json;
 
 using Prism.Events;
 
@@ -23,8 +27,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         // Injections:
         private readonly User user;
+        private readonly ICompressionUtility gzip;
         private readonly IConvoService convoService;
         private readonly IConvoPasswordProvider convoPasswordProvider;
+        private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -60,9 +66,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, User user, IConvoPasswordProvider convoPasswordProvider)
+        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, User user, IConvoPasswordProvider convoPasswordProvider, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
+            this.gzip = gzip;
+            this.crypto = crypto;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
@@ -99,7 +107,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             Task.Run(async () =>
             {
-                if (!await convoService.JoinConvo(ConvoId, passwordSHA512, user.Id, user.Token.Item2))
+                var dto = new ConvoJoinRequestDto
+                {
+                    ConvoId = this.ConvoId,
+                    ConvoPasswordSHA512 = passwordSHA512
+                };
+
+                var body = new EpistleRequestBody
+                {
+                    UserId = user.Id,
+                    Auth = user.Token.Item2,
+                    Body = JsonConvert.SerializeObject(dto)
+                };
+
+                if (!await convoService.JoinConvo(body.Sign(crypto, user.PrivateKeyPem)))
                 {
                     convoPasswordProvider.RemovePasswordSHA512(ConvoId);
 
