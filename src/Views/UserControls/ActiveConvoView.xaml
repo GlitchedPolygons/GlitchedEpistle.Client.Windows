@@ -47,7 +47,7 @@
             <Button Width="15"
                     Height="15"
                     Margin="4,0,0,0"
-                    ToolTip="Copy user id to clipboard"
+                    ToolTip="Copy convo id to clipboard"
                     Command="{Binding CopyConvoIdToClipboardCommand}"
                     Style="{StaticResource CopyToClipboardButton}" />
 

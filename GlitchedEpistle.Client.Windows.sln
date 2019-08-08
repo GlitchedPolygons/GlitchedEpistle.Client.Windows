@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchedEpistle.Client.Windows", "GlitchedEpistle.Client.Windows\GlitchedEpistle.Client.Windows.csproj", "{4B7E3355-6733-4B88-9360-4C8BC8974DF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchedEpistle.Client.Windows", "src\GlitchedEpistle.Client.Windows.csproj", "{4B7E3355-6733-4B88-9360-4C8BC8974DF6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlitchedEpistle.Client", "..\GlitchedEpistle.Client\src\GlitchedEpistle.Client.csproj", "{106B9806-322B-45E1-9565-9C5B832F9E8A}"
 EndProject
