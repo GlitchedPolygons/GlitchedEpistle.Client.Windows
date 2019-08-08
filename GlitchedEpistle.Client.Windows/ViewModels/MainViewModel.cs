@@ -335,7 +335,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                     if (await convoProvider.AddRange(userConvos.Select(dto => (Convo)dto).Distinct()))
                     {
-                        Application.Current.Dispatcher?.Invoke(() => eventAggregator.GetEvent<UpdatedUserConvosEvent>().Publish());
+                        ExecUI(() => eventAggregator.GetEvent<UpdatedUserConvosEvent>().Publish());
                     }
                 }
                 catch (Exception e)
@@ -412,11 +412,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnJoinedConvo(Convo convo)
         {
-            Convo local = convoProvider[convo.Id];
-            if (local is null)
-            {
-                convoProvider.Add(convo).GetAwaiter().GetResult();
-            }
+            UpdateUserConvosMetadata();
 
             // In case there was a convo view already open, dispose that.
             (MainControl?.DataContext as ActiveConvoViewModel)?.Dispose();

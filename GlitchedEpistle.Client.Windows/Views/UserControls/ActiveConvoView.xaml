@@ -61,7 +61,7 @@
             <Button Width="30" 
                     Height="30" 
                     FontSize="20"
-                    Margin="0,0,0,0"
+                    Margin="5,0,0,0"
                     Style="{DynamicResource ScrollToBottomButton}"
                     Command="{Binding LoadPreviousMessagesCommand}"
                     ToolTip="Load the previous messages that were sent to this convo."

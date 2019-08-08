@@ -255,7 +255,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void PrintMessage(string message, bool error)
         {
-            Application.Current?.Dispatcher?.Invoke(() =>
+            ExecUI(() =>
             {
                 ResetMessages();
 
@@ -331,7 +331,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     await DeleteConvoLocally();
 
                     PrintMessage($"You left the convo \"{Convo.Name}\" successfully! You are no longer a participant of it and can now close this window.", false);
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         UIEnabled = false;
                         eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
@@ -402,7 +402,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                             }
                         }
 
-                        Application.Current?.Dispatcher?.Invoke(() =>
+                        ExecUI(() =>
                         {
                             UIEnabled = false;
                             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id);
@@ -461,7 +461,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         }
                         
                         RefreshParticipantLists();
-                        Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
+                        ExecUI(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
                     });
                 }
             }
@@ -504,14 +504,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     if (!success)
                     {
                         PrintMessage("The convo deletion request could not be fulfilled server-side; please double check the provided 2FA token and try again.", true);
-                        Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
+                        ExecUI(() => CanSubmit = true);
                         return;
                     }
 
                     await DeleteConvoLocally();
                     
                     PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         UIEnabled = false;
                         eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
@@ -593,7 +593,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (!successful)
                 {
                     PrintMessage("Convo metadata change request was rejected. Perhaps you provided the wrong password or invalid data? Please double check the form.", true);
-                    Application.Current?.Dispatcher?.Invoke(() => CanSubmit = true);
+                    ExecUI(() => CanSubmit = true);
                     return;
                 }
 
@@ -621,7 +621,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     await convoProvider.Update(convo);
                 }
 
-                Application.Current?.Dispatcher?.Invoke(() =>
+                ExecUI(() =>
                 {
                     UIEnabled = false;
                     eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id);

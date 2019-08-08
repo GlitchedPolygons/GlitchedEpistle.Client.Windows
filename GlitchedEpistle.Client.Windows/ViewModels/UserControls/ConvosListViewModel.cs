@@ -83,7 +83,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             EditConvoCommand = new DelegateCommand(OnClickedEditConvo);
             CopyConvoIdCommand = new DelegateCommand(OnClickedCopyConvoIdToClipboard);
 
-            eventAggregator.GetEvent<LoginSucceededEvent>().Subscribe(UpdateList);
             eventAggregator.GetEvent<UpdatedUserConvosEvent>().Subscribe(UpdateList);
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => UpdateList());
             eventAggregator.GetEvent<DeletedConvoEvent>().Subscribe(_ => UpdateList());
@@ -129,7 +128,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     if (!await convoService.JoinConvo(body.Sign(crypto,user.PrivateKeyPem)))
                     {
                         convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
-                        Application.Current?.Dispatcher?.Invoke(() =>
+                        ExecUI(() =>
                         {
                             CanJoin = true;
                             var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/", Title = "Message upload failed" } };
@@ -144,7 +143,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         return;
                     }
 
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         CanJoin = true;
                         eventAggregator.GetEvent<JoinedConvoEvent>().Publish(metadata);

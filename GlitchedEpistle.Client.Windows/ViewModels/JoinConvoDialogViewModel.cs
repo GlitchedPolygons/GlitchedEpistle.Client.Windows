@@ -124,7 +124,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     convoPasswordProvider.RemovePasswordSHA512(ConvoId);
 
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         ResetMessages();
                         ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
@@ -137,7 +137,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 ConvoMetadataDto metadata = await convoService.GetConvoMetadata(ConvoId, passwordSHA512, user.Id, user.Token.Item2);
                 convoPasswordProvider.SetPasswordSHA512(ConvoId, passwordSHA512);
 
-                Application.Current?.Dispatcher?.Invoke(() =>
+                ExecUI(() =>
                 {
                     UIEnabled = true;
                     eventAggregator.GetEvent<JoinedConvoEvent>().Publish(metadata);
