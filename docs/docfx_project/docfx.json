@@ -5,7 +5,7 @@
         {
     	  "src":"../..",
           "files": [
-            "GlitchedEpistle.Client.Windows/**.csproj"
+            "src/**.csproj"
           ]
         }
       ],
