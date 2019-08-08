@@ -117,7 +117,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     errorMessageTimer.Stop();
                     errorMessageTimer.Start();
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         ErrorMessage = "Two-Factor authentication failed!";
                         Totp = string.Empty;
@@ -125,10 +125,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish());
+                    ExecUI(() => eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish());
                 }
 
-                Application.Current?.Dispatcher?.Invoke(() => pendingAttempt = false);
+                ExecUI(() => pendingAttempt = false);
             });
         }
 

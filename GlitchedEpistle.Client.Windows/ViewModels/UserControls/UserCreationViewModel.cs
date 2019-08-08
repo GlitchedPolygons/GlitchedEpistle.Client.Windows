@@ -175,7 +175,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         if (userCreationResponse is null)
                         {
                             logger.LogError("The user creation process failed server-side. Reason unknown; please make an admin check out the server's log files!");
-                            Application.Current?.Dispatcher?.Invoke(() =>
+                            ExecUI(() =>
                             {
                                 UIEnabled = true;
                                 pendingAttempt = false;
@@ -186,7 +186,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                         // Handle this event back in the main view model,
                         // since it's there where the backup codes + 2FA secret (QR) will be shown.
-                        Application.Current?.Dispatcher?.Invoke(() => eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse));
+                        ExecUI(() => eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse));
                         logger.LogMessage($"Created user {userCreationResponse.Id}.");
 
                         settings[nameof(Username)] = Username;
@@ -204,7 +204,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     ErrorMessage = errorMsg;
                 }
 
-                Application.Current?.Dispatcher?.Invoke(() =>
+                ExecUI(() =>
                 {
                     UIEnabled = true;
                     pendingAttempt = false;

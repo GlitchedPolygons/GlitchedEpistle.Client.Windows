@@ -95,7 +95,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (!await connectionTest.TestConnection())
                 {
-                    Application.Current?.Dispatcher?.Invoke(() => 
+                    ExecUI(() => 
                     {
                         pendingAttempt = false;
                         UIEnabled = true;
@@ -114,7 +114,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 if (response is null || response.Auth.NullOrEmpty() || response.PrivateKey.NullOrEmpty())
                 {
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         failedAttempts++;
                         errorMessageTimer.Stop();
@@ -129,7 +129,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    Application.Current?.Dispatcher?.Invoke(() =>
+                    ExecUI(() =>
                     {
                         failedAttempts = 0;
 
@@ -155,7 +155,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     });
                 }
 
-                Application.Current?.Dispatcher?.Invoke(() =>
+                ExecUI(() =>
                 {
                     pendingAttempt = false;
                     UIEnabled = true;

@@ -80,7 +80,7 @@ In the top left corner you have information about your profile (user id, usernam
 Beneath it there's a blue/grey progress bar: it indicates how many days you have left of your paid Epistle subscription.&#x0a;&#x0a;
 If you click on the progress bar, you're redirected to the Glitched Polygons page where you can buy additional Epistle access tokens (currently, one token gives you 30 days of subscription).&#x0a;&#x0a;
 The buttons in this area do what they say, but some of them need two-factor authentication as an additional security step.&#x0a;&#x0a;
-In the lower-left quadrant of the UI you have the list of conversations that you have synced with this machine.&#x0a;&#x0a;
+In the lower-left quadrant of the UI you have the list of conversations that you have synced with this account.&#x0a;&#x0a;
 On the right hand side of the window you have your active convo.&#x0a;&#x0a;
 When you join a conversation, the chatroom appears here in this area. If the sidebar on the left disturbs you, you can collapse it with the arrow button at the top of it and enjoy maximum focus on the active convo.&#x0a;&#x0a;
 In the top right corner you have three buttons: restore window, settings and help." />
@@ -130,7 +130,6 @@ The gear icon in the top right corner of the program's main window opens up the 
 In there, you can change your username (the one displayed next to your messages) as well as your favorite theme.&#x0a;&#x0a;
 You can also redeem Epistle tokens in the settings menu: remaining days are added on top if you redeem before expiration.&#x0a;&#x0a;
 Expired user accounts are purged automatically from the Epistle server within one to two months of inactivity.&#x0a;&#x0a;
-In the settings menu you can export a full backup of your Epistle account, including all of the convos and their message data (in encrypted form) into a single file that you can then import back into Epistle upon registration when for example migrating machines.&#x0a;&#x0a;
 The trash icon at the bottom of the settings menu is a button that allows you to instantly purge your entire Epistle account + convo data from your local machine.&#x0a;
 PLEASE read every warning carefully in the dialog menu before you do something you might regret later!
 " />

@@ -233,11 +233,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                         // Display success message and keep UI disabled.
                         CanSubmit = false;
-                        PrintMessage($"The convo {Name} has been created successfully under the id {id}. You can close this window now.", false);
+                        PrintMessage($"The convo \"{Name}\" has been created successfully under the id \"{id}\". You can close this window now.", false);
                     });
 
                     // Record the convo creation into the user log.
-                    logger.LogMessage($"Convo {Name} created successfully under the id {id}.");
+                    logger.LogMessage($"Convo \"{Name}\" created successfully under the id {id}.");
                 }
                 else
                 {
@@ -246,8 +246,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         // If convo creation failed for some reason, the returned
                         // id string is null and the user is notified accordingly.
                         CanSubmit = true;
-                        PrintMessage($"Convo {Name} couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.", true);
-                        logger.LogError($"Convo {Name} couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
+                        PrintMessage($"Convo \"{Name}\" couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.", true);
+                        logger.LogError($"Convo \"{Name}\" couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
                     });
                 }
             });
