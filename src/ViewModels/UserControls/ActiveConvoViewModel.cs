@@ -483,7 +483,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             await PullConvoMetadata();
 
-            var encryptedMessagesBag = new ConcurrentBag<Tuple<string, string>>();
+            var encryptedMessagesBag = new ConcurrentDictionary<string, string>();
             string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
 
             // Get the keys of all convo participants here.
@@ -496,31 +496,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (key != null && key.Item1.NotNullNotEmpty() && key.Item2.NotNullNotEmpty() && messageBodyJsonString.NotNullNotEmpty())
                 {
                     string encryptedMessage = crypto.EncryptMessage(messageBodyJsonString, KeyExchangeUtility.DecompressPublicKey(key.Item2));
-                    encryptedMessagesBag.Add(new Tuple<string, string>(key.Item1, encryptedMessage));
+                    encryptedMessagesBag[key.Item1] = encryptedMessage;
                 }
             });
 
-            var messageBodiesJson = new JObject();
-
-            foreach (Tuple<string, string> encryptedMessage in encryptedMessagesBag)
-            {
-                messageBodiesJson[encryptedMessage.Item1] = encryptedMessage.Item2;
-            }
-
-            JToken ownMessageBody = messageBodiesJson[user.Id];
-            if (ownMessageBody == null)
-            {
-                return false;
-            }
-
-            string username = settings["Username"];
-
             var postParamsDto = new PostMessageParamsDto
             {
-                SenderName = username,
+                SenderName = settings["Username"],
                 ConvoId = ActiveConvo.Id,
                 ConvoPasswordSHA512 = convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
-                MessageBodiesJson = messageBodiesJson.ToString(Formatting.None)
+                MessageBodiesJson = JsonConvert.SerializeObject(encryptedMessagesBag)
             };
 
             var body = new EpistleRequestBody
@@ -570,6 +555,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         errorView.ShowDialog();
                     });
                 }
+
                 messageBodyJson["text"] = messageBodyJson = null;
             });
         }
