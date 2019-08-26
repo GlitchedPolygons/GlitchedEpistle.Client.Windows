@@ -14,24 +14,5 @@
 git clone https://github.com/GlitchedPolygons/GlitchedEpistle.Client "GlitchedEpistle.Client"
 git clone https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows "GlitchedEpistle.Client.Windows"
 ```
-
-### Preparing for a release
-#### Updating the Windows Client
-
-When done creating a new update for the windows client, push everything to github (obviously) and then create a new commit (which you could comfortably name "Release x.y.z" for consistency's sake) where you:
-
-When updating the Epistle Windows client, version numbers must be increased in the following locations:
-```
-    glitched-epistle-innosetup-script.iss
-    [Assembly Version + File Version] (under project properties)
-```
-Now you can build in Release mode and upload the installer file to github (create a new release). Remember to update the checksum in the release description!
-
-
-##### If the inno setup compiler fails:
-Inside inno setup studio, under files:  remove all files and directories and re-add the build output (bin/Release/) by drag 'n' drop back into the inno setup studio field.
-Save, and then run the inno compiler again. Don't add the .pdb files, they are unnecessary in a release build. Exceptions are almost always logged to the ILogger implementation anyway..
-
-
 ### Contributing
 Just fork & open a PR and I'll take a look at it ASAP :)
