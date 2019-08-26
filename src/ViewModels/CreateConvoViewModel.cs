@@ -234,7 +234,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         Id = id,
                         Name = Name,
                         CreatorId = user.Id,
-                        CreationTimestampUTC = DateTime.UtcNow,
+                        CreationUTC = DateTime.UtcNow,
                         Description = Description,
                         ExpirationUTC = ExpirationUTC,
                         Participants = new List<string> { user.Id }

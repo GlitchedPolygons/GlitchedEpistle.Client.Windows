@@ -340,7 +340,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             var messageViewModel = new MessageViewModel(methodQ)
             {
-                Id = message.Id,
+                Id = message.Id.ToString(),
                 SenderId = message.SenderId,
                 SenderName = message.SenderName,
                 TimestampDateTimeUTC = message.TimestampUTC,
@@ -412,7 +412,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             convo.CreatorId = ActiveConvo.CreatorId = metadataDto.CreatorId;
             convo.Description = ActiveConvo.Description = metadataDto.Description;
             convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadataDto.ExpirationUTC;
-            convo.CreationTimestampUTC = ActiveConvo.CreationTimestampUTC = metadataDto.CreationTimestampUTC;
+            convo.CreationUTC = ActiveConvo.CreationUTC = metadataDto.CreationTimestampUTC;
             convo.BannedUsers = ActiveConvo.BannedUsers = metadataDto.BannedUsers.Split(',').ToList();
             convo.Participants = ActiveConvo.Participants = metadataDto.Participants.Split(',').ToList();
 
