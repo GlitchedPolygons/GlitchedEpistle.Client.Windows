@@ -412,7 +412,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             convo.CreatorId = ActiveConvo.CreatorId = metadataDto.CreatorId;
             convo.Description = ActiveConvo.Description = metadataDto.Description;
             convo.ExpirationUTC = ActiveConvo.ExpirationUTC = metadataDto.ExpirationUTC;
-            convo.CreationUTC = ActiveConvo.CreationUTC = metadataDto.CreationTimestampUTC;
+            convo.CreationUTC = ActiveConvo.CreationUTC = metadataDto.CreationUTC;
             convo.BannedUsers = ActiveConvo.BannedUsers = metadataDto.BannedUsers.Split(',').ToList();
             convo.Participants = ActiveConvo.Participants = metadataDto.Participants.Split(',').ToList();
 
@@ -443,12 +443,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
 
                 // Pull newest messages.
+                var tailId = await messageRepository.GetLastMessageId();
                 Message[] retrievedMessages = await convoService.GetConvoMessages(
                     convoId: ActiveConvo.Id,
                     convoPasswordSHA512: convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
                     userId: user?.Id,
                     auth: user?.Token?.Item2,
-                    tailId: await messageRepository.GetLastMessageId()
+                    tailId: tailId is null ? 0 : long.Parse(tailId)
                 );
 
                 if (retrievedMessages is null || retrievedMessages.Length == 0)
