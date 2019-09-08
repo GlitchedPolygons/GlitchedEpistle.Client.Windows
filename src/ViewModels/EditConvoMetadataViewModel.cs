@@ -434,7 +434,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (oldPw.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing the current convo's password (at the bottom of the form).", true);
+                PrintMessage("Please authenticate your request by providing the current convo's password (at the top of the form).", true);
+                return;
+            }
+
+            if (Totp.NullOrEmpty())
+            {
+                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
                 return;
             }
 
@@ -450,7 +456,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                             ConvoId = Convo.Id,
                             ConvoPasswordSHA512 = oldPw.SHA512(),
                             UserIdToKick = userIdToKick,
-                            PermaBan = true
+                            PermaBan = true,
+                            Totp = Totp
                         };
 
                         var body = new EpistleRequestBody
