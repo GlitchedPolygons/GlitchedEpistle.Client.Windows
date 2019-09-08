@@ -9,10 +9,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.App.html",
-          "hash": "2uzxVKgbt2AKJB6UNy6S6Q=="
+          "hash": "zhNjATb3Xi55OZ/Debzf7g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -21,10 +21,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands.DelegateCommand.html",
-          "hash": "3TCs/GWbQQkbp95K36QhBA=="
+          "hash": "Dc5HyvLBttcPbsagknYKpg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -36,7 +36,7 @@
           "hash": "Cbbafaa28ZyxDGK/XJsG2Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -48,10 +48,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.html",
-          "hash": "Bjey5DnDv4xzU0+kdDcmOA=="
+          "hash": "BqlnAJYDhCzlJz0UcH9Wrw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -60,10 +60,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Themes.html",
-          "hash": "ce9VbBzy9DVUk/8jJHjQeA=="
+          "hash": "V3W26QyJ8ahx1rSleE8lpA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -75,7 +75,7 @@
           "hash": "Ce7YwWgVFQElXBQ5zHxgWQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -84,10 +84,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Converters.GridLengthConverter.html",
-          "hash": "W7o5PxK0goqiywlt3y0bsw=="
+          "hash": "++xPM8FsJBhjbP0J6PvbZg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -99,7 +99,7 @@
           "hash": "KGvZfb0qpLuXDWHmXVrMVA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -108,10 +108,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions.BitmapExtensions.html",
-          "hash": "Xv6Bqn1AFmggPhYwB6KLAw=="
+          "hash": "gVh/RvyUZR8/BxoNXgaaKA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -120,10 +120,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions.WindowExtensions.html",
-          "hash": "Y7fz8+CuXgXDhEN+cIuaKw=="
+          "hash": "t3aIawjpx8EDcCmV7z1faA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -135,7 +135,7 @@
           "hash": "DrBz2U3UGdQfHt8VjML5uQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -147,10 +147,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent.html",
-          "hash": "TxcYHXddQyxfFTXB3Px/HA=="
+          "hash": "oL2oEo+Y+WaRh+8VQN5RMA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -159,10 +159,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedRegisterButtonEvent.html",
-          "hash": "JIXDqJVc04bJALWwk4j23g=="
+          "hash": "xz1kxhYjZEWpdJXKBMKzTQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -171,22 +171,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ConvoCreationSucceededEvent.html",
-          "hash": "aBqRafKYubfqrgRGfg56IQ=="
+          "hash": "qXcPwyrW9rCb5eUHFKv48g=="
         }
       },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent.html",
-          "hash": "NfwFEx87btZdIsi6+T6zQg=="
-        }
-      },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -195,10 +183,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.DeletedConvoEvent.html",
-          "hash": "IdJoMHuvQl5ZU1gYWpmo4g=="
+          "hash": "cLno3dYFE69XeXgKalRcHQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -207,10 +195,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.JoinedConvoEvent.html",
-          "hash": "M65r8O0Zgu6c38b3gtctog=="
+          "hash": "7Y3kn+H63D5LLLYmDT2wIg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -219,10 +207,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.LoginSucceededEvent.html",
-          "hash": "exxFQFpC5D+RP+0dI0XiNg=="
+          "hash": "/U4vELw+F80SG2KupK/QLg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -231,10 +219,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.LogoutEvent.html",
-          "hash": "qt8zcg6O1DRCw5MFb9MKTA=="
+          "hash": "nMxw9C7HFi9bRt4Sa1Iuew=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -243,10 +231,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ResetConfirmedEvent.html",
-          "hash": "jMc1T+KP3szea44BzSNv9w=="
+          "hash": "XhuMXpza3WqEiZSoK+JG+Q=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -255,10 +243,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UpdatedUserConvosEvent.html",
-          "hash": "LfXArjTn0K/CZvrd7ihijw=="
+          "hash": "XlWcqsrTLeMXSSFhiblusg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -270,10 +258,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationSucceededEvent.html",
-          "hash": "ExQjpFBKQE4S4tM/5XyFZA=="
+          "hash": "1CpojH8Badts6iCvjqRNcg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -282,10 +270,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationVerifiedEvent.html",
-          "hash": "l0cCW7teFT7V6m3KoaSmJQ=="
+          "hash": "ftoO3Ctx68/854fXKjT1OA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -294,10 +282,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UsernameChangedEvent.html",
-          "hash": "SNZCzWiIgGdhdHcvhEFHOg=="
+          "hash": "xZi1/EXGSEa69xMIfMrBZg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -309,10 +297,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.html",
-          "hash": "P1TCNbHolToOWiMFiiX+iA=="
+          "hash": "n3I/gnXHVBfoXXguOnLi3A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -321,10 +309,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory.html",
-          "hash": "H2MvBDfsXZ3OS8M8zdtgHw=="
+          "hash": "E9ogW4xFsg9hnpeg20HtUw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -333,10 +321,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory.html",
-          "hash": "N27BfEJcnTUBu5rzjay5BA=="
+          "hash": "DxZVqnqgn2DPDDb5REpgjA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -345,10 +333,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.ViewModelFactory.html",
-          "hash": "LM3L/LQer/mxgMybinRQwA=="
+          "hash": "OYedXn0GXqPe2UPjWEnSdA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -357,10 +345,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.WindowFactory.html",
-          "hash": "UH9qxQShADimQj86fkPaDg=="
+          "hash": "f6YkLpXdWCozbuKKSFBJAQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -372,7 +360,7 @@
           "hash": "FLQ+f9JpxzftjXbUJ7AY/g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -381,10 +369,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html",
-          "hash": "RsXsXnAbZCdNEAcP0tB2Tw=="
+          "hash": "RkwG59Pmu37bxyIwc+B9JA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -396,7 +384,7 @@
           "hash": "CZ/yLS/LgY4fEtxMm63Xqw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -405,10 +393,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html",
-          "hash": "RC/wVpVjk0TmEGOIvAuzKg=="
+          "hash": "9ibkGOoYtUlE3GIBj2H61g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -420,7 +408,7 @@
           "hash": "FggGh4L8uWHajsMQNUesUA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -429,10 +417,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.html",
-          "hash": "EJkv1+4E+KrXiE6iigkmsA=="
+          "hash": "Q61VF+ACwKOcUJkEdmSCyg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -441,10 +429,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.html",
-          "hash": "mSu4CP9Dq/IU8rWpevmuhg=="
+          "hash": "F1eYrOK1zl1iu5LO5n3egg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -453,10 +441,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html",
-          "hash": "nOMYF2Gl37r1SNGlmkJw8Q=="
+          "hash": "pQJf3rc2oecxHSLnZtyaOQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -465,10 +453,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.HelpViewModel.html",
-          "hash": "dl5kdorX8Psrf5GTtyOCsg=="
+          "hash": "rrcWkvPTFhSm/JkyXwnYqw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -477,10 +465,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ICloseable.html",
-          "hash": "Mw5QnhcRWMHx6CoGw/frDA=="
+          "hash": "jI5cd/UC50gZgdavIJi3SQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -489,10 +477,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.html",
-          "hash": "VCZy4T1CxTpia0KiESuvyg=="
+          "hash": "2IuX3ulY2Y+MRh0vHiW82A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -501,10 +489,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html",
-          "hash": "KuMuJoIoB4pRP3+u9h0Pmg=="
+          "hash": "604yQavjIAKdlZK+oMa+Bg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -513,10 +501,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.InfoDialogViewModel.html",
-          "hash": "LEVKTGrMwzI7oStp79h6PQ=="
+          "hash": "POZyXYd08rXay66bHoTInQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -525,10 +513,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.JoinConvoDialogViewModel.html",
-          "hash": "BIuTA14CQxm6YNz3trV+4Q=="
+          "hash": "VyeEbM4ymaQ8jrsOIycrLg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -537,10 +525,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html",
-          "hash": "joinykF2Tc5Hu66iysTlzg=="
+          "hash": "Ww3puYahtO6Efm/9zdIjYw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -549,10 +537,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html",
-          "hash": "FbfvYpdUxgiRsGSaJiQtUA=="
+          "hash": "a1vZ6O/MRORvhlk/psEFJg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -561,10 +549,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html",
-          "hash": "vwF502b9ZLhlO4p7R2kekw=="
+          "hash": "B/36MwDFTllAb44fW1vXFA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -573,46 +561,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ConvosListViewModel.html",
-          "hash": "Mn2L3PZvpUosH++dkkmgeg=="
+          "hash": "Lthjh43PUVyjd5S/52J/EQ=="
         }
       },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html",
-          "hash": "JI8nVUUG7ONAV8QPgEcV0g=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html",
-          "hash": "B5ICnXf9ajaQUnKYC1rI2w=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html",
-          "hash": "YZU+WUksVZx3ZTt6Sfdxzg=="
-        }
-      },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -621,10 +573,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html",
-          "hash": "6VJmM04j1ZhjU4FHWezKfA=="
+          "hash": "gHz2E5mlo4qtkAfH/BF8lQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -633,10 +585,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html",
-          "hash": "QVF+J/6S/4Ivj+Fw+E07Mg=="
+          "hash": "P4dFiPeQTuUz0anKz4HZmA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -645,10 +597,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.html",
-          "hash": "u1sUIky4W5M9B2IHW+nE3Q=="
+          "hash": "JiAcHmjXwBg0iqJ+P9NRhw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -657,10 +609,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html",
-          "hash": "taRokl8Iui94JoWZdGeV1A=="
+          "hash": "chRIi9GFdAqrDaoySN3PyQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -669,10 +621,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.html",
-          "hash": "CHlD1YcQi38aVRQuRyLhCA=="
+          "hash": "bv4JfbSpvNM5cDqmxf7aZQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -681,10 +633,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html",
-          "hash": "Vtrpj/QyIG8X4POufVBwrQ=="
+          "hash": "PUga3FOenr/oZlJtEHjFOQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -696,7 +648,7 @@
           "hash": "SlK1a510mg4QI9QxJRM2Sg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -705,10 +657,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ChangePasswordView.html",
-          "hash": "gzV94gDmRE8Iuix+NWXAZA=="
+          "hash": "3Osz52E1ZMzcOx+r4qjCKg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -717,10 +669,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmChangeConvoAdminView.html",
-          "hash": "2AFO8A6othxfvtQAhlf8AQ=="
+          "hash": "jJuLxoRWqcEWFXiOicKyUw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -729,10 +681,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmConvoDeletionView.html",
-          "hash": "+GM5bDNDaEBkvpiXTGZBWQ=="
+          "hash": "JhYYafx99mFlgMpx+3kutQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -741,10 +693,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmDeleteConvoLocallyView.html",
-          "hash": "KEWQjYaBCxvyQBtwkur4UQ=="
+          "hash": "Yep9UarhopspzgqhUWxpOw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -753,10 +705,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmFileUploadView.html",
-          "hash": "fZUcGDfASnW0DQxZ4NIcJg=="
+          "hash": "LpJ6Zwkt8ig3fPZ2226fVA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -765,10 +717,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmKickUserView.html",
-          "hash": "vlzAfGEBOiC++weYW0uj2Q=="
+          "hash": "zpP8jtDLZMTIUoAXQ2s1ew=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -777,10 +729,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmLeaveConvoView.html",
-          "hash": "b02CMCf9y0WyfJnWzVrVAg=="
+          "hash": "i1AXVPp9LEsiYfEvea5UWg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -789,10 +741,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmResetView.html",
-          "hash": "hbzWUFuTkZtwlt+t3/BL1g=="
+          "hash": "12Bh90g1trz6S5YCyQBQig=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -801,10 +753,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.CreateConvoView.html",
-          "hash": "wZXTwTyaeBut9Y8SHiBrVQ=="
+          "hash": "Vy/yPjcPSvtbLFGreC0lIA=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -813,10 +765,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.EditConvoMetadataView.html",
-          "hash": "Qkx6SmPP581ctHcI6NJJ8g=="
+          "hash": "TzL03e3CgB7WGuc3RJWFNQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -825,10 +777,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.GeneratingKeyView.html",
-          "hash": "j3a+QXeVpVJzWUvgn50ozA=="
+          "hash": "z3BkYBTFRZj16vPtvj8DwQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -837,10 +789,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.HelpView.html",
-          "hash": "nuncy4asgQv9Nv7m+GuUOg=="
+          "hash": "uVnPnweCJf2TZ2DpTpOwDQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -849,10 +801,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.html",
-          "hash": "QwaKYAl4hDOlI1M1saET9A=="
+          "hash": "KF68HExilV0UE9MIugjNRw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -861,10 +813,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.html",
-          "hash": "EH+niaQ0IcUGspPo0ZlcrQ=="
+          "hash": "xA9Sr+AueJ6oouqiqwD3SQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -873,10 +825,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.InfoDialogView.html",
-          "hash": "X5IVpPqiQ+hCJFBn2CNGXA=="
+          "hash": "ED7/Kkkmz5eX6sm7tv3U1w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -885,10 +837,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.JoinConvoDialogView.html",
-          "hash": "/gKDIwRU9/Rh69cEoqJD5A=="
+          "hash": "ShOGpoNOShyB/3+8UGfPEQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -897,10 +849,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView.html",
-          "hash": "BnUgbqEUShlocuNNwVBwbg=="
+          "hash": "tQTS7NpSUhvkj1e8umqm3g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -909,10 +861,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.SettingsView.html",
-          "hash": "IisyXnIMVzuJJPrUXEYxXA=="
+          "hash": "w3Lafl/cZlxdX39fr9Uu4g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -921,10 +873,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ActiveConvoView.html",
-          "hash": "hkFbVZHJOoaEK2XhvZJT6w=="
+          "hash": "iPr/I0YT2CNL3mB9i/CeTg=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -933,46 +885,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ConvosListView.html",
-          "hash": "wEn6pnyr75BVD7b1ow+EeA=="
+          "hash": "dfwRD1y9dyYZYImQ6KOl/Q=="
         }
       },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.html",
-          "hash": "6Vls+QKEf6ZjoLmoid9/Zw=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.html",
-          "hash": "xtDsaXtDjD8FHw+lgcbs2Q=="
-        }
-      },
-      "is_incremental": true,
-      "version": ""
-    },
-    {
-      "type": "ManagedReference",
-      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.yml",
-      "output": {
-        ".html": {
-          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.html",
-          "hash": "9B3wDexNG3gxKYxyT26wGg=="
-        }
-      },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -981,10 +897,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.LoginView.html",
-          "hash": "SJUcB+LxvI15GPb0PCHRrA=="
+          "hash": "K4LZ7MIMWwxN5ElzSVX4Mw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -993,10 +909,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.html",
-          "hash": "0A9/Jiyf0rFqIe89Kt2GJQ=="
+          "hash": "1Nd4skmmitBafdULT7Rs6w=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1005,10 +921,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.UserCreationSuccessfulView.html",
-          "hash": "eFQKFNRgsn7lexWZ7AncEg=="
+          "hash": "MoUiYFu8VXst22tee/BodQ=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1017,10 +933,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.UserCreationView.html",
-          "hash": "lk0WjrXyRXZHNzCccTZPSw=="
+          "hash": "dcsih+o9Lv/NPFdUXPpMWw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1029,10 +945,10 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.html",
-          "hash": "q0X36PkaiZ1n8aGdZY93qw=="
+          "hash": "zx5pfSMjKf9DxjqnSClx3g=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1044,7 +960,7 @@
           "hash": "irOFqTVds8JUIIEgLn+KNw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1056,7 +972,7 @@
           "hash": "QWXcjn9sER7oWyYHfh8nhw=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1068,7 +984,7 @@
           "hash": "9596tQL677XX6ZAVHhNx8A=="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -1077,7 +993,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "MFWDF+lzZZ9Jtf/c2MT3kg=="
+          "hash": "glzNeLKHBg1FFrke9GfVWA=="
         }
       },
       "is_incremental": false,
@@ -1144,24 +1060,24 @@
         "skipped_file_count": 0
       },
       "processors": {
-        "ManagedReferenceDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 87,
-          "skipped_file_count": 87
-        },
-        "ConceptualDocumentProcessor": {
-          "can_incremental": true,
-          "incrementalPhase": "build",
-          "total_file_count": 3,
-          "skipped_file_count": 3
-        },
         "TocDocumentProcessor": {
           "can_incremental": false,
           "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
           "incrementalPhase": "build",
           "total_file_count": 0,
           "skipped_file_count": 0
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 80,
+          "skipped_file_count": 10
+        },
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 3
         }
       }
     },
