@@ -94,6 +94,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref username, value);
         }
 
+        private string userCreationSecret = string.Empty;
+        public string UserCreationSecret
+        {
+            get => userCreationSecret;
+            set => Set(ref userCreationSecret, value);
+        }
+
         private string errorMessage = string.Empty;
         public string ErrorMessage
         {
@@ -187,7 +194,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                             PasswordSHA512 = password1.SHA512(),
                             PublicKey = KeyExchangeUtility.CompressPublicKey(publicKeyPem),
                             PrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(privateKeyPem, password1),
-                            CreationSecret = "e5ca42HK-e4128cff.a2f603f8-451d440b"
+                            CreationSecret = UserCreationSecret
                         });
 
                         if (userCreationResponse is null)

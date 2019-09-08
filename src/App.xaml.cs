@@ -90,7 +90,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 MessageBox.Show("There is already one instance of Glitched Epistle running!");
                 Current.Shutdown();
             }
-
+            
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
             
             // Register transient types:
