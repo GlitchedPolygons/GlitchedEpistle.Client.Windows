@@ -1,4 +1,5 @@
 [![API](https://img.shields.io/badge/api-docs-informational.svg)](https://glitchedpolygons.github.io/GlitchedEpistle.Client.Windows)
+[![License Shield](https://img.shields.io/badge/license-GPLv3-brightgreen)](https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/LICENSE)
 
 # Glitched Epistle
 ## Windows Client
