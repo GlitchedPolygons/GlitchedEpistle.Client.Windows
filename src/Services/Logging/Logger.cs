@@ -57,6 +57,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
         private object messageLock = new object();
         private object warningLock = new object();
         private object errorLock = new object();
+        private object logLock = new object();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Logger"/> class (implements <see cref="ILogger"/>).
@@ -140,12 +141,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
 
         private void Log(string msg, string path)
         {
-            string log = string.Empty;
-            if (File.Exists(path))
+            try
             {
-                log = File.ReadAllText(path);
+                lock (logLock)
+                {
+                    string log = string.Empty;
+                    if (File.Exists(path))
+                    {
+                        log = File.ReadAllText(path);
+                    }
+                    File.WriteAllText(path, Timestamp(msg) + log);
+                }
             }
-            File.WriteAllText(path, Timestamp(msg) + log);
+            catch (Exception) { }
         }
     }
 }
