@@ -328,12 +328,6 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ConvoCreationSucceededEvent
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ConvoCreationSucceededEvent
   nameWithType: ConvoCreationSucceededEvent
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent
-  name: CouponRedeemedEvent
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.CouponRedeemedEvent
-  nameWithType: CouponRedeemedEvent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.DeletedConvoEvent
   name: DeletedConvoEvent
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.DeletedConvoEvent.html
@@ -2173,12 +2167,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel
   nameWithType: SettingsViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Coupons.ICouponService,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA)
-  name: SettingsViewModel(ISettings, IEventAggregator, ICouponService, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_IEventAggregator_GlitchedPolygons_GlitchedEpistle_Client_Services_Web_Coupons_ICouponService_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_IAsymmetricCryptographyRSA_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Coupons.ICouponService,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.SettingsViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, IEventAggregator, GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Coupons.ICouponService, GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, IAsymmetricCryptographyRSA)
-  nameWithType: SettingsViewModel.SettingsViewModel(ISettings, IEventAggregator, ICouponService, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA)
+  name: SettingsViewModel(ISettings, IEventAggregator, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_IEventAggregator_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_IAsymmetricCryptographyRSA_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.SettingsViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, IEventAggregator, GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, IAsymmetricCryptographyRSA)
+  nameWithType: SettingsViewModel.SettingsViewModel(ISettings, IEventAggregator, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor*
   name: SettingsViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel__ctor_
@@ -2199,19 +2193,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.CancelButtonCommand
   nameWithType: SettingsViewModel.CancelButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.CanRedeem
-  name: CanRedeem
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_CanRedeem
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.CanRedeem
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.CanRedeem
-  nameWithType: SettingsViewModel.CanRedeem
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.CanRedeem*
-  name: CanRedeem
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_CanRedeem_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.CanRedeem
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.CanRedeem
-  nameWithType: SettingsViewModel.CanRedeem
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.ChangeThemeCommand
   name: ChangeThemeCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_ChangeThemeCommand
@@ -2257,19 +2238,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.DeleteButtonCommand
   nameWithType: SettingsViewModel.DeleteButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.RedeemButtonCommand
-  name: RedeemButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_RedeemButtonCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.RedeemButtonCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.RedeemButtonCommand
-  nameWithType: SettingsViewModel.RedeemButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.RedeemButtonCommand*
-  name: RedeemButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_RedeemButtonCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.RedeemButtonCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.RedeemButtonCommand
-  nameWithType: SettingsViewModel.RedeemButtonCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.RequestedClose
   name: RequestedClose
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_RequestedClose
@@ -2606,154 +2574,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ConvosListViewModel.OpenConvoCommand
   nameWithType: ConvosListViewModel.OpenConvoCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel
-  name: CouponRedeemedSuccessfullyViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel
-  nameWithType: CouponRedeemedSuccessfullyViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.#ctor
-  name: CouponRedeemedSuccessfullyViewModel()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_CouponRedeemedSuccessfullyViewModel__ctor
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.#ctor
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.CouponRedeemedSuccessfullyViewModel()
-  nameWithType: CouponRedeemedSuccessfullyViewModel.CouponRedeemedSuccessfullyViewModel()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.#ctor*
-  name: CouponRedeemedSuccessfullyViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_CouponRedeemedSuccessfullyViewModel__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.CouponRedeemedSuccessfullyViewModel
-  nameWithType: CouponRedeemedSuccessfullyViewModel.CouponRedeemedSuccessfullyViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.Quote
-  name: Quote
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_CouponRedeemedSuccessfullyViewModel_Quote
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.Quote
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.Quote
-  nameWithType: CouponRedeemedSuccessfullyViewModel.Quote
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.Quote*
-  name: Quote
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_CouponRedeemedSuccessfullyViewModel_Quote_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.Quote
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.Quote
-  nameWithType: CouponRedeemedSuccessfullyViewModel.Quote
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.ThankYouNote
-  name: ThankYouNote
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_CouponRedeemedSuccessfullyViewModel_ThankYouNote
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.ThankYouNote
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.ThankYouNote
-  nameWithType: CouponRedeemedSuccessfullyViewModel.ThankYouNote
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.ThankYouNote*
-  name: ThankYouNote
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_CouponRedeemedSuccessfullyViewModel_ThankYouNote_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.ThankYouNote
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.CouponRedeemedSuccessfullyViewModel.ThankYouNote
-  nameWithType: CouponRedeemedSuccessfullyViewModel.ThankYouNote
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel
-  name: ExpirationReminderViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel
-  nameWithType: ExpirationReminderViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory)
-  name: ExpirationReminderViewModel(User, IWindowFactory, IViewModelFactory)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Models_User_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Models.User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ExpirationReminderViewModel(GlitchedPolygons.GlitchedEpistle.Client.Models.User, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory)
-  nameWithType: ExpirationReminderViewModel.ExpirationReminderViewModel(User, IWindowFactory, IViewModelFactory)
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.#ctor*
-  name: ExpirationReminderViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ExpirationReminderViewModel
-  nameWithType: ExpirationReminderViewModel.ExpirationReminderViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.BuyButtonCommand
-  name: BuyButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel_BuyButtonCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.BuyButtonCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.BuyButtonCommand
-  nameWithType: ExpirationReminderViewModel.BuyButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.BuyButtonCommand*
-  name: BuyButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel_BuyButtonCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.BuyButtonCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.BuyButtonCommand
-  nameWithType: ExpirationReminderViewModel.BuyButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.RedeemButtonCommand
-  name: RedeemButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel_RedeemButtonCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.RedeemButtonCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.RedeemButtonCommand
-  nameWithType: ExpirationReminderViewModel.RedeemButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.RedeemButtonCommand*
-  name: RedeemButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel_RedeemButtonCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.RedeemButtonCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.RedeemButtonCommand
-  nameWithType: ExpirationReminderViewModel.RedeemButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ReminderText
-  name: ReminderText
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel_ReminderText
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ReminderText
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ReminderText
-  nameWithType: ExpirationReminderViewModel.ReminderText
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ReminderText*
-  name: ReminderText
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpirationReminderViewModel_ReminderText_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ReminderText
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpirationReminderViewModel.ReminderText
-  nameWithType: ExpirationReminderViewModel.ReminderText
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel
-  name: ExpiredViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel
-  nameWithType: ExpiredViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory)
-  name: ExpiredViewModel(IWindowFactory)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpiredViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.ExpiredViewModel(GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory)
-  nameWithType: ExpiredViewModel.ExpiredViewModel(IWindowFactory)
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.#ctor*
-  name: ExpiredViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpiredViewModel__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.ExpiredViewModel
-  nameWithType: ExpiredViewModel.ExpiredViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.BuyButtonCommand
-  name: BuyButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpiredViewModel_BuyButtonCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.BuyButtonCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.BuyButtonCommand
-  nameWithType: ExpiredViewModel.BuyButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.BuyButtonCommand*
-  name: BuyButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpiredViewModel_BuyButtonCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.BuyButtonCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.BuyButtonCommand
-  nameWithType: ExpiredViewModel.BuyButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.RedeemButtonCommand
-  name: RedeemButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpiredViewModel_RedeemButtonCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.RedeemButtonCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.RedeemButtonCommand
-  nameWithType: ExpiredViewModel.RedeemButtonCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.RedeemButtonCommand*
-  name: RedeemButtonCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ExpiredViewModel_RedeemButtonCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.RedeemButtonCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ExpiredViewModel.RedeemButtonCommand
-  nameWithType: ExpiredViewModel.RedeemButtonCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel
   name: LoginViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html
@@ -3388,6 +3208,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UIEnabled
   nameWithType: UserCreationViewModel.UIEnabled
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret
+  name: UserCreationSecret
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecret
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret
+  nameWithType: UserCreationViewModel.UserCreationSecret
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret*
+  name: UserCreationSecret
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecret_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret
+  nameWithType: UserCreationViewModel.UserCreationSecret
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Username
   name: Username
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Username
@@ -4016,102 +3849,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ConvosListView.InitializeComponent
   nameWithType: ConvosListView.InitializeComponent
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView
-  name: CouponRedeemedSuccessfullyView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView
-  nameWithType: CouponRedeemedSuccessfullyView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.#ctor
-  name: CouponRedeemedSuccessfullyView()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_CouponRedeemedSuccessfullyView__ctor
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.#ctor
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.CouponRedeemedSuccessfullyView()
-  nameWithType: CouponRedeemedSuccessfullyView.CouponRedeemedSuccessfullyView()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.#ctor*
-  name: CouponRedeemedSuccessfullyView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_CouponRedeemedSuccessfullyView__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.CouponRedeemedSuccessfullyView
-  nameWithType: CouponRedeemedSuccessfullyView.CouponRedeemedSuccessfullyView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.InitializeComponent
-  name: InitializeComponent()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_CouponRedeemedSuccessfullyView_InitializeComponent
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.InitializeComponent
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.InitializeComponent()
-  nameWithType: CouponRedeemedSuccessfullyView.InitializeComponent()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.InitializeComponent*
-  name: InitializeComponent
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_CouponRedeemedSuccessfullyView_InitializeComponent_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.InitializeComponent
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.CouponRedeemedSuccessfullyView.InitializeComponent
-  nameWithType: CouponRedeemedSuccessfullyView.InitializeComponent
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView
-  name: ExpirationReminderView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView
-  nameWithType: ExpirationReminderView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.#ctor
-  name: ExpirationReminderView()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpirationReminderView__ctor
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.#ctor
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.ExpirationReminderView()
-  nameWithType: ExpirationReminderView.ExpirationReminderView()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.#ctor*
-  name: ExpirationReminderView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpirationReminderView__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.ExpirationReminderView
-  nameWithType: ExpirationReminderView.ExpirationReminderView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.InitializeComponent
-  name: InitializeComponent()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpirationReminderView_InitializeComponent
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.InitializeComponent
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.InitializeComponent()
-  nameWithType: ExpirationReminderView.InitializeComponent()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.InitializeComponent*
-  name: InitializeComponent
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpirationReminderView_InitializeComponent_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.InitializeComponent
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpirationReminderView.InitializeComponent
-  nameWithType: ExpirationReminderView.InitializeComponent
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView
-  name: ExpiredView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView
-  nameWithType: ExpiredView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.#ctor
-  name: ExpiredView()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpiredView__ctor
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.#ctor
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.ExpiredView()
-  nameWithType: ExpiredView.ExpiredView()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.#ctor*
-  name: ExpiredView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpiredView__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.ExpiredView
-  nameWithType: ExpiredView.ExpiredView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.InitializeComponent
-  name: InitializeComponent()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpiredView_InitializeComponent
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.InitializeComponent
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.InitializeComponent()
-  nameWithType: ExpiredView.InitializeComponent()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.InitializeComponent*
-  name: InitializeComponent
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ExpiredView_InitializeComponent_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.InitializeComponent
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ExpiredView.InitializeComponent
-  nameWithType: ExpiredView.InitializeComponent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.LoginView
   name: LoginView
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.LoginView.html
