@@ -33,6 +33,7 @@ using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Threading;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
@@ -444,7 +445,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 // Pull newest messages.
                 var tailId = await messageRepository.GetLastMessageId();
-                Message[] retrievedMessages = await convoService.GetConvoMessages(
+                Message[] retrievedMessages = await convoService.GetConvoMessagesSinceTailId(
                     convoId: ActiveConvo.Id,
                     convoPasswordSHA512: convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
                     userId: user?.Id,

@@ -22,9 +22,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
@@ -47,7 +47,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly User user;
         private readonly ILogger logger;
         private readonly ISettings settings;
-        private readonly ICouponService couponService;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IWindowFactory windowFactory;
@@ -72,7 +71,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public ICommand DeleteButtonCommand { get; }
         public ICommand CancelButtonCommand { get; }
         public ICommand RevertButtonCommand { get; }
-        public ICommand RedeemButtonCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -82,24 +80,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => username;
             set => Set(ref username, value);
         }
-
-        private bool canRedeem = true;
-        public bool CanRedeem
-        {
-            get => canRedeem;
-            set => Set(ref canRedeem, value);
-        }
         #endregion
 
         private string oldTheme, newTheme;
 
-        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, ICouponService couponService, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto)
+        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
             this.logger = logger;
             this.crypto = crypto;
             this.settings = settings;
-            this.couponService = couponService;
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
@@ -109,7 +99,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             DeleteButtonCommand = new DelegateCommand(OnClickedDelete);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
-            RedeemButtonCommand = new DelegateCommand(OnClickedRedeem);
 
             if (!settings.Load())
             {
@@ -167,53 +156,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 newTheme = theme;
             }
-        }
-
-        private void OnClickedRedeem(object commandParam)
-        {
-            var couponCode = commandParam as string;
-
-            if (couponCode.NullOrEmpty())
-            {
-                return;
-            }
-
-            CanRedeem = false;
-
-            Task.Run(async () =>
-            {
-                var requestBody = new EpistleRequestBody
-                {
-                    UserId = user.Id,
-                    Auth = user.Token.Item2,
-                    Body = couponCode
-                };
-
-                bool success = await couponService.UseCoupon(requestBody.Sign(crypto, user.PrivateKeyPem));
-
-                ExecUI(() =>
-                {
-                    var dialogViewModel = viewModelFactory.Create<InfoDialogViewModel>();
-
-                    if (success)
-                    {
-                        dialogViewModel.Title = "Success!";
-                        dialogViewModel.Text = $"Your coupon \"{couponCode}\" has been redeemed successfully; your Glitched Epistle membership has thus been extended. Thanks for choosing this service!";
-                        logger.LogMessage($"Successfully redeemed Glitched Epistle coupon {couponCode}");
-                        eventAggregator.GetEvent<CouponRedeemedEvent>().Publish();
-                    }
-                    else
-                    {
-                        dialogViewModel.Title = "Couldn't redeem coupon...";
-                        dialogViewModel.Text = $"The coupon \"{couponCode}\" couldn't be redeemed, sorry... Please make sure that you have no typos in it, and keep in mind that its validity is case-sensitive!";
-                        logger.LogError($"Unsuccessful coupon redeem attempt (ends with \"{couponCode.Substring(couponCode.Length / 4)}\")");
-                    }
-
-                    CanRedeem = true;
-                    var dialogView = new InfoDialogView { DataContext = dialogViewModel };
-                    dialogView.ShowDialog();
-                });
-            });
         }
 
         private void OnClickedDelete(object commandParam)

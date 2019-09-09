@@ -23,10 +23,10 @@ using System.Reflection;
 using System.Threading;
 using System.Windows;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Coupons;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
@@ -90,7 +90,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
                 MessageBox.Show("There is already one instance of Glitched Epistle running!");
                 Current.Shutdown();
             }
-            
+            Client.Utilities.UrlUtility.SetEpistleServerUrl("http://localhost:8888/");
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
             
             // Register transient types:
@@ -98,7 +98,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<ILogger, Logger>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IConvoService, ConvoService>();
-            container.RegisterType<ICouponService, CouponService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
             container.RegisterType<IAsymmetricKeygenRSA, AsymmetricKeygenRSA>();
             container.RegisterType<ISymmetricCryptography, SymmetricCryptography>();

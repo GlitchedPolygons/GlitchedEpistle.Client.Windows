@@ -25,6 +25,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.Cryptography.Symmetric;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;

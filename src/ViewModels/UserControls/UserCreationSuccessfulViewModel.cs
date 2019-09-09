@@ -27,6 +27,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;

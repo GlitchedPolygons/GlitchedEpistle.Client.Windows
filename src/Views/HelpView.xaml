@@ -146,8 +146,6 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
                                Text="
 The gear icon in the top right corner of the program's main window opens up the settings menu.&#x0a;&#x0a;
 In there, you can change your username (the one displayed next to your messages) as well as your favorite theme.&#x0a;&#x0a;
-You can also redeem Epistle tokens in the settings menu: remaining days are added on top if you redeem before expiration.&#x0a;&#x0a;
-Expired user accounts are purged automatically from the Epistle server within one to two months of inactivity.&#x0a;&#x0a;
 The trash icon at the bottom of the settings menu is a button that allows you to instantly purge your entire Epistle account + convo data from your local machine.&#x0a;
 PLEASE read every warning carefully in the dialog menu before you do something you might regret later!
 " />

@@ -26,6 +26,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
@@ -114,7 +115,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private WindowState windowState = WindowState.Normal;
         public WindowState WindowState { get => windowState; set => Set(ref windowState, value); }
 
-        private string progressBarTooltip = "Subscription expires the 24th of December, 2018 at 15:30. Click to extend now!";
+        private string progressBarTooltip = "";
         public string ProgressBarTooltip { get => progressBarTooltip; set => Set(ref progressBarTooltip, value); }
 
         private double progressBarValue = 100;
@@ -132,7 +133,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private bool reset;
         private IRepository<Convo, string> convoProvider;
-        private ulong? scheduledAuthRefresh, scheduledExpirationDialog, scheduledHideGreenTickIcon;
+        private ulong? scheduledAuthRefresh, scheduledHideGreenTickIcon;
 
         public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger,IConvoPasswordProvider convoPasswordProvider)
         {
@@ -206,9 +207,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 Application.Current.Shutdown();
             });
 
-            // When the user redeemed a coupon, update the account's remaining time bar in main menu.
-            eventAggregator.GetEvent<CouponRedeemedEvent>().Subscribe(OnCouponRedeemedSuccessfully);
-
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
 
             // Load up the settings on startup.
@@ -245,24 +243,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UserCreationViewModel viewModel = viewModelFactory.Create<UserCreationViewModel>();
             MainControl = new UserCreationView { DataContext = viewModel };
         }
-
-        private void ShowExpiredControl()
-        {
-            ExpiredViewModel viewModel = viewModelFactory.Create<ExpiredViewModel>();
-            MainControl = new ExpiredView { DataContext = viewModel };
-        }
-
-        private void ShowExpirationReminderControl()
-        {
-            ExpirationReminderViewModel viewModel = viewModelFactory.Create<ExpirationReminderViewModel>();
-            MainControl = new ExpirationReminderView { DataContext = viewModel };
-        }
-
-        private void ShowCouponRedeemedSuccessfullyControl()
-        {
-            var viewModel = viewModelFactory.Create<CouponRedeemedSuccessfullyViewModel>();
-            MainControl = new CouponRedeemedSuccessfullyView { DataContext = viewModel };
-        }
         #endregion
 
         private void OnClosed(object commandParam)
@@ -291,49 +271,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 Application.Current.Shutdown();
             }
-        }
-
-        private async void UpdateUserExp()
-        {
-            // Gather user expiration UTC from server.
-            DateTime? exp = await userService.GetUserExpirationUTC(user.Id);
-            
-            if (!exp.HasValue)
-            {
-                return;
-            }
-
-            // Update the UI accordingly (blue progress bar + tooltip).
-            user.ExpirationUTC = exp.Value;
-            DateTime utcNow = DateTime.UtcNow;
-            TimeSpan delta = user.ExpirationUTC - utcNow;
-            bool expired = utcNow > user.ExpirationUTC;
-            ProgressBarValue = expired ? 0 : delta.TotalHours * 100.0d / 720.0d;
-            ProgressBarTooltip = $"Subscription {(expired ? "expired since" : "expires")} {user.ExpirationUTC:U}. Click to extend now!";
-
-            // Schedule expiration dialog / extension prompt
-            if (expired)
-            {
-                ShowExpiredControl();
-            }
-            else
-            {
-                if (delta < TimeSpan.FromDays(5))
-                {
-                    ShowExpirationReminderControl();
-
-                    if (scheduledExpirationDialog.HasValue)
-                    {
-                        methodQ.Cancel(scheduledExpirationDialog.Value);
-                    }
-
-                    scheduledExpirationDialog = methodQ.Schedule(ShowExpiredControl, user.ExpirationUTC);
-                }
-            }
-
-            // When the user account is expired,
-            // the UI should be inactive (and inoperable).
-            UIEnabled = !expired;
         }
 
         private void UpdateUserConvosMetadata()
@@ -379,14 +316,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 scheduledAuthRefresh = methodQ.Schedule(OnRefreshAuth, AUTH_REFRESH_INTERVAL);
             }
 
-            UpdateUserExp();
             UpdateUserConvosMetadata();
-        }
-
-        private void OnCouponRedeemedSuccessfully()
-        {
-            UpdateUserExp();
-            ShowCouponRedeemedSuccessfullyControl();
         }
 
         private void OnUserCreationSuccessful(UserCreationResponseDto userCreationResponseDto)

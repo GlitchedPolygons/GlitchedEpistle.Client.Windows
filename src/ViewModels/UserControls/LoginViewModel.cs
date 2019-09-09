@@ -23,6 +23,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
