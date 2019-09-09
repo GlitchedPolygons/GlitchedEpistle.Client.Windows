@@ -54,32 +54,6 @@
                  GotKeyboardFocus="UsernameTextBox_SelectText"
                  PreviewMouseLeftButtonDown="UsernameTextBox_OnMouseDown" />
 
-        <Label Content="Extend your Glitched Epistle membership now!"
-               Margin="0,8,0,0"
-               Padding="5,0,0,5"
-               ToolTip="How frequently should Epistle check for updates (e.g. new messages) in milliseconds?" />
-
-        <Grid IsEnabled="{Binding CanRedeem}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <TextBox Grid.Column="0" 
-                     MaxLength="42"
-                     Padding="5,0,17,0"
-                     TextAlignment="Left"
-                     Name="CouponTextBox"
-                     ToolTip="Enter your Epistle coupon here to extend your subscription." />
-            <Button Grid.Column="1"
-                    Focusable="False"
-                    Margin="-35,0,1,0"
-                    Content="Redeem"
-                    HorizontalAlignment="Right"
-                    Command="{Binding RedeemButtonCommand}"
-                    CommandParameter="{Binding Text, ElementName=CouponTextBox}"/>
-        </Grid>
-
         <Label Content="Theme" 
                Margin="0,8,0,0"
                Padding="3,0,0,5"/>

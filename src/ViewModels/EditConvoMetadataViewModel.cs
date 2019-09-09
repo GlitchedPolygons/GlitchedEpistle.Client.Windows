@@ -27,6 +27,7 @@ using System.Windows.Threading;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
