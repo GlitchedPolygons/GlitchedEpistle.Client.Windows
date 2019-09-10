@@ -49,7 +49,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class UserCreationViewModel : ViewModel
     {
         #region Constants
-        private const double ERROR_MESSAGE_INTERVAL = 7000;
+        private const double ERROR_MESSAGE_INTERVAL = 7500;
 
         private readonly ILogger logger;
         private readonly ISettings settings;
@@ -203,6 +203,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                             logger.LogError("The user creation process failed server-side. Reason unknown; please make an admin check out the server's log files!");
                             ExecUI(() =>
                             {
+                                errorMessageTimer.Stop();
+                                errorMessageTimer.Start();
+                                ErrorMessage = "The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!";
                                 UIEnabled = true;
                                 pendingAttempt = false;
                                 loadingScreen?.Close();

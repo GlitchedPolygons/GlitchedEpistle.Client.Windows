@@ -92,7 +92,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             QuitCommand = new DelegateCommand(OnClickedQuit);
             LoginCommand = new DelegateCommand(OnClickedLogin);
-            RegisterCommand = new DelegateCommand(_ => eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Publish());
+            RegisterCommand = new DelegateCommand(_ =>
+            {
+                UrlUtility.SetEpistleServerUrl(ServerUrl);
+                eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Publish();
+            });
 
             UserId = settings[nameof(UserId)];
             string url = settings[nameof(ServerUrl)];
@@ -119,6 +123,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             pendingAttempt = true;
             UIEnabled = false;
+            UrlUtility.SetEpistleServerUrl(ServerUrl);
 
             Task.Run(async () =>
             {
