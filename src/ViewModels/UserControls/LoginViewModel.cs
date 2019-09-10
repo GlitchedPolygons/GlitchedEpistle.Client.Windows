@@ -67,6 +67,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private string userId = string.Empty;
         public string UserId { get => userId; set => Set(ref userId, value); }
 
+        private string serverUrl = "https://epistle.glitchedpolygons.com";
+        public string ServerUrl { get => serverUrl; set => Set(ref serverUrl, value); }
+
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
 
@@ -90,6 +93,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             QuitCommand = new DelegateCommand(OnClickedQuit);
             LoginCommand = new DelegateCommand(OnClickedLogin);
             RegisterCommand = new DelegateCommand(_ => eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Publish());
+
+            UserId = settings[nameof(UserId)];
+            string url = settings[nameof(ServerUrl)];
+            if (url.NotNullNotEmpty())
+            {
+                ServerUrl = url;
+            }
 
             // Bind the password box to the password field.
             PasswordChangedCommand = new DelegateCommand(o => password = (o as PasswordBox)?.Password);
@@ -155,6 +165,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         try
                         {
                             user.Id = settings[nameof(UserId)] = UserId;
+                            settings[nameof(ServerUrl)] = ServerUrl.TrimEnd('/');
                             settings.Save();
 
                             user.PublicKeyPem = KeyExchangeUtility.DecompressPublicKey(response.PublicKey);

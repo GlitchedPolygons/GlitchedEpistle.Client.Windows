@@ -67,6 +67,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
             LoginButton.IsEnabled = FormReady;
         }
 
-        private bool FormReady => !string.IsNullOrEmpty(UserIdTextBox.Text) && !string.IsNullOrEmpty(PasswordBox.Password) && !string.IsNullOrEmpty(TotpTextBox.Text);
+        private void ServerUrlTextBox_OnTextChangedTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            LoginButton.IsEnabled = FormReady;
+        }
+
+        private bool FormReady => UserIdTextBox.Text.NotNullNotEmpty() 
+                                  && PasswordBox.Password.NotNullNotEmpty() 
+                                  && TotpTextBox.Text.NotNullNotEmpty() 
+                                  && ServerUrlTextBox.Text.NotNullNotEmpty();
     }
 }
