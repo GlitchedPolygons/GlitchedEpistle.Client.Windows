@@ -234,7 +234,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void ShowLoginControl()
         {
             LoginViewModel viewModel = viewModelFactory.Create<LoginViewModel>();
-            viewModel.UserId = UserId;
             MainControl = new LoginView { DataContext = viewModel };
         }
 
