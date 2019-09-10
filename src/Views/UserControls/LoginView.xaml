@@ -43,14 +43,14 @@
         <Label Content="Please login:"
                FontSize="14" />
 
+<!--
         <Label Content="Epistle Server URL"
                ToolTip="The Glitched Epistle server to connect to." />
 
         <TextBox MinWidth="250"
                  Name="ServerUrlTextBox"
-                 Text="{Binding ServerUrl}"
-                 TextChanged="ServerUrlTextBox_OnTextChangedTextBox_OnTextChanged" />
-
+                 Text="{Binding ServerUrl}" />
+-->
         <Label Content="User ID"
                ToolTip="Your user ID." />
 
