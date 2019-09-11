@@ -178,6 +178,7 @@
     <Compile Include="ViewModels\UserControls\ActiveConvoViewModel.cs" />
     <Compile Include="ViewModels\UserControls\ConvosListViewModel.cs" />
     <Compile Include="ViewModels\UserControls\MessageViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\ServerUrlViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationViewModel.cs" />
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationSuccessfulViewModel.cs" />
@@ -252,6 +253,9 @@
     </Compile>
     <Compile Include="Views\UserControls\MessageView.xaml.cs">
       <DependentUpon>MessageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\ServerUrlView.xaml.cs">
+      <DependentUpon>ServerUrlView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\UserCreationView.xaml.cs">
       <DependentUpon>UserCreationView.xaml</DependentUpon>
@@ -364,6 +368,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\MessageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\ServerUrlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

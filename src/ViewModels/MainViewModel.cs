@@ -209,6 +209,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
 
+            bool serverUrlConfigured = false;
+
             // Load up the settings on startup.
             if (settings.Load())
             {
@@ -223,14 +225,32 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
+
+                if (settings["ServerUrl"].NotNullNotEmpty())
+                {
+                    serverUrlConfigured = true;
+                }
             }
 
-            ShowLoginControl();
+            if (serverUrlConfigured)
+            {
+                ShowLoginControl();
+            }
+            else
+            {
+                ShowServerUrlControl();
+            }
 
             ConvosListControl = new ConvosListView { DataContext = viewModelFactory.Create<ConvosListViewModel>() };
         }
 
         #region MainControl
+        private void ShowServerUrlControl()
+        {
+            ServerUrlViewModel viewModel = viewModelFactory.Create<ServerUrlViewModel>();
+            MainControl = new ServerUrlView { DataContext = viewModel };
+        }
+
         private void ShowLoginControl()
         {
             LoginViewModel viewModel = viewModelFactory.Create<LoginViewModel>();

@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d">
+    <StackPanel HorizontalAlignment="Center" MaxWidth="250"
+                IsEnabled="{Binding UIEnabled}">
+
+        <Label Content="Welcome to Glitched Epistle."
+               FontWeight="Bold"
+               FontSize="16" />
+
+        <TextBlock Text="{Binding ErrorMessage}"
+                   TextWrapping="Wrap"
+                   MaxWidth="250"
+                   Margin="5,0,0,0"
+                   HorizontalAlignment="Left"
+                   Foreground="{DynamicResource ErrorMessageColor}"
+                   FontSize="14" />
+
+        <Label Content="Please connect to the Epistle server."
+               FontSize="14" />
+
+        <Label Content="Epistle Server URL" Margin="0 10 0 0"
+               ToolTip="The Glitched Epistle server to connect to." />
+
+        <TextBox MinWidth="250"
+                 Name="ServerUrlTextBox"
+                 Text="{Binding ServerUrl}" />
+    </StackPanel>
+
+    <UserControl.InputBindings>
+        <KeyBinding Key="Enter"
+                    Command="{Binding ConnectCommand}" />
+    </UserControl.InputBindings>
+</UserControl>
