@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using GlitchedPolygons.ExtensionMethods;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
@@ -10,6 +11,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         public ServerUrlView()
         {
             InitializeComponent();
+        }
+
+        private void ServerUrlTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TestConnectionButton.IsEnabled = 
+                ServerUrlTextBox.Text.NotNullNotEmpty() 
+                && ServerUrlTextBox.Text.Contains(".")
+                && (ServerUrlTextBox.Text.Contains("http://") || ServerUrlTextBox.Text.Contains("https://"));
         }
     }
 }
