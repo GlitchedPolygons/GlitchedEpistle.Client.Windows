@@ -36,6 +36,8 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
+using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
@@ -73,6 +75,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
+        private readonly IServerConnectionTest connectionTest;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
 
@@ -135,7 +138,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private IRepository<Convo, string> convoProvider;
         private ulong? scheduledAuthRefresh, scheduledHideGreenTickIcon;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger,IConvoPasswordProvider convoPasswordProvider)
+        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoPasswordProvider convoPasswordProvider, IServerConnectionTest connectionTest)
         {
             this.user = user;
             this.logger = logger;
@@ -143,6 +146,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.settings = settings;
             this.userService = userService;
             this.windowFactory = windowFactory;
+            this.connectionTest = connectionTest;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
@@ -196,6 +200,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // After a successful user creation, show the login screen.
             eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(ShowLoginControl);
 
+            // Also after the user has configured the server URL successfully...
+            eventAggregator.GetEvent<ConfiguredServerUrlEvent>().Subscribe(ShowLoginControl);
+
             // Connect the "Register" button to its callback.
             eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Subscribe(ShowRegisterControl);
 
@@ -208,8 +215,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             });
 
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
-
-            bool serverUrlConfigured = false;
 
             // Load up the settings on startup.
             if (settings.Load())
@@ -225,23 +230,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
+            }
 
-                if (settings["ServerUrl"].NotNullNotEmpty())
+            Task.Run(async () =>
+            {
+                bool serverUrlConfigured = false;
+                string url = settings["ServerUrl"];
+
+                if (url.NotNullNotEmpty())
                 {
-                    serverUrlConfigured = true;
+                    UrlUtility.SetEpistleServerUrl(url);
+                    serverUrlConfigured = await connectionTest.TestConnection();
                 }
-            }
 
-            if (serverUrlConfigured)
-            {
-                ShowLoginControl();
-            }
-            else
-            {
-                ShowServerUrlControl();
-            }
+                if (serverUrlConfigured)
+                {
+                    ExecUI(ShowLoginControl);
+                }
+                else
+                {
+                    ExecUI(ShowServerUrlControl);
+                }
 
-            ConvosListControl = new ConvosListView { DataContext = viewModelFactory.Create<ConvosListViewModel>() };
+                ExecUI(() => ConvosListControl = new ConvosListView { DataContext = viewModelFactory.Create<ConvosListViewModel>() });
+            });
         }
 
         #region MainControl
@@ -314,7 +326,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 }
                 catch (Exception e)
                 {
-                    logger.LogError($"{nameof(MainViewModel)}::{nameof(UpdateUserConvosMetadata)}: User convos sync failed! Thrown exception: "+ e.ToString());
+                    logger.LogError($"{nameof(MainViewModel)}::{nameof(UpdateUserConvosMetadata)}: User convos sync failed! Thrown exception: " + e.ToString());
                 }
             });
         }
