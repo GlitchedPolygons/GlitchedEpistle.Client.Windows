@@ -36,11 +36,13 @@
         </StackPanel>
 
         <TextBox MinWidth="250"
+                 TextChanged="ServerUrlTextBox_OnTextChanged"
                  Name="ServerUrlTextBox"
                  Text="{Binding ServerUrl}" />
 
         <StackPanel IsEnabled="{Binding UIEnabled}">
             <Button Margin="0 10 0 0" 
+                    Name="TestConnectionButton"
                     Command="{Binding TestConnectionCommand}"
                     ToolTip="Tests the connection to the entered Epistle server URL.">
                 Test Connection
