@@ -150,7 +150,6 @@
     <Compile Include="PubSubEvents\ClickedRegisterButtonEvent.cs" />
     <Compile Include="PubSubEvents\ChangedConvoMetadataEvent.cs" />
     <Compile Include="PubSubEvents\DeletedConvoEvent.cs" />
-    <Compile Include="PubSubEvents\ConfiguredServerUrlEvent.cs" />
     <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
     <Compile Include="PubSubEvents\JoinedConvoEvent.cs" />

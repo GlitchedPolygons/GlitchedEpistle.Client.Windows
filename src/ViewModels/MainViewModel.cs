@@ -200,9 +200,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // After a successful user creation, show the login screen.
             eventAggregator.GetEvent<UserCreationVerifiedEvent>().Subscribe(ShowLoginControl);
 
-            // Also after the user has configured the server URL successfully...
-            eventAggregator.GetEvent<ConfiguredServerUrlEvent>().Subscribe(ShowLoginControl);
-
             // Connect the "Register" button to its callback.
             eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Subscribe(ShowRegisterControl);
 
