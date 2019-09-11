@@ -26,7 +26,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         #region UI Bindings
         private string serverUrl = "https://epistle.glitchedpolygons.com";
-        public string ServerUrl { get => serverUrl; set => Set(ref serverUrl, value); }
+        public string ServerUrl
+        {
+            get => serverUrl;
+            set
+            {
+                Set(ref serverUrl, value);
+                ConnectionOk = false;
+            }
+        }
 
         private string errorMessage = string.Empty;
         public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
@@ -73,14 +81,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             UIEnabled = false;
             UrlUtility.SetEpistleServerUrl(ServerUrl);
-            Task.Run(async() =>
+            Task.Run(async () =>
             {
                 bool success = await test.TestConnection();
                 if (success)
                 {
                     settings["ServerUrl"] = ServerUrl;
                     settings.Save();
-                    ExecUI(() => eventAggregator.GetEvent<ConfiguredServerUrlEvent>().Publish());
+                    ExecUI(() => eventAggregator.GetEvent<LogoutEvent>().Publish());
                     return;
                 }
                 ExecUI(() => ErrorMessage = "The connection to the specified Epistle server could not be established.");
