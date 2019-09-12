@@ -15,5 +15,12 @@
 git clone https://github.com/GlitchedPolygons/GlitchedEpistle.Client "GlitchedEpistle.Client"
 git clone https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows "GlitchedEpistle.Client.Windows"
 ```
+
+### Where are my messages stored
+
+Your entire Glitched Epistle user data, including settings, convos, metadata and messages are stored inside `C:\Users\{YOUR_USERNAME}\AppData\Local\GlitchedPolygons\GlitchedEpistle\{YOUR_EPISTLE_USER_ID}`. 
+
+The messages are stored (in their encrypted form!) inside [SQLite](https://sqlite.org) database files inside the `Convos/` directory.
+
 ### Contributing
 Just fork & open a PR and I'll take a look at it ASAP :)
