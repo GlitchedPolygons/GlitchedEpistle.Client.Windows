@@ -206,6 +206,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Connect the "Edit Server URL" button to its callback.
             eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Subscribe(ShowServerUrlControl);
 
+            // If the currently active main control is a convo that was just deleted, close that convo!
+            eventAggregator.GetEvent<DeletedConvoEvent>().Subscribe(convoId =>
+            {
+                if (MainControl is ActiveConvoView a && (a.DataContext as ActiveConvoViewModel)?.ActiveConvo.Id == convoId)
+                {
+                    MainControl = null;
+                }
+            });
+
             // If the user agreed to delete all of his data on the local machine, respect his will
             // and get rid of everything (even preventing new settings to be written out on app shutdown too).
             eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(() =>
