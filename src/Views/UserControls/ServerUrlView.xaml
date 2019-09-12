@@ -81,9 +81,4 @@
             Testing connection...
         </Label>
     </StackPanel>
-
-    <UserControl.InputBindings>
-        <KeyBinding Key="Enter"
-                    Command="{Binding ConnectCommand}" />
-    </UserControl.InputBindings>
 </UserControl>

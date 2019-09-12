@@ -97,9 +97,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 bool success = await test.TestConnection();
                 if (success)
                 {
-                    settings["ServerUrl"] = ServerUrl;
-                    settings.Save();
                     UrlUtility.SetEpistleServerUrl(ServerUrl);
+                    settings["ServerUrl"] = UrlUtility.EpistleBaseUrl;
+                    settings.Save();
                     ExecUI(() => eventAggregator.GetEvent<LogoutEvent>().Publish());
                     return;
                 }
