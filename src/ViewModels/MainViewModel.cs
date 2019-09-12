@@ -118,7 +118,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private WindowState windowState = WindowState.Normal;
         public WindowState WindowState { get => windowState; set => Set(ref windowState, value); }
 
-        private string progressBarTooltip = "";
+        private string progressBarTooltip = "Glitched Epistle " + App.Version;
         public string ProgressBarTooltip { get => progressBarTooltip; set => Set(ref progressBarTooltip, value); }
 
         private double progressBarValue = 100;
@@ -132,6 +132,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private Control convosListControl;
         public Control ConvosListControl { get => convosListControl; set => Set(ref convosListControl, value); }
+
+        private string serverUrl;
+        public string ServerUrl { get => serverUrl; set => Set(ref serverUrl, value); }
         #endregion
 
         private bool reset;
@@ -187,6 +190,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             #endregion
 
             ClosedCommand = new DelegateCommand(OnClosed);
+
+            UrlUtility.ChangedEpistleServerUrl += UrlUtility_ChangedEpistleServerUrl;
 
             // Update the username label on the main window when that setting has changed.
             eventAggregator.GetEvent<UsernameChangedEvent>().Subscribe(newUsername => Username = newUsername);
@@ -263,6 +268,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 ExecUI(() => ConvosListControl = new ConvosListView { DataContext = viewModelFactory.Create<ConvosListViewModel>() });
             });
+        }
+
+        private void UrlUtility_ChangedEpistleServerUrl()
+        {
+            ServerUrl = UrlUtility.EpistleBaseUrl
+                .TrimEnd('/')
+                .Replace("http://", string.Empty)
+                .Replace("https://", string.Empty);
         }
 
         #region MainControl

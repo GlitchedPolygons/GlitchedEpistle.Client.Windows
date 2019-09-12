@@ -153,7 +153,12 @@
                             Command="{Binding LogoutButtonCommand}"
                             ToolTip="Click here to log out of your Glitched Epistle account." />
                 </WrapPanel>
-
+                <Label Foreground="Gray" 
+                       FontStyle="Italic" 
+                       Content="{Binding ServerUrl}"
+                       ContentStringFormat="Server: {0}"
+                       HorizontalAlignment="Center">
+                </Label>
             </StackPanel>
 
             <Rectangle Opacity="0.5"
