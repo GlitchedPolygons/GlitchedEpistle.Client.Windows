@@ -33,10 +33,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void ServerUrlTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            TestConnectionButton.IsEnabled =
-                ServerUrlTextBox.Text.NotNullNotEmpty() 
-                && ServerUrlTextBox.Text.Contains(".")
-                && (ServerUrlTextBox.Text.Contains("http://") || ServerUrlTextBox.Text.Contains("https://"));
+            TestConnectionButton.IsEnabled = ServerUrlTextBox.Text.NotNullNotEmpty();
         }
     }
 }
