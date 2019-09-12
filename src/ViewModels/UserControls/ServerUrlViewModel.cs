@@ -73,10 +73,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             UIEnabled = false;
             ClipboardTickVisibility = Visibility.Hidden;
             TestingLabelVisibility = Visibility.Visible;
-            UrlUtility.SetEpistleServerUrl(ServerUrl);
+
             Task.Run(async () =>
             {
-                bool success = await test.TestConnection();
+                bool success = await test.TestConnection(ServerUrl);
+                if (success) UrlUtility.SetEpistleServerUrl(ServerUrl);
                 ExecUI(() =>
                 {
                     ConnectionOk = success;
@@ -91,7 +92,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void OnClickedConnect(object commandParam)
         {
             UIEnabled = false;
-            UrlUtility.SetEpistleServerUrl(ServerUrl);
             Task.Run(async () =>
             {
                 bool success = await test.TestConnection();
@@ -99,6 +99,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     settings["ServerUrl"] = ServerUrl;
                     settings.Save();
+                    UrlUtility.SetEpistleServerUrl(ServerUrl);
                     ExecUI(() => eventAggregator.GetEvent<LogoutEvent>().Publish());
                     return;
                 }
