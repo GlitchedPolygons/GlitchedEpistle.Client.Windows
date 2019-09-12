@@ -316,6 +316,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent
   nameWithType: ChangedConvoMetadataEvent
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent
+  name: ClickedConfigureServerUrlButtonEvent
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent
+  nameWithType: ClickedConfigureServerUrlButtonEvent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedRegisterButtonEvent
   name: ClickedRegisterButtonEvent
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedRegisterButtonEvent.html
@@ -1825,12 +1831,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel
   nameWithType: MainViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Models.User,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos.IConvoPasswordProvider)
-  name: MainViewModel(ISettings, IEventAggregator, IUserService, IWindowFactory, IViewModelFactory, User, IMethodQ, ILogger, IConvoPasswordProvider)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_IEventAggregator_GlitchedPolygons_GlitchedEpistle_Client_Services_Web_Users_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_GlitchedPolygons_GlitchedEpistle_Client_Models_User_IMethodQ_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_GlitchedPolygons_GlitchedEpistle_Client_Services_Web_Convos_IConvoPasswordProvider_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Models.User,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos.IConvoPasswordProvider)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.MainViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, IEventAggregator, GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users.IUserService, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, GlitchedPolygons.GlitchedEpistle.Client.Models.User, IMethodQ, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos.IConvoPasswordProvider)
-  nameWithType: MainViewModel.MainViewModel(ISettings, IEventAggregator, IUserService, IWindowFactory, IViewModelFactory, User, IMethodQ, ILogger, IConvoPasswordProvider)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Models.User,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos.IConvoPasswordProvider,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth.IServerConnectionTest)
+  name: MainViewModel(ISettings, IEventAggregator, IUserService, IWindowFactory, IViewModelFactory, User, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_IEventAggregator_GlitchedPolygons_GlitchedEpistle_Client_Services_Web_Users_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_GlitchedPolygons_GlitchedEpistle_Client_Models_User_IMethodQ_GlitchedPolygons_GlitchedEpistle_Client_Services_Logging_ILogger_GlitchedPolygons_GlitchedEpistle_Client_Services_Web_Convos_IConvoPasswordProvider_GlitchedPolygons_GlitchedEpistle_Client_Services_Web_ServerHealth_IServerConnectionTest_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users.IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Models.User,IMethodQ,GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos.IConvoPasswordProvider,GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth.IServerConnectionTest)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.MainViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, IEventAggregator, GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users.IUserService, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, GlitchedPolygons.GlitchedEpistle.Client.Models.User, IMethodQ, GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger, GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos.IConvoPasswordProvider, GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth.IServerConnectionTest)
+  nameWithType: MainViewModel.MainViewModel(ISettings, IEventAggregator, IUserService, IWindowFactory, IViewModelFactory, User, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor*
   name: MainViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel__ctor_
@@ -2045,6 +2051,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.ResetWindowButtonCommand
   nameWithType: MainViewModel.ResetWindowButtonCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.ServerUrl
+  name: ServerUrl
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel_ServerUrl
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.ServerUrl
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.ServerUrl
+  nameWithType: MainViewModel.ServerUrl
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.ServerUrl*
+  name: ServerUrl
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel_ServerUrl_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.ServerUrl
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.ServerUrl
+  nameWithType: MainViewModel.ServerUrl
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.SettingsButtonCommand
   name: SettingsButtonCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel_SettingsButtonCommand
@@ -2593,6 +2612,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.LoginViewModel
   nameWithType: LoginViewModel.LoginViewModel
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.EditServerUrlCommand
+  name: EditServerUrlCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_LoginViewModel_EditServerUrlCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.EditServerUrlCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.EditServerUrlCommand
+  nameWithType: LoginViewModel.EditServerUrlCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.EditServerUrlCommand*
+  name: EditServerUrlCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_LoginViewModel_EditServerUrlCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.EditServerUrlCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.EditServerUrlCommand
+  nameWithType: LoginViewModel.EditServerUrlCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.ErrorMessage
   name: ErrorMessage
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_LoginViewModel_ErrorMessage
@@ -2950,6 +2982,129 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.TimestampDateTimeUTC
   nameWithType: MessageViewModel.TimestampDateTimeUTC
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel
+  name: ServerUrlViewModel
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel
+  nameWithType: ServerUrlViewModel
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth.IServerConnectionTest,GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator)
+  name: ServerUrlViewModel(IServerConnectionTest, ISettings, IEventAggregator)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel__ctor_GlitchedPolygons_GlitchedEpistle_Client_Services_Web_ServerHealth_IServerConnectionTest_GlitchedPolygons_GlitchedEpistle_Client_Services_Settings_ISettings_IEventAggregator_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor(GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth.IServerConnectionTest,GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings,IEventAggregator)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrlViewModel(GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth.IServerConnectionTest, GlitchedPolygons.GlitchedEpistle.Client.Services.Settings.ISettings, IEventAggregator)
+  nameWithType: ServerUrlViewModel.ServerUrlViewModel(IServerConnectionTest, ISettings, IEventAggregator)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor*
+  name: ServerUrlViewModel
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel__ctor_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrlViewModel
+  nameWithType: ServerUrlViewModel.ServerUrlViewModel
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ClipboardTickVisibility
+  name: ClipboardTickVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ClipboardTickVisibility
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ClipboardTickVisibility
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ClipboardTickVisibility
+  nameWithType: ServerUrlViewModel.ClipboardTickVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ClipboardTickVisibility*
+  name: ClipboardTickVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ClipboardTickVisibility_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ClipboardTickVisibility
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ClipboardTickVisibility
+  nameWithType: ServerUrlViewModel.ClipboardTickVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectCommand
+  name: ConnectCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ConnectCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectCommand
+  nameWithType: ServerUrlViewModel.ConnectCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectCommand*
+  name: ConnectCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ConnectCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectCommand
+  nameWithType: ServerUrlViewModel.ConnectCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectionOk
+  name: ConnectionOk
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ConnectionOk
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectionOk
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectionOk
+  nameWithType: ServerUrlViewModel.ConnectionOk
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectionOk*
+  name: ConnectionOk
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ConnectionOk_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectionOk
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ConnectionOk
+  nameWithType: ServerUrlViewModel.ConnectionOk
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ErrorMessage
+  name: ErrorMessage
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ErrorMessage
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ErrorMessage
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ErrorMessage
+  nameWithType: ServerUrlViewModel.ErrorMessage
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ErrorMessage*
+  name: ErrorMessage
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ErrorMessage_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ErrorMessage
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ErrorMessage
+  nameWithType: ServerUrlViewModel.ErrorMessage
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrl
+  name: ServerUrl
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ServerUrl
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrl
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrl
+  nameWithType: ServerUrlViewModel.ServerUrl
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrl*
+  name: ServerUrl
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_ServerUrl_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrl
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrl
+  nameWithType: ServerUrlViewModel.ServerUrl
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestConnectionCommand
+  name: TestConnectionCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_TestConnectionCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestConnectionCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestConnectionCommand
+  nameWithType: ServerUrlViewModel.TestConnectionCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestConnectionCommand*
+  name: TestConnectionCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_TestConnectionCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestConnectionCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestConnectionCommand
+  nameWithType: ServerUrlViewModel.TestConnectionCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestingLabelVisibility
+  name: TestingLabelVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_TestingLabelVisibility
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestingLabelVisibility
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestingLabelVisibility
+  nameWithType: ServerUrlViewModel.TestingLabelVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestingLabelVisibility*
+  name: TestingLabelVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_TestingLabelVisibility_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestingLabelVisibility
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.TestingLabelVisibility
+  nameWithType: ServerUrlViewModel.TestingLabelVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.UIEnabled
+  name: UIEnabled
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_UIEnabled
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.UIEnabled
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.UIEnabled
+  nameWithType: ServerUrlViewModel.UIEnabled
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.UIEnabled*
+  name: UIEnabled
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel_UIEnabled_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.UIEnabled
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.UIEnabled
+  nameWithType: ServerUrlViewModel.UIEnabled
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel
   name: UserCreationSuccessfulViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.html
@@ -3079,6 +3234,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationViewModel
   nameWithType: UserCreationViewModel.UserCreationViewModel
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand
+  name: EditServerUrlCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_EditServerUrlCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand
+  nameWithType: UserCreationViewModel.EditServerUrlCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand*
+  name: EditServerUrlCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_EditServerUrlCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand
+  nameWithType: UserCreationViewModel.EditServerUrlCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.ErrorMessage
   name: ErrorMessage
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_ErrorMessage
@@ -3900,6 +4068,38 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.InitializeComponent
   nameWithType: MessageView.InitializeComponent
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView
+  name: ServerUrlView
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView
+  nameWithType: ServerUrlView
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.#ctor
+  name: ServerUrlView()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ServerUrlView__ctor
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.#ctor
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.ServerUrlView()
+  nameWithType: ServerUrlView.ServerUrlView()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.#ctor*
+  name: ServerUrlView
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ServerUrlView__ctor_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.#ctor
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.ServerUrlView
+  nameWithType: ServerUrlView.ServerUrlView
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.InitializeComponent
+  name: InitializeComponent()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ServerUrlView_InitializeComponent
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.InitializeComponent
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.InitializeComponent()
+  nameWithType: ServerUrlView.InitializeComponent()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.InitializeComponent*
+  name: InitializeComponent
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_ServerUrlView_InitializeComponent_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.InitializeComponent
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.InitializeComponent
+  nameWithType: ServerUrlView.InitializeComponent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.UserCreationSuccessfulView
   name: UserCreationSuccessfulView
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.UserCreationSuccessfulView.html

@@ -155,6 +155,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent.html",
+          "hash": "AxHJgx2pOxcYVTvnDSYuWw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedRegisterButtonEvent.yml",
       "output": {
         ".html": {
@@ -297,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.html",
-          "hash": "n3I/gnXHVBfoXXguOnLi3A=="
+          "hash": "RjbxpmUmOunhSKIfrF0xOA=="
         }
       },
       "is_incremental": false,
@@ -525,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html",
-          "hash": "Ww3puYahtO6Efm/9zdIjYw=="
+          "hash": "ePuGcDYsugFcTtAHUqyn+Q=="
         }
       },
       "is_incremental": false,
@@ -573,7 +585,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html",
-          "hash": "gHz2E5mlo4qtkAfH/BF8lQ=="
+          "hash": "KuFPsBDKOAxj27XG5FY11A=="
         }
       },
       "is_incremental": false,
@@ -586,6 +598,18 @@
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html",
           "hash": "P4dFiPeQTuUz0anKz4HZmA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html",
+          "hash": "uac5shAWDBGrjgbMWW0jLQ=="
         }
       },
       "is_incremental": false,
@@ -609,7 +633,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html",
-          "hash": "chRIi9GFdAqrDaoySN3PyQ=="
+          "hash": "PTRrWNv3IiRYAoQv1Im6CA=="
         }
       },
       "is_incremental": false,
@@ -621,7 +645,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.html",
-          "hash": "bv4JfbSpvNM5cDqmxf7aZQ=="
+          "hash": "y7UJBgmH2WLqXLPXwDYKRA=="
         }
       },
       "is_incremental": false,
@@ -633,7 +657,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html",
-          "hash": "PUga3FOenr/oZlJtEHjFOQ=="
+          "hash": "ohD5iysxRq7VAu12ZdIF+Q=="
         }
       },
       "is_incremental": false,
@@ -917,6 +941,18 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.html",
+          "hash": "nvs+SmPAoB4fb30Voywabw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.UserCreationSuccessfulView.yml",
       "output": {
         ".html": {
@@ -945,7 +981,7 @@
       "output": {
         ".html": {
           "relative_path": "api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.html",
-          "hash": "zx5pfSMjKf9DxjqnSClx3g=="
+          "hash": "2PxIuV3r17pQSCA8cuqs3w=="
         }
       },
       "is_incremental": false,
@@ -993,7 +1029,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "glzNeLKHBg1FFrke9GfVWA=="
+          "hash": "Da8jPz0YKJnrr5Ip/ghY1A=="
         }
       },
       "is_incremental": false,
@@ -1060,24 +1096,24 @@
         "skipped_file_count": 0
       },
       "processors": {
-        "TocDocumentProcessor": {
-          "can_incremental": false,
-          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
-          "incrementalPhase": "build",
-          "total_file_count": 0,
-          "skipped_file_count": 0
-        },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 80,
-          "skipped_file_count": 10
+          "total_file_count": 83,
+          "skipped_file_count": 73
         },
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
           "total_file_count": 3,
           "skipped_file_count": 3
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
         }
       }
     },
