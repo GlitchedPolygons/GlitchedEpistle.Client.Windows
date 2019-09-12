@@ -203,6 +203,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Connect the "Register" button to its callback.
             eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Subscribe(ShowRegisterControl);
 
+            // Connect the "Edit Server URL" button to its callback.
+            eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Subscribe(ShowServerUrlControl);
+
             // If the user agreed to delete all of his data on the local machine, respect his will
             // and get rid of everything (even preventing new settings to be written out on app shutdown too).
             eventAggregator.GetEvent<ResetConfirmedEvent>().Subscribe(() =>

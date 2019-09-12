@@ -108,6 +108,11 @@
                         IsEnabled="{Binding FormValid}" />
             </StackPanel>
 
+            <Button Margin="0 15 0 0" 
+                    ToolTip="Change the Epistle server URL to connect to."
+                    Command="{Binding EditServerUrlCommand}">
+                Change Server
+            </Button>
 
             <Button Width="250"
                     HorizontalAlignment="Center"

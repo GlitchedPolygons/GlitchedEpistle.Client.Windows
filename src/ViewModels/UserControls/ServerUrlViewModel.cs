@@ -47,6 +47,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
         public Visibility ClipboardTickVisibility { get => clipboardTickVisibility; set => Set(ref clipboardTickVisibility, value); }
+
+        private Visibility testingLabelVisibility = Visibility.Hidden;
+        public Visibility TestingLabelVisibility { get => testingLabelVisibility; set => Set(ref testingLabelVisibility, value); }
         #endregion
 
         public ServerUrlViewModel(IServerConnectionTest test, ISettings settings, IEventAggregator eventAggregator)
@@ -54,6 +57,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.test = test;
             this.settings = settings;
             this.eventAggregator = eventAggregator;
+
+            string url = settings["ServerUrl"];
+            if (url.NotNullNotEmpty())
+            {
+                ServerUrl = url;
+            }
 
             ConnectCommand = new DelegateCommand(OnClickedConnect);
             TestConnectionCommand = new DelegateCommand(OnClickedTestConnection);
@@ -63,6 +72,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             UIEnabled = false;
             ClipboardTickVisibility = Visibility.Hidden;
+            TestingLabelVisibility = Visibility.Visible;
             UrlUtility.SetEpistleServerUrl(ServerUrl);
             Task.Run(async () =>
             {
@@ -70,6 +80,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ExecUI(() =>
                 {
                     ConnectionOk = success;
+                    TestingLabelVisibility = Visibility.Hidden;
                     ClipboardTickVisibility = ConnectionOk ? Visibility.Visible : Visibility.Hidden;
                     ErrorMessage = ConnectionOk ? null : "The connection to the specified Epistle server could not be established.";
                     UIEnabled = true;

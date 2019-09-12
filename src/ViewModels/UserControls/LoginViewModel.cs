@@ -61,6 +61,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ICommand RegisterCommand { get; }
         public ICommand QuitCommand { get; }
         public ICommand PasswordChangedCommand { get; }
+        public ICommand EditServerUrlCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -89,9 +90,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             QuitCommand = new DelegateCommand(OnClickedQuit);
             LoginCommand = new DelegateCommand(OnClickedLogin);
+            
             RegisterCommand = new DelegateCommand(_ =>
             {
                 eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Publish();
+            });
+
+            EditServerUrlCommand = new DelegateCommand(_ =>
+            {
+                eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Publish();
             });
 
             UserId = settings[nameof(UserId)];
@@ -119,7 +126,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (!await connectionTest.TestConnection())
                 {
-                    ExecUI(() => 
+                    ExecUI(() =>
                     {
                         pendingAttempt = false;
                         UIEnabled = true;
@@ -128,7 +135,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     });
                     return;
                 }
-                
+
                 UserLoginSuccessResponseDto response = await userService.Login(new UserLoginRequestDto
                 {
                     UserId = UserId,
