@@ -98,6 +98,12 @@
                     ToolTip="Don't have an account yet? No worries, click here and create one now!"/>
         </StackPanel>
 
+        <Button Margin="0 15 0 0" 
+                ToolTip="Change the Epistle server URL to connect to."
+                Command="{Binding EditServerUrlCommand}">
+            Change Server
+        </Button>
+
         <Button Width="250" 
                 Margin="0,15,0,0"
                 Content="Login"

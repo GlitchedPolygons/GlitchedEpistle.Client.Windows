@@ -66,6 +66,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #endregion
 
         #region Commands
+        public ICommand EditServerUrlCommand { get; }
         public ICommand PasswordChangedCommand1 { get; }
         public ICommand PasswordChangedCommand2 { get; }
         public ICommand LoginCommand { get; }
@@ -146,6 +147,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             RegisterCommand = new DelegateCommand(OnClickedRegister);
             LoginCommand = new DelegateCommand(OnClickedAlreadyHaveAnAccount);
             QuitCommand = new DelegateCommand(_ => Application.Current.Shutdown());
+            EditServerUrlCommand = new DelegateCommand(_ =>
+            {
+                eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Publish();
+            });
 
             errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
             errorMessageTimer.Start();

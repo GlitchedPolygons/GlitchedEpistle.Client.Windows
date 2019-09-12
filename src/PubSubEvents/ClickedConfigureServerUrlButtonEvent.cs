@@ -16,27 +16,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System.Windows.Controls;
-using GlitchedPolygons.ExtensionMethods;
+using Prism.Events;
 
-namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents
 {
     /// <summary>
-    /// Interaction logic for ServerUrlView.xaml
+    /// Raised whenever the user clicked the "Edit Server URL"
+    /// button on the login or register screen.
     /// </summary>
-    public partial class ServerUrlView : UserControl
+    public class ClickedConfigureServerUrlButtonEvent : PubSubEvent
     {
-        public ServerUrlView()
-        {
-            InitializeComponent();
-        }
-
-        private void ServerUrlTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            TestConnectionButton.IsEnabled =
-                ServerUrlTextBox.Text.NotNullNotEmpty() 
-                && ServerUrlTextBox.Text.Contains(".")
-                && (ServerUrlTextBox.Text.Contains("http://") || ServerUrlTextBox.Text.Contains("https://"));
-        }
     }
 }
