@@ -29,6 +29,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         public ConfirmConvoDeletionView()
         {
             InitializeComponent();
+            TextBox?.Focus();
         }
 
         private void CancelButton_OnClick(object sender, RoutedEventArgs e)
