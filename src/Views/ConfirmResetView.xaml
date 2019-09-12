@@ -45,7 +45,7 @@
         <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
                    Margin="0,5,0,0"
-                   Text="Unless you have a backup of your user account that you can import during the registration process, your data (and any active subscription) is lost!" />
+                   Text="Unless you have a backup of your user account that you can import during the registration process, your data is lost!" />
         <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
                    Margin="0,5,0,0"
@@ -53,7 +53,7 @@
         <TextBlock Style="{DynamicResource TextBlock}"
                    TextWrapping="Wrap"
                    Margin="0,5,0,0"
-                   Text="If you restart the program afterwards, you will be prompted to create a new user account." />
+                   Text="If you restart the program afterwards, your locally stored convos, messages and user settings will be gone and you will be prompted to create a new user account." />
         <StackPanel Width="300"
                     Margin="0,50,0,0">
             <Label Content="Please confirm the DELETION of your user data." />
