@@ -99,11 +99,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IConvoService, ConvoService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
+            container.RegisterType<ICompressionUtilityAsync, GZipUtilityAsync>();
             container.RegisterType<IAsymmetricKeygenRSA, AsymmetricKeygenRSA>();
             container.RegisterType<ISymmetricCryptography, SymmetricCryptography>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();
             container.RegisterType<IMessageCryptography, MessageCryptography>();
             container.RegisterType<IServerConnectionTest, ServerConnectionTest>();
+            container.RegisterType<IMessageSender, MessageSender>();
 
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.

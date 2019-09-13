@@ -78,10 +78,10 @@
     <h3 id="classes">Classes
   </h3>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent.html">ChangedConvoMetadataEvent</a></h4>
-      <section><p>This <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully modified a <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>'s metadata server-side.<p> </p>
-The passed <code>string</code> parameter is the <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo.Id</span>.<p> </p>
+      <section><p>This <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully modified a <see cref="!:Convo"></see>'s metadata server-side.<p> </p>
+The passed <code>string</code> parameter is the <see cref="!:Convo.Id"></see>.<p> </p>
 Can also be raised when you're a non-admin participant of a (currently open and active)
-<span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span> and the admin changed the metadata server-side.</p>
+<see cref="!:Convo"></see> and the admin changed the metadata server-side.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent.html">ClickedConfigureServerUrlButtonEvent</a></h4>
       <section><p>Raised whenever the user clicked the &quot;Edit Server URL&quot;
@@ -93,14 +93,14 @@ button on the login screen to create a new account.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ConvoCreationSucceededEvent.html">ConvoCreationSucceededEvent</a></h4>
       <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;String>"></see> (where <code>TPayload</code> is of type <span class="xref">System.String</span>)
-is raised whenever the user has successfully created a new <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>.</p>
+is raised whenever the user has successfully created a new <see cref="!:Convo"></see>.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.DeletedConvoEvent.html">DeletedConvoEvent</a></h4>
-      <section><p>This <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully deleted a <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span> server-side.<p> </p>
+      <section><p>This <see cref="!:PubSubEvent"></see> is raised whenever a the user has successfully deleted a <see cref="!:Convo"></see> server-side.<p> </p>
 The passed <code>string</code> parameter is the deleted convo's id.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.JoinedConvoEvent.html">JoinedConvoEvent</a></h4>
-      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;TPayload>"></see> (where <code>TPayload</code> is of type <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.Convo</span>)
+      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;TPayload>"></see> (where <code>TPayload</code> is of type <see cref="!:Convo"></see>)
 is raised whenever the user has submitted the convo credentials form successfully,
 and has now joined the conversation successfully.<p> </p>
 The subscriber should be adding the convo data to the device in a persistent way (e.g. file IO).</p>
@@ -121,7 +121,7 @@ whenever a the user has successfully confirmed the deletion of his application d
 in which the logged in user is involved that were NOT YET on the local device (thus causing the convos list to be updated).</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationSucceededEvent.html">UserCreationSucceededEvent</a></h4>
-      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;UserCreationResponse>"></see> (where <code>TPayload</code> is of type <span class="xref">GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs.UserCreationResponseDto</span>)
+      <section><p>This <see cref="!:Prism.Events.PubSubEvent&lt;UserCreationResponse>"></see> (where <code>TPayload</code> is of type <see cref="!:UserCreationResponseDto"></see>)
 is raised whenever the user has submitted the registration form successfully, and is now awaiting to receive his 2FA TOTP secret + backup codes to show on a QR and unordered list, respectively.</p>
 </section>
       <h4><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UserCreationVerifiedEvent.html">UserCreationVerifiedEvent</a></h4>
