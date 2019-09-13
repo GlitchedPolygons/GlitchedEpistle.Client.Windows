@@ -22,53 +22,47 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
-using System.Windows.Threading;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.RepositoryPattern;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
-using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.Services.CompressionUtility;
-using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
 using Microsoft.Win32;
 
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 using Prism.Events;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
-
+    /// <summary>
+    /// This is one of the most important classes inside the Windows client code.<para> </para>
+    /// It contains the view model for the currently active convo, meaning that it will
+    /// take care of pulling the newest messages from the backend, adding them to the UI, etc...
+    /// </summary>
     public class ActiveConvoViewModel : ViewModel, IDisposable
     {
         #region Constants
-        private const long MAX_FILE_SIZE_BYTES = 20971520;
         private const int MSG_COLLECTION_SIZE = 20;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
-        private static readonly char[] MSG_TRIM_CHARS = { '\n', '\r', '\t' };
         private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(314.159265);
         private static readonly TimeSpan METADATA_PULL_FREQUENCY = TimeSpan.FromMilliseconds(30000);
 
@@ -76,12 +70,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly User user;
         private readonly ILogger logger;
         private readonly IMethodQ methodQ;
-        private readonly ISettings settings;
-        private readonly ICompressionUtility gzip;
-        private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IMessageCryptography crypto;
-        private readonly IAsymmetricCryptographyRSA rsa;
+        private readonly IMessageSender messageSender;
         private readonly IEventAggregator eventAggregator;
         private readonly IRepository<Convo, string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
@@ -167,21 +158,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             IConvoService convoService,
             IEventAggregator eventAggregator,
             IMethodQ methodQ,
-            IUserService userService,
             IMessageCryptography crypto,
             ISettings settings,
             ILogger logger,
-            IConvoPasswordProvider convoPasswordProvider, ICompressionUtility gzip, IAsymmetricCryptographyRSA rsa)
+            IConvoPasswordProvider convoPasswordProvider, 
+            IMessageSender messageSender)
         {
             #region Injections
-            this.rsa = rsa;
+            this.messageSender = messageSender;
             this.user = user;
-            this.gzip = gzip;
             this.logger = logger;
             this.crypto = crypto;
             this.methodQ = methodQ;
-            this.settings = settings;
-            this.userService = userService;
             this.convoService = convoService;
             this.convoPasswordProvider = convoPasswordProvider;
             this.eventAggregator = eventAggregator;
@@ -468,60 +456,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
 
         /// <summary>
-        /// Encrypts and submits a <see cref="Message"/> body to the server.<para> </para>
-        /// Returns whether the <see cref="Message"/> was submitted successfully or not.
-        /// </summary>
-        /// <param name="messageBodyJson">The <see cref="Message"/> body's json.</param>
-        /// <returns>Whether the <see cref="Message"/> was submitted successfully or not.</returns>
-        private async Task<bool> SubmitMessage(JObject messageBodyJson)
-        {
-            if (ActiveConvo is null)
-            {
-                logger.LogError($"Tried to submit a message from an {nameof(ActiveConvoViewModel)} whose {nameof(ActiveConvo)} is null! Something's wrong... please analyze this behaviour!");
-                return false;
-            }
-
-            pageIndex = 0;
-
-            await PullConvoMetadata();
-
-            var encryptedMessagesBag = new ConcurrentDictionary<string, string>();
-            string messageBodyJsonString = messageBodyJson.ToString(Formatting.None);
-
-            // Get the keys of all convo participants here.
-            List<Tuple<string, string>> keys = await userService.GetUserPublicKey(user.Id, ActiveConvo.GetParticipantIdsCommaSeparated(), user.Token.Item2);
-
-            // Encrypt the message for every convo participant individually
-            // and put the result in a temporary concurrent bag.
-            Parallel.ForEach(keys, key =>
-            {
-                if (key != null && key.Item1.NotNullNotEmpty() && key.Item2.NotNullNotEmpty() && messageBodyJsonString.NotNullNotEmpty())
-                {
-                    string encryptedMessage = crypto.EncryptMessage(messageBodyJsonString, KeyExchangeUtility.DecompressPublicKey(key.Item2));
-                    encryptedMessagesBag[key.Item1] = encryptedMessage;
-                }
-            });
-
-            var postParamsDto = new PostMessageParamsDto
-            {
-                SenderName = settings["Username"],
-                ConvoId = ActiveConvo.Id,
-                ConvoPasswordSHA512 = convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
-                MessageBodiesJson = JsonConvert.SerializeObject(encryptedMessagesBag)
-            };
-
-            var body = new EpistleRequestBody
-            {
-                UserId = user.Id,
-                Auth = user.Token.Item2,
-                Body = gzip.Compress(JsonConvert.SerializeObject(postParamsDto))
-            };
-
-            bool success = await convoService.PostMessage(body.Sign(rsa, user.PrivateKeyPem));
-            return success;
-        }
-
-        /// <summary>
         /// Called when the user submitted a text message
         /// (either via UI button click or by pressing Enter).
         /// </summary>
@@ -545,9 +479,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                var messageBodyJson = new JObject { ["text"] = messageText.TrimEnd(MSG_TRIM_CHARS).TrimStart(MSG_TRIM_CHARS) };
-
-                bool success = await SubmitMessage(messageBodyJson);
+                bool success = await messageSender.PostText(ActiveConvo, messageText);
 
                 if (!success)
                 {
@@ -557,8 +489,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         errorView.ShowDialog();
                     });
                 }
-
-                messageBodyJson["text"] = messageBodyJson = null;
             });
         }
 
@@ -603,15 +533,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 byte[] fileBytes = File.ReadAllBytes(filePath);
 
-                if (fileBytes.LongLength < MAX_FILE_SIZE_BYTES)
+                if (fileBytes.LongLength < MessageSender.MAX_FILE_SIZE_BYTES)
                 {
-                    var messageBodyJson = new JObject
-                    {
-                        ["fileName"] = Path.GetFileName(filePath),
-                        ["fileBase64"] = Convert.ToBase64String(fileBytes)
-                    };
-
-                    bool success = await SubmitMessage(messageBodyJson);
+                    bool success = await messageSender.PostFile(ActiveConvo, Path.GetFileName(filePath), fileBytes);
 
                     if (!success)
                     {
@@ -621,8 +545,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                             errorView.ShowDialog();
                         });
                     }
-
-                    messageBodyJson["fileBase64"] = messageBodyJson["fileName"] = messageBodyJson = null;
                 }
                 else
                 {

@@ -484,6 +484,9 @@
     <PackageReference Include="GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter">
       <Version>1.0.6</Version>
     </PackageReference>
+    <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client">
+      <Version>2019.4.0.1</Version>
+    </PackageReference>
     <PackageReference Include="GlitchedPolygons.Services.CompressionUtility">
       <Version>1.1.0</Version>
     </PackageReference>
@@ -541,12 +544,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\scroll-to-bottom-icon-black.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\GlitchedEpistle.Client\src\GlitchedEpistle.Client.csproj">
-      <Project>{106B9806-322B-45E1-9565-9C5B832F9E8A}</Project>
-      <Name>GlitchedEpistle.Client</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
