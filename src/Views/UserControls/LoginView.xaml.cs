@@ -20,7 +20,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 using GlitchedPolygons.ExtensionMethods;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
