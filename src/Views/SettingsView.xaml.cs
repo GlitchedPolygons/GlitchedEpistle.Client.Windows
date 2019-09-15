@@ -20,7 +20,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
