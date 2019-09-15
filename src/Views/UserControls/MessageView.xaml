@@ -161,6 +161,7 @@
                          AllowDrop="False"
                          Margin="2.5,0,0,8"
                          TextWrapping="Wrap"
+                         MaxLength="8192"
                          MouseDoubleClick="TextBox_SelectText"
                          GotKeyboardFocus="TextBox_SelectText"
                          PreviewMouseLeftButtonDown="TextBox_OnMouseDown"
