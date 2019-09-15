@@ -28,7 +28,6 @@ using System.Windows.Controls;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.Services.Cryptography.Symmetric;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;

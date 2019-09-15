@@ -19,14 +19,12 @@
 using System;
 using System.IO;
 using System.Timers;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using GlitchedPolygons.ExtensionMethods;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;

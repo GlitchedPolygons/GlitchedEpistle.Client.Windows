@@ -25,7 +25,6 @@ using System.Windows;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Extensions;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
