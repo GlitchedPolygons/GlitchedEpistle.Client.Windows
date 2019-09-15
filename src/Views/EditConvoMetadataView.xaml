@@ -170,7 +170,8 @@
                                 </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" 
+                                                    Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
                                             <StackPanel.ContextMenu>
                                                 <ContextMenu>
                                                     <MenuItem Header="{Binding}"
@@ -180,11 +181,11 @@
                                                     <Separator />
                                                     <MenuItem Header="Promote to admin" 
                                                               ToolTip="Promotes this user to be the new convo's admin.&#x0a;Please be aware of the fact that by doing this you fully give up your rights as a convo admin,&#x0a;and that the new admin will have FULL control over the conversation."
-                                                              Command="{Binding DataContext.MakeAdminCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                              Command="{Binding PlacementTarget.Tag.MakeAdminCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                               CommandParameter="{Binding}" />
                                                     <MenuItem Header="Kick and ban from convo" 
                                                               ToolTip="Kicks the user from the convo and prevents him from joining back in by putting him on the convo's black list.&#x0a;Only use this when really needed (e.g. spam), as this action is intentionally irreversible!"
-                                                              Command="{Binding DataContext.KickAndBanUserCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
+                                                              Command="{Binding PlacementTarget.Tag.KickAndBanUserCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                               CommandParameter="{Binding}" />
                                                 </ContextMenu>
                                             </StackPanel.ContextMenu>
