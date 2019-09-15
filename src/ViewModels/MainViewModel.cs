@@ -232,8 +232,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Load up the settings on startup.
             if (settings.Load())
             {
-                Username = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
                 UserId = user.Id = settings[nameof(UserId)];
+                Username = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
 
                 Enum.TryParse(settings[nameof(WindowState), WindowState.Normal.ToString()], out WindowState loadedWindowState);
                 WindowState = loadedWindowState;

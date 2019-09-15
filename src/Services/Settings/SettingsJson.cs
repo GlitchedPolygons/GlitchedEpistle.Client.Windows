@@ -51,7 +51,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         {
             this.logger = logger;
 
-            FilePath = Path.Combine(Paths.ROOT_DIRECTORY, "UserSettings.json");
+            FilePath = Path.Combine(Paths.ROOT_DIRECTORY, "Settings.json");
         }
 
         /// <summary>
