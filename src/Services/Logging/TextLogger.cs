@@ -28,7 +28,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
     /// Implements the <see cref="GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger" /> interface.
     /// </summary>
     /// <seealso cref="GlitchedPolygons.GlitchedEpistle.Client.Services.Logging.ILogger" />
-    public class Logger : ILogger
+    public class TextLogger : ILogger
     {
         /// <summary>
         /// Gets the directory path where the log files are stored on disk.
@@ -60,9 +60,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
         private object logLock = new object();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Logger"/> class (implements <see cref="ILogger"/>).
+        /// Initializes a new instance of the <see cref="TextLogger"/> class (implements <see cref="ILogger"/>).
         /// </summary>
-        public Logger()
+        public TextLogger()
         {
             DirectoryPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
