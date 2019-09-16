@@ -94,7 +94,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             
             // Register transient types:
             container.RegisterType<JwtService>();
-            container.RegisterType<ILogger, Logger>();
+            container.RegisterType<ILogger, TextLogger>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IConvoService, ConvoService>();
             container.RegisterType<ICompressionUtility, GZipUtility>();
