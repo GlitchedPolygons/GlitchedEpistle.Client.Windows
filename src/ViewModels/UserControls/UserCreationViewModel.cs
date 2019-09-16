@@ -24,9 +24,6 @@ using System.Windows.Input;
 using System.Windows.Controls;
 
 using GlitchedPolygons.ExtensionMethods;
-using GlitchedPolygons.Services.CompressionUtility;
-using GlitchedPolygons.Services.Cryptography.Symmetric;
-using GlitchedPolygons.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
@@ -35,7 +32,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 
 using Prism.Events;
 
@@ -47,17 +43,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const double ERROR_MESSAGE_INTERVAL = 7500;
 
         private readonly ILogger logger;
-        private readonly ISettings settings;
-        private readonly IUserService userService;
-        private readonly IAsymmetricKeygenRSA keygen;
-        private readonly ISymmetricCryptography crypto;
-        private readonly ICompressionUtility gzip;
-        private readonly IWindowFactory windowFactory;
-        private readonly IViewModelFactory viewModelFactory;
+        private readonly IUserSettings settings;
         private readonly IEventAggregator eventAggregator;
+        private readonly IRegistrationService registrationService;
         private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
-        private static readonly RSAKeySize RSA_KEY_SIZE = new RSA4096();
-        private static readonly CompressionSettings COMPRESSION_SETTINGS = new CompressionSettings();
         #endregion
 
         #region Commands
@@ -109,17 +98,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygenRSA keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory, ISymmetricCryptography crypto)
+        public UserCreationViewModel(IUserSettings settings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)
         {
-            this.gzip = gzip;
             this.logger = logger;
-            this.keygen = keygen;
             this.settings = settings;
-            this.userService = userService;
-            this.windowFactory = windowFactory;
-            this.crypto = crypto;
-            this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
+            this.registrationService = registrationService;
 
             PasswordChangedCommand1 = new DelegateCommand(commandParam =>
             {
@@ -181,56 +165,45 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                Tuple<string, string> keyPair = await keygen.GenerateKeyPair(RSA_KEY_SIZE);
-                
-                if (keyPair != null)
+                Tuple<int, UserCreationResponseDto> result = await registrationService.CreateUser(password1, UserCreationSecret);
+
+                switch (result.Item1)
                 {
-                    try
-                    {
-                        string publicKeyPem = keyPair.Item1;
-                        string privateKeyPem = keyPair.Item2;
-
-                        var userCreationResponse = await userService.CreateUser(new UserCreationRequestDto
-                        {
-                            PasswordSHA512 = password1.SHA512(),
-                            PublicKey = KeyExchangeUtility.CompressPublicKey(publicKeyPem),
-                            PrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(privateKeyPem, password1),
-                            CreationSecret = UserCreationSecret
-                        });
-
-                        if (userCreationResponse is null)
-                        {
-                            logger.LogError("The user creation process failed server-side. Reason unknown; please make an admin check out the server's log files!");
-                            ExecUI(() =>
-                            {
-                                errorMessageTimer.Stop();
-                                errorMessageTimer.Start();
-                                ErrorMessage = "The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!";
-                                UIEnabled = true;
-                                pendingAttempt = false;
-                                loadingScreen?.Close();
-                            });
-                            return;
-                        }
-
+                    case 0: // Success!
                         // Handle this event back in the main view model,
                         // since it's there where the backup codes + 2FA secret (QR) will be shown.
-                        ExecUI(() => eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse));
-                        logger.LogMessage($"Created user {userCreationResponse.Id}.");
-
-                        settings[nameof(Username)] = Username;
+                        ExecUI(() => eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(result.Item2));
+                        logger.LogMessage($"Created user {result.Item2.Id}.");
+                        settings.Username = Username;
                         settings.Save();
-                    }
-                    catch (Exception e)
-                    {
-                        logger.LogError($"The user creation process failed. Thrown exception: {e}");
-                    }
-                }
-                else
-                {
-                    var errorMsg = "There was an unexpected error whilst generating the RSA key pair (during user creation process).";
-                    logger.LogError(errorMsg);
-                    ErrorMessage = errorMsg;
+                        break;
+                    case 1: // Epistle backend connectivity issues
+                        var errorMsg = "Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server url!";
+                        logger?.LogError(errorMsg);
+                        ExecUI(() => ErrorMessage = errorMsg);
+                        break;
+                    case 2: // RSA failure
+                        errorMsg = "There was an unexpected error whilst generating the RSA key pair (during user creation process).";
+                        logger?.LogError(errorMsg);
+                        ExecUI(() => ErrorMessage = errorMsg);
+                        break;
+                    case 3: // Server-side failure
+                        logger?.LogError("The user creation process failed server-side. Reason unknown; please make an admin check out the server's log files!");
+                        ExecUI(() =>
+                        {
+                            errorMessageTimer.Stop();
+                            errorMessageTimer.Start();
+                            ErrorMessage = "The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!";
+                            UIEnabled = true;
+                            pendingAttempt = false;
+                            loadingScreen?.Close();
+                        });
+                        break;
+                    case 4: // Client-side failure
+                        errorMsg = "The user creation succeeded server-side but there was an unexpected client-side error whilst handling the user creation server response.";
+                        logger?.LogError(errorMsg);
+                        ExecUI(() => ErrorMessage = errorMsg);
+                        break;
                 }
 
                 ExecUI(() =>

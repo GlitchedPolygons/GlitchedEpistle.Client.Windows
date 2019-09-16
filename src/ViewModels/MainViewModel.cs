@@ -208,6 +208,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Connect the "Edit Server URL" button to its callback.
             eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Subscribe(ShowServerUrlControl);
 
+            // Close/clear the main window's user control on demand via the related PubSubEvent.
+            eventAggregator.GetEvent<ClearMainControlEvent>().Subscribe(() => MainControl = null);
+
             // If the currently active main control is a convo that was just deleted, close that convo!
             eventAggregator.GetEvent<DeletedConvoEvent>().Subscribe(convoId =>
             {
@@ -344,7 +347,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                     if (await convoProvider.AddRange(userConvos.Select(dto => (Convo)dto).Distinct()))
                     {
-                        ExecUI(() => eventAggregator.GetEvent<UpdatedUserConvosEvent>().Publish());
+                        ExecUI(eventAggregator.GetEvent<UpdatedUserConvosEvent>().Publish);
                     }
                 }
                 catch (Exception e)
@@ -364,6 +367,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             UserId = user.Id;
             Username = userSettings.Username;
+
+            if (Username.NullOrEmpty())
+            {
+                MainControl = new UsernamePromptView { DataContext = viewModelFactory.Create<UsernamePromptViewModel>() };
+            }
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
