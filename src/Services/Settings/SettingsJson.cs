@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         /// <summary>
         /// Absolute settings file path.
         /// </summary>
-        public string FilePath { get; protected set; } = Path.Combine(Paths.ROOT_DIRECTORY, "Settings.json");
+        public string FilePath { get; protected set; }
 
         private readonly ILogger logger;
 

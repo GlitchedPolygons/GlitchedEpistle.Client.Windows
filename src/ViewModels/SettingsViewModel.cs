@@ -97,10 +97,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
 
-            if (!appSettings.Load() || !userSettings.Load())
-            {
-                return;
-            }
+            appSettings.Load();
+            userSettings.Load();
 
             // Load up the current settings into the UI on load.
             Username = userSettings.Username;

@@ -107,6 +107,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IMessageSender, MessageSender>();
             container.RegisterType<ILoginService, LoginService>();
             container.RegisterType<IUserSettings, UserSettingsJson>();
+            container.RegisterType<IRegistrationService, RegistrationService>();
 
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.

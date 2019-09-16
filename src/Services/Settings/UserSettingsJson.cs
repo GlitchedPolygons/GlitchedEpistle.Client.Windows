@@ -17,16 +17,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         {
             this.user = user;
             this.logger = logger;
-
-            if (!settings.ContainsKey("Username"))
-            {
-                settings["Username"] = user?.Id ?? "user";
-            }
         }
 
         public string Username
         {
-            get => settings["Username"];
+            get
+            {
+                if (!settings.TryGetValue("Username", out string u))
+                {
+                    u = settings["Username"] = string.Empty;
+                }
+                return u;
+            }
             set => settings["Username"] = value;
         }
 
@@ -38,6 +40,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
             }
             FilePath = Path.Combine(Paths.ROOT_DIRECTORY, user.Id, "Settings.json");
             return base.Load();
+        }
+
+        public override bool Save()
+        {
+            if (user.Id.NullOrEmpty())
+            {
+                return false;
+            }
+            FilePath = Path.Combine(Paths.ROOT_DIRECTORY, user.Id, "Settings.json");
+            return base.Save();
         }
     }
 }

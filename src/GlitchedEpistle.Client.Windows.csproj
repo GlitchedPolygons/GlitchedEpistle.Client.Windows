@@ -151,6 +151,7 @@
     <Compile Include="PubSubEvents\ClickedRegisterButtonEvent.cs" />
     <Compile Include="PubSubEvents\ChangedConvoMetadataEvent.cs" />
     <Compile Include="PubSubEvents\DeletedConvoEvent.cs" />
+    <Compile Include="PubSubEvents\ClearMainControlEvent.cs" />
     <Compile Include="PubSubEvents\ResetConfirmedEvent.cs" />
     <Compile Include="PubSubEvents\LoginSucceededEvent.cs" />
     <Compile Include="PubSubEvents\JoinedConvoEvent.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationSuccessfulViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\UserControls\UsernamePromptViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
@@ -265,6 +267,9 @@
     </Compile>
     <Compile Include="Views\UserControls\UserCreationSuccessfulView.xaml.cs">
       <DependentUpon>UserCreationSuccessfulView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\UsernamePromptView.xaml.cs">
+      <DependentUpon>UsernamePromptView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Themes\Base\Theme.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -383,6 +388,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\UserCreationSuccessfulView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UsernamePromptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
