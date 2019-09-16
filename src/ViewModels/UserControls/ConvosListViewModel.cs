@@ -142,9 +142,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         Body = JsonConvert.SerializeObject(dto)
                     };
 
-                    if (!await convoService.JoinConvo(body.Sign(crypto,user.PrivateKeyPem)))
+                    if (!await convoService.JoinConvo(body.Sign(crypto, user.PrivateKeyPem)))
                     {
                         convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
+
                         ExecUI(() =>
                         {
                             CanJoin = true;
