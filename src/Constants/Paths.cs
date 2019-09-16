@@ -19,6 +19,7 @@
 using System;
 using System.IO;
 
+using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants
@@ -41,14 +42,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants
         /// Gets the user directory.
         /// </summary>
         /// <param name="userId"><see cref="User.Id"/></param>
-        /// <returns>The full path to the Epistle user dir.</returns>
-        public static string GetUserDirectory(string userId) => Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId)).FullName;
+        /// <returns>The full path to the Epistle user dir (or <c>string.Empty</c> if the passed <paramref name="userId"/> was <c>null</c> or empty).</returns>
+        public static string GetUserDirectory(string userId) => userId.NullOrEmpty() ? string.Empty : Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId)).FullName;
 
         /// <summary>
         /// Get the convos storage directory for a specific user account's convos (creates the directory if it doesn't exist).
         /// </summary>
         /// <param name="userId"><see cref="User.Id"/></param>
-        /// <returns>The path to the convos directory.</returns>
-        public static string GetConvosDirectory(string userId) => Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId, "Convos")).FullName;
+        /// <returns>The path to the convos directory (or <c>string.Empty</c> if the passed <paramref name="userId"/> was <c>null</c> or empty).</returns>
+        public static string GetConvosDirectory(string userId) => userId.NullOrEmpty() ? string.Empty : Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId, "Convos")).FullName;
     }
 }

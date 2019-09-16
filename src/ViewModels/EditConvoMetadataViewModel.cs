@@ -49,7 +49,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Constants
         private readonly User user;
         private readonly ICompressionUtility gzip;
-        private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
@@ -231,12 +230,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user, IUserService userService, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto, ICompressionUtility gzip)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto, ICompressionUtility gzip)
         {
             this.user = user;
             this.gzip = gzip;
             this.crypto = crypto;
-            this.userService = userService;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;

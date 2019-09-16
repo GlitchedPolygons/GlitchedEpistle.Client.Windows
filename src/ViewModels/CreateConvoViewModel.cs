@@ -51,7 +51,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
-        private readonly IUserService userService;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
         private readonly ICompressionUtility gzip;
@@ -126,13 +125,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string pw = string.Empty;
         private string pw2 = string.Empty;
 
-        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IUserService userService, IConvoService convoService, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
+        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IConvoService convoService, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
             this.gzip = gzip;
             this.logger = logger;
             this.crypto = crypto;
-            this.userService = userService;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
 

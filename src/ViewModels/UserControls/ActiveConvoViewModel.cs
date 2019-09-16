@@ -159,7 +159,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             IEventAggregator eventAggregator,
             IMethodQ methodQ,
             IMessageCryptography crypto,
-            ISettings settings,
             ILogger logger,
             IConvoPasswordProvider convoPasswordProvider, 
             IMessageSender messageSender)
@@ -191,8 +190,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             // The subscribed Dispose method should stop the automatic pulling.
             // Last thing you'd wanna have to debug is some background thread trying to pull from a convo that you already closed...
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(_ => Dispose());
-
-            settings.Load();
         }
 
         public void Init()
