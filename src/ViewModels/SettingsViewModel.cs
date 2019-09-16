@@ -38,12 +38,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class SettingsViewModel : ViewModel, ICloseable
     {
         #region Constants
-        public const string DEFAULT_USERNAME = "user";
-
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
-        private readonly ISettings settings;
+        private readonly IAppSettings appSettings;
+        private readonly IUserSettings userSettings;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IWindowFactory windowFactory;
@@ -71,7 +70,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
-        private string username = DEFAULT_USERNAME;
+        private string username;
         public string Username
         {
             get => username;
@@ -81,12 +80,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldTheme, newTheme;
 
-        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto)
+        public SettingsViewModel(IAppSettings appSettings, IEventAggregator eventAggregator, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto, IUserSettings userSettings)
         {
             this.user = user;
             this.logger = logger;
             this.crypto = crypto;
-            this.settings = settings;
+            this.userSettings = userSettings;
+            this.appSettings = appSettings;
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
@@ -97,14 +97,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
 
-            if (!settings.Load())
+            if (!appSettings.Load() || !userSettings.Load())
             {
                 return;
             }
 
             // Load up the current settings into the UI on load.
-            Username = settings[nameof(Username), DEFAULT_USERNAME];
-            oldTheme = newTheme = settings["Theme", Themes.DARK_THEME];
+            Username = userSettings.Username;
+            oldTheme = newTheme = appSettings["Theme", Themes.DARK_THEME];
             OnChangedTheme(oldTheme);
         }
 
@@ -116,9 +116,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
             else
             {
-                settings[nameof(Username)] = Username;
-                settings["Theme"] = newTheme;
-                settings.Save();
+                userSettings.Username = Username;
+                userSettings.Save();
+
+                appSettings["Theme"] = newTheme;
+                appSettings.Save();
 
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
             }
@@ -132,7 +134,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedRevert(object commandParam)
         {
-            Username = DEFAULT_USERNAME;
+            Username = user?.Id ?? "user";
         }
 
         private void OnChangedTheme(object commandParam)

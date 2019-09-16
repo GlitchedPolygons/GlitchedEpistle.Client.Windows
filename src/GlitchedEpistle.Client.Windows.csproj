@@ -165,7 +165,9 @@
     <Compile Include="Services\Factories\ViewModelFactory.cs" />
     <Compile Include="Services\Factories\WindowFactory.cs" />
     <Compile Include="Services\Logging\TextLogger.cs" />
+    <Compile Include="Services\Settings\AppSettingsJson.cs" />
     <Compile Include="Services\Settings\SettingsJson.cs" />
+    <Compile Include="Services\Settings\UserSettingsJson.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\CreateConvoViewModel.cs" />
     <Compile Include="ViewModels\EditConvoMetadataViewModel.cs" />
@@ -485,7 +487,7 @@
       <Version>1.0.6</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client">
-      <Version>2019.4.0.2</Version>
+      <Version>2019.4.0.3</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.Services.CompressionUtility">
       <Version>1.1.0</Version>

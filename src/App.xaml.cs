@@ -106,11 +106,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IServerConnectionTest, ServerConnectionTest>();
             container.RegisterType<IMessageSender, MessageSender>();
             container.RegisterType<ILoginService, LoginService>();
+            container.RegisterType<IUserSettings, UserSettingsJson>();
 
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.
             container.RegisterInstance(methodQ, new ContainerControlledLifetimeManager());
-            container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IAppSettings, AppSettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
@@ -122,7 +123,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             Current.MainWindow = mainView;
             Current.MainWindow?.Show();
 
-            var settings = container.Resolve<ISettings>();
+            var settings = container.Resolve<IAppSettings>();
             ChangeTheme(settings["Theme", Themes.DARK_THEME]);
         }
 

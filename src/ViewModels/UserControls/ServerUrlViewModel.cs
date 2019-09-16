@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
@@ -15,7 +15,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 {
     public class ServerUrlViewModel : ViewModel
     {
-        private readonly ISettings settings;
+        private readonly IAppSettings settings;
         private readonly IServerConnectionTest test;
         private readonly IEventAggregator eventAggregator;
 
@@ -52,7 +52,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Visibility TestingLabelVisibility { get => testingLabelVisibility; set => Set(ref testingLabelVisibility, value); }
         #endregion
 
-        public ServerUrlViewModel(IServerConnectionTest test, ISettings settings, IEventAggregator eventAggregator)
+        public ServerUrlViewModel(IServerConnectionTest test, IAppSettings settings, IEventAggregator eventAggregator)
         {
             this.test = test;
             this.settings = settings;
@@ -98,7 +98,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (success)
                 {
                     UrlUtility.SetEpistleServerUrl(ServerUrl);
-                    settings["ServerUrl"] = UrlUtility.EpistleBaseUrl;
+                    settings.ServerUrl = UrlUtility.EpistleBaseUrl;
                     settings.Save();
                     ExecUI(() => eventAggregator.GetEvent<LogoutEvent>().Publish());
                     return;

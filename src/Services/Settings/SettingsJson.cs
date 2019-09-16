@@ -29,7 +29,7 @@ using Newtonsoft.Json;
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 {
     /// <summary>
-    /// Implements the <see cref="ISettings" /> interface for accessing user settings formatted as human-readable JSON.
+    /// Implements the <see cref="ISettings" /> interface for accessing settings formatted as human-readable JSON.
     /// </summary>
     /// <seealso cref="ISettings" />
     public class SettingsJson : ISettings
@@ -39,7 +39,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         /// <summary>
         /// Absolute settings file path.
         /// </summary>
-        public string FilePath { get; }
+        public string FilePath { get; protected set; } = Path.Combine(Paths.ROOT_DIRECTORY, "Settings.json");
 
         private readonly ILogger logger;
 
@@ -50,15 +50,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         public SettingsJson(ILogger logger)
         {
             this.logger = logger;
-
-            FilePath = Path.Combine(Paths.ROOT_DIRECTORY, "Settings.json");
         }
 
         /// <summary>
         /// Saves the current user settings out to disk.
         /// </summary>
         /// <returns>Whether the settings were saved out to disk successfully or not.</returns>
-        public bool Save()
+        public virtual bool Save()
         {
             lock (settings)
             {
@@ -80,7 +78,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         /// Loads user settings from disk into the <see cref="ISettings" /> instance.
         /// </summary>
         /// <returns>Whether the loading procedure was successful or not.</returns>
-        public bool Load()
+        public virtual bool Load()
         {
             lock (settings)
             {
@@ -107,7 +105,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
             set
             {
                 lock (settings)
-                settings[key] = value;
+                {
+                    settings[key] = value;
+                }
             }
         }
 
