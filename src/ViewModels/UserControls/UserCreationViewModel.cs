@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.IO;
 using System.Timers;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,12 +29,13 @@ using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.Cryptography.Symmetric;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 
@@ -47,7 +49,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const double ERROR_MESSAGE_INTERVAL = 7500;
 
         private readonly ILogger logger;
-        private readonly ISettings settings;
+        private readonly UserSettings settings;
         private readonly IUserService userService;
         private readonly IAsymmetricKeygenRSA keygen;
         private readonly ISymmetricCryptography crypto;
@@ -109,7 +111,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygenRSA keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory, ISymmetricCryptography crypto)
+        public UserCreationViewModel(IUserService userService, UserSettings settings, IEventAggregator eventAggregator, ICompressionUtility gzip, ILogger logger, IAsymmetricKeygenRSA keygen, IViewModelFactory viewModelFactory, IWindowFactory windowFactory, ISymmetricCryptography crypto)
         {
             this.gzip = gzip;
             this.logger = logger;
@@ -218,8 +220,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         ExecUI(() => eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(userCreationResponse));
                         logger.LogMessage($"Created user {userCreationResponse.Id}.");
 
-                        settings[nameof(Username)] = Username;
-                        settings.Save();
+                        settings.Username = Username;
+                        if (!settings.Save())
+                        {
+                            logger.LogError($"Could not save user settings to disk after successful user creation: {userCreationResponse.Id}");
+                        }
                     }
                     catch (Exception e)
                     {

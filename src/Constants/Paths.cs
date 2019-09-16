@@ -42,7 +42,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants
         /// </summary>
         /// <param name="userId"><see cref="User.Id"/></param>
         /// <returns>The full path to the Epistle user dir.</returns>
-        public static string GetUserDirectory(string userId) => Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId)).FullName;
+        public static string GetUserDirectory(string userId) => Directory.CreateDirectory(Path.Combine(ROOT_DIRECTORY, userId ?? "16b4f566adeb45eda11de0e1a2ec458e")).FullName;
 
         /// <summary>
         /// Get the convos storage directory for a specific user account's convos (creates the directory if it doesn't exist).

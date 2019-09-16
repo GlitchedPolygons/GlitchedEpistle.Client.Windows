@@ -16,7 +16,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#region
 using System;
 using System.IO;
 using System.Reflection;
@@ -25,15 +24,15 @@ using System.Windows;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
@@ -48,7 +47,6 @@ using Prism.Events;
 
 using Unity;
 using Unity.Lifetime;
-#endregion
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 {
@@ -63,10 +61,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         public static string Version => Assembly.GetEntryAssembly()?.GetName().Version.ToString();
 
         /// <summary>
-        /// Gets the currently active GUI theme (appearance of the app).
+        /// Gets the currently active GUI theme.
         /// </summary>
-        /// <value>The current theme.</value>
-        public string CurrentTheme { get; private set; } = Themes.DARK_THEME;
+        public WindowsAppSettings.WindowsEpistleTheme CurrentTheme { get; private set; } = 0;
 
         /// <summary>
         /// The IoC container.
@@ -109,7 +106,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.
             container.RegisterInstance(methodQ, new ContainerControlledLifetimeManager());
-            container.RegisterType<ISettings, SettingsJson>(new ContainerControlledLifetimeManager());
+            container.RegisterType<AppSettings, WindowsAppSettings>(new ContainerControlledLifetimeManager());
+            container.RegisterType<UserSettings, WindowsUserSettings>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
@@ -121,8 +119,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             Current.MainWindow = mainView;
             Current.MainWindow?.Show();
 
-            var settings = container.Resolve<ISettings>();
-            ChangeTheme(settings["Theme", Themes.DARK_THEME]);
+            var settings = container.Resolve<WindowsAppSettings>();
+            ChangeTheme(settings?.Theme ?? 0);
         }
 
         /// <summary>
@@ -140,9 +138,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
         /// </summary>
         /// <param name="theme">The theme to switch to.</param>
         /// <returns>Whether the theme change occurred or not (e.g. in case of changing to a theme that's already active, or in case of a failure, this method returns <c>false</c>).</returns>
-        public bool ChangeTheme(string theme)
+        public bool ChangeTheme(WindowsAppSettings.WindowsEpistleTheme theme)
         {
-            if (theme.NullOrEmpty() || theme.Equals(CurrentTheme))
+            if (theme.Equals(CurrentTheme))
             {
                 return false;
             }
@@ -152,13 +150,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
             switch (theme)
             {
-                case Themes.DARK_THEME:
+                case WindowsAppSettings.WindowsEpistleTheme.DarkPolygons:
                     path = "/Resources/Themes/DarkTheme.xaml";
                     break;
-                case Themes.LIGHT_THEME:
+                case WindowsAppSettings.WindowsEpistleTheme.LightPolygons:
                     path = "/Resources/Themes/LightTheme.xaml";
                     break;
-                case Themes.OLED_THEME:
+                case WindowsAppSettings.WindowsEpistleTheme.OLED:
                     path = "/Resources/Themes/OLEDTheme.xaml";
                     break;
             }

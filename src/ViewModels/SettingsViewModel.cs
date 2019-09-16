@@ -17,16 +17,18 @@
 */
 
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
@@ -38,12 +40,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class SettingsViewModel : ViewModel, ICloseable
     {
         #region Constants
-        public const string DEFAULT_USERNAME = "user";
-
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
-        private readonly ISettings settings;
+        private readonly UserSettings userSettings;
+        private readonly WindowsAppSettings appSettings;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IWindowFactory windowFactory;
@@ -71,7 +72,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
-        private string username = DEFAULT_USERNAME;
+        private string username;
         public string Username
         {
             get => username;
@@ -79,14 +80,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        private string oldTheme, newTheme;
+        private WindowsAppSettings.WindowsEpistleTheme oldTheme, newTheme;
 
-        public SettingsViewModel(ISettings settings, IEventAggregator eventAggregator, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto)
+        public SettingsViewModel(UserSettings userSettings, IEventAggregator eventAggregator, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto, AppSettings appSettings)
         {
             this.user = user;
             this.logger = logger;
             this.crypto = crypto;
-            this.settings = settings;
+            this.appSettings = appSettings as WindowsAppSettings;
+            this.userSettings = userSettings;
             this.eventAggregator = eventAggregator;
             this.windowFactory = windowFactory;
             this.viewModelFactory = viewModelFactory;
@@ -97,14 +99,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
 
-            if (!settings.Load())
+            if (!userSettings.Load())
             {
                 return;
             }
 
             // Load up the current settings into the UI on load.
-            Username = settings[nameof(Username), DEFAULT_USERNAME];
-            oldTheme = newTheme = settings["Theme", Themes.DARK_THEME];
+            Username = userSettings.Username;
+            oldTheme = newTheme = this.appSettings.Theme;
             OnChangedTheme(oldTheme);
         }
 
@@ -116,9 +118,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
             else
             {
-                settings[nameof(Username)] = Username;
-                settings["Theme"] = newTheme;
-                settings.Save();
+                userSettings.Username = Username;
+                appSettings.Theme = newTheme;
+                userSettings.Save();
+                appSettings.Save();
 
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
             }
@@ -132,7 +135,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedRevert(object commandParam)
         {
-            Username = DEFAULT_USERNAME;
+            Username = user?.Id;
         }
 
         private void OnChangedTheme(object commandParam)
@@ -148,11 +151,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 return;
             }
-
+            throw new NotImplementedException("IMPLEMENT CHANGE THEME HERE ASAP");
+            /*
             if (app.ChangeTheme(theme))
             {
                 newTheme = theme;
-            }
+            }*/
         }
 
         private void OnClickedDelete(object commandParam)

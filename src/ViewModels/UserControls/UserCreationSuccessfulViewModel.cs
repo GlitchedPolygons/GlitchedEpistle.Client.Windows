@@ -28,7 +28,6 @@ using System.Windows.Media.Imaging;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
@@ -43,7 +42,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         private readonly User user;
-        private readonly ISettings settings;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
         private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
@@ -89,10 +87,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public List<string> BackupCodes { get; set; }
 
-        public UserCreationSuccessfulViewModel(ISettings settings, IUserService userService, IEventAggregator eventAggregator, User user)
+        public UserCreationSuccessfulViewModel(IUserService userService, IEventAggregator eventAggregator, User user)
         {
             this.user = user;
-            this.settings = settings;
             this.userService = userService;
             this.eventAggregator = eventAggregator;
 

@@ -27,9 +27,9 @@ using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
@@ -48,7 +48,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
-        private readonly ISettings settings;
+        private readonly AppSettings appSettings;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
         private readonly IServerConnectionTest connectionTest;
@@ -77,11 +77,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private volatile int failedAttempts;
         private volatile bool pendingAttempt;
 
-        public LoginViewModel(IUserService userService, ISettings settings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest, ILogger logger)
+        public LoginViewModel(IUserService userService, AppSettings appSettings, IEventAggregator eventAggregator, User user, IServerConnectionTest connectionTest, ILogger logger)
         {
             this.user = user;
             this.logger = logger;
-            this.settings = settings;
+            this.appSettings = appSettings;
             this.userService = userService;
             this.connectionTest = connectionTest;
             this.eventAggregator = eventAggregator;
@@ -99,7 +99,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Publish();
             });
 
-            UserId = settings[nameof(UserId)];
+            UserId = appSettings.LastUserId;
 
             // Bind the password box to the password field.
             PasswordChangedCommand = new DelegateCommand(o => password = (o as PasswordBox)?.Password);
@@ -164,8 +164,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                         try
                         {
-                            user.Id = settings[nameof(UserId)] = UserId;
-                            settings.Save();
+                            user.Id = appSettings.LastUserId = UserId;
+                            appSettings.Save();
 
                             user.PublicKeyPem = KeyExchangeUtility.DecompressPublicKey(response.PublicKey);
                             user.PrivateKeyPem = KeyExchangeUtility.DecompressAndDecryptPrivateKey(response.PrivateKey, password);

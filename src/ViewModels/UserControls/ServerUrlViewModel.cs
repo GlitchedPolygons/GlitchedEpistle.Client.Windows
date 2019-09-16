@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 
 using GlitchedPolygons.ExtensionMethods;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
@@ -15,7 +15,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 {
     public class ServerUrlViewModel : ViewModel
     {
-        private readonly ISettings settings;
+        private readonly AppSettings settings;
         private readonly IServerConnectionTest test;
         private readonly IEventAggregator eventAggregator;
 
@@ -52,13 +52,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Visibility TestingLabelVisibility { get => testingLabelVisibility; set => Set(ref testingLabelVisibility, value); }
         #endregion
 
-        public ServerUrlViewModel(IServerConnectionTest test, ISettings settings, IEventAggregator eventAggregator)
+        public ServerUrlViewModel(IServerConnectionTest test, AppSettings settings, IEventAggregator eventAggregator)
         {
             this.test = test;
             this.settings = settings;
             this.eventAggregator = eventAggregator;
 
-            string url = settings["ServerUrl"];
+            string url = settings.ServerUrl;
             if (url.NotNullNotEmpty())
             {
                 ServerUrl = url;
@@ -98,7 +98,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (success)
                 {
                     UrlUtility.SetEpistleServerUrl(ServerUrl);
-                    settings["ServerUrl"] = UrlUtility.EpistleBaseUrl;
+                    settings.ServerUrl = UrlUtility.EpistleBaseUrl;
                     settings.Save();
                     ExecUI(() => eventAggregator.GetEvent<LogoutEvent>().Publish());
                     return;

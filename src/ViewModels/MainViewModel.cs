@@ -31,14 +31,15 @@ using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Models.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
@@ -69,7 +70,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly User user;
         private readonly ILogger logger;
         private readonly IMethodQ methodQ;
-        private readonly ISettings settings;
+        private readonly WindowsAppSettings appSettings;
+        private readonly UserSettings userSettings;
         private readonly IUserService userService;
         private readonly IWindowFactory windowFactory;
         private readonly IEventAggregator eventAggregator;
@@ -94,7 +96,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool uiEnabled;
         public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
 
-        private string username = SettingsViewModel.DEFAULT_USERNAME;
+        private string username;
         public string Username { get => username; set => Set(ref username, value); }
 
         private string userId = string.Empty;
@@ -140,18 +142,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private IRepository<Convo, string> convoProvider;
         private ulong? scheduledAuthRefresh, scheduledHideGreenTickIcon;
 
-        public MainViewModel(ISettings settings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoPasswordProvider convoPasswordProvider, IServerConnectionTest connectionTest)
+        public MainViewModel(AppSettings appSettings, IEventAggregator eventAggregator, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, User user, IMethodQ methodQ, ILogger logger, IConvoPasswordProvider convoPasswordProvider, IServerConnectionTest connectionTest, UserSettings userSettings)
         {
             this.user = user;
             this.logger = logger;
             this.methodQ = methodQ;
-            this.settings = settings;
+            this.userSettings = userSettings;
             this.userService = userService;
             this.windowFactory = windowFactory;
             this.connectionTest = connectionTest;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
+            var windowsAppSettings = appSettings as WindowsAppSettings;
+            this.appSettings = windowsAppSettings;
 
             eventAggregator.GetEvent<LogoutEvent>().Subscribe(Logout);
 
@@ -230,25 +234,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
 
             // Load up the settings on startup.
-            if (settings.Load())
+            if (appSettings.Load())
             {
-                UserId = user.Id = settings[nameof(UserId)];
-                Username = settings[nameof(SettingsViewModel.Username), SettingsViewModel.DEFAULT_USERNAME];
+                UserId = user.Id = appSettings.LastUserId;
 
-                Enum.TryParse(settings[nameof(WindowState), WindowState.Normal.ToString()], out WindowState loadedWindowState);
-                WindowState = loadedWindowState;
+                WindowState = this.appSettings?.WindowState ?? WindowState.Normal;
 
-                MainWindowWidth = Math.Abs(settings[nameof(MainWindowWidth), MAIN_WINDOW_MIN_WIDTH]);
-                MainWindowHeight = Math.Abs(settings[nameof(MainWindowHeight), MAIN_WINDOW_MIN_HEIGHT]);
+                MainWindowWidth = Math.Abs(windowsAppSettings.MainWindowWidth);
+                MainWindowHeight = Math.Abs(windowsAppSettings.MainWindowHeight);
 
-                double w = Math.Abs(settings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
+                double w = Math.Abs(windowsAppSettings.SidebarWidth);
                 SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
+            }
+
+            if (userSettings.Load())
+            {
+                Username = userSettings.Username ?? user?.Id;
             }
 
             Task.Run(async () =>
             {
                 bool serverUrlConfigured = false;
-                string url = settings["ServerUrl"];
+                string url = appSettings.ServerUrl;
 
                 if (url.NotNullNotEmpty())
                 {
@@ -313,13 +320,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             else
             {
                 // Save the window's state before termination.
-                settings.Load();
-                CultureInfo c = CultureInfo.InvariantCulture;
-                settings[nameof(WindowState)] = WindowState.ToString();
-                settings[nameof(MainWindowWidth)] = ((int)MainWindowWidth).ToString(c);
-                settings[nameof(MainWindowHeight)] = ((int)MainWindowHeight).ToString(c);
-                settings[nameof(SidebarWidth)] = ((int)SidebarWidth).ToString(c);
-                settings.Save();
+                appSettings.Load();
+                appSettings.WindowState = WindowState;
+                appSettings.MainWindowWidth = (int)MainWindowWidth;
+                appSettings.MainWindowHeight = (int)MainWindowHeight;
+                appSettings.SidebarWidth = (int)SidebarWidth;
+                appSettings.Save();
 
                 Application.Current.Shutdown();
             }
@@ -357,9 +363,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             MainControl = null;
             UIEnabled = true;
 
-            settings.Load();
             UserId = user.Id;
-            Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
+            userSettings.Load();
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
@@ -369,14 +374,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             UpdateUserConvosMetadata();
+
+            Username = userSettings.Username;
+            if (Username.NullOrEmpty())
+            {
+                throw new NotImplementedException("");
+                userSettings.Save();
+            }
         }
 
         private void OnUserCreationSuccessful(UserCreationResponseDto userCreationResponseDto)
         {
-            settings.Load();
-            Username = settings[nameof(Username), SettingsViewModel.DEFAULT_USERNAME];
-            settings[nameof(UserId)] = UserId = user.Id = userCreationResponseDto.Id;
-            settings.Save();
+            appSettings.Load();
+            appSettings.LastUserId = UserId = user.Id = userCreationResponseDto.Id;
+            appSettings.Save();
+
+            userSettings.Load();
+            Username = userSettings.Username ?? user.Id;
 
             // Create QR code containing the Authy/Google Auth setup link and open the RegistrationSuccessfulView.
             IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap> { Format = BarcodeFormat.QR_CODE, Renderer = new WriteableBitmapRenderer(), Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 } };
