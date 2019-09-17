@@ -73,37 +73,39 @@
   
   <h1 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson" class="text-break">Class SettingsJson
   </h1>
-  <div class="markdown level0 summary"><p>Implements the <see cref="!:ISettings"></see> interface for accessing user settings formatted as human-readable JSON.</p>
+  <div class="markdown level0 summary"><p>Implements the <see cref="!:ISettings"></see> interface for accessing settings formatted as human-readable JSON.</p>
 </div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
     <div class="level0"><span class="xref">System.Object</span></div>
     <div class="level1"><span class="xref">SettingsJson</span></div>
+      <div class="level2"><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html">AppSettingsJson</a></div>
+      <div class="level2"><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.html">UserSettingsJson</a></div>
   </div>
   <h6><strong>Namespace</strong>: <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.html">GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings</a></h6>
   <h6><strong>Assembly</strong>: Epistle.dll</h6>
   <h5 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_syntax">Syntax</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public class SettingsJson : ISettings</code></pre>
+    <pre><code class="lang-csharp hljs">public abstract class SettingsJson : ISettings</code></pre>
   </div>
   <h3 id="constructors">Constructors
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_ILogger_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.%23ctor(ILogger)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_ILogger_System_String_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.%23ctor(ILogger%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L50">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L57">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor*"></a>
-  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_ILogger_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor(ILogger)">SettingsJson(ILogger)</h4>
+  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_ILogger_System_String_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor(ILogger,System.String)">SettingsJson(ILogger, String)</h4>
   <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html">SettingsJson</a> class.</p>
 </div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public SettingsJson(ILogger logger)</code></pre>
+    <pre><code class="lang-csharp hljs">protected SettingsJson(ILogger logger, string filePath)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -121,6 +123,12 @@
         <td><p>The <see cref="!:ILogger"></see> instance needed for logging any eventual errors that might occur.</p>
 </td>
       </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">filePath</span></td>
+        <td><p>The json file's path.</p>
+</td>
+      </tr>
     </tbody>
   </table>
   <h3 id="properties">Properties
@@ -130,7 +138,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_FilePath.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.FilePath%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L42">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L45">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_FilePath_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.FilePath*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_FilePath" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.FilePath">FilePath</h4>
@@ -139,7 +147,7 @@
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string FilePath { get; }</code></pre>
+    <pre><code class="lang-csharp hljs">public string FilePath { get; protected set; }</code></pre>
   </div>
   <h5 class="propertyValue">Property Value</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -161,11 +169,15 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L104">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L96">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String)">Item[String]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets or sets a user setting with its specified key <code>string</code>.<p> </p>
+Setting a value also auto-saves the config out to disk.<p> </p>
+If you are trying to get an inexistent setting, <code>null</code> (or <code>string.Empty</code>) is returned.<p> </p>
+If you are trying to set an inexistent setting, the setting is created.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -184,7 +196,8 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">key</span></td>
-        <td></td>
+        <td><p>The setting's name/key.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -199,7 +212,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><p>The setting's <code>string</code> value; <code>null</code> (or <code>string.Empty</code>) if the setting doesn't exist.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -208,11 +222,12 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Boolean_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String%2CSystem.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L117">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L137">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Boolean_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String,System.Boolean)">Item[String, Boolean]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets a user setting parsed as a <code>bool</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -231,12 +246,14 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">key</span></td>
-        <td></td>
+        <td><p>The setting's key.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
         <td><span class="parametername">defaultValue</span></td>
-        <td></td>
+        <td><p>The setting's default <code>bool</code> value to return in case the setting doesn't exist or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -251,7 +268,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Boolean</span></td>
-        <td></td>
+        <td><p>The setting's <code>bool</code> value; or the specified default value if the setting wasn't found or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -260,11 +278,12 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Double_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String%2CSystem.Double)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L119">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L151">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Double_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String,System.Double)">Item[String, Double]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets a user setting parsed as a <code>double</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -283,12 +302,14 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">key</span></td>
-        <td></td>
+        <td><p>The setting's key.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.Double</span></td>
         <td><span class="parametername">defaultValue</span></td>
-        <td></td>
+        <td><p>The setting's default <code>double</code> value to return in case the setting doesn't exist or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -303,7 +324,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Double</span></td>
-        <td></td>
+        <td><p>The setting's <code>double</code> value; or the specified default value if the setting wasn't found or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -312,11 +334,12 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Int32_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String%2CSystem.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L116">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L130">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Int32_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String,System.Int32)">Item[String, Int32]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets a user setting parsed as an <code>int</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -335,12 +358,14 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">key</span></td>
-        <td></td>
+        <td><p>The setting's key.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.Int32</span></td>
         <td><span class="parametername">defaultValue</span></td>
-        <td></td>
+        <td><p>The setting's default <code>int</code> value to return in case the setting doesn't exist or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -355,7 +380,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Int32</span></td>
-        <td></td>
+        <td><p>The setting's <code>int</code> value; or the specified default value if the setting wasn't found or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -364,11 +390,12 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Single_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String%2CSystem.Single)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L118">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L144">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_Single_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String,System.Single)">Item[String, Single]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets a user setting parsed as a <code>float</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -387,12 +414,14 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">key</span></td>
-        <td></td>
+        <td><p>The setting's key.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.Single</span></td>
         <td><span class="parametername">defaultValue</span></td>
-        <td></td>
+        <td><p>The setting's default <code>float</code> value to return in case the setting doesn't exist or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -407,7 +436,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.Single</span></td>
-        <td></td>
+        <td><p>The setting's <code>float</code> value; or the specified default value if the setting wasn't found or couldn't be parsed.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -416,11 +446,12 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_String_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L114">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L123">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Item_System_String_System_String_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item(System.String,System.String)">Item[String, String]</h4>
-  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 summary"><p>Gets a user setting by its key <code>string</code>.</p>
+</div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
@@ -439,12 +470,14 @@
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">key</span></td>
-        <td></td>
+        <td><p>The setting's name/key.</p>
+</td>
       </tr>
       <tr>
         <td><span class="xref">System.String</span></td>
         <td><span class="parametername">defaultValue</span></td>
-        <td></td>
+        <td><p>The setting's default <code>string</code> value (in case the setting doesn't exist).</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -459,7 +492,8 @@
     <tbody>
       <tr>
         <td><span class="xref">System.String</span></td>
-        <td></td>
+        <td><p>The setting's <code>string</code> value; the specified default value if the setting wasn't found.</p>
+</td>
       </tr>
     </tbody>
   </table>
@@ -467,68 +501,19 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Load.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Reload.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L83">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L65">View Source</a>
   </span>
-  <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Load_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load*"></a>
-  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Load" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load">Load()</h4>
-  <div class="markdown level1 summary"><p>Loads user settings from disk into the <see cref="!:ISettings"></see> instance.</p>
-</div>
+  <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Reload_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload*"></a>
+  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Reload" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload">Reload()</h4>
+  <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Load()</code></pre>
+    <pre><code class="lang-csharp hljs">protected void Reload()</code></pre>
   </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>Whether the loading procedure was successful or not.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Save.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/Services/Settings/SettingsJson.cs/#L61">View Source</a>
-  </span>
-  <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Save_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save*"></a>
-  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Save" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save">Save()</h4>
-  <div class="markdown level1 summary"><p>Saves the current user settings out to disk.</p>
-</div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public bool Save()</code></pre>
-  </div>
-  <h5 class="returns">Returns</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.Boolean</span></td>
-        <td><p>Whether the settings were saved out to disk successfully or not.</p>
-</td>
-      </tr>
-    </tbody>
-  </table>
 </article>
           </div>
           

@@ -192,6 +192,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.GetConvosDirectory
   nameWithType: Paths.GetConvosDirectory
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.GetUserDirectory(System.String)
+  name: GetUserDirectory(String)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Constants_Paths_GetUserDirectory_System_String_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.GetUserDirectory(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.GetUserDirectory(System.String)
+  nameWithType: Paths.GetUserDirectory(String)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.GetUserDirectory*
+  name: GetUserDirectory
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Constants_Paths_GetUserDirectory_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.GetUserDirectory
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.GetUserDirectory
+  nameWithType: Paths.GetUserDirectory
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.ROOT_DIRECTORY
   name: ROOT_DIRECTORY
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants.Paths.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Constants_Paths_ROOT_DIRECTORY
@@ -316,6 +329,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ChangedConvoMetadataEvent
   nameWithType: ChangedConvoMetadataEvent
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClearMainControlEvent
+  name: ClearMainControlEvent
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClearMainControlEvent.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClearMainControlEvent
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClearMainControlEvent
+  nameWithType: ClearMainControlEvent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent
   name: ClickedConfigureServerUrlButtonEvent
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.ClickedConfigureServerUrlButtonEvent.html
@@ -533,134 +552,192 @@ references:
   commentId: N:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
   nameWithType: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger
-  name: Logger
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger
-  nameWithType: Logger
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.#ctor
-  name: Logger()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger__ctor
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.#ctor
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.Logger()
-  nameWithType: Logger.Logger()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.#ctor*
-  name: Logger
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.#ctor
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger
+  name: TextLogger
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger
+  nameWithType: TextLogger
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.#ctor
+  name: TextLogger()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger__ctor
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.#ctor
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.TextLogger()
+  nameWithType: TextLogger.TextLogger()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.#ctor*
+  name: TextLogger
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger__ctor_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.#ctor
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.Logger
-  nameWithType: Logger.Logger
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.DirectoryPath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.TextLogger
+  nameWithType: TextLogger.TextLogger
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.DirectoryPath
   name: DirectoryPath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_DirectoryPath
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.DirectoryPath
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.DirectoryPath
-  nameWithType: Logger.DirectoryPath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.DirectoryPath*
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_DirectoryPath
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.DirectoryPath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.DirectoryPath
+  nameWithType: TextLogger.DirectoryPath
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.DirectoryPath*
   name: DirectoryPath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_DirectoryPath_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.DirectoryPath
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_DirectoryPath_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.DirectoryPath
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.DirectoryPath
-  nameWithType: Logger.DirectoryPath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.ErrorLogFilePath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.DirectoryPath
+  nameWithType: TextLogger.DirectoryPath
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.ErrorLogFilePath
   name: ErrorLogFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_ErrorLogFilePath
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.ErrorLogFilePath
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.ErrorLogFilePath
-  nameWithType: Logger.ErrorLogFilePath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.ErrorLogFilePath*
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_ErrorLogFilePath
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.ErrorLogFilePath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.ErrorLogFilePath
+  nameWithType: TextLogger.ErrorLogFilePath
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.ErrorLogFilePath*
   name: ErrorLogFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_ErrorLogFilePath_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.ErrorLogFilePath
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_ErrorLogFilePath_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.ErrorLogFilePath
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.ErrorLogFilePath
-  nameWithType: Logger.ErrorLogFilePath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogError(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.ErrorLogFilePath
+  nameWithType: TextLogger.ErrorLogFilePath
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogError(System.String)
   name: LogError(String)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_LogError_System_String_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogError(System.String)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogError(System.String)
-  nameWithType: Logger.LogError(String)
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogError*
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_LogError_System_String_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogError(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogError(System.String)
+  nameWithType: TextLogger.LogError(String)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogError*
   name: LogError
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_LogError_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogError
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_LogError_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogError
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogError
-  nameWithType: Logger.LogError
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogMessage(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogError
+  nameWithType: TextLogger.LogError
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogMessage(System.String)
   name: LogMessage(String)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_LogMessage_System_String_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogMessage(System.String)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogMessage(System.String)
-  nameWithType: Logger.LogMessage(String)
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogMessage*
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_LogMessage_System_String_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogMessage(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogMessage(System.String)
+  nameWithType: TextLogger.LogMessage(String)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogMessage*
   name: LogMessage
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_LogMessage_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogMessage
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_LogMessage_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogMessage
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogMessage
-  nameWithType: Logger.LogMessage
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogWarning(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogMessage
+  nameWithType: TextLogger.LogMessage
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogWarning(System.String)
   name: LogWarning(String)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_LogWarning_System_String_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogWarning(System.String)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogWarning(System.String)
-  nameWithType: Logger.LogWarning(String)
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogWarning*
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_LogWarning_System_String_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogWarning(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogWarning(System.String)
+  nameWithType: TextLogger.LogWarning(String)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogWarning*
   name: LogWarning
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_LogWarning_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogWarning
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_LogWarning_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogWarning
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.LogWarning
-  nameWithType: Logger.LogWarning
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.MessageLogFilePath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.LogWarning
+  nameWithType: TextLogger.LogWarning
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.MessageLogFilePath
   name: MessageLogFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_MessageLogFilePath
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.MessageLogFilePath
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.MessageLogFilePath
-  nameWithType: Logger.MessageLogFilePath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.MessageLogFilePath*
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_MessageLogFilePath
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.MessageLogFilePath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.MessageLogFilePath
+  nameWithType: TextLogger.MessageLogFilePath
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.MessageLogFilePath*
   name: MessageLogFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_MessageLogFilePath_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.MessageLogFilePath
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_MessageLogFilePath_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.MessageLogFilePath
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.MessageLogFilePath
-  nameWithType: Logger.MessageLogFilePath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.WarningLogFilePath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.MessageLogFilePath
+  nameWithType: TextLogger.MessageLogFilePath
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.WarningLogFilePath
   name: WarningLogFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_WarningLogFilePath
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.WarningLogFilePath
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.WarningLogFilePath
-  nameWithType: Logger.WarningLogFilePath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.WarningLogFilePath*
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_WarningLogFilePath
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.WarningLogFilePath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.WarningLogFilePath
+  nameWithType: TextLogger.WarningLogFilePath
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.WarningLogFilePath*
   name: WarningLogFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_Logger_WarningLogFilePath_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.WarningLogFilePath
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Logging_TextLogger_WarningLogFilePath_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.WarningLogFilePath
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.Logger.WarningLogFilePath
-  nameWithType: Logger.WarningLogFilePath
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging.TextLogger.WarningLogFilePath
+  nameWithType: TextLogger.WarningLogFilePath
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
   name: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.html
   commentId: N:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
   nameWithType: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson
+  name: AppSettingsJson
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson
+  nameWithType: AppSettingsJson
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.#ctor(ILogger)
+  name: AppSettingsJson(ILogger)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson__ctor_ILogger_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.#ctor(ILogger)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.AppSettingsJson(ILogger)
+  nameWithType: AppSettingsJson.AppSettingsJson(ILogger)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.#ctor*
+  name: AppSettingsJson
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson__ctor_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.#ctor
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.AppSettingsJson
+  nameWithType: AppSettingsJson.AppSettingsJson
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ClientVersion
+  name: ClientVersion
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson_ClientVersion
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ClientVersion
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ClientVersion
+  nameWithType: AppSettingsJson.ClientVersion
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ClientVersion*
+  name: ClientVersion
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson_ClientVersion_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ClientVersion
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ClientVersion
+  nameWithType: AppSettingsJson.ClientVersion
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.LastUserId
+  name: LastUserId
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson_LastUserId
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.LastUserId
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.LastUserId
+  nameWithType: AppSettingsJson.LastUserId
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.LastUserId*
+  name: LastUserId
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson_LastUserId_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.LastUserId
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.LastUserId
+  nameWithType: AppSettingsJson.LastUserId
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ServerUrl
+  name: ServerUrl
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson_ServerUrl
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ServerUrl
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ServerUrl
+  nameWithType: AppSettingsJson.ServerUrl
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ServerUrl*
+  name: ServerUrl
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_AppSettingsJson_ServerUrl_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ServerUrl
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.AppSettingsJson.ServerUrl
+  nameWithType: AppSettingsJson.ServerUrl
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson
   name: SettingsJson
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson
   nameWithType: SettingsJson
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor(ILogger)
-  name: SettingsJson(ILogger)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_ILogger_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor(ILogger)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.SettingsJson(ILogger)
-  nameWithType: SettingsJson.SettingsJson(ILogger)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor(ILogger,System.String)
+  name: SettingsJson(ILogger, String)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_ILogger_System_String_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor(ILogger,System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.SettingsJson(ILogger, System.String)
+  nameWithType: SettingsJson.SettingsJson(ILogger, String)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.#ctor*
   name: SettingsJson
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson__ctor_
@@ -742,32 +819,51 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Item
   nameWithType: SettingsJson.Item
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load
-  name: Load()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Load
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load()
-  nameWithType: SettingsJson.Load()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load*
-  name: Load
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Load_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload
+  name: Reload()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Reload
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload()
+  nameWithType: SettingsJson.Reload()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload*
+  name: Reload
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Reload_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Load
-  nameWithType: SettingsJson.Load
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save
-  name: Save()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Save
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save()
-  nameWithType: SettingsJson.Save()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save*
-  name: Save
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_SettingsJson_Save_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Reload
+  nameWithType: SettingsJson.Reload
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson
+  name: UserSettingsJson
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson
+  nameWithType: UserSettingsJson
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.#ctor(User,ILogger,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory)
+  name: UserSettingsJson(User, ILogger, IEventAggregator, IViewModelFactory)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_UserSettingsJson__ctor_User_ILogger_IEventAggregator_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.#ctor(User,ILogger,IEventAggregator,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.UserSettingsJson(User, ILogger, IEventAggregator, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory)
+  nameWithType: UserSettingsJson.UserSettingsJson(User, ILogger, IEventAggregator, IViewModelFactory)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.#ctor*
+  name: UserSettingsJson
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_UserSettingsJson__ctor_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.#ctor
   isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.SettingsJson.Save
-  nameWithType: SettingsJson.Save
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.UserSettingsJson
+  nameWithType: UserSettingsJson.UserSettingsJson
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.Username
+  name: Username
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_UserSettingsJson_Username
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.Username
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.Username
+  nameWithType: UserSettingsJson.Username
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.Username*
+  name: Username
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Settings_UserSettingsJson_Username_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.Username
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings.UserSettingsJson.Username
+  nameWithType: UserSettingsJson.Username
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
   name: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.html
@@ -928,12 +1024,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel
   nameWithType: CreateConvoViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.#ctor(User,ILogger,IEventAggregator,IUserService,IConvoService,ICompressionUtility,IAsymmetricCryptographyRSA)
-  name: CreateConvoViewModel(User, ILogger, IEventAggregator, IUserService, IConvoService, ICompressionUtility, IAsymmetricCryptographyRSA)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_CreateConvoViewModel__ctor_User_ILogger_IEventAggregator_IUserService_IConvoService_ICompressionUtility_IAsymmetricCryptographyRSA_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.#ctor(User,ILogger,IEventAggregator,IUserService,IConvoService,ICompressionUtility,IAsymmetricCryptographyRSA)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.CreateConvoViewModel(User, ILogger, IEventAggregator, IUserService, IConvoService, ICompressionUtility, IAsymmetricCryptographyRSA)
-  nameWithType: CreateConvoViewModel.CreateConvoViewModel(User, ILogger, IEventAggregator, IUserService, IConvoService, ICompressionUtility, IAsymmetricCryptographyRSA)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.#ctor(User,ILogger,IEventAggregator,IConvoService,ICompressionUtility,IAsymmetricCryptographyRSA)
+  name: CreateConvoViewModel(User, ILogger, IEventAggregator, IConvoService, ICompressionUtility, IAsymmetricCryptographyRSA)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_CreateConvoViewModel__ctor_User_ILogger_IEventAggregator_IConvoService_ICompressionUtility_IAsymmetricCryptographyRSA_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.#ctor(User,ILogger,IEventAggregator,IConvoService,ICompressionUtility,IAsymmetricCryptographyRSA)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.CreateConvoViewModel(User, ILogger, IEventAggregator, IConvoService, ICompressionUtility, IAsymmetricCryptographyRSA)
+  nameWithType: CreateConvoViewModel.CreateConvoViewModel(User, ILogger, IEventAggregator, IConvoService, ICompressionUtility, IAsymmetricCryptographyRSA)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.#ctor*
   name: CreateConvoViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.CreateConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_CreateConvoViewModel__ctor_
@@ -1109,12 +1205,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel
   nameWithType: EditConvoMetadataViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(IConvoService,User,IUserService,IEventAggregator,IConvoPasswordProvider,IAsymmetricCryptographyRSA,ICompressionUtility)
-  name: EditConvoMetadataViewModel(IConvoService, User, IUserService, IEventAggregator, IConvoPasswordProvider, IAsymmetricCryptographyRSA, ICompressionUtility)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel__ctor_IConvoService_User_IUserService_IEventAggregator_IConvoPasswordProvider_IAsymmetricCryptographyRSA_ICompressionUtility_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(IConvoService,User,IUserService,IEventAggregator,IConvoPasswordProvider,IAsymmetricCryptographyRSA,ICompressionUtility)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IUserService, IEventAggregator, IConvoPasswordProvider, IAsymmetricCryptographyRSA, ICompressionUtility)
-  nameWithType: EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IUserService, IEventAggregator, IConvoPasswordProvider, IAsymmetricCryptographyRSA, ICompressionUtility)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(IConvoService,User,IEventAggregator,IConvoPasswordProvider,IAsymmetricCryptographyRSA,ICompressionUtility)
+  name: EditConvoMetadataViewModel(IConvoService, User, IEventAggregator, IConvoPasswordProvider, IAsymmetricCryptographyRSA, ICompressionUtility)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel__ctor_IConvoService_User_IEventAggregator_IConvoPasswordProvider_IAsymmetricCryptographyRSA_ICompressionUtility_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor(IConvoService,User,IEventAggregator,IConvoPasswordProvider,IAsymmetricCryptographyRSA,ICompressionUtility)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IEventAggregator, IConvoPasswordProvider, IAsymmetricCryptographyRSA, ICompressionUtility)
+  nameWithType: EditConvoMetadataViewModel.EditConvoMetadataViewModel(IConvoService, User, IEventAggregator, IConvoPasswordProvider, IAsymmetricCryptographyRSA, ICompressionUtility)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.#ctor*
   name: EditConvoMetadataViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.EditConvoMetadataViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_EditConvoMetadataViewModel__ctor_
@@ -1542,109 +1638,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytes
   nameWithType: ImageViewerViewModel.ImageBytes
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel
-  name: ImportUserFromBackupViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel
-  nameWithType: ImportUserFromBackupViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.#ctor(ISymmetricCryptography,ILogger)
-  name: ImportUserFromBackupViewModel(ISymmetricCryptography, ILogger)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel__ctor_ISymmetricCryptography_ILogger_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.#ctor(ISymmetricCryptography,ILogger)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportUserFromBackupViewModel(ISymmetricCryptography, ILogger)
-  nameWithType: ImportUserFromBackupViewModel.ImportUserFromBackupViewModel(ISymmetricCryptography, ILogger)
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.#ctor*
-  name: ImportUserFromBackupViewModel
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportUserFromBackupViewModel
-  nameWithType: ImportUserFromBackupViewModel.ImportUserFromBackupViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.BackupFilePath
-  name: BackupFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_BackupFilePath
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.BackupFilePath
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.BackupFilePath
-  nameWithType: ImportUserFromBackupViewModel.BackupFilePath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.BackupFilePath*
-  name: BackupFilePath
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_BackupFilePath_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.BackupFilePath
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.BackupFilePath
-  nameWithType: ImportUserFromBackupViewModel.BackupFilePath
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.CancelCommand
-  name: CancelCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_CancelCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.CancelCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.CancelCommand
-  nameWithType: ImportUserFromBackupViewModel.CancelCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.CancelCommand*
-  name: CancelCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_CancelCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.CancelCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.CancelCommand
-  nameWithType: ImportUserFromBackupViewModel.CancelCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ErrorMessage
-  name: ErrorMessage
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_ErrorMessage
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ErrorMessage
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ErrorMessage
-  nameWithType: ImportUserFromBackupViewModel.ErrorMessage
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ErrorMessage*
-  name: ErrorMessage
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_ErrorMessage_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ErrorMessage
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ErrorMessage
-  nameWithType: ImportUserFromBackupViewModel.ErrorMessage
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportCommand
-  name: ImportCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_ImportCommand
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportCommand
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportCommand
-  nameWithType: ImportUserFromBackupViewModel.ImportCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportCommand*
-  name: ImportCommand
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_ImportCommand_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportCommand
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.ImportCommand
-  nameWithType: ImportUserFromBackupViewModel.ImportCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.RequestedClose
-  name: RequestedClose
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_RequestedClose
-  commentId: E:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.RequestedClose
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.RequestedClose
-  nameWithType: ImportUserFromBackupViewModel.RequestedClose
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.SuccessMessage
-  name: SuccessMessage
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_SuccessMessage
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.SuccessMessage
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.SuccessMessage
-  nameWithType: ImportUserFromBackupViewModel.SuccessMessage
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.SuccessMessage*
-  name: SuccessMessage
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_SuccessMessage_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.SuccessMessage
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.SuccessMessage
-  nameWithType: ImportUserFromBackupViewModel.SuccessMessage
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.UIEnabled
-  name: UIEnabled
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_UIEnabled
-  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.UIEnabled
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.UIEnabled
-  nameWithType: ImportUserFromBackupViewModel.UIEnabled
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.UIEnabled*
-  name: UIEnabled
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImportUserFromBackupViewModel_UIEnabled_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.UIEnabled
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImportUserFromBackupViewModel.UIEnabled
-  nameWithType: ImportUserFromBackupViewModel.UIEnabled
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.InfoDialogViewModel
   name: InfoDialogViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.InfoDialogViewModel.html
@@ -1831,12 +1824,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel
   nameWithType: MainViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(ISettings,IEventAggregator,IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,User,IMethodQ,ILogger,IConvoPasswordProvider,IServerConnectionTest)
-  name: MainViewModel(ISettings, IEventAggregator, IUserService, IWindowFactory, IViewModelFactory, User, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel__ctor_ISettings_IEventAggregator_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_User_IMethodQ_ILogger_IConvoPasswordProvider_IServerConnectionTest_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(ISettings,IEventAggregator,IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,User,IMethodQ,ILogger,IConvoPasswordProvider,IServerConnectionTest)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.MainViewModel(ISettings, IEventAggregator, IUserService, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, User, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest)
-  nameWithType: MainViewModel.MainViewModel(ISettings, IEventAggregator, IUserService, IWindowFactory, IViewModelFactory, User, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(User,IEventAggregator,IAppSettings,IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,IMethodQ,ILogger,IConvoPasswordProvider,IServerConnectionTest,IUserSettings)
+  name: MainViewModel(User, IEventAggregator, IAppSettings, IUserService, IWindowFactory, IViewModelFactory, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest, IUserSettings)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel__ctor_User_IEventAggregator_IAppSettings_IUserService_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_IMethodQ_ILogger_IConvoPasswordProvider_IServerConnectionTest_IUserSettings_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor(User,IEventAggregator,IAppSettings,IUserService,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,IMethodQ,ILogger,IConvoPasswordProvider,IServerConnectionTest,IUserSettings)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.MainViewModel(User, IEventAggregator, IAppSettings, IUserService, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest, IUserSettings)
+  nameWithType: MainViewModel.MainViewModel(User, IEventAggregator, IAppSettings, IUserService, IWindowFactory, IViewModelFactory, IMethodQ, ILogger, IConvoPasswordProvider, IServerConnectionTest, IUserSettings)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.#ctor*
   name: MainViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.MainViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_MainViewModel__ctor_
@@ -2186,12 +2179,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel
   nameWithType: SettingsViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(ISettings,IEventAggregator,User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA)
-  name: SettingsViewModel(ISettings, IEventAggregator, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel__ctor_ISettings_IEventAggregator_User_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_ILogger_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_IAsymmetricCryptographyRSA_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(ISettings,IEventAggregator,User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.SettingsViewModel(ISettings, IEventAggregator, User, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, ILogger, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, IAsymmetricCryptographyRSA)
-  nameWithType: SettingsViewModel.SettingsViewModel(ISettings, IEventAggregator, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(IAppSettings,IEventAggregator,User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA,IUserSettings)
+  name: SettingsViewModel(IAppSettings, IEventAggregator, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA, IUserSettings)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel__ctor_IAppSettings_IEventAggregator_User_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_ILogger_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_IAsymmetricCryptographyRSA_IUserSettings_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor(IAppSettings,IEventAggregator,User,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,ILogger,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,IAsymmetricCryptographyRSA,IUserSettings)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.SettingsViewModel(IAppSettings, IEventAggregator, User, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, ILogger, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, IAsymmetricCryptographyRSA, IUserSettings)
+  nameWithType: SettingsViewModel.SettingsViewModel(IAppSettings, IEventAggregator, User, IViewModelFactory, ILogger, IWindowFactory, IAsymmetricCryptographyRSA, IUserSettings)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.#ctor*
   name: SettingsViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel__ctor_
@@ -2238,12 +2231,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.ClosedCommand
   nameWithType: SettingsViewModel.ClosedCommand
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.DEFAULT_USERNAME
-  name: DEFAULT_USERNAME
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_DEFAULT_USERNAME
-  commentId: F:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.DEFAULT_USERNAME
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.DEFAULT_USERNAME
-  nameWithType: SettingsViewModel.DEFAULT_USERNAME
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.DeleteButtonCommand
   name: DeleteButtonCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.SettingsViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_SettingsViewModel_DeleteButtonCommand
@@ -2301,12 +2288,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel
   nameWithType: ActiveConvoViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ISettings,ILogger,IConvoPasswordProvider,IMessageSender)
-  name: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ISettings, ILogger, IConvoPasswordProvider, IMessageSender)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_User_IConvoService_IEventAggregator_IMethodQ_IMessageCryptography_ISettings_ILogger_IConvoPasswordProvider_IMessageSender_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ISettings,ILogger,IConvoPasswordProvider,IMessageSender)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ISettings, ILogger, IConvoPasswordProvider, IMessageSender)
-  nameWithType: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ISettings, ILogger, IConvoPasswordProvider, IMessageSender)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ILogger,IConvoPasswordProvider,IMessageSender)
+  name: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_User_IConvoService_IEventAggregator_IMethodQ_IMessageCryptography_ILogger_IConvoPasswordProvider_IMessageSender_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ILogger,IConvoPasswordProvider,IMessageSender)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender)
+  nameWithType: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor*
   name: ActiveConvoViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_
@@ -2599,12 +2586,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel
   nameWithType: LoginViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.#ctor(IUserService,ISettings,IEventAggregator,User,IServerConnectionTest,ILogger)
-  name: LoginViewModel(IUserService, ISettings, IEventAggregator, User, IServerConnectionTest, ILogger)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_LoginViewModel__ctor_IUserService_ISettings_IEventAggregator_User_IServerConnectionTest_ILogger_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.#ctor(IUserService,ISettings,IEventAggregator,User,IServerConnectionTest,ILogger)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.LoginViewModel(IUserService, ISettings, IEventAggregator, User, IServerConnectionTest, ILogger)
-  nameWithType: LoginViewModel.LoginViewModel(IUserService, ISettings, IEventAggregator, User, IServerConnectionTest, ILogger)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.#ctor(IAppSettings,IEventAggregator,ILoginService)
+  name: LoginViewModel(IAppSettings, IEventAggregator, ILoginService)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_LoginViewModel__ctor_IAppSettings_IEventAggregator_ILoginService_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.#ctor(IAppSettings,IEventAggregator,ILoginService)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.LoginViewModel(IAppSettings, IEventAggregator, ILoginService)
+  nameWithType: LoginViewModel.LoginViewModel(IAppSettings, IEventAggregator, ILoginService)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.#ctor*
   name: LoginViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.LoginViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_LoginViewModel__ctor_
@@ -2988,12 +2975,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel
   nameWithType: ServerUrlViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor(IServerConnectionTest,ISettings,IEventAggregator)
-  name: ServerUrlViewModel(IServerConnectionTest, ISettings, IEventAggregator)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel__ctor_IServerConnectionTest_ISettings_IEventAggregator_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor(IServerConnectionTest,ISettings,IEventAggregator)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrlViewModel(IServerConnectionTest, ISettings, IEventAggregator)
-  nameWithType: ServerUrlViewModel.ServerUrlViewModel(IServerConnectionTest, ISettings, IEventAggregator)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor(IServerConnectionTest,IAppSettings,IEventAggregator)
+  name: ServerUrlViewModel(IServerConnectionTest, IAppSettings, IEventAggregator)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel__ctor_IServerConnectionTest_IAppSettings_IEventAggregator_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor(IServerConnectionTest,IAppSettings,IEventAggregator)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.ServerUrlViewModel(IServerConnectionTest, IAppSettings, IEventAggregator)
+  nameWithType: ServerUrlViewModel.ServerUrlViewModel(IServerConnectionTest, IAppSettings, IEventAggregator)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.#ctor*
   name: ServerUrlViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ServerUrlViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ServerUrlViewModel__ctor_
@@ -3111,12 +3098,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel
   nameWithType: UserCreationSuccessfulViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.#ctor(ISettings,IUserService,IEventAggregator,User)
-  name: UserCreationSuccessfulViewModel(ISettings, IUserService, IEventAggregator, User)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationSuccessfulViewModel__ctor_ISettings_IUserService_IEventAggregator_User_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.#ctor(ISettings,IUserService,IEventAggregator,User)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.UserCreationSuccessfulViewModel(ISettings, IUserService, IEventAggregator, User)
-  nameWithType: UserCreationSuccessfulViewModel.UserCreationSuccessfulViewModel(ISettings, IUserService, IEventAggregator, User)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.#ctor(IUserService,IEventAggregator,User)
+  name: UserCreationSuccessfulViewModel(IUserService, IEventAggregator, User)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationSuccessfulViewModel__ctor_IUserService_IEventAggregator_User_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.#ctor(IUserService,IEventAggregator,User)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.UserCreationSuccessfulViewModel(IUserService, IEventAggregator, User)
+  nameWithType: UserCreationSuccessfulViewModel.UserCreationSuccessfulViewModel(IUserService, IEventAggregator, User)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.#ctor*
   name: UserCreationSuccessfulViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationSuccessfulViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationSuccessfulViewModel__ctor_
@@ -3221,12 +3208,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel
   nameWithType: UserCreationViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserService,ISettings,IEventAggregator,ICompressionUtility,ILogger,IAsymmetricKeygenRSA,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,ISymmetricCryptography)
-  name: UserCreationViewModel(IUserService, ISettings, IEventAggregator, ICompressionUtility, ILogger, IAsymmetricKeygenRSA, IViewModelFactory, IWindowFactory, ISymmetricCryptography)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserService_ISettings_IEventAggregator_ICompressionUtility_ILogger_IAsymmetricKeygenRSA_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IViewModelFactory_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Factories_IWindowFactory_ISymmetricCryptography_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserService,ISettings,IEventAggregator,ICompressionUtility,ILogger,IAsymmetricKeygenRSA,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory,ISymmetricCryptography)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationViewModel(IUserService, ISettings, IEventAggregator, ICompressionUtility, ILogger, IAsymmetricKeygenRSA, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IViewModelFactory, GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.IWindowFactory, ISymmetricCryptography)
-  nameWithType: UserCreationViewModel.UserCreationViewModel(IUserService, ISettings, IEventAggregator, ICompressionUtility, ILogger, IAsymmetricKeygenRSA, IViewModelFactory, IWindowFactory, ISymmetricCryptography)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,IEventAggregator,ILogger,IRegistrationService)
+  name: UserCreationViewModel(IUserSettings, IEventAggregator, ILogger, IRegistrationService)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserSettings_IEventAggregator_ILogger_IRegistrationService_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,IEventAggregator,ILogger,IRegistrationService)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationViewModel(IUserSettings, IEventAggregator, ILogger, IRegistrationService)
+  nameWithType: UserCreationViewModel.UserCreationViewModel(IUserSettings, IEventAggregator, ILogger, IRegistrationService)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor*
   name: UserCreationViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_
@@ -3402,6 +3389,83 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Username
   nameWithType: UserCreationViewModel.Username
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel
+  name: UsernamePromptViewModel
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel
+  nameWithType: UsernamePromptViewModel
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.#ctor(IUserSettings)
+  name: UsernamePromptViewModel(IUserSettings)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel__ctor_IUserSettings_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.#ctor(IUserSettings)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UsernamePromptViewModel(IUserSettings)
+  nameWithType: UsernamePromptViewModel.UsernamePromptViewModel(IUserSettings)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.#ctor*
+  name: UsernamePromptViewModel
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel__ctor_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.#ctor
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UsernamePromptViewModel
+  nameWithType: UsernamePromptViewModel.UsernamePromptViewModel
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.AcceptCommand
+  name: AcceptCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_AcceptCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.AcceptCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.AcceptCommand
+  nameWithType: UsernamePromptViewModel.AcceptCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.AcceptCommand*
+  name: AcceptCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_AcceptCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.AcceptCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.AcceptCommand
+  nameWithType: UsernamePromptViewModel.AcceptCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.ErrorMessage
+  name: ErrorMessage
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_ErrorMessage
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.ErrorMessage
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.ErrorMessage
+  nameWithType: UsernamePromptViewModel.ErrorMessage
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.ErrorMessage*
+  name: ErrorMessage
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_ErrorMessage_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.ErrorMessage
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.ErrorMessage
+  nameWithType: UsernamePromptViewModel.ErrorMessage
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.RequestedClose
+  name: RequestedClose
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_RequestedClose
+  commentId: E:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.RequestedClose
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.RequestedClose
+  nameWithType: UsernamePromptViewModel.RequestedClose
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UIEnabled
+  name: UIEnabled
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_UIEnabled
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UIEnabled
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UIEnabled
+  nameWithType: UsernamePromptViewModel.UIEnabled
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UIEnabled*
+  name: UIEnabled
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_UIEnabled_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UIEnabled
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.UIEnabled
+  nameWithType: UsernamePromptViewModel.UIEnabled
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.Username
+  name: Username
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_Username
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.Username
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.Username
+  nameWithType: UsernamePromptViewModel.Username
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.Username*
+  name: Username
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UsernamePromptViewModel_Username_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.Username
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UsernamePromptViewModel.Username
+  nameWithType: UsernamePromptViewModel.Username
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel
   name: ViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html
@@ -3813,38 +3877,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.InitializeComponent
   nameWithType: ImageViewerView.InitializeComponent
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView
-  name: ImportUserFromBackupView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.html
-  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView
-  nameWithType: ImportUserFromBackupView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.#ctor
-  name: ImportUserFromBackupView()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_ImportUserFromBackupView__ctor
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.#ctor
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.ImportUserFromBackupView()
-  nameWithType: ImportUserFromBackupView.ImportUserFromBackupView()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.#ctor*
-  name: ImportUserFromBackupView
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_ImportUserFromBackupView__ctor_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.#ctor
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.ImportUserFromBackupView
-  nameWithType: ImportUserFromBackupView.ImportUserFromBackupView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.InitializeComponent
-  name: InitializeComponent()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_ImportUserFromBackupView_InitializeComponent
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.InitializeComponent
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.InitializeComponent()
-  nameWithType: ImportUserFromBackupView.InitializeComponent()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.InitializeComponent*
-  name: InitializeComponent
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_ImportUserFromBackupView_InitializeComponent_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.InitializeComponent
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImportUserFromBackupView.InitializeComponent
-  nameWithType: ImportUserFromBackupView.InitializeComponent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.InfoDialogView
   name: InfoDialogView
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.InfoDialogView.html
@@ -4151,3 +4183,35 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.UserCreationView.UserCreationView
   nameWithType: UserCreationView.UserCreationView
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView
+  name: UsernamePromptView
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView
+  nameWithType: UsernamePromptView
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.#ctor
+  name: UsernamePromptView()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UsernamePromptView__ctor
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.#ctor
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.UsernamePromptView()
+  nameWithType: UsernamePromptView.UsernamePromptView()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.#ctor*
+  name: UsernamePromptView
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UsernamePromptView__ctor_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.#ctor
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.UsernamePromptView
+  nameWithType: UsernamePromptView.UsernamePromptView
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.InitializeComponent
+  name: InitializeComponent()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UsernamePromptView_InitializeComponent
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.InitializeComponent
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.InitializeComponent()
+  nameWithType: UsernamePromptView.InitializeComponent()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.InitializeComponent*
+  name: InitializeComponent
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UsernamePromptView_InitializeComponent_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.InitializeComponent
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView.InitializeComponent
+  nameWithType: UsernamePromptView.InitializeComponent
