@@ -43,7 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const double ERROR_MESSAGE_INTERVAL = 7500;
 
         private readonly ILogger logger;
-        private readonly IUserSettings settings;
+        private readonly IUserSettings userSettings;
         private readonly IEventAggregator eventAggregator;
         private readonly IRegistrationService registrationService;
         private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
@@ -98,10 +98,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserSettings settings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)
+        public UserCreationViewModel(IUserSettings userSettings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)
         {
             this.logger = logger;
-            this.settings = settings;
+            this.userSettings = userSettings;
             this.eventAggregator = eventAggregator;
             this.registrationService = registrationService;
 
@@ -170,12 +170,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 switch (result.Item1)
                 {
                     case 0: // Success!
-                        // Handle this event back in the main view model,
-                        // since it's there where the backup codes + 2FA secret (QR) will be shown.
-                        ExecUI(() => eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(result.Item2));
-                        logger.LogMessage($"Created user {result.Item2.Id}.");
-                        settings.Username = Username;
-                        settings.Save();
+                        ExecUI(() =>
+                        {
+                            // Handle this event back in the main view model,
+                            // since it's there where the backup codes + 2FA secret (QR) will be shown.
+                            eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(result.Item2);
+                            logger?.LogMessage($"Created user {result.Item2.Id}.");
+                            userSettings.Username = Username;
+                        });
+                        
                         break;
                     case 1: // Epistle backend connectivity issues
                         var errorMsg = "Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server url!";

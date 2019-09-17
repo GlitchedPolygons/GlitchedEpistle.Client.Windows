@@ -78,7 +78,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        private string oldTheme, newTheme;
+        private string oldTheme, newTheme, oldUsername;
 
         public SettingsViewModel(IAppSettings appSettings, IEventAggregator eventAggregator, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto, IUserSettings userSettings)
         {
@@ -97,8 +97,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
 
-            appSettings.Load();
-            userSettings.Load();
+            oldUsername = this.userSettings.Username;
 
             // Load up the current settings into the UI on load.
             Username = userSettings.Username;
@@ -110,15 +109,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (cancelled)
             {
+                userSettings.Username = oldUsername;
                 OnChangedTheme(oldTheme);
             }
             else
             {
                 userSettings.Username = Username;
-                userSettings.Save();
-
                 appSettings["Theme"] = newTheme;
-                appSettings.Save();
 
                 eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
             }
@@ -133,6 +130,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnClickedRevert(object commandParam)
         {
             Username = user?.Id ?? "user";
+            OnChangedTheme(Themes.DARK_THEME);
         }
 
         private void OnChangedTheme(object commandParam)
