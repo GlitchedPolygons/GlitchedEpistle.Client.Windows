@@ -76,6 +76,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
                 var dialog = new UsernamePromptView { DataContext = viewModelFactory.Create<UsernamePromptViewModel>() };
                 dialog.ShowDialog();
             }
+
+            Username = Username; // Triggers the UsernameChangedEvent and refreshes the main view's username label...
         }
 
         /// <summary>The username to use for sending messages.</summary>

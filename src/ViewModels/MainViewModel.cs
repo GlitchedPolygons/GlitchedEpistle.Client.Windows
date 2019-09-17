@@ -231,7 +231,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             eventAggregator.GetEvent<JoinedConvoEvent>().Subscribe(OnJoinedConvo);
 
             // Load up the settings on startup.
-            UserId = user.Id = appSettings.LastUserId;
+            UserId = Username = string.Empty;
+            user.Id = appSettings.LastUserId;
 
             Enum.TryParse(appSettings[nameof(WindowState), WindowState.Normal.ToString()], out WindowState loadedWindowState);
             WindowState = loadedWindowState;
@@ -241,11 +242,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             double w = Math.Abs(appSettings[nameof(SidebarWidth), SIDEBAR_MIN_WIDTH]);
             SidebarWidth = w < SIDEBAR_MIN_WIDTH ? SIDEBAR_MIN_WIDTH : w > SIDEBAR_MAX_WIDTH ? SIDEBAR_MIN_WIDTH : w;
-
-            if (UserId.NotNullNotEmpty())
-            {
-                Username = userSettings.Username;
-            }
 
             Task.Run(async () =>
             {
@@ -358,7 +354,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UIEnabled = true;
 
             UserId = user.Id;
-            Username = userSettings.Username;
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
@@ -373,7 +368,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private void OnUserCreationSuccessful(UserCreationResponseDto userCreationResponseDto)
         {
             UserId = user.Id = userCreationResponseDto.Id;
-            Username = userSettings.Username;
 
             // Create QR code containing the Authy/Google Auth setup link and open the RegistrationSuccessfulView.
             IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap> { Format = BarcodeFormat.QR_CODE, Renderer = new WriteableBitmapRenderer(), Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 } };
@@ -428,7 +422,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 return;
             }
 
-            Username = string.Empty;
+            Username = UserId = string.Empty;
 
             user.Token = null;
             user.PasswordSHA512 = user.PublicKeyPem = user.PrivateKeyPem = null;
