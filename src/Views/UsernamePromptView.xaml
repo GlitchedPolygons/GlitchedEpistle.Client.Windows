@@ -1,0 +1,70 @@
+﻿<Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UsernamePromptView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
+        mc:Ignorable="d"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        Icon="/Resources/Images/settings-icon-white.png"
+        Title="Set username"
+        WindowStartupLocation="CenterScreen"
+        SizeToContent="WidthAndHeight"
+        ResizeMode="NoResize">
+    <StackPanel HorizontalAlignment="Center" 
+                MaxWidth="300" 
+                Margin="16"
+                IsEnabled="{Binding UIEnabled}">
+
+        <Label Content="Please define a username"
+               FontWeight="Bold"
+               FontSize="16" />
+
+        <TextBlock Text="{Binding ErrorMessage}"
+                   TextWrapping="Wrap"
+                   MaxWidth="250"
+                   Margin="5,0,0,0"
+                   HorizontalAlignment="Left"
+                   Foreground="{DynamicResource ErrorMessageColor}"
+                   FontSize="14" />
+
+        <TextBlock TextWrapping="Wrap" 
+                   Style="{DynamicResource TextBlock}"
+                   TextAlignment="Left"
+                   FontSize="14">
+            Don't worry, you can change this later in the settings.<LineBreak/><LineBreak/>
+            Your username is used for sending messages.<LineBreak/><LineBreak/>
+            If you change your username, messages that were sent using your old username will NOT be updated retroactively!<LineBreak/><LineBreak/>
+            It is stored locally on a per-machine basis, meaning that you can have multiple usernames across devices (e.g. one for when you send from your phone or laptop, etc...).
+        </TextBlock>
+
+        <Separator Margin="0 20 0 0"/>
+
+        <Label Content="Username" Margin="15 10 0 0"
+               ToolTip="Your username with which you are gonna send out your messages." />
+
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center">
+            <TextBox MinWidth="200"
+                     MaxWidth="200"
+                     Margin="0 0 8 0"
+                     Name="UsernameTextBox"
+                     MaxLength="25"
+                     Text="{Binding Username}"
+                     TextChanged="UsernameTextBox_OnTextChanged" />
+
+            <Button MinWidth="64"
+                    Content="Accept"
+                    Name="AcceptButton"
+                    Command="{Binding AcceptCommand}"
+                    ToolTip="Accept the entered username."
+                    IsEnabled="false" />
+        </StackPanel>
+        
+    </StackPanel>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Enter"
+                    Command="{Binding AcceptCommand}"/>
+    </Window.InputBindings>
+</Window>

@@ -16,23 +16,34 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.Windows;
 using System.Windows.Controls;
-using GlitchedPolygons.ExtensionMethods;
 
-namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
+using GlitchedPolygons.ExtensionMethods;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
+
+namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 {
     /// <summary>
     /// Interaction logic for UsernamePromptView.xaml
     /// </summary>
-    public partial class UsernamePromptView : UserControl
+    public partial class UsernamePromptView : Window
     {
         public UsernamePromptView()
         {
             InitializeComponent();
+            UsernameTextBox.Focus();
+            Loaded += UsernamePromptView_Loaded;
+        }
+
+        private void UsernamePromptView_Loaded(object sender, RoutedEventArgs e)
+        {
+            UsernameTextBox.Focus();
         }
 
         private void UsernameTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            this.MakeCloseable();
             AcceptButton.IsEnabled = UsernameTextBox.Text.NotNullNotEmpty();
         }
     }

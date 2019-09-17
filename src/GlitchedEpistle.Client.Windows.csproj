@@ -187,7 +187,7 @@
     <Compile Include="ViewModels\UserControls\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserControls\UserCreationSuccessfulViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\UserControls\UsernamePromptViewModel.cs" />
+    <Compile Include="ViewModels\UsernamePromptViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
@@ -268,7 +268,7 @@
     <Compile Include="Views\UserControls\UserCreationSuccessfulView.xaml.cs">
       <DependentUpon>UserCreationSuccessfulView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserControls\UsernamePromptView.xaml.cs">
+    <Compile Include="Views\UsernamePromptView.xaml.cs">
       <DependentUpon>UsernamePromptView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\Themes\Base\Theme.xaml">
@@ -391,7 +391,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserControls\UsernamePromptView.xaml">
+    <Page Include="Views\UsernamePromptView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -496,7 +496,7 @@
       <Version>1.0.6</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client">
-      <Version>2019.4.0.3</Version>
+      <Version>2019.4.0.4</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.Services.CompressionUtility">
       <Version>1.1.0</Version>
