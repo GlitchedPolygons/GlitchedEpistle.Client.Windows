@@ -18,6 +18,7 @@
 
 using System;
 using System.IO;
+using System.Windows.Threading;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -25,6 +26,9 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 
 using Prism.Events;
 
@@ -39,11 +43,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
     {
         private readonly User user;
         private readonly ILogger logger;
+        private readonly IEventAggregator eventAggregator;
+        private readonly IViewModelFactory viewModelFactory;
 
-        public UserSettingsJson(ILogger logger, IEventAggregator eventAggregator, User user) : base(logger, null)
+        public UserSettingsJson(User user, ILogger logger, IEventAggregator eventAggregator, IViewModelFactory viewModelFactory) : base(logger, null)
         {
             this.user = user;
             this.logger = logger;
+            this.eventAggregator = eventAggregator;
+            this.viewModelFactory = viewModelFactory;
+
             eventAggregator.GetEvent<LoginSucceededEvent>().Subscribe(OnLoginOrRegister);
             eventAggregator.GetEvent<UserCreationSucceededEvent>().Subscribe(_ => OnLoginOrRegister());
         }
@@ -59,14 +68,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
             }
 
             FilePath = Path.Combine(Paths.GetUserDirectory(user.Id), "Settings.json");
+
             Reload();
+
+            while (Username.NullOrEmpty())
+            {
+                var dialog = new UsernamePromptView { DataContext = viewModelFactory.Create<UsernamePromptViewModel>() };
+                dialog.ShowDialog();
+            }
         }
 
         /// <summary>The username to use for sending messages.</summary>
         public string Username
         {
             get => this["Username"];
-            set => this["Username"] = value;
+            set
+            {
+                this["Username"] = value;
+                Dispatcher.CurrentDispatcher.Invoke(() => eventAggregator.GetEvent<UsernameChangedEvent>().Publish(value));
+            }
         }
     }
 }

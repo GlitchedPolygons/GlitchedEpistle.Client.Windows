@@ -116,8 +116,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 userSettings.Username = Username;
                 appSettings["Theme"] = newTheme;
-
-                eventAggregator.GetEvent<UsernameChangedEvent>().Publish(Username);
             }
         }
 
