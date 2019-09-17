@@ -20,14 +20,14 @@ using System;
 using System.Windows.Input;
 
 using GlitchedPolygons.ExtensionMethods;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-
-using Prism.Events;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
+    /// <summary>
+    /// View model for the missing username prompt (dialog window).
+    /// </summary>
     public class UsernamePromptViewModel : ViewModel, ICloseable
     {
         #region Constants
