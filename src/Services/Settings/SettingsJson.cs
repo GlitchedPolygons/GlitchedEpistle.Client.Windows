@@ -87,9 +87,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 
         /// <summary>
         /// Gets or sets a user setting with its specified key <c>string</c>.<para> </para>
-        /// Setting should also auto-save the config.<para> </para>
-        /// If you are trying to get an inexistent setting, <c>null</c> (or <c>string.Empty</c>) should be returned.<para> </para>
-        /// If you are trying to set an inexistent setting, the setting shall be created.
+        /// Setting a value also auto-saves the config out to disk.<para> </para>
+        /// If you are trying to get an inexistent setting, <c>null</c> (or <c>string.Empty</c>) is returned.<para> </para>
+        /// If you are trying to set an inexistent setting, the setting is created.
         /// </summary>
         /// <param name="key">The setting's name/key.</param>
         /// <returns>The setting's <c>string</c> value; <c>null</c> (or <c>string.Empty</c>) if the setting doesn't exist.</returns>

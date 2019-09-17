@@ -33,7 +33,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Constants
         // Injections:
         private readonly IUserSettings userSettings;
-        private readonly IEventAggregator eventAggregator;
         #endregion
 
         #region Events
@@ -55,10 +54,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
         #endregion
 
-        public UsernamePromptViewModel(IUserSettings userSettings, IEventAggregator eventAggregator)
+        public UsernamePromptViewModel(IUserSettings userSettings)
         {
             this.userSettings = userSettings;
-            this.eventAggregator = eventAggregator;
 
             AcceptCommand = new DelegateCommand(OnAccept);
         }
@@ -71,9 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             userSettings.Username = Username;
-            eventAggregator.GetEvent<UsernameChangedEvent>().Publish(userSettings.Username);
             RequestedClose?.Invoke(this,EventArgs.Empty);
         }
-
     }
 }

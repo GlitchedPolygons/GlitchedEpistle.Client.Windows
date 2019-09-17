@@ -358,13 +358,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UIEnabled = true;
 
             UserId = user.Id;
-
-            while (userSettings.Username.NullOrEmpty())
-            {
-                var dialog = new UsernamePromptView { DataContext = viewModelFactory.Create<UsernamePromptViewModel>() };
-                dialog.ShowDialog();
-            }
-
             Username = userSettings.Username;
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
@@ -434,6 +427,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 return;
             }
+
+            Username = string.Empty;
 
             user.Token = null;
             user.PasswordSHA512 = user.PublicKeyPem = user.PrivateKeyPem = null;
