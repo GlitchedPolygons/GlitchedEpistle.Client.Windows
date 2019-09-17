@@ -175,7 +175,6 @@
     <Compile Include="ViewModels\HelpViewModel.cs" />
     <Compile Include="ViewModels\ICloseable.cs" />
     <Compile Include="ViewModels\ImageViewerViewModel.cs" />
-    <Compile Include="ViewModels\ImportUserFromBackupViewModel.cs" />
     <Compile Include="ViewModels\InfoDialogViewModel.cs" />
     <Compile Include="ViewModels\JoinConvoDialogViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -227,9 +226,6 @@
     </Compile>
     <Compile Include="Views\ImageViewerView.xaml.cs">
       <DependentUpon>ImageViewerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ImportUserFromBackupView.xaml.cs">
-      <DependentUpon>ImportUserFromBackupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\InfoDialogView.xaml.cs">
       <DependentUpon>InfoDialogView.xaml</DependentUpon>
@@ -340,10 +336,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ImageViewerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ImportUserFromBackupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
