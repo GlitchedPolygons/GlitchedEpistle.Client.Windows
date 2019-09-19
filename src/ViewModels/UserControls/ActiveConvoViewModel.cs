@@ -138,8 +138,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private volatile bool disposed;
         private volatile int pageIndex;
         private volatile CancellationTokenSource autoFetch;
+        private volatile CancellationTokenSource metadataUpdater;
 
-        private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
         private IMessageRepository messageRepository;
 
@@ -246,6 +246,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             autoFetch?.Cancel();
             autoFetch = null;
+
+            metadataUpdater?.Cancel();
+            metadataUpdater = null;
         }
 
         /// <summary>
@@ -261,6 +264,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 await messageRepository.GetLastMessageId(),
                 OnFetchedNewMessages
             );
+
+            metadataUpdater = new CancellationTokenSource();
+
+            var task = Task.Run(async () =>
+            {
+                while (!metadataUpdater.IsCancellationRequested)
+                {
+                    await PullConvoMetadata();
+                    Thread.Sleep(METADATA_PULL_FREQUENCY);
+                }
+            }, metadataUpdater.Token);
         }
 
         /// <summary>
