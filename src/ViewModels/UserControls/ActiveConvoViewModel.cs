@@ -63,7 +63,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Constants
         private const int MSG_COLLECTION_SIZE = 20;
         private const string MSG_TIMESTAMP_FORMAT = "dd.MM.yyyy HH:mm";
-        private static readonly TimeSpan MSG_PULL_FREQUENCY = TimeSpan.FromMilliseconds(314.159265);
         private static readonly TimeSpan METADATA_PULL_FREQUENCY = TimeSpan.FromMilliseconds(30000);
 
         // Injections:
@@ -136,9 +135,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
-        private volatile bool pulling;
         private volatile bool disposed;
         private volatile int pageIndex;
+        private volatile CancellationTokenSource autoFetch;
+
         private DateTime lastMetadataPull;
         private ulong? scheduledHideGreenTickIcon;
         private IMessageRepository messageRepository;
@@ -244,51 +244,55 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         private void StopAutomaticPulling()
         {
-            pulling = false;
+            autoFetch?.Cancel();
+            autoFetch = null;
         }
 
         /// <summary>
-        /// Starts the automatic message pull cycle,
-        /// which also truncates the view's message collection size when needed.
+        /// Starts the automatic message pull cycle.
         /// </summary>
-        private void StartAutomaticPulling()
+        private async void StartAutomaticPulling()
         {
             StopAutomaticPulling();
 
-            pulling = true;
+            autoFetch = messageFetcher.StartAutoFetchingMessages(
+                ActiveConvo.Id,
+                convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
+                await messageRepository.GetLastMessageId(),
+                OnFetchedNewMessages
+            );
+        }
 
-            // Start message pull cycle:
-            Task.Run(async () =>
+        /// <summary>
+        /// Callback method for the auto-fetching routine.<para> </para>
+        /// Gets called when there were new messages in the <see cref="Convo"/> server-side.<para> </para>
+        /// Also truncates the view's message collection size when needed.
+        /// </summary>
+        /// <param name="messages">The messages that were fetched from the backend.</param>
+        private async void OnFetchedNewMessages(IEnumerable<Message> messages)
+        {
+            if(messages is null)
             {
-                while (pulling)
+                return;
+            }
+
+            // Add the pulled messages to the local sqlite db.
+            if (!await messageRepository.AddRange(messages.OrderBy(m => m?.TimestampUTC)))
+            {
+                logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {messages.First()?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
+                return;
+            }
+
+            // Decrypt and add the retrieved messages to the chatroom UI.
+            var decryptedMessages = DecryptMessages(messages).OrderBy(m => m?.TimestampDateTimeUTC);
+
+            ExecUI(() =>
+            {
+                Messages.AddRange(decryptedMessages);
+
+                if (pageIndex == 0)
                 {
-                    Thread.Sleep(MSG_PULL_FREQUENCY);
-
-                    var pulledMessages = await PullNewestMessages();
-                    if (pulledMessages.Length == 0)
-                    {
-                        continue;
-                    }
-
-                    // Add the pulled messages to the local sqlite db.
-                    if (!await messageRepository.AddRange(pulledMessages.OrderBy(m => m?.TimestampUTC)))
-                    {
-                        logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {pulledMessages[0]?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
-                        continue;
-                    }
-
-                    // Decrypt and add the retrieved messages to the chatroom UI.
-                    var decryptedMessages = DecryptMessages(pulledMessages).OrderBy(m => m?.TimestampDateTimeUTC);
-
-                    ExecUI(() =>
-                    {
-                        Messages.AddRange(decryptedMessages);
-
-                        if (pageIndex == 0)
-                        {
-                            TruncateMessagesCollection();
-                        }
-                    });
+                    TruncateMessagesCollection();
                 }
             });
         }
@@ -408,51 +412,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(convo.Id);
 
             return await convoProvider.Update(convo);
-        }
-
-        /// <summary>
-        /// Pulls the convo's newest messages from the server (DOES NOT guarantee correct order!).<para> </para>
-        /// Returns the pulled <see cref="Message"/>s (or an empty array if no new messages were found).
-        /// </summary>
-        /// <returns>The pulled <see cref="Message"/>s (or an empty array if no new messages were found).</returns>
-        private async Task<Message[]> PullNewestMessages()
-        {
-            if (ActiveConvo is null || user is null)
-            {
-                return Array.Empty<Message>();
-            }
-
-            try
-            {
-                // Pull convo metadata first.
-                if (DateTime.UtcNow - lastMetadataPull > METADATA_PULL_FREQUENCY)
-                {
-                    await PullConvoMetadata();
-                    lastMetadataPull = DateTime.UtcNow;
-                }
-
-                // Pull newest messages.
-                var tailId = await messageRepository.GetLastMessageId();
-                Message[] retrievedMessages = await convoService.GetConvoMessagesSinceTailId(
-                    convoId: ActiveConvo.Id,
-                    convoPasswordSHA512: convoPasswordProvider.GetPasswordSHA512(ActiveConvo.Id),
-                    userId: user?.Id,
-                    auth: user?.Token?.Item2,
-                    tailId: tailId is null ? 0 : long.Parse(tailId)
-                );
-
-                if (retrievedMessages is null || retrievedMessages.Length == 0)
-                {
-                    return Array.Empty<Message>();
-                }
-
-                return retrievedMessages;
-            }
-            catch (Exception e)
-            {
-                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(PullNewestMessages)}: Pull failed (ConvoId = {ActiveConvo?.Id}). Thrown exception: " + e.ToString());
-                return Array.Empty<Message>();
-            }
         }
 
         /// <summary>
