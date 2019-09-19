@@ -46,6 +46,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly ILogger logger;
         private readonly IUserService userService;
         private readonly ICompressionUtility gzip;
+        private readonly IPasswordChanger passwordChanger;
         private readonly IAsymmetricCryptographyRSA crypto;
         #endregion
 
@@ -81,13 +82,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string newPw = string.Empty;
         private string newPw2 = string.Empty;
 
-        public ChangePasswordViewModel(IUserService userService, User user, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto, ILogger logger)
+        public ChangePasswordViewModel(IUserService userService, User user, ICompressionUtility gzip, IPasswordChanger passwordChanger, IAsymmetricCryptographyRSA crypto, ILogger logger)
         {
             this.user = user;
             this.gzip = gzip;
             this.crypto = crypto;
             this.logger = logger;
             this.userService = userService;
+            this.passwordChanger = passwordChanger;
 
             SubmitCommand = new DelegateCommand(SubmitChangePassword);
             CancelCommand = new DelegateCommand(o => RequestedClose?.Invoke(null, EventArgs.Empty));
@@ -151,22 +153,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     throw new ApplicationException(msg);
                 }
 
-                var dto = new UserChangePasswordRequestDto
-                {
-                    Totp = totp,
-                    OldPwSHA512 = oldPw.SHA512(),
-                    NewPwSHA512 = newPw.SHA512(),
-                    NewPrivateKey = KeyExchangeUtility.EncryptAndCompressPrivateKey(user.PrivateKeyPem, newPw)
-                };
-
-                var requestBody = new EpistleRequestBody
-                {
-                    UserId = user.Id,
-                    Auth = user.Token.Item2,
-                    Body = gzip.Compress(JsonConvert.SerializeObject(dto))
-                };
-
-                bool success = await userService.ChangeUserPassword(requestBody.Sign(crypto, user.PrivateKeyPem));
+                bool success = await passwordChanger.ChangePassword(oldPw, newPw, totp);
 
                 if (success)
                 {
