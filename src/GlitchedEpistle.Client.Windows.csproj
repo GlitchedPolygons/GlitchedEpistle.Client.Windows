@@ -488,7 +488,7 @@
       <Version>1.0.6</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client">
-      <Version>2019.4.0.4</Version>
+      <Version>2019.4.1</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.Services.CompressionUtility">
       <Version>1.1.0</Version>

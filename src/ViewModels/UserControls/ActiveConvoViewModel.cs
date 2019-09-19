@@ -73,6 +73,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IConvoService convoService;
         private readonly IMessageCryptography crypto;
         private readonly IMessageSender messageSender;
+        private readonly IMessageFetcher messageFetcher;
         private readonly IEventAggregator eventAggregator;
         private readonly IRepository<Convo, string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
@@ -161,10 +162,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             IMessageCryptography crypto,
             ILogger logger,
             IConvoPasswordProvider convoPasswordProvider, 
-            IMessageSender messageSender)
+            IMessageSender messageSender,
+            IMessageFetcher messageFetcher)
         {
             #region Injections
-            this.messageSender = messageSender;
             this.user = user;
             this.logger = logger;
             this.crypto = crypto;
@@ -172,6 +173,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.convoService = convoService;
             this.convoPasswordProvider = convoPasswordProvider;
             this.eventAggregator = eventAggregator;
+            this.messageSender = messageSender;
+            this.messageFetcher = messageFetcher;
             #endregion
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");

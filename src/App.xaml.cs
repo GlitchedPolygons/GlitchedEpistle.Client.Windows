@@ -106,6 +106,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IServerConnectionTest, ServerConnectionTest>();
             container.RegisterType<IMessageSender, MessageSender>();
             container.RegisterType<ILoginService, LoginService>();
+            container.RegisterType<IPasswordChanger, PasswordChanger>();
             container.RegisterType<IRegistrationService, RegistrationService>();
 
             // Register IoC singletons:
@@ -117,6 +118,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IViewModelFactory, ViewModelFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IWindowFactory, WindowFactory>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConvoPasswordProvider, ConvoPasswordProvider>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMessageFetcher, MessageFetcher>(new ContainerControlledLifetimeManager());
 
             // Open the main app's window.
             var mainView = container.Resolve<MainView>();

@@ -69,7 +69,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             userSettings.Username = Username;
-            RequestedClose?.Invoke(this,EventArgs.Empty);
+            RequestedClose?.Invoke(this, EventArgs.Empty);
         }
     }
 }
