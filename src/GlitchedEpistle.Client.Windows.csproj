@@ -108,10 +108,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GlitchedPolygons.RepositoryPattern, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Users\rapha\.nuget\packages\glitchedpolygons.repositorypattern\1.0.4\lib\netstandard2.0\GlitchedPolygons.RepositoryPattern.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -488,7 +484,7 @@
       <Version>1.0.6</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client">
-      <Version>2019.4.1</Version>
+      <Version>2019.4.2</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.Services.CompressionUtility">
       <Version>1.1.0</Version>
