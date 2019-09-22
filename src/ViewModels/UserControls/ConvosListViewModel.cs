@@ -111,8 +111,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private void UpdateList()
         {
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
+
             var convos = convoProvider.GetAll().GetAwaiter().GetResult();
-            Convos = convos != null ? new ObservableCollection<Convo>(convos.OrderBy(c => c.IsExpired()).ThenBy(c => c.Name.ToUpper())) : new ObservableCollection<Convo>();
+
+            Convos =
+                convos != null
+                ? new ObservableCollection<Convo>(convos
+                    .Where(convo => !convo.IsExpired())
+                    .OrderByDescending(convo => convo.ExpirationUTC)
+                    .ThenBy(convo => convo.Name.ToUpper()))
+                : new ObservableCollection<Convo>();
         }
 
         private void OnClickedOnConvo(object commandParam)
