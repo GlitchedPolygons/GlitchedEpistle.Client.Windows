@@ -5,6 +5,16 @@
 # Glitched Epistle
 ## Windows Client
 
+### What is this?
+
+Glitched Epistle is a messaging service that encrypts messages locally (client-side) and submits them to a server-side stored "Convo" (conversation). 
+
+* Every message is encrypted using every convo participant's public RSA key **individually**. 
+* The server **NEVER** stores messages in plaintext and **DOES NOT** under any circumstance know the user's private message decryption key at any given time. 
+* Requests to the backend are cryptographically signed using 4096-bit RSA keys. For more information, check out the [client's shared codebase](https://github.com/GlitchedPolygons/GlitchedEpistle.Client).
+
+This specific repository here is the Windows client, but anyone can implement any client that communicates over the Epistle backend by using the provided sahred codebase (also available as a NuGet package) _[GlitchedEpistle.Client](https://github.com/GlitchedPolygons/GlitchedEpistle.Client)._
+
 ### How to set up the development environment:
 
 * Make sure you have [Visual Studio](https://visualstudio.microsoft.com/) >2017 installed with the [.NET Framework SDK](https://dotnet.microsoft.com/download/visual-studio-sdks) v4.7.2.
