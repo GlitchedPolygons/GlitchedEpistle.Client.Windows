@@ -87,7 +87,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     {
                         var img = new BitmapImage();
                         img.BeginInit();
-                        img.DecodePixelWidth = 300;
+                        img.DecodePixelWidth = 256;
                         img.StreamSource = FileBytesStream;
                         img.EndInit();
                         img.Freeze();
@@ -140,7 +140,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref clipboardTickVisibility, value);
         }
 
-        public Visibility ImageVisibility => IsImage() || IsGif() ? Visibility.Visible : Visibility.Hidden;
+        public Visibility ImageVisibility => IsImage() ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility GifVisibility => IsGif() ? Visibility.Visible : Visibility.Collapsed;
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
         #endregion
 

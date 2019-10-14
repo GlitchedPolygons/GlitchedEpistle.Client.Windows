@@ -147,6 +147,19 @@
                        MaxHeight="350"
                        Margin="5,26,0,-12"
                        Name="ImagePreview"
+                       HorizontalAlignment="Left">
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick"
+                                      Command="{Binding ClickedOnImageAttachmentCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <Image Cursor="Hand"
+                       Visibility="{Binding GifVisibility}"
+                       Style="{DynamicResource ImageAttachmentStyle}"
+                       MaxWidth="350"
+                       MaxHeight="350"
+                       Margin="5,26,0,-12"
+                       Name="GifPreview"
                        HorizontalAlignment="Left"
                        gif:AnimationBehavior.AnimateInDesignMode="true"
                        gif:AnimationBehavior.RepeatBehavior="Forever"
