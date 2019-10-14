@@ -16,6 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System.IO;
+
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
     public class ImageViewerViewModel : ViewModel
@@ -30,6 +32,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region UI Bindings
         private byte[] imageBytes;
         public byte[] ImageBytes { get => imageBytes; set => Set(ref imageBytes, value); }
+
+        private MemoryStream imageBytesStream;
+        public MemoryStream ImageBytesStream
+        {
+            get
+            {
+                if (imageBytesStream is null)
+                {
+                    imageBytesStream = new MemoryStream(ImageBytes ?? new byte[0]);
+                }
+                return imageBytesStream;
+            }
+        }
         #endregion
     }
 }
