@@ -49,13 +49,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void SecretTextBox_SelectText(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
             textBox?.SelectAll();
         }
 
         private void SecretTextBox_OnPreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
+            var textBox = sender as TextBox;
 
             if (textBox == null || textBox.IsKeyboardFocusWithin)
             {
