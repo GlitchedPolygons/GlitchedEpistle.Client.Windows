@@ -109,14 +109,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         }
 
         /// <summary>
-        /// Handles the OnMouseDown event of the SubscriptionProgressBar control
-        /// (when the user clicks on his remaining time, he should be redirected to the website where he can extend his subscription).
+        /// Handles the OnMouseDown event of the ProgressBar control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
         private void SubscriptionProgressBar_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
-            Process.Start("https://www.glitchedpolygons.com/extend-epistle-sub");
+            Process.Start("https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows");
         }
 
         /// <summary>

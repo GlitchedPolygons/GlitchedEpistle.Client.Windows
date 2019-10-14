@@ -54,6 +54,7 @@
                 Cancel
             </Button>
             <Button Margin="10,10,0,0" 
+                    Name="ExploreButton"
                     Click="ExploreButton_Click">
                 Show in Explorer
             </Button>

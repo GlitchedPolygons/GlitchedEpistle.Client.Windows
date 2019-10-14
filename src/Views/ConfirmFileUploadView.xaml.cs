@@ -34,13 +34,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
             InitializeComponent();
             this.filePath = filePath;
             FilePathLabel.Text = filePath;
-            FileNameLabel.Text = Path.GetFileName(filePath);
+            try
+            {
+                FileNameLabel.Text = Path.GetFileName(filePath);
+            }
+            catch (Exception)
+            {
+                FileNameLabel.Text = string.Empty;
+            }
             Focus();
+            ExploreButton.IsEnabled = filePath != "{CLIPBOARD}" && File.Exists(filePath);
         }
 
         private void ExploreButton_Click(object sender, EventArgs e)
         {
-            if (!File.Exists(filePath))
+            if (filePath == "{CLIPBOARD}" || !File.Exists(filePath))
             {
                 return;
             }

@@ -30,6 +30,7 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 
 using GlitchedPolygons.ExtensionMethods;
@@ -161,7 +162,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             IMethodQ methodQ,
             IMessageCryptography crypto,
             ILogger logger,
-            IConvoPasswordProvider convoPasswordProvider, 
+            IConvoPasswordProvider convoPasswordProvider,
             IMessageSender messageSender,
             IMessageFetcher messageFetcher)
         {
@@ -285,7 +286,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// <param name="messages">The messages that were fetched from the backend.</param>
         private async void OnFetchedNewMessages(IEnumerable<Message> messages)
         {
-            if(messages is null)
+            if (messages is null)
             {
                 return;
             }
@@ -523,11 +524,51 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     ExecUI(() =>
                     {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size of 20MB", Title = "Message upload failed" } };
+                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size limit.", Title = "Message upload failed" } };
                         errorView.ShowDialog();
                     });
                 }
             });
+        }
+
+        public async void PasteImage()
+        {
+            var img = Clipboard.GetImage();
+            if (img is null)
+            {
+                return;
+            }
+
+            byte[] fileBytes;
+            using (var stream = new MemoryStream())
+            {
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(img));
+                encoder.Save(stream);
+                fileBytes = stream.ToArray();
+            }
+
+            if (fileBytes.LongLength >= MessageSender.MAX_FILE_SIZE_BYTES)
+            {
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size limit.", Title = "Message upload failed" } };
+                errorView.ShowDialog();
+                return;
+            }
+
+            var dialog = new ConfirmFileUploadView("{CLIPBOARD}");
+            bool? dialogResult = dialog.ShowDialog();
+            if (!dialogResult.HasValue || dialogResult.Value != true)
+            {
+                return;
+            }
+
+            bool success = await messageSender.PostFile(ActiveConvo, $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png", fileBytes);
+            if (!success)
+            {
+                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
+                errorView.ShowDialog();
+                return;
+            }
         }
 
         /// <summary>

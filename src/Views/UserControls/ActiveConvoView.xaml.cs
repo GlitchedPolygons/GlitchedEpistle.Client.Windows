@@ -55,7 +55,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         {
             TextBox.Focus();
             TextBox.SelectAll();
-            
+
             if (VisualTreeHelper.GetChildrenCount(MessagesListBox) > 0)
             {
                 border = (Border)VisualTreeHelper.GetChild(MessagesListBox, 0);
@@ -154,9 +154,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void TextBox_OnKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            switch (e.Key)
             {
-                scrollViewer?.ScrollToBottom();
+                case Key.Enter:
+                    scrollViewer?.ScrollToBottom();
+                    break;
+                case Key.V:
+                    if (Keyboard.Modifiers == ModifierKeys.Control && Clipboard.ContainsImage())
+                    {
+                        e.Handled = true;
+                        (DataContext as ActiveConvoViewModel)?.PasteImage();
+                    }
+                    break;
             }
         }
     }
