@@ -13,7 +13,7 @@ Glitched Epistle is a messaging service that encrypts messages locally (client-s
 * The server **NEVER** stores messages in plaintext and **DOES NOT** under any circumstance know the user's private message decryption key at any given time. 
 * Requests to the backend are cryptographically signed using 4096-bit RSA keys. For more information, check out the [client's shared codebase](https://github.com/GlitchedPolygons/GlitchedEpistle.Client).
 
-This specific repository here is the Windows client, but anyone can implement any client that communicates over the Epistle backend by using the provided sahred codebase (also available as a NuGet package) _[GlitchedEpistle.Client](https://github.com/GlitchedPolygons/GlitchedEpistle.Client)._
+This specific repository here is the Windows client, but anyone can implement any client that communicates over the Epistle backend by using the provided shared codebase (also available as a NuGet package) _[GlitchedEpistle.Client](https://github.com/GlitchedPolygons/GlitchedEpistle.Client)._
 
 ### How to set up the development environment:
 
