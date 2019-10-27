@@ -43,6 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private const double ERROR_MESSAGE_INTERVAL = 7500;
 
         private readonly ILogger logger;
+        private readonly IAppSettings appSettings;
         private readonly IUserSettings userSettings;
         private readonly IEventAggregator eventAggregator;
         private readonly IRegistrationService registrationService;
@@ -87,6 +88,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref userCreationSecret, value);
         }
 
+        private Visibility userCreationSecretFieldVis = Visibility.Visible;
+        public Visibility UserCreationSecretFieldVis
+        {
+            get => userCreationSecretFieldVis;
+            set => Set(ref userCreationSecretFieldVis, value);
+        }
+
         private string errorMessage = string.Empty;
         public string ErrorMessage
         {
@@ -98,9 +106,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private bool pendingAttempt;
         private string password1, password2;
 
-        public UserCreationViewModel(IUserSettings userSettings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)
+        public UserCreationViewModel(IUserSettings userSettings, IAppSettings appSettings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)
         {
             this.logger = logger;
+            this.appSettings = appSettings;
             this.userSettings = userSettings;
             this.eventAggregator = eventAggregator;
             this.registrationService = registrationService;
@@ -133,6 +142,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
             errorMessageTimer.Start();
+
+            bool onOfficialServer = appSettings.ServerUrl.Contains("epistle.glitchedpolygons.com");
+
+            UserCreationSecretFieldVis = onOfficialServer ? Visibility.Collapsed : Visibility.Visible;
+
+            if (onOfficialServer)
+            {
+                UserCreationSecret = "Freedom";
+            }
         }
 
         ~UserCreationViewModel()

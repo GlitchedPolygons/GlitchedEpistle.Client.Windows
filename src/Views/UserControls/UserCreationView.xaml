@@ -82,14 +82,16 @@
                 </i:Interaction.Triggers>
             </PasswordBox>
 
-            <Label Content="User creation secret"
+            <StackPanel Visibility="{Binding UserCreationSecretFieldVis}">
+                <Label Content="User creation secret"
                    ToolTip="Enter the server's registration secret." />
 
-            <TextBox Name="UserCreationSecretTextBox"
+                <TextBox Name="UserCreationSecretTextBox"
                      MinWidth="250"
                      ToolTip="Please enter the Epistle server's user creation secret."
                      Text="{Binding UserCreationSecret}" />
-
+            </StackPanel>
+            
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         Margin="0,15,0,0">
