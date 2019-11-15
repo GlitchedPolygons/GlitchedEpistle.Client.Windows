@@ -53,7 +53,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             }
 
             field = newValue;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            ExecUI(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
             return true;
         }
 

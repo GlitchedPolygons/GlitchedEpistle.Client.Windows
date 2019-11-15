@@ -429,6 +429,12 @@
     <Content Include="glitched-epistle-icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\pause-icon-selected.png" />
+    <Resource Include="Resources\Images\play-icon-selected.png" />
+    <Resource Include="Resources\Images\pause-icon-black.png" />
+    <Resource Include="Resources\Images\play-icon-black.png" />
+    <Resource Include="Resources\Images\pause-icon-white.png" />
+    <Resource Include="Resources\Images\play-icon-white.png" />
     <Resource Include="Resources\Images\change-pw-icon-black.png" />
     <Resource Include="Resources\Images\change-pw-icon-selected.png" />
     <Resource Include="Resources\Images\change-pw-icon-white.png" />
@@ -485,7 +491,7 @@
       <Version>1.0.6</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client">
-      <Version>2019.4.2</Version>
+      <Version>2020.1.0.1</Version>
     </PackageReference>
     <PackageReference Include="GlitchedPolygons.Services.CompressionUtility">
       <Version>1.1.0</Version>
@@ -497,7 +503,7 @@
       <Version>1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
+      <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Prism.Wpf">
       <Version>7.2.0.1367</Version>
@@ -506,22 +512,22 @@
       <Version>106.6.10</Version>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
-      <Version>4.5.0</Version>
+      <Version>4.6.0</Version>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite">
-      <Version>1.0.111</Version>
+      <Version>1.0.112</Version>
     </PackageReference>
     <PackageReference Include="System.Drawing.Common">
-      <Version>4.5.1</Version>
+      <Version>4.6.0</Version>
     </PackageReference>
     <PackageReference Include="System.IdentityModel.Tokens.Jwt">
-      <Version>5.5.0</Version>
+      <Version>5.6.0</Version>
     </PackageReference>
     <PackageReference Include="System.Reflection.Emit">
-      <Version>4.3.0</Version>
+      <Version>4.6.0</Version>
     </PackageReference>
     <PackageReference Include="System.Security.Principal.Windows">
-      <Version>4.5.1</Version>
+      <Version>4.6.0</Version>
     </PackageReference>
     <PackageReference Include="System.Windows.Interactivity.WPF">
       <Version>2.0.20525</Version>
@@ -529,11 +535,14 @@
     <PackageReference Include="Unity">
       <Version>5.11.1</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.SimpleAudioPlayer.WPF">
+      <Version>1.3.1</Version>
+    </PackageReference>
     <PackageReference Include="XamlAnimatedGif">
       <Version>1.2.2</Version>
     </PackageReference>
     <PackageReference Include="ZXing.Net">
-      <Version>0.16.4</Version>
+      <Version>0.16.5</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -109,12 +109,64 @@
             </StackPanel>
 
             <StackPanel Margin="0,-1,0,0">
+                
                 <!--{Binding Timestamp}-->
                 <Label Margin="0"
                        Padding="4,2"
                        FontSize="12.333"
                        Content="{Binding Timestamp}" />
 
+                <!-- Audio message -->
+                <StackPanel Orientation="Horizontal"
+                            Height="32"
+                            HorizontalAlignment="Stretch"
+                            Visibility="{Binding AudioVisibility}">
+
+                    <Button Width="32"
+                            Height="32" 
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource PlayAudioButton}"
+                            Visibility="{Binding PlayButtonVisibility}"
+                            Command="{Binding ClickedOnPlayAudioAttachmentCommand}"
+                            ToolTip="Click here to play back this audio message." />
+
+                    <Button Width="32"
+                            Height="32" 
+                            Focusable="False"
+                            FocusVisualStyle="{x:Null}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left"
+                            Style="{DynamicResource PauseAudioButton}"
+                            Visibility="{Binding PauseButtonVisibility}"
+                            Command="{Binding ClickedOnPlayAudioAttachmentCommand}"
+                            ToolTip="Click here to stop playing back this audio message." />
+                    
+                    <!-- TODO: Fix bad slider width -->
+                    <Slider Minimum="0.0"
+                            Maximum="1.0"
+                            MinWidth="64"
+                            Margin="6,0,0,0"
+                            SmallChange="0.01"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            Thumb.DragCompleted="AudioMessageSlider_DragCompleted"
+                            Value="{Binding AudioThumbPos}" />
+
+                    <Label FontSize="13.37"
+                           Height="32"
+                           VerticalAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           HorizontalAlignment="Center"
+                           HorizontalContentAlignment="Center"
+                           Content="{Binding AudioDuration}"
+                           Foreground="AliceBlue"/>
+                </StackPanel>
+                
                 <!-- Attachment -->
                 <WrapPanel Orientation="Horizontal"
                            Margin="5,4,0,-15"
@@ -183,6 +235,7 @@
                          GotKeyboardFocus="TextBox_SelectText"
                          PreviewMouseLeftButtonDown="TextBox_OnMouseDown"
                          Text="{Binding Text}"
+                         Visibility="{Binding TextVisibility}"
                          Style="{DynamicResource MessageLabelTextBox}" />
 
             </StackPanel>

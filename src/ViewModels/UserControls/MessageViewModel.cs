@@ -17,8 +17,8 @@
 */
 
 using System;
-using System.Globalization;
 using System.IO;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -29,6 +29,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.Services.MethodQ;
 
 using Microsoft.Win32;
+using Plugin.SimpleAudioPlayer;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -43,6 +44,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public ICommand DownloadAttachmentCommand { get; }
         public ICommand CopyUserIdToClipboardCommand { get; }
         public ICommand ClickedOnImageAttachmentCommand { get; }
+        public ICommand ClickedOnPlayAudioAttachmentCommand { get; }
         #endregion
 
         #region UI Bindings
@@ -64,7 +66,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public string Text
         {
             get => text;
-            set => Set(ref text, value);
+            set
+            {
+                Set(ref text, value);
+                TextVisibility = value.NotNullNotEmpty() ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
         private string fileName = string.Empty;
@@ -96,6 +102,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     catch (Exception)
                     {
                     }
+                }
+                if (value != null && IsAudio())
+                {
+                    audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+                    AudioLoadFailed = !audioPlayer.Load(FileBytesStream);
+                    audioPlayer.Loop = false;
+                    OnAudioThumbDragged();
+                    AudioDuration = TimeSpan.FromSeconds(audioPlayer.Duration).ToString(@"mm\:ss");
                 }
             }
         }
@@ -131,6 +145,39 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref timestamp, value);
         }
 
+        private bool isAudioPlaying;
+        public bool IsAudioPlaying
+        {
+            get => isAudioPlaying;
+            set
+            {
+                Set(ref isAudioPlaying, value);
+                PlayButtonVisibility = value ? Visibility.Collapsed : Visibility.Visible;
+                PauseButtonVisibility = value ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private bool audioLoadFailed = false;
+        public bool AudioLoadFailed
+        {
+            get => audioLoadFailed;
+            set => Set(ref audioLoadFailed, value);
+        }
+
+        private double audioThumbPos = 0.0;
+        public double AudioThumbPos
+        {
+            get => audioThumbPos;
+            set => Set(ref audioThumbPos, value < 0 ? 0 : value > 1 ? 1 : value);
+        }
+
+        private string audioDuration = "00:00";
+        public string AudioDuration
+        {
+            get => audioDuration;
+            set => Set(ref audioDuration, value);
+        }
+
         public DateTime TimestampDateTimeUTC { get; set; }
 
         private Visibility clipboardTickVisibility = Visibility.Hidden;
@@ -140,8 +187,30 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref clipboardTickVisibility, value);
         }
 
-        public Visibility ImageVisibility => IsImage() ? Visibility.Visible : Visibility.Collapsed;
+        private Visibility playButtonVisibility = Visibility.Visible;
+        public Visibility PlayButtonVisibility
+        {
+            get => playButtonVisibility;
+            set => Set(ref playButtonVisibility, value);
+        }
+
+        private Visibility pauseButtonVisibility = Visibility.Collapsed;
+        public Visibility PauseButtonVisibility
+        {
+            get => pauseButtonVisibility;
+            set => Set(ref pauseButtonVisibility, value);
+        }
+
+        private Visibility textVisibility = Visibility.Visible;
+        public Visibility TextVisibility
+        {
+            get => textVisibility;
+            set => Set(ref textVisibility, value);
+        }
+
         public Visibility GifVisibility => IsGif() ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility ImageVisibility => IsImage() ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility AudioVisibility => IsAudio() ? Visibility.Visible : Visibility.Collapsed;
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
         #endregion
 
@@ -151,7 +220,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         public string Id { get; set; }
 
+        private ulong? thumbUpdater;
         private ulong? scheduledHideGreenTickIcon;
+
+        private ISimpleAudioPlayer audioPlayer;
 
         public MessageViewModel(IMethodQ methodQ)
         {
@@ -160,10 +232,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             DownloadAttachmentCommand = new DelegateCommand(OnDownloadAttachment);
             CopyUserIdToClipboardCommand = new DelegateCommand(OnCopyUserIdToClipboard);
             ClickedOnImageAttachmentCommand = new DelegateCommand(OnClickedImagePreview);
+            ClickedOnPlayAudioAttachmentCommand = new DelegateCommand(OnClickedPlayAudioAttachment);
         }
 
         ~MessageViewModel()
         {
+            //audioPlayer?.Stop();
             Text = FileName = null;
             if (FileBytes != null)
             {
@@ -222,6 +296,74 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ClipboardTickVisibility = Visibility.Hidden;
                 scheduledHideGreenTickIcon = null;
             }, DateTime.UtcNow.AddSeconds(3));
+        }
+
+        private void OnClickedPlayAudioAttachment(object commandParam)
+        {
+            if (!IsAudio())
+            {
+                return;
+            }
+
+            if (AudioLoadFailed)
+            {
+                // TODO: show error dialog
+                //Application.Current.MainPage.DisplayAlert(localization["AudioLoadFailedErrorMessageTitle"], localization["AudioLoadFailedErrorMessageText"], "OK");
+                return;
+            }
+
+            if (audioPlayer is null)
+            {
+                return;
+            }
+
+            IsAudioPlaying = !IsAudioPlaying;
+
+            if (thumbUpdater.HasValue)
+            {
+                methodQ.Cancel(thumbUpdater.Value);
+                thumbUpdater = null;
+            }
+
+            if (IsAudioPlaying)
+            {
+                if (AudioThumbPos >= 0.99d)
+                {
+                    audioPlayer.Seek(0);
+                }
+
+                audioPlayer.Play();
+
+                thumbUpdater = methodQ.Schedule(() =>
+                {
+                    AudioThumbPos = audioPlayer.CurrentPosition / audioPlayer.Duration;
+
+                    if (AudioThumbPos >= 0.99d)
+                    {
+                        OnClickedPlayAudioAttachment(null);
+                    }
+                }, TimeSpan.FromMilliseconds(420.69d));
+            }
+            else
+            {
+                audioPlayer.Pause();
+
+                if (thumbUpdater.HasValue)
+                {
+                    methodQ.Cancel(thumbUpdater.Value);
+                    thumbUpdater = null;
+                }
+            }
+        }
+
+        public void OnAudioThumbDragged()
+        {
+            if (audioPlayer is null || !audioPlayer.CanSeek)
+            {
+                return;
+            }
+
+            audioPlayer.Seek(AudioThumbPos * audioPlayer.Duration);
         }
 
         private bool HasAttachment()

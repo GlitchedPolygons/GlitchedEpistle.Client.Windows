@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Glitched Polygons")]
 [assembly: AssemblyProduct("Glitched Epistle")]
-[assembly: AssemblyCopyright("Copyright © 2019 - Glitched Polygons")]
+[assembly: AssemblyCopyright("Copyright © 2020 - Glitched Polygons")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -49,5 +49,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2019.4.1.1")]
-[assembly: AssemblyFileVersion("2019.4.1.1")]
+[assembly: AssemblyVersion("2020.1.0.0")]
+[assembly: AssemblyFileVersion("2020.1.0.0")]

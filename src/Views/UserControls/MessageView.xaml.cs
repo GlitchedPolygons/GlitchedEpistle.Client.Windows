@@ -17,8 +17,10 @@
 */
 
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 {
@@ -61,6 +63,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
         {
             var textBox = sender as TextBox;
             textBox?.SelectAll();
+        }
+
+        private void AudioMessageSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            (DataContext as MessageViewModel)?.OnAudioThumbDragged();
         }
     }
 }
