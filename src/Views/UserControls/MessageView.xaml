@@ -132,7 +132,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="32"/>
                         <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="64"/>
+                        <ColumnDefinition Width="50"/>
                     </Grid.ColumnDefinitions>
                     
                     <Button Grid.Column="0" 
@@ -159,7 +159,6 @@
                             Command="{Binding ClickedOnPlayAudioAttachmentCommand}"
                             ToolTip="Click here to stop playing back this audio message." />
 
-                    <!-- TODO: Fix bad slider width -->
                     <Slider Grid.Column="1" 
                             Minimum="0.0"
                             Maximum="1.0"
@@ -178,8 +177,8 @@
                            Height="32"
                            VerticalAlignment="Center"
                            VerticalContentAlignment="Center"
-                           HorizontalAlignment="Center"
-                           HorizontalContentAlignment="Center"
+                           HorizontalAlignment="Right"
+                           HorizontalContentAlignment="Right"
                            Content="{Binding AudioDuration}"/>
                 </Grid>
                 
