@@ -105,11 +105,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 if (value != null && IsAudio())
                 {
-                    audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
-                    AudioLoadFailed = !audioPlayer.Load(FileBytesStream);
-                    audioPlayer.Loop = false;
-                    OnAudioThumbDragged();
-                    AudioDuration = TimeSpan.FromSeconds(audioPlayer.Duration).ToString(@"mm\:ss");
+                    ExecUI(() =>
+                    {
+                        if (audioPlayer is null)
+                            audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+
+                        AudioLoadFailed = !audioPlayer.Load(FileBytesStream);
+                        audioPlayer.Loop = false;
+                        OnAudioThumbDragged();
+                        AudioDuration = TimeSpan.FromSeconds(audioPlayer.Duration).ToString(@"mm\:ss");
+                    });
                 }
             }
         }
@@ -214,16 +219,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
         #endregion
 
-        /// <summary>
-        /// Gets the message's unique identifier, which is <para> </para>
-        /// md5( <see cref="SenderId"/> + UTC timestamp )
-        /// </summary>
         public string Id { get; set; }
 
         private ulong? thumbUpdater;
         private ulong? scheduledHideGreenTickIcon;
 
-        private ISimpleAudioPlayer audioPlayer;
+        private volatile ISimpleAudioPlayer audioPlayer;
 
         public MessageViewModel(IMethodQ methodQ)
         {
@@ -237,7 +238,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         ~MessageViewModel()
         {
-            //audioPlayer?.Stop();
+            audioPlayer?.Stop();
+            audioPlayer?.Dispose();
+
             Text = FileName = null;
             if (FileBytes != null)
             {

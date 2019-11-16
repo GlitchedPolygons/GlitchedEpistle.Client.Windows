@@ -299,7 +299,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             // Decrypt and add the retrieved messages to the chatroom UI.
-            var decryptedMessages = DecryptMessages(messages).OrderBy(m => m?.TimestampDateTimeUTC);
+            var decryptedMessages = DecryptMessages(messages).OrderBy(m => m?.TimestampDateTimeUTC).ToArray();
 
             ExecUI(() =>
             {
@@ -359,7 +359,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             };
 
             string fileBase64 = json["fileBase64"]?.Value<string>();
-            messageViewModel.FileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
+            byte[] fileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
+
+            messageViewModel.FileBytes = fileBytes;
 
             return messageViewModel;
         }
