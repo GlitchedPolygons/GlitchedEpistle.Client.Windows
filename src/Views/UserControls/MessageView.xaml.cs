@@ -67,7 +67,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
         private void AudioMessageSlider_DragCompleted(object sender, DragCompletedEventArgs e)
         {
-            (DataContext as MessageViewModel)?.OnAudioThumbDragged();
+            (DataContext as MessageViewModel)?.OnAudioThumbFinishedDragging();
         }
     }
 }

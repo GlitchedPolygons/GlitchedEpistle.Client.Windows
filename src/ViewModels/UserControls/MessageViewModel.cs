@@ -111,7 +111,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     audioPlayer = new SimpleAudioPlayerWPF();
                     AudioLoadFailed = !audioPlayer.Load(FileBytesStream);
                     audioPlayer.Loop = false;
-                    OnAudioThumbDragged();
+                    OnAudioThumbFinishedDragging();
                     AudioDuration = TimeSpan.FromSeconds(audioPlayer.Duration).ToString(@"mm\:ss");
                 }
             }
@@ -357,12 +357,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
-        public void OnAudioThumbDragged()
+        public void OnAudioThumbFinishedDragging()
         {
             if (audioPlayer is null || !audioPlayer.CanSeek)
             {
                 return;
             }
+
             audioPlayer.Seek(AudioThumbPos * audioPlayer.Duration);
         }
 

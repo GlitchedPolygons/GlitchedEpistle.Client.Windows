@@ -65,7 +65,7 @@
             </Rectangle.Style>
         </Rectangle>
 
-        <StackPanel Margin="10"
+        <StackPanel Margin="12.50"
                     Orientation="Vertical"
                     Grid.Row="0" Grid.Column="1"
                     HorizontalAlignment="Center">
@@ -108,6 +108,15 @@
                        Visibility="{Binding ClipboardTickVisibility}" />
             </StackPanel>
 
+            <!-- Separator wall -->
+            <!--
+                 <Rectangle Height="1"
+                 Opacity="0.47"
+                 Margin="2.5,3,2.5,3"
+                 HorizontalAlignment="Stretch"
+                 Stroke="{DynamicResource SeparatorColorBrush}" />
+            -->
+            
             <StackPanel Margin="0,-1,0,0">
                 
                 <!--{Binding Timestamp}-->
@@ -117,12 +126,17 @@
                        Content="{Binding Timestamp}" />
 
                 <!-- Audio message -->
-                <StackPanel Orientation="Horizontal"
-                            Height="32"
-                            HorizontalAlignment="Stretch"
-                            Visibility="{Binding AudioVisibility}">
-
-                    <Button Width="32"
+                <Grid Visibility="{Binding AudioVisibility}"
+                      Margin="4,8,0,-4">
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="32"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="64"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="0" 
+                            Width="32"
                             Height="32" 
                             Focusable="False"
                             FocusVisualStyle="{x:Null}"
@@ -133,7 +147,8 @@
                             Command="{Binding ClickedOnPlayAudioAttachmentCommand}"
                             ToolTip="Click here to play back this audio message." />
 
-                    <Button Width="32"
+                    <Button Grid.Column="0" 
+                            Width="32"
                             Height="32" 
                             Focusable="False"
                             FocusVisualStyle="{x:Null}"
@@ -143,12 +158,13 @@
                             Visibility="{Binding PauseButtonVisibility}"
                             Command="{Binding ClickedOnPlayAudioAttachmentCommand}"
                             ToolTip="Click here to stop playing back this audio message." />
-                    
+
                     <!-- TODO: Fix bad slider width -->
-                    <Slider Minimum="0.0"
+                    <Slider Grid.Column="1" 
+                            Minimum="0.0"
                             Maximum="1.0"
-                            MinWidth="64"
-                            Margin="6,0,0,0"
+                            MinWidth="200"
+                            Margin="10,0,0,0"
                             SmallChange="0.01"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
@@ -157,19 +173,52 @@
                             Thumb.DragCompleted="AudioMessageSlider_DragCompleted"
                             Value="{Binding AudioThumbPos}" />
 
-                    <Label FontSize="13.37"
+                    <Label Grid.Column="2" 
+                           FontSize="13.37"
                            Height="32"
                            VerticalAlignment="Center"
                            VerticalContentAlignment="Center"
                            HorizontalAlignment="Center"
                            HorizontalContentAlignment="Center"
-                           Content="{Binding AudioDuration}"
-                           Foreground="AliceBlue"/>
-                </StackPanel>
+                           Content="{Binding AudioDuration}"/>
+                </Grid>
                 
+                <!-- Image (only displayed when attachment is an image) -->
+                <Image Cursor="Hand"
+                       Source="{Binding Image}"
+                       Visibility="{Binding ImageVisibility}"
+                       Style="{DynamicResource ImageAttachmentStyle}"
+                       MaxWidth="350"
+                       MaxHeight="350"
+                       Name="ImagePreview"
+                       Margin="5,13.37,5,3"
+                       HorizontalAlignment="Center">
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick"
+                                      Command="{Binding ClickedOnImageAttachmentCommand}" />
+                    </Image.InputBindings>
+                </Image>
+                <Image Cursor="Hand"
+                       Visibility="{Binding GifVisibility}"
+                       Style="{DynamicResource ImageAttachmentStyle}"
+                       MaxWidth="350"
+                       MaxHeight="350"
+                       Name="GifPreview"
+                       Margin="5,13.37,5,3"
+                       HorizontalAlignment="Center"
+                       gif:AnimationBehavior.AnimateInDesignMode="true"
+                       gif:AnimationBehavior.RepeatBehavior="Forever"
+                       gif:AnimationBehavior.SourceStream="{Binding FileBytesStream}">
+                    <Image.InputBindings>
+                        <MouseBinding Gesture="LeftClick"
+                                      Command="{Binding ClickedOnImageAttachmentCommand}" />
+                    </Image.InputBindings>
+                </Image>
+
                 <!-- Attachment -->
                 <WrapPanel Orientation="Horizontal"
-                           Margin="5,4,0,-15"
+                           Margin="6,6,0,-30"
+                           HorizontalAlignment="Left"
                            Visibility="{Binding AttachmentButtonVisibility}">
 
                     <Label Content="Attachment:"
@@ -190,45 +239,13 @@
                             Command="{Binding DownloadAttachmentCommand}" />
                 </WrapPanel>
 
-                <!-- Image (only displayed when attachment is an image) -->
-                <Image Cursor="Hand"
-                       Source="{Binding Image}"
-                       Visibility="{Binding ImageVisibility}"
-                       Style="{DynamicResource ImageAttachmentStyle}"
-                       MaxWidth="350"
-                       MaxHeight="350"
-                       Margin="5,26,0,-12"
-                       Name="ImagePreview"
-                       HorizontalAlignment="Left">
-                    <Image.InputBindings>
-                        <MouseBinding Gesture="LeftClick"
-                                      Command="{Binding ClickedOnImageAttachmentCommand}" />
-                    </Image.InputBindings>
-                </Image>
-                <Image Cursor="Hand"
-                       Visibility="{Binding GifVisibility}"
-                       Style="{DynamicResource ImageAttachmentStyle}"
-                       MaxWidth="350"
-                       MaxHeight="350"
-                       Margin="5,26,0,-12"
-                       Name="GifPreview"
-                       HorizontalAlignment="Left"
-                       gif:AnimationBehavior.AnimateInDesignMode="true"
-                       gif:AnimationBehavior.RepeatBehavior="Forever"
-                       gif:AnimationBehavior.SourceStream="{Binding FileBytesStream}">
-                    <Image.InputBindings>
-                        <MouseBinding Gesture="LeftClick"
-                                      Command="{Binding ClickedOnImageAttachmentCommand}" />
-                    </Image.InputBindings>
-                </Image>
-
                 <!-- Text -->
                 <TextBox Name="TextBox"
                          UndoLimit="1"
                          FontSize="15"
                          IsReadOnly="True"
                          AllowDrop="False"
-                         Margin="2.5,0,0,8"
+                         Margin="1,0,3,2"
                          TextWrapping="Wrap"
                          MaxLength="8192"
                          MouseDoubleClick="TextBox_SelectText"
