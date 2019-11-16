@@ -158,6 +158,7 @@
     <Compile Include="PubSubEvents\UserCreationSucceededEvent.cs" />
     <Compile Include="PubSubEvents\ConvoCreationSucceededEvent.cs" />
     <Compile Include="PubSubEvents\UsernameChangedEvent.cs" />
+    <Compile Include="Services\Audio\SimpleAudioPlayerWPF.cs" />
     <Compile Include="Services\Factories\IViewModelFactory.cs" />
     <Compile Include="Services\Factories\IWindowFactory.cs" />
     <Compile Include="Services\Factories\ViewModelFactory.cs" />

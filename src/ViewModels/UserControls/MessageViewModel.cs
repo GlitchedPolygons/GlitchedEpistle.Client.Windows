@@ -30,6 +30,7 @@ using GlitchedPolygons.Services.MethodQ;
 
 using Microsoft.Win32;
 using Plugin.SimpleAudioPlayer;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -87,6 +88,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set
             {
                 fileBytes = value;
+
                 if (value != null && IsImage())
                 {
                     try
@@ -103,18 +105,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     {
                     }
                 }
+
                 if (value != null && IsAudio())
                 {
-                    ExecUI(() =>
-                    {
-                        if (audioPlayer is null)
-                            audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
-
-                        AudioLoadFailed = !audioPlayer.Load(FileBytesStream);
-                        audioPlayer.Loop = false;
-                        OnAudioThumbDragged();
-                        AudioDuration = TimeSpan.FromSeconds(audioPlayer.Duration).ToString(@"mm\:ss");
-                    });
+                    audioPlayer = new SimpleAudioPlayerWPF();
+                    AudioLoadFailed = !audioPlayer.Load(FileBytesStream);
+                    audioPlayer.Loop = false;
+                    OnAudioThumbDragged();
+                    AudioDuration = TimeSpan.FromSeconds(audioPlayer.Duration).ToString(@"mm\:ss");
                 }
             }
         }
@@ -365,7 +363,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 return;
             }
-
             audioPlayer.Seek(AudioThumbPos * audioPlayer.Duration);
         }
 
