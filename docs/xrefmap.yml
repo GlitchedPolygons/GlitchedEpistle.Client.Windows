@@ -407,6 +407,199 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UsernameChangedEvent
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents.UsernameChangedEvent
   nameWithType: UsernameChangedEvent
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
+  name: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.html
+  commentId: N:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
+  nameWithType: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF
+  name: SimpleAudioPlayerWPF
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html
+  commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF
+  nameWithType: SimpleAudioPlayerWPF
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Balance
+  name: Balance
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Balance
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Balance
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Balance
+  nameWithType: SimpleAudioPlayerWPF.Balance
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Balance*
+  name: Balance
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Balance_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Balance
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Balance
+  nameWithType: SimpleAudioPlayerWPF.Balance
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CanSeek
+  name: CanSeek
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_CanSeek
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CanSeek
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CanSeek
+  nameWithType: SimpleAudioPlayerWPF.CanSeek
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CanSeek*
+  name: CanSeek
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_CanSeek_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CanSeek
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CanSeek
+  nameWithType: SimpleAudioPlayerWPF.CanSeek
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CurrentPosition
+  name: CurrentPosition
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_CurrentPosition
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CurrentPosition
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CurrentPosition
+  nameWithType: SimpleAudioPlayerWPF.CurrentPosition
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CurrentPosition*
+  name: CurrentPosition
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_CurrentPosition_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CurrentPosition
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.CurrentPosition
+  nameWithType: SimpleAudioPlayerWPF.CurrentPosition
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Dispose
+  name: Dispose()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Dispose
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Dispose
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Dispose()
+  nameWithType: SimpleAudioPlayerWPF.Dispose()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Dispose*
+  name: Dispose
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Dispose_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Dispose
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Dispose
+  nameWithType: SimpleAudioPlayerWPF.Dispose
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Duration
+  name: Duration
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Duration
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Duration
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Duration
+  nameWithType: SimpleAudioPlayerWPF.Duration
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Duration*
+  name: Duration
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Duration_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Duration
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Duration
+  nameWithType: SimpleAudioPlayerWPF.Duration
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.IsPlaying
+  name: IsPlaying
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_IsPlaying
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.IsPlaying
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.IsPlaying
+  nameWithType: SimpleAudioPlayerWPF.IsPlaying
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.IsPlaying*
+  name: IsPlaying
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_IsPlaying_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.IsPlaying
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.IsPlaying
+  nameWithType: SimpleAudioPlayerWPF.IsPlaying
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load(System.IO.Stream)
+  name: Load(Stream)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Load_System_IO_Stream_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load(System.IO.Stream)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load(System.IO.Stream)
+  nameWithType: SimpleAudioPlayerWPF.Load(Stream)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load(System.String)
+  name: Load(String)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Load_System_String_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load(System.String)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load(System.String)
+  nameWithType: SimpleAudioPlayerWPF.Load(String)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load*
+  name: Load
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Load_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Load
+  nameWithType: SimpleAudioPlayerWPF.Load
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Loop
+  name: Loop
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Loop
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Loop
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Loop
+  nameWithType: SimpleAudioPlayerWPF.Loop
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Loop*
+  name: Loop
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Loop_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Loop
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Loop
+  nameWithType: SimpleAudioPlayerWPF.Loop
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Pause
+  name: Pause()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Pause
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Pause
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Pause()
+  nameWithType: SimpleAudioPlayerWPF.Pause()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Pause*
+  name: Pause
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Pause_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Pause
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Pause
+  nameWithType: SimpleAudioPlayerWPF.Pause
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Play
+  name: Play()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Play
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Play
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Play()
+  nameWithType: SimpleAudioPlayerWPF.Play()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Play*
+  name: Play
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Play_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Play
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Play
+  nameWithType: SimpleAudioPlayerWPF.Play
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.PlaybackEnded
+  name: PlaybackEnded
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_PlaybackEnded
+  commentId: E:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.PlaybackEnded
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.PlaybackEnded
+  nameWithType: SimpleAudioPlayerWPF.PlaybackEnded
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Seek(System.Double)
+  name: Seek(Double)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Seek_System_Double_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Seek(System.Double)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Seek(System.Double)
+  nameWithType: SimpleAudioPlayerWPF.Seek(Double)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Seek*
+  name: Seek
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Seek_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Seek
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Seek
+  nameWithType: SimpleAudioPlayerWPF.Seek
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Stop
+  name: Stop()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Stop
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Stop
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Stop()
+  nameWithType: SimpleAudioPlayerWPF.Stop()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Stop*
+  name: Stop
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Stop_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Stop
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Stop
+  nameWithType: SimpleAudioPlayerWPF.Stop
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Volume
+  name: Volume
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Volume
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Volume
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Volume
+  nameWithType: SimpleAudioPlayerWPF.Volume
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Volume*
+  name: Volume
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Audio_SimpleAudioPlayerWPF_Volume_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Volume
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio.SimpleAudioPlayerWPF.Volume
+  nameWithType: SimpleAudioPlayerWPF.Volume
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
   name: GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories.html
@@ -876,12 +1069,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel
   nameWithType: ChangePasswordViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.#ctor(IUserService,User,ICompressionUtility,IAsymmetricCryptographyRSA,ILogger)
-  name: ChangePasswordViewModel(IUserService, User, ICompressionUtility, IAsymmetricCryptographyRSA, ILogger)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ChangePasswordViewModel__ctor_IUserService_User_ICompressionUtility_IAsymmetricCryptographyRSA_ILogger_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.#ctor(IUserService,User,ICompressionUtility,IAsymmetricCryptographyRSA,ILogger)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.ChangePasswordViewModel(IUserService, User, ICompressionUtility, IAsymmetricCryptographyRSA, ILogger)
-  nameWithType: ChangePasswordViewModel.ChangePasswordViewModel(IUserService, User, ICompressionUtility, IAsymmetricCryptographyRSA, ILogger)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.#ctor(IUserService,User,ICompressionUtility,IPasswordChanger,IAsymmetricCryptographyRSA,ILogger)
+  name: ChangePasswordViewModel(IUserService, User, ICompressionUtility, IPasswordChanger, IAsymmetricCryptographyRSA, ILogger)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ChangePasswordViewModel__ctor_IUserService_User_ICompressionUtility_IPasswordChanger_IAsymmetricCryptographyRSA_ILogger_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.#ctor(IUserService,User,ICompressionUtility,IPasswordChanger,IAsymmetricCryptographyRSA,ILogger)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.ChangePasswordViewModel(IUserService, User, ICompressionUtility, IPasswordChanger, IAsymmetricCryptographyRSA, ILogger)
+  nameWithType: ChangePasswordViewModel.ChangePasswordViewModel(IUserService, User, ICompressionUtility, IPasswordChanger, IAsymmetricCryptographyRSA, ILogger)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.#ctor*
   name: ChangePasswordViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ChangePasswordViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ChangePasswordViewModel__ctor_
@@ -1638,6 +1831,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytes
   nameWithType: ImageViewerViewModel.ImageBytes
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytesStream
+  name: ImageBytesStream
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImageViewerViewModel_ImageBytesStream
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytesStream
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytesStream
+  nameWithType: ImageViewerViewModel.ImageBytesStream
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytesStream*
+  name: ImageBytesStream
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ImageViewerViewModel_ImageBytesStream_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytesStream
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ImageViewerViewModel.ImageBytesStream
+  nameWithType: ImageViewerViewModel.ImageBytesStream
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.InfoDialogViewModel
   name: InfoDialogViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.InfoDialogViewModel.html
@@ -2288,12 +2494,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel
   nameWithType: ActiveConvoViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ILogger,IConvoPasswordProvider,IMessageSender)
-  name: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_User_IConvoService_IEventAggregator_IMethodQ_IMessageCryptography_ILogger_IConvoPasswordProvider_IMessageSender_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ILogger,IConvoPasswordProvider,IMessageSender)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender)
-  nameWithType: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ILogger,IConvoPasswordProvider,IMessageSender,IMessageFetcher)
+  name: ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender, IMessageFetcher)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_User_IConvoService_IEventAggregator_IMethodQ_IMessageCryptography_ILogger_IConvoPasswordProvider_IMessageSender_IMessageFetcher_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor(User,IConvoService,IEventAggregator,IMethodQ,IMessageCryptography,ILogger,IConvoPasswordProvider,IMessageSender,IMessageFetcher)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender, IMessageFetcher)
+  nameWithType: ActiveConvoViewModel.ActiveConvoViewModel(User, IConvoService, IEventAggregator, IMethodQ, IMessageCryptography, ILogger, IConvoPasswordProvider, IMessageSender, IMessageFetcher)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.#ctor*
   name: ActiveConvoViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel__ctor_
@@ -2444,6 +2650,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.OnDragAndDropFile
   nameWithType: ActiveConvoViewModel.OnDragAndDropFile
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PasteImage
+  name: PasteImage()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_PasteImage
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PasteImage
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PasteImage()
+  nameWithType: ActiveConvoViewModel.PasteImage()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PasteImage*
+  name: PasteImage
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_PasteImage_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PasteImage
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PasteImage
+  nameWithType: ActiveConvoViewModel.PasteImage
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.PressedEscapeCommand
   name: PressedEscapeCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.ActiveConvoViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_ActiveConvoViewModel_PressedEscapeCommand
@@ -2748,6 +2967,58 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AttachmentButtonVisibility
   nameWithType: MessageViewModel.AttachmentButtonVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioDuration
+  name: AudioDuration
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioDuration
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioDuration
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioDuration
+  nameWithType: MessageViewModel.AudioDuration
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioDuration*
+  name: AudioDuration
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioDuration_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioDuration
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioDuration
+  nameWithType: MessageViewModel.AudioDuration
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioLoadFailed
+  name: AudioLoadFailed
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioLoadFailed
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioLoadFailed
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioLoadFailed
+  nameWithType: MessageViewModel.AudioLoadFailed
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioLoadFailed*
+  name: AudioLoadFailed
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioLoadFailed_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioLoadFailed
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioLoadFailed
+  nameWithType: MessageViewModel.AudioLoadFailed
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioThumbPos
+  name: AudioThumbPos
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioThumbPos
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioThumbPos
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioThumbPos
+  nameWithType: MessageViewModel.AudioThumbPos
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioThumbPos*
+  name: AudioThumbPos
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioThumbPos_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioThumbPos
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioThumbPos
+  nameWithType: MessageViewModel.AudioThumbPos
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioVisibility
+  name: AudioVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioVisibility
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioVisibility
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioVisibility
+  nameWithType: MessageViewModel.AudioVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioVisibility*
+  name: AudioVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_AudioVisibility_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioVisibility
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.AudioVisibility
+  nameWithType: MessageViewModel.AudioVisibility
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnImageAttachmentCommand
   name: ClickedOnImageAttachmentCommand
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_ClickedOnImageAttachmentCommand
@@ -2761,6 +3032,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnImageAttachmentCommand
   nameWithType: MessageViewModel.ClickedOnImageAttachmentCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnPlayAudioAttachmentCommand
+  name: ClickedOnPlayAudioAttachmentCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_ClickedOnPlayAudioAttachmentCommand
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnPlayAudioAttachmentCommand
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnPlayAudioAttachmentCommand
+  nameWithType: MessageViewModel.ClickedOnPlayAudioAttachmentCommand
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnPlayAudioAttachmentCommand*
+  name: ClickedOnPlayAudioAttachmentCommand
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_ClickedOnPlayAudioAttachmentCommand_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnPlayAudioAttachmentCommand
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClickedOnPlayAudioAttachmentCommand
+  nameWithType: MessageViewModel.ClickedOnPlayAudioAttachmentCommand
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ClipboardTickVisibility
   name: ClipboardTickVisibility
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_ClipboardTickVisibility
@@ -2813,6 +3097,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileBytes
   nameWithType: MessageViewModel.FileBytes
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileBytesStream
+  name: FileBytesStream
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_FileBytesStream
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileBytesStream
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileBytesStream
+  nameWithType: MessageViewModel.FileBytesStream
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileBytesStream*
+  name: FileBytesStream
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_FileBytesStream_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileBytesStream
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileBytesStream
+  nameWithType: MessageViewModel.FileBytesStream
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.FileName
   name: FileName
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_FileName
@@ -2852,6 +3149,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.Finalize
   nameWithType: MessageViewModel.Finalize
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.GifVisibility
+  name: GifVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_GifVisibility
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.GifVisibility
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.GifVisibility
+  nameWithType: MessageViewModel.GifVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.GifVisibility*
+  name: GifVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_GifVisibility_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.GifVisibility
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.GifVisibility
+  nameWithType: MessageViewModel.GifVisibility
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.Id
   name: Id
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_Id
@@ -2891,6 +3201,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.ImageVisibility
   nameWithType: MessageViewModel.ImageVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsAudioPlaying
+  name: IsAudioPlaying
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_IsAudioPlaying
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsAudioPlaying
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsAudioPlaying
+  nameWithType: MessageViewModel.IsAudioPlaying
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsAudioPlaying*
+  name: IsAudioPlaying
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_IsAudioPlaying_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsAudioPlaying
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsAudioPlaying
+  nameWithType: MessageViewModel.IsAudioPlaying
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn
   name: IsOwn
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_IsOwn
@@ -2904,6 +3227,45 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.IsOwn
   nameWithType: MessageViewModel.IsOwn
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.OnAudioThumbFinishedDragging
+  name: OnAudioThumbFinishedDragging()
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_OnAudioThumbFinishedDragging
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.OnAudioThumbFinishedDragging
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.OnAudioThumbFinishedDragging()
+  nameWithType: MessageViewModel.OnAudioThumbFinishedDragging()
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.OnAudioThumbFinishedDragging*
+  name: OnAudioThumbFinishedDragging
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_OnAudioThumbFinishedDragging_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.OnAudioThumbFinishedDragging
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.OnAudioThumbFinishedDragging
+  nameWithType: MessageViewModel.OnAudioThumbFinishedDragging
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PauseButtonVisibility
+  name: PauseButtonVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_PauseButtonVisibility
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PauseButtonVisibility
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PauseButtonVisibility
+  nameWithType: MessageViewModel.PauseButtonVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PauseButtonVisibility*
+  name: PauseButtonVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_PauseButtonVisibility_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PauseButtonVisibility
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PauseButtonVisibility
+  nameWithType: MessageViewModel.PauseButtonVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PlayButtonVisibility
+  name: PlayButtonVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_PlayButtonVisibility
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PlayButtonVisibility
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PlayButtonVisibility
+  nameWithType: MessageViewModel.PlayButtonVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PlayButtonVisibility*
+  name: PlayButtonVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_PlayButtonVisibility_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PlayButtonVisibility
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.PlayButtonVisibility
+  nameWithType: MessageViewModel.PlayButtonVisibility
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.SenderId
   name: SenderId
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_SenderId
@@ -2943,6 +3305,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.Text
   nameWithType: MessageViewModel.Text
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.TextVisibility
+  name: TextVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_TextVisibility
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.TextVisibility
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.TextVisibility
+  nameWithType: MessageViewModel.TextVisibility
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.TextVisibility*
+  name: TextVisibility
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_TextVisibility_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.TextVisibility
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.TextVisibility
+  nameWithType: MessageViewModel.TextVisibility
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.Timestamp
   name: Timestamp
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.MessageViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_MessageViewModel_Timestamp
@@ -3208,12 +3583,12 @@ references:
   commentId: T:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel
   nameWithType: UserCreationViewModel
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,IEventAggregator,ILogger,IRegistrationService)
-  name: UserCreationViewModel(IUserSettings, IEventAggregator, ILogger, IRegistrationService)
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserSettings_IEventAggregator_ILogger_IRegistrationService_
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,IEventAggregator,ILogger,IRegistrationService)
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationViewModel(IUserSettings, IEventAggregator, ILogger, IRegistrationService)
-  nameWithType: UserCreationViewModel.UserCreationViewModel(IUserSettings, IEventAggregator, ILogger, IRegistrationService)
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,IAppSettings,IEventAggregator,ILogger,IRegistrationService)
+  name: UserCreationViewModel(IUserSettings, IAppSettings, IEventAggregator, ILogger, IRegistrationService)
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserSettings_IAppSettings_IEventAggregator_ILogger_IRegistrationService_
+  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,IAppSettings,IEventAggregator,ILogger,IRegistrationService)
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationViewModel(IUserSettings, IAppSettings, IEventAggregator, ILogger, IRegistrationService)
+  nameWithType: UserCreationViewModel.UserCreationViewModel(IUserSettings, IAppSettings, IEventAggregator, ILogger, IRegistrationService)
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor*
   name: UserCreationViewModel
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_
@@ -3376,6 +3751,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret
   nameWithType: UserCreationViewModel.UserCreationSecret
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis
+  name: UserCreationSecretFieldVis
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecretFieldVis
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis
+  nameWithType: UserCreationViewModel.UserCreationSecretFieldVis
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis*
+  name: UserCreationSecretFieldVis
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecretFieldVis_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis
+  nameWithType: UserCreationViewModel.UserCreationSecretFieldVis
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Username
   name: Username
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Username
@@ -3864,19 +4252,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.ImageViewerView
   nameWithType: ImageViewerView.ImageViewerView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.InitializeComponent
-  name: InitializeComponent()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_ImageViewerView_InitializeComponent
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.InitializeComponent
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.InitializeComponent()
-  nameWithType: ImageViewerView.InitializeComponent()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.InitializeComponent*
-  name: InitializeComponent
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_ImageViewerView_InitializeComponent_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.InitializeComponent
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ImageViewerView.InitializeComponent
-  nameWithType: ImageViewerView.InitializeComponent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.InfoDialogView
   name: InfoDialogView
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.InfoDialogView.html
@@ -4087,19 +4462,6 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.MessageView
   nameWithType: MessageView.MessageView
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.InitializeComponent
-  name: InitializeComponent()
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_MessageView_InitializeComponent
-  commentId: M:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.InitializeComponent
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.InitializeComponent()
-  nameWithType: MessageView.InitializeComponent()
-- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.InitializeComponent*
-  name: InitializeComponent
-  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Views_UserControls_MessageView_InitializeComponent_
-  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.InitializeComponent
-  isSpec: "True"
-  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.MessageView.InitializeComponent
-  nameWithType: MessageView.InitializeComponent
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView
   name: ServerUrlView
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView.html
