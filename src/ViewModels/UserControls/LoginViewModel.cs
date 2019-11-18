@@ -30,6 +30,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 
 using Prism.Events;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -41,6 +42,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         // Injections:
         private readonly ILoginService loginService;
+        private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -67,9 +69,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private volatile int failedAttempts;
         private volatile bool pendingAttempt;
 
-        public LoginViewModel(IAppSettings settings, IEventAggregator eventAggregator, ILoginService loginService)
+        public LoginViewModel(IAppSettings settings, IEventAggregator eventAggregator, ILoginService loginService, ILocalization localization)
         {
             this.loginService = loginService;
+            this.localization = localization;
             this.eventAggregator = eventAggregator;
 
             QuitCommand = new DelegateCommand(OnClickedQuit);

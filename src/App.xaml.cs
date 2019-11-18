@@ -31,12 +31,13 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.Services.JwtService;
@@ -48,6 +49,8 @@ using Prism.Events;
 
 using Unity;
 using Unity.Lifetime;
+
+using Localization = GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization.Localization;
 #endregion
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
@@ -112,6 +115,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             // Register IoC singletons:
             container.RegisterType<User>(new ContainerControlledLifetimeManager()); // This is the application's user.
             container.RegisterInstance(methodQ, new ContainerControlledLifetimeManager());
+            container.RegisterType<ILocalization, Localization>(new ContainerControlledLifetimeManager());
             container.RegisterType<IAppSettings, AppSettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IUserSettings, UserSettingsJson>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventAggregator, EventAggregator>(new ContainerControlledLifetimeManager());

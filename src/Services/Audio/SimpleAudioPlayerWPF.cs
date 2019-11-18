@@ -146,8 +146,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
                 {
                     Play();
                 }
-
-                return;
+            }
+            else
+            {
+                PlaybackEnded?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -173,6 +175,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
 
         public void Stop()
         {
+            Seek(0);
             outputDevice?.Stop();
         }
     }

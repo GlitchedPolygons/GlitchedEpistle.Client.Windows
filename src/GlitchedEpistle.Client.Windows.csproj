@@ -163,6 +163,8 @@
     <Compile Include="Services\Factories\IWindowFactory.cs" />
     <Compile Include="Services\Factories\ViewModelFactory.cs" />
     <Compile Include="Services\Factories\WindowFactory.cs" />
+    <Compile Include="Services\Localization\ILocalization.cs" />
+    <Compile Include="Services\Localization\Localization.cs" />
     <Compile Include="Services\Logging\TextLogger.cs" />
     <Compile Include="Services\Settings\AppSettingsJson.cs" />
     <Compile Include="Services\Settings\SettingsJson.cs" />
@@ -395,8 +397,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.de.resx" />
+    <EmbeddedResource Include="Properties\Resources.gsw.resx" />
+    <EmbeddedResource Include="Properties\Resources.it.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config" />
