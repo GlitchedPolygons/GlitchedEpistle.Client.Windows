@@ -17,18 +17,16 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
@@ -45,8 +43,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly User user;
         private readonly IUserService userService;
         private readonly IEventAggregator eventAggregator;
-        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
-        private const double ERROR_MESSAGE_INTERVAL = 7000;
         #endregion
 
         #region Commands
@@ -60,13 +56,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         {
             get => totp;
             set => Set(ref totp, value);
-        }
-
-        private string errorMessage = string.Empty;
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
         }
 
         private string secret = string.Empty;
@@ -84,7 +73,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
         #endregion
 
-        private bool pendingAttempt;
+        private volatile bool pendingAttempt;
 
         public List<string> BackupCodes { get; set; }
 
@@ -96,9 +85,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             VerifyCommand = new DelegateCommand(OnClickedVerify);
             ExportBackupCodesCommand = new DelegateCommand(OnClickedExport);
-
-            errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
-            errorMessageTimer.Start();
         }
 
         private void OnClickedExport(object commandParam)
@@ -130,20 +116,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 if (!await userService.Validate2FA(user.Id, Totp))
                 {
-                    errorMessageTimer.Stop();
-                    errorMessageTimer.Start();
-                    ExecUI(() =>
-                    {
-                        ErrorMessage = "Two-Factor authentication failed!";
-                        Totp = string.Empty;
-                    });
+                    Totp = string.Empty;
+                    ErrorMessage = "Two-Factor authentication failed!";
                 }
                 else
                 {
                     ExecUI(() => eventAggregator.GetEvent<UserCreationVerifiedEvent>().Publish());
                 }
 
-                ExecUI(() => pendingAttempt = false);
+                pendingAttempt = false;
             });
         }
 
@@ -152,12 +133,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             if (sender is SaveFileDialog dialog)
             {
                 dialog.FileOk -= ExportFileDialog_FileOk;
+
                 if (dialog.FileName.NullOrEmpty() || BackupCodes.Count == 0)
                 {
                     return;
                 }
 
                 var sb = new StringBuilder(512);
+
                 sb.AppendLine("Glitched Epistle 2FA Backup Codes\n");
                 sb.AppendLine($"User: {user.Id}");
                 sb.AppendLine($"Export timestamp: {DateTime.UtcNow:s} (UTC)\n");

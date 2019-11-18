@@ -51,6 +51,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 
 using Prism.Events;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -70,6 +71,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly User user;
         private readonly ILogger logger;
         private readonly IMethodQ methodQ;
+        private readonly ILocalization localization;
         private readonly IConvoService convoService;
         private readonly IMessageCryptography crypto;
         private readonly IMessageSender messageSender;

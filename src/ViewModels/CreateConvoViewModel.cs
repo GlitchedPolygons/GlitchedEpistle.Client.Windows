@@ -46,8 +46,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class CreateConvoViewModel : ViewModel, ICloseable
     {
         #region Constants
-        private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
-
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
@@ -100,20 +98,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             set => Set(ref expirationUTC, value);
         }
 
-        private string errorMessage = string.Empty;
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
-        }
-
-        private string successMessage = string.Empty;
-        public string SuccessMessage
-        {
-            get => successMessage;
-            set => Set(ref successMessage, value);
-        }
-
         private bool canSubmit = true;
         public bool CanSubmit
         {
@@ -140,31 +124,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelCommand = new DelegateCommand(OnClickedCancel);
             PasswordChangedCommand = new DelegateCommand(pwBox => pw = (pwBox as PasswordBox)?.Password);
             Password2ChangedCommand = new DelegateCommand(pwBox => pw2 = (pwBox as PasswordBox)?.Password);
-            ClosedCommand = new DelegateCommand(OnClosed);
-
-            messageTimer.Elapsed += (_, __) => ResetMessages();
-            messageTimer.Start();
-        }
-
-        private void ResetMessages()
-        {
-            messageTimer.Stop();
-            messageTimer.Start();
-            ErrorMessage = SuccessMessage = null;
-        }
-
-        private void PrintMessage(string message, bool error)
-        {
-            ResetMessages();
-
-            if (error)
-            {
-                ErrorMessage = message;
-            }
-            else
-            {
-                SuccessMessage = message;
-            }
         }
 
         private void OnClosed(object commandParam)
@@ -183,7 +142,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (totp.NullOrEmpty())
             {
-                PrintMessage("No 2FA token provided - please take security seriously and authenticate your request!", true);
+                ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
                 return;
             }
 
@@ -191,19 +150,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (pw != pw2)
             {
-                PrintMessage("The password does not match its confirmation; please make sure that you re-type your password correctly!", true);
+                ErrorMessage = "The password does not match its confirmation; please make sure that you re-type your password correctly!";
                 CanSubmit = true;
                 return;
             }
 
             if (pw.Length < 5)
             {
-                PrintMessage("Your password is too weak; make sure that it has at least >5 characters!", true);
+                ErrorMessage = "Your password is too weak; make sure that it has at least >5 characters!";
                 CanSubmit = true;
                 return;
             }
 
-            Task.Run(async() =>
+            Task.Run(async () =>
             {
                 var convoCreationDto = new ConvoCreationRequestDto
                 {
@@ -248,7 +207,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                         // Display success message and keep UI disabled.
                         CanSubmit = false;
-                        PrintMessage($"The convo \"{Name}\" has been created successfully under the id \"{id}\". You can close this window now.", false);
+                        SuccessMessage = $"The convo \"{Name}\" has been created successfully under the id \"{id}\". You can close this window now.";
                     });
 
                     // Record the convo creation into the user log.
@@ -256,14 +215,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 }
                 else
                 {
-                    ExecUI(() =>
-                    {
-                        // If convo creation failed for some reason, the returned
-                        // id string is null and the user is notified accordingly.
-                        CanSubmit = true;
-                        PrintMessage($"Convo \"{Name}\" couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.", true);
-                        logger.LogError($"Convo \"{Name}\" couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
-                    });
+                    // If convo creation failed for some reason, the returned
+                    // id string is null and the user is notified accordingly.
+                    CanSubmit = true;
+                    ErrorMessage = $"Convo \"{Name}\" couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.";
+                    logger.LogError($"Convo \"{Name}\" couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
                 }
             });
         }

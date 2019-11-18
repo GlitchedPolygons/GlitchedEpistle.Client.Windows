@@ -75,16 +75,18 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                    Margin="0,10,0,0" HorizontalAlignment="Right">
+                    Margin="0,10,0,0" 
+                    HorizontalAlignment="Right">
 
             <Button Width="25"
                     Height="25"
-                    Margin="0,0,75,0"
+                    Margin="0,0,0,0"
                     Style="{DynamicResource TrashButton}"
                     Command="{Binding DeleteButtonCommand}"
                     ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this." />
 
-            <Button Content="Cancel"
+            <Button Margin="10,0,0,0"
+                    Content="Cancel"
                     Command="{Binding CancelButtonCommand}"
                     ToolTip="Closes the window without saving the changes." />
 
@@ -93,6 +95,10 @@
                     Command="{Binding RevertButtonCommand}"
                     ToolTip="Resets all user settings back to their default values." />
 
+            <Button Margin="10,0,0,0"
+                    Content="OK"
+                    ToolTip="Accepts your changes and"
+                    Click="OkButton_Click"/>
         </StackPanel>
     </StackPanel>
 </Window>

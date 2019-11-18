@@ -37,9 +37,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class LoginViewModel : ViewModel
     {
         #region Constants
-        private const double ERROR_MESSAGE_INTERVAL_MS = 7000;
-        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL_MS) { AutoReset = true };
-
         // Injections:
         private readonly ILoginService loginService;
         private readonly ILocalization localization;
@@ -57,9 +54,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region UI Bindings
         private string userId = string.Empty;
         public string UserId { get => userId; set => Set(ref userId, value); }
-
-        private string errorMessage = string.Empty;
-        public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
 
         private bool uiEnabled = true;
         public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
@@ -92,9 +86,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             // Bind the password box to the password field.
             PasswordChangedCommand = new DelegateCommand(o => password = (o as PasswordBox)?.Password);
-
-            errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
-            errorMessageTimer.Start();
         }
 
         private void OnClickedLogin(object commandParam)
@@ -131,37 +122,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         break;
 
                     case 2: // Login failed server-side.
-                        ExecUI(() =>
+                        ErrorMessage = "Error! Invalid user id, password or 2FA.";
+                        if (++failedAttempts > 3)
                         {
-                            failedAttempts++;
-                            errorMessageTimer.Stop();
-                            errorMessageTimer.Start();
-
-                            ErrorMessage = "Error! Invalid user id, password or 2FA.";
-                            if (failedAttempts > 3)
-                            {
-                                ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
-                            }
-                        });
+                            ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
+                        }
                         break;
 
                     case 3: // Login failed client-side.
-                        ExecUI(() =>
-                        {
-                            failedAttempts++;
-                            errorMessageTimer.Stop();
-                            errorMessageTimer.Start();
-
-                            ErrorMessage = "Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).";
-                        });
+                        failedAttempts++;
+                        ErrorMessage = "Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).";
                         break;
                 }
 
-                ExecUI(() =>
-                {
-                    pendingAttempt = false;
-                    UIEnabled = true;
-                });
+                pendingAttempt = false;
+                UIEnabled = true;
             });
         }
 

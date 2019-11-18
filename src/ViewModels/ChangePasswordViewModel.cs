@@ -29,6 +29,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
@@ -39,13 +40,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class ChangePasswordViewModel : ViewModel, ICloseable
     {
         #region Constants
-        private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
-
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
         private readonly IUserService userService;
         private readonly ICompressionUtility gzip;
+        private readonly ILocalization localization;
         private readonly IPasswordChanger passwordChanger;
         private readonly IAsymmetricCryptographyRSA crypto;
         #endregion
@@ -64,12 +64,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
-        private string errorMessage = string.Empty;
-        public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
-
-        private string successMessage = string.Empty;
-        public string SuccessMessage { get => successMessage; set => Set(ref successMessage, value); }
-
         public bool uiEnabled = true;
         public bool UIEnabled
         {
@@ -78,17 +72,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        private string oldPw = string.Empty;
-        private string newPw = string.Empty;
-        private string newPw2 = string.Empty;
+        private volatile string oldPw = string.Empty;
+        private volatile string newPw = string.Empty;
+        private volatile string newPw2 = string.Empty;
 
-        public ChangePasswordViewModel(IUserService userService, User user, ICompressionUtility gzip, IPasswordChanger passwordChanger, IAsymmetricCryptographyRSA crypto, ILogger logger)
+        public ChangePasswordViewModel(User user, IUserService userService, ILocalization localization, ICompressionUtility gzip, IPasswordChanger passwordChanger, IAsymmetricCryptographyRSA crypto, ILogger logger)
         {
             this.user = user;
             this.gzip = gzip;
             this.crypto = crypto;
             this.logger = logger;
             this.userService = userService;
+            this.localization = localization;
             this.passwordChanger = passwordChanger;
 
             SubmitCommand = new DelegateCommand(SubmitChangePassword);
@@ -97,16 +92,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             OldPasswordChangedCommand = new DelegateCommand(pw => oldPw = (pw as PasswordBox)?.Password);
             NewPasswordChangedCommand = new DelegateCommand(pw => newPw = (pw as PasswordBox)?.Password);
             NewPassword2ChangedCommand = new DelegateCommand(pw => newPw2 = (pw as PasswordBox)?.Password);
-
-            messageTimer.Elapsed += (_, __) => ErrorMessage = SuccessMessage = null;
-            messageTimer.Start();
-        }
-
-        private void ResetMessages()
-        {
-            messageTimer.Stop();
-            messageTimer.Start();
-            ErrorMessage = SuccessMessage = null;
         }
 
         private void SubmitChangePassword(object commandParam)
@@ -115,7 +100,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (totp.NullOrEmpty())
             {
-                ResetMessages();
                 ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
                 return;
             }
@@ -126,23 +110,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 if (oldPw.NullOrEmpty() || newPw.NullOrEmpty() || newPw != newPw2)
                 {
-                    ExecUI(() =>
-                    {
-                        ResetMessages();
-                        ErrorMessage = "The old password is wrong or the new ones don't match.";
-                        UIEnabled = true;
-                    });
+                    ErrorMessage = "The old password is wrong or the new ones don't match.";
+                    UIEnabled = true;
                     return;
                 }
 
                 if (newPw.Length < 7)
                 {
-                    ExecUI(() =>
-                    {
-                        ResetMessages();
-                        ErrorMessage = "Your password is too weak; make sure that it has at least >7 characters!";
-                        UIEnabled = true;
-                    });
+                    ErrorMessage = "Your password is too weak; make sure that it has at least >7 characters!";
+                    UIEnabled = true;
                     return;
                 }
 
@@ -158,20 +134,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (success)
                 {
                     oldPw = newPw = newPw2 = totp = null;
-                    ExecUI(() =>
-                    {
-                        ResetMessages();
-                        SuccessMessage = "Congrats! Your password's been changed successfully.";
-                    });
+                    SuccessMessage = "Congrats! Your password's been changed successfully.";
                 }
                 else
                 {
-                    ExecUI(() =>
-                    {
-                        ResetMessages();
-                        ErrorMessage = "Password change request rejected server-side: perhaps invalid 2FA token?";
-                        UIEnabled = true;
-                    });
+                    ErrorMessage = "Password change request rejected server-side: perhaps invalid 2FA token?";
+                    UIEnabled = true;
                 }
             });
         }

@@ -18,7 +18,6 @@
 
 using System;
 using System.IO;
-using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -26,15 +25,14 @@ using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
 using GlitchedPolygons.ExtensionMethods;
+using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.RepositoryPattern;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
@@ -53,7 +51,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IConvoPasswordProvider convoPasswordProvider;
-        private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
         #endregion
 
         #region Events
@@ -79,7 +76,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     Clipboard.SetText(userId);
 
-                    var dialog = new InfoDialogView
+                    new InfoDialogView
                     {
                         DataContext = new InfoDialogViewModel
                         {
@@ -88,29 +85,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                             OkButtonText = "Cool",
                             Text = $"The user id \"{userId}\" has been copied successfully to the clipboard!"
                         }
-                    };
-
-                    dialog.ShowDialog();
+                    }.ShowDialog();
                 }
             });
         }
         #endregion
 
         #region UI Bindings
-        private string errorMessage = string.Empty;
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
-        }
-
-        private string successMessage = string.Empty;
-        public string SuccessMessage
-        {
-            get => successMessage;
-            set => Set(ref successMessage, value);
-        }
-
         public string UserId => user?.Id;
 
         private string name;
@@ -151,14 +132,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private bool uiEnabled = true;
         public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
 
-        public bool IsAdmin
-        {
-            get
-            {
-                bool? isAdmin = Convo?.CreatorId.Equals(user?.Id);
-                return isAdmin ?? false;
-            }
-        }
+        public bool IsAdmin => Convo?.CreatorId.Equals(user?.Id) ?? false;
 
         private bool canSubmit = true;
         public bool CanSubmit
@@ -194,8 +168,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => convo;
             set
             {
-                convo = value;
-                if (convo != null)
+                if ((convo = value) != null)
                 {
                     Name = convo.Name;
                     Description = convo.Description;
@@ -250,38 +223,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             OldPasswordChangedCommand = new DelegateCommand(pwBox => oldPw = (pwBox as PasswordBox)?.Password);
             NewPasswordChangedCommand = new DelegateCommand(pwBox => newPw = (pwBox as PasswordBox)?.Password);
             NewPassword2ChangedCommand = new DelegateCommand(pwBox => newPw2 = (pwBox as PasswordBox)?.Password);
-
-            messageTimer.Elapsed += (_, __) => ResetMessages();
-            messageTimer.Start();
         }
 
         ~EditConvoMetadataViewModel()
         {
             oldPw = newPw = newPw2 = null;
-        }
-
-        private void ResetMessages()
-        {
-            messageTimer.Stop();
-            messageTimer.Start();
-            ErrorMessage = SuccessMessage = null;
-        }
-
-        private void PrintMessage(string message, bool error)
-        {
-            ExecUI(() =>
-            {
-                ResetMessages();
-
-                if (error)
-                {
-                    ErrorMessage = message;
-                }
-                else
-                {
-                    SuccessMessage = message;
-                }
-            });
         }
 
         private async Task DeleteConvoLocally()
@@ -311,7 +257,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (Totp.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
+                ErrorMessage = "Please authenticate your request by providing your two-factor authentication token.";
                 return;
             }
 
@@ -338,18 +284,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                     if (!success)
                     {
-                        PrintMessage("The request could not be fulfilled server-side; please double check the provided password and make sure that you actually are currently a participant of this convo.", true);
+                        ErrorMessage = "The request could not be fulfilled server-side; please double check the provided password and make sure that you actually are currently a participant of this convo.";
                         return;
                     }
 
                     await DeleteConvoLocally();
 
-                    PrintMessage($"You left the convo \"{Convo.Name}\" successfully! You are no longer a participant of it and can now close this window.", false);
-                    ExecUI(() =>
-                    {
-                        UIEnabled = false;
-                        eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id);
-                    });
+                    SuccessMessage = $"You left the convo \"{Convo.Name}\" successfully! You are no longer a participant of it and can now close this window.";
+                    UIEnabled = false;
+
+                    ExecUI(() => eventAggregator.GetEvent<DeletedConvoEvent>().Publish(Convo.Id));
                 });
             }
         }
@@ -358,13 +302,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (oldPw.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing the current convo's password (at the top of the form).", true);
+                ErrorMessage = "Please authenticate your request by providing the current convo's password (at the top of the form).";
                 return;
             }
 
             if (Totp.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
+                ErrorMessage = "Please authenticate your request by providing your two-factor authentication token.";
                 return;
             }
 
@@ -373,7 +317,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 bool? confirmed = new ConfirmChangeConvoAdminView().ShowDialog();
                 if (confirmed.HasValue && confirmed.Value == true)
                 {
-                    Task.Run(async() =>
+                    Task.Run(async () =>
                     {
                         var dto = new ConvoChangeMetadataRequestDto
                         {
@@ -397,7 +341,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         bool success = await convoService.ChangeConvoMetadata(body.Sign(crypto, user.PrivateKeyPem));
                         if (!success)
                         {
-                            PrintMessage("The convo admin change request was rejected server-side! Perhaps double-check the provided convo password?",true);
+                            ErrorMessage = "The convo admin change request was rejected server-side! Perhaps double-check the provided convo password?";
                             return;
                         }
 
@@ -405,14 +349,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         if (convo != null)
                         {
                             convo.CreatorId = newAdminUserId;
-                            
+
                             if (await convoProvider.Update(convo))
                             {
-                                PrintMessage($"Success! The user {newAdminUserId} is now the new convo admin. You can now close this window...", false);
+                                SuccessMessage = $"Success! The user {newAdminUserId} is now the new convo admin. You can now close this window...";
                             }
                             else
                             {
-                                PrintMessage("The convo admin change request was accepted server-side but couldn't be applied locally. Try re-syncing the convo...", true);
+                                ErrorMessage = "The convo admin change request was accepted server-side but couldn't be applied locally. Try re-syncing the convo...";
                             }
                         }
 
@@ -430,13 +374,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             if (oldPw.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing the current convo's password (at the top of the form).", true);
+                ErrorMessage = "Please authenticate your request by providing the current convo's password (at the top of the form).";
                 return;
             }
 
             if (Totp.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
+                ErrorMessage = "Please authenticate your request by providing your two-factor authentication token.";
                 return;
             }
 
@@ -466,11 +410,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         bool success = await convoService.KickUser(body.Sign(crypto, user.PrivateKeyPem));
                         if (!success)
                         {
-                            PrintMessage($"The user \"{userIdToKick}\" could not be kicked and banned from the convo. Perhaps double-check the provided convo password?", true);
+                            ErrorMessage = $"The user \"{userIdToKick}\" could not be kicked and banned from the convo. Perhaps double-check the provided convo password?";
                             return;
                         }
 
-                        PrintMessage($"The user \"{userIdToKick}\" has been kicked out of the convo.", false);
+                        SuccessMessage = $"The user \"{userIdToKick}\" has been kicked out of the convo.";
 
                         var convo = await convoProvider.Get(Convo.Id);
                         if (convo != null)
@@ -480,7 +424,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                             await convoProvider.Update(convo);
                         }
-                        
+
                         RefreshParticipantLists();
                         ExecUI(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
                     });
@@ -494,7 +438,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (Totp.NullOrEmpty())
             {
-                PrintMessage("Please authenticate your request by providing your two-factor authentication token.", true);
+                ErrorMessage = "Please authenticate your request by providing your two-factor authentication token.";
                 CanSubmit = true;
                 return;
             }
@@ -524,14 +468,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     bool success = await convoService.DeleteConvo(body.Sign(crypto, user.PrivateKeyPem));
                     if (!success)
                     {
-                        PrintMessage("The convo deletion request could not be fulfilled server-side; please double check the provided 2FA token and try again.", true);
+                        ErrorMessage = "The convo deletion request could not be fulfilled server-side; please double check the provided 2FA token and try again.";
                         ExecUI(() => CanSubmit = true);
                         return;
                     }
 
                     await DeleteConvoLocally();
-                    
-                    PrintMessage("Convo deleted successfully, it's gone... You can now close this window.", false);
+
+                    SuccessMessage = "Convo deleted successfully, it's gone... You can now close this window.";
                     ExecUI(() =>
                     {
                         UIEnabled = false;
@@ -545,36 +489,36 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         {
             CanSubmit = false;
 
-            if (oldPw.NullOrEmpty())
-            {
-                PrintMessage("Please authenticate your request by providing the current convo's password.", true);
-                CanSubmit = true;
-                return;
-            }
-
-            if (Totp.NullOrEmpty())
-            {
-                PrintMessage("No 2FA token provided - please take security seriously and authenticate your request!", true);
-                CanSubmit = true;
-                return;
-            }
-
-            if (newPw != newPw2)
-            {
-                PrintMessage("The new password does not match its confirmation; please make sure that you re-type your password correctly!", true);
-                CanSubmit = true;
-                return;
-            }
-
-            if (newPw.NotNullNotEmpty() && newPw.Length < 5)
-            {
-                PrintMessage("Your new password is too weak; make sure that it has at least >5 characters!", true);
-                CanSubmit = true;
-                return;
-            }
-
             Task.Run(async () =>
             {
+                if (oldPw.NullOrEmpty())
+                {
+                    ErrorMessage = "Please authenticate your request by providing the current convo's password.";
+                    CanSubmit = true;
+                    return;
+                }
+
+                if (Totp.NullOrEmpty())
+                {
+                    ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
+                    CanSubmit = true;
+                    return;
+                }
+
+                if (newPw != newPw2)
+                {
+                    ErrorMessage = "The new password does not match its confirmation; please make sure that you re-type your password correctly!";
+                    CanSubmit = true;
+                    return;
+                }
+
+                if (newPw.NotNullNotEmpty() && newPw.Length < 5)
+                {
+                    ErrorMessage = "Your new password is too weak; make sure that it has at least >5 characters!";
+                    CanSubmit = true;
+                    return;
+                }
+
                 var dto = new ConvoChangeMetadataRequestDto
                 {
                     Totp = Totp,
@@ -613,12 +557,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
                 if (!successful)
                 {
-                    PrintMessage("Convo metadata change request was rejected. Perhaps you provided the wrong password or invalid data? Please double check the form.", true);
+                    ErrorMessage = "Convo metadata change request was rejected. Perhaps you provided the wrong password or invalid data? Please double check the form.";
                     ExecUI(() => CanSubmit = true);
                     return;
                 }
 
-                PrintMessage("Convo metadata changed successfully. You can now close this window.", false);
+                SuccessMessage = "Convo metadata changed successfully. You can now close this window.";
 
                 var convo = await convoProvider.Get(Convo.Id);
                 if (convo != null)

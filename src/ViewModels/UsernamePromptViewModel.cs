@@ -47,9 +47,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string username = string.Empty;
         public string Username { get => username; set => Set(ref username, value); }
 
-        private string errorMessage = string.Empty;
-        public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
-
         private bool uiEnabled = true;
         public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
         #endregion

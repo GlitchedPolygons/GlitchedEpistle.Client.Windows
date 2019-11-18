@@ -22,14 +22,11 @@ using System.Windows.Input;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
 using Prism.Events;
 
@@ -40,13 +37,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #region Constants
         // Injections:
         private readonly User user;
-        private readonly ILogger logger;
         private readonly IAppSettings appSettings;
         private readonly IUserSettings userSettings;
         private readonly IEventAggregator eventAggregator;
-        private readonly IAsymmetricCryptographyRSA crypto;
-        private readonly IWindowFactory windowFactory;
-        private readonly IViewModelFactory viewModelFactory;
         #endregion
 
         #region Variables
@@ -80,16 +73,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldTheme, newTheme, oldUsername;
 
-        public SettingsViewModel(IAppSettings appSettings, IEventAggregator eventAggregator, User user, IViewModelFactory viewModelFactory, ILogger logger, IWindowFactory windowFactory, IAsymmetricCryptographyRSA crypto, IUserSettings userSettings)
+        public SettingsViewModel(IAppSettings appSettings, IUserSettings userSettings, IEventAggregator eventAggregator, User user)
         {
             this.user = user;
-            this.logger = logger;
-            this.crypto = crypto;
-            this.userSettings = userSettings;
             this.appSettings = appSettings;
+            this.userSettings = userSettings;
             this.eventAggregator = eventAggregator;
-            this.windowFactory = windowFactory;
-            this.viewModelFactory = viewModelFactory;
 
             ClosedCommand = new DelegateCommand(OnClosed);
             ChangeThemeCommand = new DelegateCommand(OnChangedTheme);

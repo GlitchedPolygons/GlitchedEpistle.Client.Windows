@@ -40,15 +40,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     public class JoinConvoDialogViewModel : ViewModel, ICloseable
     {
         #region Constants
-        private readonly Timer messageTimer = new Timer(7000) { AutoReset = true };
-
         // Injections:
         private readonly User user;
-        private readonly ICompressionUtility gzip;
         private readonly IConvoService convoService;
-        private readonly IConvoPasswordProvider convoPasswordProvider;
-        private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IEventAggregator eventAggregator;
+        private readonly IAsymmetricCryptographyRSA crypto;
+        private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
 
         #region Events
@@ -61,13 +58,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         #endregion
 
         #region UI Bindings
-        private string errorMessage = string.Empty;
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
-        }
-
         private string convoId = string.Empty;
         public string ConvoId
         {
@@ -83,10 +73,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, User user, IConvoPasswordProvider convoPasswordProvider, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
+        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, User user, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
-            this.gzip = gzip;
             this.crypto = crypto;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
@@ -94,16 +83,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             JoinCommand = new DelegateCommand(OnClickedJoinConvo);
             CancelCommand = new DelegateCommand(_ => RequestedClose?.Invoke(this, EventArgs.Empty));
-
-            messageTimer.Elapsed += (_, __) => ErrorMessage = null;
-            messageTimer.Start();
-        }
-
-        private void ResetMessages()
-        {
-            messageTimer.Stop();
-            messageTimer.Start();
-            ErrorMessage = null;
         }
 
         private void OnClickedJoinConvo(object commandParam)
@@ -140,14 +119,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (!await convoService.JoinConvo(body.Sign(crypto, user.PrivateKeyPem)))
                 {
                     convoPasswordProvider.RemovePasswordSHA512(ConvoId);
-
-                    ExecUI(() =>
-                    {
-                        ResetMessages();
-                        ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
-                        UIEnabled = true;
-                    });
-
+                    ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
+                    UIEnabled = true;
                     return;
                 }
 

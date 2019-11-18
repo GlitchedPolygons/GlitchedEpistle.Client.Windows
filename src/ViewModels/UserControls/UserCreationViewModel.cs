@@ -18,20 +18,21 @@
 
 using System;
 using System.Timers;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods;
+using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using Prism.Events;
 
@@ -40,14 +41,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     public class UserCreationViewModel : ViewModel
     {
         #region Constants
-        private const double ERROR_MESSAGE_INTERVAL = 7500;
-
         private readonly ILogger logger;
         private readonly IAppSettings appSettings;
+        private readonly ILocalization localization;
         private readonly IUserSettings userSettings;
         private readonly IEventAggregator eventAggregator;
         private readonly IRegistrationService registrationService;
-        private readonly Timer errorMessageTimer = new Timer(ERROR_MESSAGE_INTERVAL) { AutoReset = true };
         #endregion
 
         #region Commands
@@ -94,23 +93,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => userCreationSecretFieldVis;
             set => Set(ref userCreationSecretFieldVis, value);
         }
-
-        private string errorMessage = string.Empty;
-        public string ErrorMessage
-        {
-            get => errorMessage;
-            set => Set(ref errorMessage, value);
-        }
         #endregion
 
-        private bool pendingAttempt;
-        private string password1, password2;
+        private volatile bool pendingAttempt;
+        private volatile string password1, password2;
 
-        public UserCreationViewModel(IUserSettings userSettings, IAppSettings appSettings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)
+        public UserCreationViewModel(IUserSettings userSettings, ILocalization localization, IAppSettings appSettings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)
         {
             this.logger = logger;
             this.appSettings = appSettings;
             this.userSettings = userSettings;
+            this.localization = localization;
             this.eventAggregator = eventAggregator;
             this.registrationService = registrationService;
 
@@ -139,9 +132,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Publish();
             });
-
-            errorMessageTimer.Elapsed += (_, __) => ErrorMessage = null;
-            errorMessageTimer.Start();
 
             bool onOfficialServer = appSettings.ServerUrl.Contains("epistle.glitchedpolygons.com");
 
@@ -188,53 +178,47 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 switch (result.Item1)
                 {
                     case 0: // Success!
+                        userSettings.Username = Username;
+                        logger?.LogMessage($"Created user {result.Item2.Id}.");
+                        // Handle this event back in the main view model,
+                        // since it's there where the backup codes + 2FA secret (QR) will be shown.
                         ExecUI(() =>
                         {
-                            // Handle this event back in the main view model,
-                            // since it's there where the backup codes + 2FA secret (QR) will be shown.
+                            loadingScreen?.Close();
+                            password1 = password2 = null;
                             eventAggregator.GetEvent<UserCreationSucceededEvent>().Publish(result.Item2);
-                            logger?.LogMessage($"Created user {result.Item2.Id}.");
-                            userSettings.Username = Username;
                         });
-                        
-                        break;
+                        return;
+
                     case 1: // Epistle backend connectivity issues
-                        var errorMsg = "Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server url!";
+                        string errorMsg = "Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server url!";
                         logger?.LogError(errorMsg);
-                        ExecUI(() => ErrorMessage = errorMsg);
+                        ErrorMessage = errorMsg;
                         break;
+
                     case 2: // RSA failure
                         errorMsg = "There was an unexpected error whilst generating the RSA key pair (during user creation process).";
                         logger?.LogError(errorMsg);
-                        ExecUI(() => ErrorMessage = errorMsg);
+                        ErrorMessage = errorMsg;
                         break;
+
                     case 3: // Server-side failure
-                        logger?.LogError("The user creation process failed server-side. Reason unknown; please make an admin check out the server's log files!");
-                        ExecUI(() =>
-                        {
-                            errorMessageTimer.Stop();
-                            errorMessageTimer.Start();
-                            ErrorMessage = "The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!";
-                            UIEnabled = true;
-                            pendingAttempt = false;
-                            loadingScreen?.Close();
-                        });
+                        errorMsg = "The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!";
+                        logger?.LogError(errorMsg);
+                        ErrorMessage = errorMsg;
                         break;
+
                     case 4: // Client-side failure
                         errorMsg = "The user creation succeeded server-side but there was an unexpected client-side error whilst handling the user creation server response.";
                         logger?.LogError(errorMsg);
-                        ExecUI(() => ErrorMessage = errorMsg);
+                        ErrorMessage = errorMsg;
                         break;
                 }
 
-                ExecUI(() =>
-                {
-                    UIEnabled = true;
-                    pendingAttempt = false;
-                    loadingScreen?.Close();
-                });
-
+                UIEnabled = true;
+                pendingAttempt = false;
                 password1 = password2 = null;
+                ExecUI(() => loadingScreen?.Close());
             });
         }
 

@@ -3,9 +3,9 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods;
+using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
-using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 
@@ -35,9 +35,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 ConnectionOk = false;
             }
         }
-
-        private string errorMessage = string.Empty;
-        public string ErrorMessage { get => errorMessage; set => Set(ref errorMessage, value); }
 
         private bool uiEnabled = true;
         public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
@@ -76,16 +73,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                bool success = await test.TestConnection(ServerUrl);
-                if (success) UrlUtility.SetEpistleServerUrl(ServerUrl);
-                ExecUI(() =>
+                ConnectionOk = await test.TestConnection(ServerUrl);
+                if (ConnectionOk)
                 {
-                    ConnectionOk = success;
-                    TestingLabelVisibility = Visibility.Hidden;
-                    ClipboardTickVisibility = ConnectionOk ? Visibility.Visible : Visibility.Hidden;
-                    ErrorMessage = ConnectionOk ? null : "The connection to the specified Epistle server could not be established.";
-                    UIEnabled = true;
-                });
+                    UrlUtility.SetEpistleServerUrl(ServerUrl);
+                }
+                TestingLabelVisibility = Visibility.Hidden;
+                ClipboardTickVisibility = ConnectionOk ? Visibility.Visible : Visibility.Hidden;
+                ErrorMessage = ConnectionOk ? null : "The connection to the specified Epistle server could not be established.";
+                UIEnabled = true;
             });
         }
 

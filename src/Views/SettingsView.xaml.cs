@@ -17,8 +17,8 @@
 */
 
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions;
 
@@ -67,6 +67,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             var textBox = sender as TextBox;
             textBox?.SelectAll();
+        }
+
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
