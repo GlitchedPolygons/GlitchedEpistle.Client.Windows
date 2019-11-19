@@ -159,12 +159,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public ActiveConvoViewModel(
             User user,
+            ILogger logger,
+            IMethodQ methodQ,
+            ILocalization localization,
             IConvoService convoService,
             IEventAggregator eventAggregator,
-            IMethodQ methodQ,
-            IMessageCryptography crypto,
-            ILogger logger,
             IConvoPasswordProvider convoPasswordProvider,
+            IMessageCryptography crypto,
             IMessageSender messageSender,
             IMessageFetcher messageFetcher)
         {
@@ -174,6 +175,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             this.crypto = crypto;
             this.methodQ = methodQ;
             this.convoService = convoService;
+            this.localization = localization;
             this.convoPasswordProvider = convoPasswordProvider;
             this.eventAggregator = eventAggregator;
             this.messageSender = messageSender;
@@ -463,8 +465,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     ExecUI(() =>
                     {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your text message couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                        errorView.ShowDialog();
+                        new InfoDialogView
+                        {
+                            DataContext = new InfoDialogViewModel
+                            {
+                                OkButtonText = "Okay :/",
+                                Title = localization["MessageUploadFailed"],
+                                Text = localization["TextMessageCouldNotBeUploaded"]
+                            }
+                        }.ShowDialog();
                     });
                 }
             });
@@ -475,7 +484,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// </summary>
         private void OnSendFile(object commandParam)
         {
-            var dialog = new OpenFileDialog { Multiselect = false, Title = "Epistle - Select the file you want to send", InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) };
+            var dialog = new OpenFileDialog
+            {
+                Multiselect = false,
+                Title = localization["SelectTheFileYouWantToSend"],
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+            };
             dialog.FileOk += OnSelectedFile;
             dialog.ShowDialog();
         }
@@ -519,8 +533,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     {
                         ExecUI(() =>
                         {
-                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                            errorView.ShowDialog();
+                            new InfoDialogView
+                            {
+                                DataContext = new InfoDialogViewModel
+                                {
+                                    OkButtonText = "Okay :/",
+                                    Title = localization["MessageUploadFailed"],
+                                    Text = localization["FileCouldNotBeUploaded"]
+                                }
+                            }.ShowDialog();
                         });
                     }
                 }
@@ -528,8 +549,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 {
                     ExecUI(() =>
                     {
-                        var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size limit.", Title = "Message upload failed" } };
-                        errorView.ShowDialog();
+                        new InfoDialogView
+                        {
+                            DataContext = new InfoDialogViewModel
+                            {
+                                OkButtonText = "Okay :/",
+                                Title = localization["MessageUploadFailed"],
+                                Text = localization["FileCouldNotBeUploadedBecauseItExceedsMaxFileSizeLimit"]
+                            }
+                        }.ShowDialog();
                     });
                 }
             });
@@ -554,12 +582,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             if (fileBytes.LongLength >= MessageSender.MAX_FILE_SIZE_BYTES)
             {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API because it exceeds the maximum file size limit.", Title = "Message upload failed" } };
-                errorView.ShowDialog();
+                new InfoDialogView
+                {
+                    DataContext = new InfoDialogViewModel
+                    {
+                        OkButtonText = "Okay :/",
+                        Title = localization["MessageUploadFailed"],
+                        Text = localization["FileCouldNotBeUploadedBecauseItExceedsMaxFileSizeLimit"]
+                    }
+                }.ShowDialog();
                 return;
             }
 
-            var dialog = new ConfirmFileUploadView("{CLIPBOARD}");
+            var dialog = new ConfirmFileUploadView('{' + localization["CLIPBOARD"] + '}');
             bool? dialogResult = dialog.ShowDialog();
             if (!dialogResult.HasValue || dialogResult.Value != true)
             {
@@ -569,8 +604,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             bool success = await messageSender.PostFile(ActiveConvo, $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png", fileBytes);
             if (!success)
             {
-                var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Your file couldn't be uploaded to the epistle Web API", Title = "Message upload failed" } };
-                errorView.ShowDialog();
+                new InfoDialogView
+                {
+                    DataContext = new InfoDialogViewModel
+                    {
+                        OkButtonText = "Okay :/",
+                        Title = localization["MessageUploadFailed"],
+                        Text = localization["FileCouldNotBeUploaded"]
+                    }
+                }.ShowDialog();
                 return;
             }
         }

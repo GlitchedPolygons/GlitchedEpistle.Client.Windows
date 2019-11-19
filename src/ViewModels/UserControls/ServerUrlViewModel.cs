@@ -8,6 +8,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using Prism.Events;
 
@@ -17,6 +18,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         private readonly IAppSettings appSettings;
         private readonly IServerConnectionTest test;
+        private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
 
         #region Commands
@@ -49,10 +51,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Visibility TestingLabelVisibility { get => testingLabelVisibility; set => Set(ref testingLabelVisibility, value); }
         #endregion
 
-        public ServerUrlViewModel(IServerConnectionTest test, IAppSettings appSettings, IEventAggregator eventAggregator)
+        public ServerUrlViewModel(IServerConnectionTest test, IAppSettings appSettings, IEventAggregator eventAggregator, ILocalization localization)
         {
             this.test = test;
             this.appSettings = appSettings;
+            this.localization = localization;
             this.eventAggregator = eventAggregator;
 
             string url = appSettings.ServerUrl;
@@ -80,7 +83,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 TestingLabelVisibility = Visibility.Hidden;
                 ClipboardTickVisibility = ConnectionOk ? Visibility.Visible : Visibility.Hidden;
-                ErrorMessage = ConnectionOk ? null : "The connection to the specified Epistle server could not be established.";
+                ErrorMessage = ConnectionOk ? null : localization["ConnectionToTheSpecifiedEpistleServerFailed"];
                 UIEnabled = true;
             });
         }
@@ -98,7 +101,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     ExecUI(() => eventAggregator.GetEvent<LogoutEvent>().Publish());
                     return;
                 }
-                ExecUI(() => ErrorMessage = "The connection to the specified Epistle server could not be established.");
+                ErrorMessage = localization["ConnectionToTheSpecifiedEpistleServerFailed"];
             });
         }
     }

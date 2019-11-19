@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 
@@ -42,6 +43,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         #region Constants
         private readonly User user;
         private readonly IUserService userService;
+        private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
         #endregion
 
@@ -77,10 +79,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public List<string> BackupCodes { get; set; }
 
-        public UserCreationSuccessfulViewModel(IUserService userService, IEventAggregator eventAggregator, User user)
+        public UserCreationSuccessfulViewModel(IUserService userService, ILocalization localization, IEventAggregator eventAggregator, User user)
         {
             this.user = user;
             this.userService = userService;
+            this.localization = localization;
             this.eventAggregator = eventAggregator;
 
             VerifyCommand = new DelegateCommand(OnClickedVerify);
@@ -117,7 +120,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (!await userService.Validate2FA(user.Id, Totp))
                 {
                     Totp = string.Empty;
-                    ErrorMessage = "Two-Factor authentication failed!";
+                    ErrorMessage = localization["TwoFactorAuthFailed"];
                 }
                 else
                 {

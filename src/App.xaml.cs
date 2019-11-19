@@ -89,7 +89,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
             if (!newInstance)
             {
-                MessageBox.Show("There is already one instance of Glitched Epistle running!");
+                MessageBox.Show(Client.Windows.Properties.Resources.GlitchedEpistleAlreadyRunningErrorMessage);
                 Current.Shutdown();
             }
             

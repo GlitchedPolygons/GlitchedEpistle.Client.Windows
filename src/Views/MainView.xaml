@@ -24,6 +24,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:converters="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Converters"
         mc:Ignorable="d"
+        xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         Title="Glitched Epistle"
         MinWidth="800"
         Width="{Binding Path=MainWindowWidth, Mode=TwoWay}"

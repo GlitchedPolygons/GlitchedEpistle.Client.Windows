@@ -17,23 +17,16 @@
 */
 
 using System;
-using System.Timers;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
-using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
-using GlitchedPolygons.Services.CompressionUtility;
-using GlitchedPolygons.Services.Cryptography.Asymmetric;
-
-using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -43,11 +36,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
-        private readonly IUserService userService;
-        private readonly ICompressionUtility gzip;
         private readonly ILocalization localization;
         private readonly IPasswordChanger passwordChanger;
-        private readonly IAsymmetricCryptographyRSA crypto;
         #endregion
 
         #region Events
@@ -76,13 +66,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private volatile string newPw = string.Empty;
         private volatile string newPw2 = string.Empty;
 
-        public ChangePasswordViewModel(User user, IUserService userService, ILocalization localization, ICompressionUtility gzip, IPasswordChanger passwordChanger, IAsymmetricCryptographyRSA crypto, ILogger logger)
+        public ChangePasswordViewModel(User user, ILocalization localization, IPasswordChanger passwordChanger, ILogger logger)
         {
             this.user = user;
-            this.gzip = gzip;
-            this.crypto = crypto;
             this.logger = logger;
-            this.userService = userService;
             this.localization = localization;
             this.passwordChanger = passwordChanger;
 
@@ -100,7 +87,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (totp.NullOrEmpty())
             {
-                ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
+                ErrorMessage = localization["NoTwoFactorAuthTokenProvided"];
                 return;
             }
 
@@ -110,14 +97,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             {
                 if (oldPw.NullOrEmpty() || newPw.NullOrEmpty() || newPw != newPw2)
                 {
-                    ErrorMessage = "The old password is wrong or the new ones don't match.";
+                    ErrorMessage = localization["OldPasswordWrongOrNewOnesDontMatch"];
                     UIEnabled = true;
                     return;
                 }
 
-                if (newPw.Length < 7)
+                if (newPw.Length <= 7)
                 {
-                    ErrorMessage = "Your password is too weak; make sure that it has at least >7 characters!";
+                    ErrorMessage = localization["PasswordTooWeakErrorMessage"];
                     UIEnabled = true;
                     return;
                 }
@@ -134,11 +121,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (success)
                 {
                     oldPw = newPw = newPw2 = totp = null;
-                    SuccessMessage = "Congrats! Your password's been changed successfully.";
+                    SuccessMessage = localization["PasswordChangedSuccessfully"];
                 }
                 else
                 {
-                    ErrorMessage = "Password change request rejected server-side: perhaps invalid 2FA token?";
+                    ErrorMessage = localization["PasswordChangeRejectedServerSide"];
                     UIEnabled = true;
                 }
             });

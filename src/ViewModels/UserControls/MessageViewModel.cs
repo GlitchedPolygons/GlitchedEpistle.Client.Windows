@@ -111,6 +111,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     audioPlayer = new SimpleAudioPlayerWPF();
                     AudioLoadFailed = !audioPlayer.Load(FileBytesStream);
                     audioPlayer.Loop = false;
+                    audioPlayer.PlaybackEnded += AudioPlayer_PlaybackEnded;
                     OnAudioThumbFinishedDragging();
                     AudioDuration = TimeSpan.FromSeconds(audioPlayer.Duration).ToString(@"mm\:ss");
                 }
@@ -236,9 +237,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         ~MessageViewModel()
         {
-            audioPlayer?.Stop();
-            audioPlayer?.Dispose();
-
+            if (audioPlayer != null)
+            {
+                audioPlayer.PlaybackEnded -= AudioPlayer_PlaybackEnded;
+                audioPlayer.Stop();
+                audioPlayer.Dispose();
+            }
+            
             Text = FileName = null;
             if (FileBytes != null)
             {
@@ -255,13 +260,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             var dialog = new SaveFileDialog
             {
-                Title = "Download attachment",
-                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
-                FileName = FileName,
+                Title = Properties.Resources.DownloadAttachment,
                 DefaultExt = ext,
+                FileName = FileName,
                 AddExtension = true,
                 OverwritePrompt = true,
-                Filter = $"Epistle Message Attachment|*{ext}"
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop),
+                Filter = string.Format(Properties.Resources.EpistleMessageAttachmentFileExtensionPickerDialog, ext)
             };
 
             dialog.FileOk += (sender, e) =>
@@ -308,8 +313,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             if (AudioLoadFailed)
             {
-                // TODO: show error dialog
-                //Application.Current.MainPage.DisplayAlert(localization["AudioLoadFailedErrorMessageTitle"], localization["AudioLoadFailedErrorMessageText"], "OK");
+                new InfoDialogView
+                {
+                    DataContext = new InfoDialogViewModel
+                    {
+                        OkButtonText = "Okay :/",
+                        Title = Properties.Resources.AudioLoadFailedErrorMessageTitle,
+                        Text = Properties.Resources.AudioLoadFailedErrorMessageText
+                    }
+                }.ShowDialog();
                 return;
             }
 
@@ -328,22 +340,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             if (IsAudioPlaying)
             {
-                if (AudioThumbPos >= 0.99d)
-                {
-                    audioPlayer.Seek(0);
-                }
-
                 audioPlayer.Play();
 
-                thumbUpdater = methodQ.Schedule(() =>
-                {
-                    AudioThumbPos = audioPlayer.CurrentPosition / audioPlayer.Duration;
-
-                    if (AudioThumbPos >= 0.99d)
-                    {
-                        OnClickedPlayAudioAttachment(null);
-                    }
-                }, TimeSpan.FromMilliseconds(420.69d));
+                thumbUpdater = methodQ.Schedule(() => AudioThumbPos = audioPlayer.CurrentPosition / audioPlayer.Duration, TimeSpan.FromMilliseconds(420.69d));
             }
             else
             {
@@ -365,6 +364,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
 
             audioPlayer.Seek(AudioThumbPos * audioPlayer.Duration);
+        }
+
+        private void AudioPlayer_PlaybackEnded(object sender, EventArgs e)
+        {
+            AudioThumbPos = 0;
+            audioPlayer.Stop();
+            IsAudioPlaying = false;
         }
 
         private bool HasAttachment()
@@ -409,3 +415,5 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         }
     }
 }
+
+

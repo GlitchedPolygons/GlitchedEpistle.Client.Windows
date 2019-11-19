@@ -23,6 +23,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         mc:Ignorable="d"
+        xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         Background="{DynamicResource WindowBackgroundBrush}"
         ResizeMode="NoResize"
         Title="Confirm your reset"

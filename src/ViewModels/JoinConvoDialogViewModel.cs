@@ -17,23 +17,22 @@
 */
 
 using System;
-using System.Timers;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
 
 using GlitchedPolygons.ExtensionMethods;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.Services.CompressionUtility;
-using GlitchedPolygons.Services.Cryptography.Asymmetric;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 
 using Newtonsoft.Json;
 
 using Prism.Events;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -43,6 +42,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly IConvoService convoService;
+        private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
         private readonly IConvoPasswordProvider convoPasswordProvider;
@@ -73,10 +73,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         }
         #endregion
 
-        public JoinConvoDialogViewModel(IConvoService convoService, IEventAggregator eventAggregator, User user, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto)
+        public JoinConvoDialogViewModel(User user, IConvoService convoService, IEventAggregator eventAggregator, ILocalization localization, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
             this.crypto = crypto;
+            this.localization = localization;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
@@ -119,7 +120,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 if (!await convoService.JoinConvo(body.Sign(crypto, user.PrivateKeyPem)))
                 {
                     convoPasswordProvider.RemovePasswordSHA512(ConvoId);
-                    ErrorMessage = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/";
+                    ErrorMessage = localization["CouldNotJoinConvoPleaseDoubleCheckCredentials"];
                     UIEnabled = true;
                     return;
                 }

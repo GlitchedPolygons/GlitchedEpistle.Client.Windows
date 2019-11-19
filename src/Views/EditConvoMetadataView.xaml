@@ -25,6 +25,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:userControls="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
         mc:Ignorable="d"
+        xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
         Title="Edit convo"

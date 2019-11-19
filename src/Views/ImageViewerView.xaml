@@ -24,6 +24,7 @@
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         xmlns:gif="clr-namespace:XamlAnimatedGif;assembly=XamlAnimatedGif"
         mc:Ignorable="d"
+        xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         WindowStartupLocation="CenterScreen"
         Icon="/Resources/Images/epistle-icon.png"
         Background="{DynamicResource WindowBackgroundBrush}"

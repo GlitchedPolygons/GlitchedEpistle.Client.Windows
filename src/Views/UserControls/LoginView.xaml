@@ -23,6 +23,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
              mc:Ignorable="d">
 
     <StackPanel HorizontalAlignment="Center" MaxWidth="250"

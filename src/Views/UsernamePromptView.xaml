@@ -3,20 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views"
         mc:Ignorable="d"
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
-        Title="Set username"
+        Title="{x:Static p:Resources.UsernameDialogTitle}"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize">
+    
     <StackPanel HorizontalAlignment="Center" 
                 MaxWidth="300" 
                 Margin="16"
                 IsEnabled="{Binding UIEnabled}">
 
-        <Label Content="Please define a username"
+        <Label Content="{x:Static p:Resources.PleaseDefineUsernameDialogTitle}"
                FontWeight="Bold"
                FontSize="16" />
 
@@ -28,43 +30,39 @@
                    Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
 
-        <TextBlock TextWrapping="Wrap" 
-                   Style="{DynamicResource TextBlock}"
+        <TextBlock Style="{DynamicResource TextBlock}"
+                   FontSize="14"
                    TextAlignment="Left"
-                   FontSize="14">
-            Don't worry, you can change this later in the settings.<LineBreak/><LineBreak/>
-            Your username is used for sending messages.<LineBreak/><LineBreak/>
-            If you change your username, messages that were sent using your old username will NOT be updated retroactively!<LineBreak/><LineBreak/>
-            It is stored locally on a per-machine basis, meaning that you can have multiple usernames across devices (e.g. one for when you send from your phone or laptop, etc...).
-        </TextBlock>
+                   TextWrapping="Wrap"
+                   Margin="5,0"
+                   Text="{x:Static p:Resources.PleaseDefineUsernameDialogText}"/>
 
         <Separator Margin="0 20 0 0"/>
 
-        <Label Content="Username" Margin="15 10 0 0"
-               ToolTip="Your username with which you are gonna send out your messages." />
+        <Label Content="{x:Static p:Resources.Username}" 
+               Margin="15 10 0 0" />
 
         <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Center">
+            
             <TextBox MinWidth="200"
                      MaxWidth="200"
+                     MaxLength="25"
                      Margin="0 0 8 0"
                      Name="UsernameTextBox"
-                     MaxLength="25"
                      Text="{Binding Username}"
                      TextChanged="UsernameTextBox_OnTextChanged" />
 
             <Button MinWidth="64"
-                    Content="Accept"
                     Name="AcceptButton"
                     Command="{Binding AcceptCommand}"
-                    ToolTip="Accept the entered username."
+                    Content="{x:Static p:Resources.Accept}"
+                    ToolTip="{x:Static p:Resources.AcceptUsernameButtonToolTip}"
                     IsEnabled="false" />
         </StackPanel>
-        
     </StackPanel>
 
     <Window.InputBindings>
-        <KeyBinding Key="Enter"
-                    Command="{Binding AcceptCommand}"/>
+        <KeyBinding Key="Enter" Command="{Binding AcceptCommand}"/>
     </Window.InputBindings>
 </Window>

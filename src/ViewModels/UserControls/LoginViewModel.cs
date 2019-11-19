@@ -16,11 +16,10 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System.Timers;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
@@ -28,9 +27,9 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using Prism.Events;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -72,15 +71,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             QuitCommand = new DelegateCommand(OnClickedQuit);
             LoginCommand = new DelegateCommand(OnClickedLogin);
 
-            RegisterCommand = new DelegateCommand(_ =>
-            {
-                eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Publish();
-            });
-
-            EditServerUrlCommand = new DelegateCommand(_ =>
-            {
-                eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Publish();
-            });
+            RegisterCommand = new DelegateCommand(_ => eventAggregator.GetEvent<ClickedRegisterButtonEvent>().Publish());
+            EditServerUrlCommand = new DelegateCommand(_ => eventAggregator.GetEvent<ClickedConfigureServerUrlButtonEvent>().Publish());
 
             UserId = settings.LastUserId;
 
@@ -116,22 +108,29 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         {
                             pendingAttempt = false;
                             UIEnabled = true;
-                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.", Title = "Epistle Server Unresponsive" } };
-                            errorView.ShowDialog();
+                            new InfoDialogView
+                            {
+                                DataContext = new InfoDialogViewModel()
+                                {
+                                    OkButtonText = "Okay :/",
+                                    Title = localization["EpistleServerUnresponsive"],
+                                    Text = localization["EpistleServerUnresponsiveErrorMessage"]
+                                }
+                            }.ShowDialog();
                         });
                         break;
 
                     case 2: // Login failed server-side.
-                        ErrorMessage = "Error! Invalid user id, password or 2FA.";
-                        if (++failedAttempts > 3)
+                        ErrorMessage = localization["InvalidUserIdPasswordOr2FA"];
+                        if (++failedAttempts > 2)
                         {
-                            ErrorMessage += "\nNote that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!\nPlease try again in 15 minutes.";
+                            ErrorMessage += "\n" + localization["InvalidUserIdPasswordOr2FA_Detailed"];
                         }
                         break;
 
                     case 3: // Login failed client-side.
                         failedAttempts++;
-                        ErrorMessage = "Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).";
+                        ErrorMessage = localization["LoginSucceededServerSideButResponseCouldNotBeHandledClientSide"];
                         break;
                 }
 

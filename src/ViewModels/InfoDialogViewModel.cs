@@ -18,11 +18,13 @@
 
 using System;
 using System.Windows.Input;
-
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
+    /// <summary>
+    /// <see cref="ViewModel"/> for informational dialog windows.
+    /// </summary>
     public class InfoDialogViewModel : ViewModel, ICloseable
     {
         #region Constants
@@ -42,7 +44,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string okButtonText = "Okay";
         public string OkButtonText { get => okButtonText; set => Set(ref okButtonText, value); }
 
-        private double maxWidth = 420;
+        private double maxWidth = 420D;
         public double MaxWidth { get => maxWidth; set => Set(ref maxWidth, value); }
         #endregion
 
@@ -52,6 +54,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         public InfoDialogViewModel()
         {
+            title = Properties.Resources.Information;
+            okButtonText = Properties.Resources.Information;
+
             OkButtonCommand = new DelegateCommand(OnClickedOkay);
         }
 

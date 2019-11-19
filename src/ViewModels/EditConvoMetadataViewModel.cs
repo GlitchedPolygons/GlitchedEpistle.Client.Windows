@@ -586,11 +586,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     await convoProvider.Update(convo);
                 }
 
-                ExecUI(() =>
-                {
-                    UIEnabled = false;
-                    eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id);
-                });
+                UIEnabled = false;
+                ExecUI(() => eventAggregator.GetEvent<ChangedConvoMetadataEvent>().Publish(Convo.Id));
             });
         }
     }

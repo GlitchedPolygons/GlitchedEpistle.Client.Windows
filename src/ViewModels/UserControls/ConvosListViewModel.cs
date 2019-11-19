@@ -16,23 +16,24 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 using GlitchedPolygons.ExtensionMethods;
+using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
-using GlitchedPolygons.RepositoryPattern;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
 using Newtonsoft.Json;
@@ -51,6 +52,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly IConvoPasswordProvider convoPasswordProvider;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
+        private readonly ILocalization localization;
         private readonly User user;
         #endregion
 
@@ -78,12 +80,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private IRepository<Convo, string> convoProvider;
 
-        public ConvosListViewModel(IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService, IAsymmetricCryptographyRSA crypto)
+        public ConvosListViewModel(ILocalization localization, IEventAggregator eventAggregator, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IConvoPasswordProvider convoPasswordProvider, User user, IConvoService convoService, IAsymmetricCryptographyRSA crypto)
         {
             #region Injections
             this.user = user;
-            this.convoService = convoService;
             this.crypto = crypto;
+            this.localization = localization;
+            this.convoService = convoService;
             this.windowFactory = windowFactory;
             this.eventAggregator = eventAggregator;
             this.viewModelFactory = viewModelFactory;
@@ -108,11 +111,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Subscribe(_ => UpdateList());
         }
 
-        private void UpdateList()
+        private async void UpdateList()
         {
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
-            var convos = convoProvider.GetAll().GetAwaiter().GetResult();
+            var convos = await convoProvider.GetAll();
 
             Convos =
                 convos != null
@@ -154,12 +157,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     if (!await convoService.JoinConvo(body.Sign(crypto, user.PrivateKeyPem)))
                     {
                         convoPasswordProvider.RemovePasswordSHA512(_convo.Id);
+                        CanJoin = true;
 
                         ExecUI(() =>
                         {
-                            CanJoin = true;
-                            var errorView = new InfoDialogView { DataContext = new InfoDialogViewModel { OkButtonText = "Okay :/", Text = "ERROR: Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/", Title = "Message upload failed" } };
-                            errorView.ShowDialog();
+                            new InfoDialogView
+                            {
+                                DataContext = new InfoDialogViewModel
+                                {
+                                    OkButtonText = "Okay :/",
+                                    Title = localization["ERROR"],
+                                    Text = localization["CouldNotJoinConvoPleaseDoubleCheckCredentials"]
+                                }
+                            }.ShowDialog();
                         });
                         return;
                     }

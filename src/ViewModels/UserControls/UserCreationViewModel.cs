@@ -17,14 +17,12 @@
 */
 
 using System;
-using System.Timers;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 
 using GlitchedPolygons.ExtensionMethods;
-using GlitchedPolygons.GlitchedEpistle.Client.Utilities;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
@@ -156,12 +154,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void OnClickedRegister(object commandParam)
         {
-            if (pendingAttempt
-                || Username.NullOrEmpty()
-                || password1.NullOrEmpty()
-                || password2.NullOrEmpty()
-                || password1 != password2 || password1.Length < 7)
+            if (pendingAttempt || Username.NullOrEmpty() || password1.NullOrEmpty() || password2.NullOrEmpty())
             {
+                return;
+            }
+
+            if (password1 != password2)
+            {
+                ErrorMessage = localization["PasswordsDontMatch"];
+                return;
+            }
+
+            if (password1.Length <= 7)
+            {
+                ErrorMessage = localization["PasswordTooWeakErrorMessage"];
                 return;
             }
 
@@ -178,6 +184,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 switch (result.Item1)
                 {
                     case 0: // Success!
+                            // TODO: reload user settings before setting username!
                         userSettings.Username = Username;
                         logger?.LogMessage($"Created user {result.Item2.Id}.");
                         // Handle this event back in the main view model,
@@ -191,25 +198,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         return;
 
                     case 1: // Epistle backend connectivity issues
-                        string errorMsg = "Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server url!";
+                        string errorMsg = localization["CouldNotConnectToServerErrorMessageUserCreationViewModel"];
                         logger?.LogError(errorMsg);
                         ErrorMessage = errorMsg;
                         break;
 
                     case 2: // RSA failure
-                        errorMsg = "There was an unexpected error whilst generating the RSA key pair (during user creation process).";
+                        errorMsg = localization["UnexpectedErrorWhileGeneratingRSAKeyPair"];
                         logger?.LogError(errorMsg);
                         ErrorMessage = errorMsg;
                         break;
 
                     case 3: // Server-side failure
-                        errorMsg = "The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!";
+                        errorMsg = localization["UserCreationFailedServerSide"];
                         logger?.LogError(errorMsg);
                         ErrorMessage = errorMsg;
                         break;
 
                     case 4: // Client-side failure
-                        errorMsg = "The user creation succeeded server-side but there was an unexpected client-side error whilst handling the user creation server response.";
+                        errorMsg = localization["UserCreationFailedClientSide"];
                         logger?.LogError(errorMsg);
                         ErrorMessage = errorMsg;
                         break;
@@ -224,10 +231,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private void ValidateForm()
         {
-            FormValid = Username.NotNullNotEmpty() &&
+            FormValid = Username.NotNullNotEmpty()  &&
                         password1.NotNullNotEmpty() &&
                         password2.NotNullNotEmpty() &&
-                        password1 == password2 &&
+                        password1 == password2      &&
                         password1.Length > 7;
         }
     }

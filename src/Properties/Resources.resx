@@ -117,7 +117,184 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+    <comment>Accept</comment>
+  </data>
+  <data name="AcceptUsernameButtonToolTip" xml:space="preserve">
+    <value>Accept the entered username.</value>
+    <comment>Accept the entered username.</comment>
+  </data>
+  <data name="AudioLoadFailedErrorMessageText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AudioLoadFailedErrorMessageTitle" xml:space="preserve">
+    <value />
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
+    <comment>Cancel</comment>
+  </data>
+  <data name="CLIPBOARD" xml:space="preserve">
+    <value>CLIPBOARD</value>
+    <comment>CLIPBOARD</comment>
+  </data>
+  <data name="ConnectionToTheSpecifiedEpistleServerFailed" xml:space="preserve">
+    <value>The connection to the specified Epistle server could not be established.</value>
+    <comment>The connection to the specified Epistle server could not be established.</comment>
+  </data>
+  <data name="ConvoCreationFailedServerSide" xml:space="preserve">
+    <value>Convo "{0}" couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.</value>
+    <comment>Convo "{0}" couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.</comment>
+  </data>
+  <data name="ConvoCreationPasswordsDontMatch" xml:space="preserve">
+    <value>The password does not match its confirmation; please make sure that you re-type your password correctly!</value>
+    <comment>The password does not match its confirmation; please make sure that you re-type your password correctly!</comment>
+  </data>
+  <data name="ConvoCreationPasswordTooWeak" xml:space="preserve">
+    <value>Your password is too weak; make sure that it has at least more than 5 characters!</value>
+    <comment>Your password is too weak; make sure that it has at least more than 5 characters!</comment>
+  </data>
+  <data name="CouldNotConnectToServerErrorMessageUserCreationViewModel" xml:space="preserve">
+    <value>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</value>
+    <comment>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</comment>
+  </data>
+  <data name="CouldNotJoinConvoPleaseDoubleCheckCredentials" xml:space="preserve">
+    <value>Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/</value>
+    <comment>Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/</comment>
+  </data>
+  <data name="DownloadAttachment" xml:space="preserve">
+    <value>Download attachment</value>
+    <comment>Download attachment</comment>
+  </data>
+  <data name="EpistleMessageAttachmentFileExtensionPickerDialog" xml:space="preserve">
+    <value>Epistle Message Attachment|*{0}</value>
+    <comment>Epistle Message Attachment|*{0}</comment>
+  </data>
+  <data name="EpistleServerUnresponsive" xml:space="preserve">
+    <value>Epistle Server Unresponsive</value>
+    <comment>Epistle Server Unresponsive</comment>
+  </data>
+  <data name="EpistleServerUnresponsiveErrorMessage" xml:space="preserve">
+    <value>ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.</value>
+    <comment>ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.</comment>
+  </data>
+  <data name="ERROR" xml:space="preserve">
+    <value>ERROR</value>
+    <comment>ERROR</comment>
+  </data>
+  <data name="FileCouldNotBeUploaded" xml:space="preserve">
+    <value>ERROR: Your file couldn't be uploaded to the Epistle Web API</value>
+    <comment>ERROR: Your file couldn't be uploaded to the Epistle Web API</comment>
+  </data>
+  <data name="FileCouldNotBeUploadedBecauseItExceedsMaxFileSizeLimit" xml:space="preserve">
+    <value>ERROR: Your file couldn't be uploaded to the Epistle Web API because it exceeds the maximum file size limit.</value>
+    <comment>ERROR: Your file couldn't be uploaded to the Epistle Web API because it exceeds the maximum file size limit.</comment>
+  </data>
+  <data name="GlitchedEpistleAlreadyRunningErrorMessage" xml:space="preserve">
+    <value>There is already one instance of Glitched Epistle running!</value>
+    <comment>There is already one instance of Glitched Epistle running!</comment>
+  </data>
+  <data name="Information" xml:space="preserve">
+    <value>Information</value>
+    <comment>Information</comment>
+  </data>
+  <data name="InvalidUserIdPasswordOr2FA" xml:space="preserve">
+    <value>ERROR: Invalid user id, password or two-factor authentication token.</value>
+    <comment>ERROR: Invalid user id, password or two-factor authentication token.</comment>
+  </data>
+  <data name="InvalidUserIdPasswordOr2FA_Detailed" xml:space="preserve">
+    <value>Note that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!
+Please try again in 15 minutes.</value>
+    <comment>Note that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!
+Please try again in 15 minutes.</comment>
+  </data>
+  <data name="LoginSucceededServerSideButResponseCouldNotBeHandledClientSide" xml:space="preserve">
+    <value>Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).</value>
+    <comment>Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).</comment>
+  </data>
+  <data name="MessageUploadFailed" xml:space="preserve">
+    <value>Message upload failed</value>
+    <comment>Message upload failed</comment>
+  </data>
+  <data name="NoTwoFactorAuthTokenProvided" xml:space="preserve">
+    <value>No Two-Factor Authentication token provided. Please authenticate your request!</value>
+    <comment>No Two-Factor Authentication token provided. Please authenticate your request!</comment>
+  </data>
+  <data name="Okay" xml:space="preserve">
+    <value>Okay</value>
+    <comment>Okay</comment>
+  </data>
+  <data name="OldPasswordWrongOrNewOnesDontMatch" xml:space="preserve">
+    <value>The old password is wrong or the new ones don't match.</value>
+    <comment>The old password is wrong or the new ones don't match.</comment>
+  </data>
+  <data name="PasswordChangedSuccessfully" xml:space="preserve">
+    <value>Congrats! Your password has been changed successfully.</value>
+    <comment>Congrats! Your password has been changed successfully.</comment>
+  </data>
+  <data name="PasswordChangeRejectedServerSide" xml:space="preserve">
+    <value>Password change request rejected server-side: perhaps invalid, expired or already used 2FA token?</value>
+    <comment>Password change request rejected server-side: perhaps invalid, expired or already used 2FA token?</comment>
+  </data>
+  <data name="PasswordsDontMatch" xml:space="preserve">
+    <value>The entered passwords don't match.</value>
+    <comment>The entered passwords don't match.</comment>
+  </data>
+  <data name="PasswordTooWeakErrorMessage" xml:space="preserve">
+    <value>Your password is too weak; make sure that it has at least more than 7 characters!</value>
+    <comment>Your password is too weak; make sure that it has at least more than 7 characters!</comment>
+  </data>
+  <data name="PleaseDefineUsernameDialogText" xml:space="preserve">
+    <value>Don't worry, you can change this later in the settings.
+
+Your username is used for sending messages.
+
+If you change your username, messages that were sent using your old username will NOT be updated retroactively!
+
+It is stored locally on a per-machine basis, meaning that you can have multiple usernames across devices (e.g. one for when you send from your phone or laptop, etc...).</value>
+    <comment>Don't worry, you can change this later in the settings.
+
+Your username is used for sending messages.
+
+If you change your username, messages that were sent using your old username will NOT be updated retroactively!
+
+It is stored locally on a per-machine basis, meaning that you can have multiple usernames across devices (e.g. one for when you send from your phone or laptop, etc...).</comment>
+  </data>
+  <data name="PleaseDefineUsernameDialogTitle" xml:space="preserve">
+    <value>Please define a username</value>
+    <comment>Please define a username</comment>
+  </data>
+  <data name="SelectTheFileYouWantToSend" xml:space="preserve">
+    <value>Epistle - Select the file you want to send</value>
+    <comment>Epistle - Select the file you want to send</comment>
+  </data>
+  <data name="TextMessageCouldNotBeUploaded" xml:space="preserve">
+    <value>ERROR: Your text message couldn't be uploaded to the Epistle Web API</value>
+    <comment>ERROR: Your text message couldn't be uploaded to the Epistle Web API</comment>
+  </data>
+  <data name="TwoFactorAuthFailed" xml:space="preserve">
+    <value>Two-Factor Authentication failed!</value>
+    <comment>Two-Factor Authentication failed!</comment>
+  </data>
+  <data name="UnexpectedErrorWhileGeneratingRSAKeyPair" xml:space="preserve">
+    <value>An unexpected and unknown error occurred whilst generating the RSA key pair.</value>
+    <comment>An unexpected and unknown error occurred whilst generating the RSA key pair.</comment>
+  </data>
+  <data name="UserCreationFailedClientSide" xml:space="preserve">
+    <value>The user creation succeeded server-side but there was an unexpected error whilst handling the user creation's server response client-side.</value>
+    <comment>The user creation succeeded server-side but there was an unexpected error whilst handling the user creation's server response client-side.</comment>
+  </data>
+  <data name="UserCreationFailedServerSide" xml:space="preserve">
+    <value>The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!</value>
+    <comment>The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!</comment>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
+    <comment>Username</comment>
+  </data>
+  <data name="UsernameDialogTitle" xml:space="preserve">
+    <value>Set username</value>
+    <comment>Set username</comment>
   </data>
 </root>

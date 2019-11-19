@@ -61,11 +61,387 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Accept.
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accept the entered username..
+        /// </summary>
+        public static string AcceptUsernameButtonToolTip {
+            get {
+                return ResourceManager.GetString("AcceptUsernameButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AudioLoadFailedErrorMessageText {
+            get {
+                return ResourceManager.GetString("AudioLoadFailedErrorMessageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AudioLoadFailedErrorMessageTitle {
+            get {
+                return ResourceManager.GetString("AudioLoadFailedErrorMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CLIPBOARD.
+        /// </summary>
+        public static string CLIPBOARD {
+            get {
+                return ResourceManager.GetString("CLIPBOARD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The connection to the specified Epistle server could not be established..
+        /// </summary>
+        public static string ConnectionToTheSpecifiedEpistleServerFailed {
+            get {
+                return ResourceManager.GetString("ConnectionToTheSpecifiedEpistleServerFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convo &quot;{0}&quot; couldn&apos;t be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again..
+        /// </summary>
+        public static string ConvoCreationFailedServerSide {
+            get {
+                return ResourceManager.GetString("ConvoCreationFailedServerSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password does not match its confirmation; please make sure that you re-type your password correctly!.
+        /// </summary>
+        public static string ConvoCreationPasswordsDontMatch {
+            get {
+                return ResourceManager.GetString("ConvoCreationPasswordsDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password is too weak; make sure that it has at least more than 5 characters!.
+        /// </summary>
+        public static string ConvoCreationPasswordTooWeak {
+            get {
+                return ResourceManager.GetString("ConvoCreationPasswordTooWeak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!.
+        /// </summary>
+        public static string CouldNotConnectToServerErrorMessageUserCreationViewModel {
+            get {
+                return ResourceManager.GetString("CouldNotConnectToServerErrorMessageUserCreationViewModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t join convo. Please double check the credentials and try again. If that&apos;s not the problem, then the convo might have expired, deleted or you&apos;ve been kicked out of it. Sorry :/.
+        /// </summary>
+        public static string CouldNotJoinConvoPleaseDoubleCheckCredentials {
+            get {
+                return ResourceManager.GetString("CouldNotJoinConvoPleaseDoubleCheckCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download attachment.
+        /// </summary>
+        public static string DownloadAttachment {
+            get {
+                return ResourceManager.GetString("DownloadAttachment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Epistle Message Attachment|*{0}.
+        /// </summary>
+        public static string EpistleMessageAttachmentFileExtensionPickerDialog {
+            get {
+                return ResourceManager.GetString("EpistleMessageAttachmentFileExtensionPickerDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Epistle Server Unresponsive.
+        /// </summary>
+        public static string EpistleServerUnresponsive {
+            get {
+                return ResourceManager.GetString("EpistleServerUnresponsive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry..
+        /// </summary>
+        public static string EpistleServerUnresponsiveErrorMessage {
+            get {
+                return ResourceManager.GetString("EpistleServerUnresponsiveErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR.
+        /// </summary>
+        public static string ERROR {
+            get {
+                return ResourceManager.GetString("ERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: Your file couldn&apos;t be uploaded to the Epistle Web API.
+        /// </summary>
+        public static string FileCouldNotBeUploaded {
+            get {
+                return ResourceManager.GetString("FileCouldNotBeUploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: Your file couldn&apos;t be uploaded to the Epistle Web API because it exceeds the maximum file size limit..
+        /// </summary>
+        public static string FileCouldNotBeUploadedBecauseItExceedsMaxFileSizeLimit {
+            get {
+                return ResourceManager.GetString("FileCouldNotBeUploadedBecauseItExceedsMaxFileSizeLimit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is already one instance of Glitched Epistle running!.
+        /// </summary>
+        public static string GlitchedEpistleAlreadyRunningErrorMessage {
+            get {
+                return ResourceManager.GetString("GlitchedEpistleAlreadyRunningErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Information.
+        /// </summary>
+        public static string Information {
+            get {
+                return ResourceManager.GetString("Information", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: Invalid user id, password or two-factor authentication token..
+        /// </summary>
+        public static string InvalidUserIdPasswordOr2FA {
+            get {
+                return ResourceManager.GetString("InvalidUserIdPasswordOr2FA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Note that if your credentials are correct but login fails nonetheless, it might be that you&apos;re locked out due to too many failed attempts!
+        ///Please try again in 15 minutes..
+        /// </summary>
+        public static string InvalidUserIdPasswordOr2FA_Detailed {
+            get {
+                return ResourceManager.GetString("InvalidUserIdPasswordOr2FA_Detailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unexpected ERROR! Login succeeded server-side, but the returned response couldn&apos;t be handled properly (probably key decryption failure)..
+        /// </summary>
+        public static string LoginSucceededServerSideButResponseCouldNotBeHandledClientSide {
+            get {
+                return ResourceManager.GetString("LoginSucceededServerSideButResponseCouldNotBeHandledClientSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message upload failed.
+        /// </summary>
+        public static string MessageUploadFailed {
+            get {
+                return ResourceManager.GetString("MessageUploadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Two-Factor Authentication token provided. Please authenticate your request!.
+        /// </summary>
+        public static string NoTwoFactorAuthTokenProvided {
+            get {
+                return ResourceManager.GetString("NoTwoFactorAuthTokenProvided", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Okay.
+        /// </summary>
+        public static string Okay {
+            get {
+                return ResourceManager.GetString("Okay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The old password is wrong or the new ones don&apos;t match..
+        /// </summary>
+        public static string OldPasswordWrongOrNewOnesDontMatch {
+            get {
+                return ResourceManager.GetString("OldPasswordWrongOrNewOnesDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Congrats! Your password has been changed successfully..
+        /// </summary>
+        public static string PasswordChangedSuccessfully {
+            get {
+                return ResourceManager.GetString("PasswordChangedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password change request rejected server-side: perhaps invalid, expired or already used 2FA token?.
+        /// </summary>
+        public static string PasswordChangeRejectedServerSide {
+            get {
+                return ResourceManager.GetString("PasswordChangeRejectedServerSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The entered passwords don&apos;t match..
+        /// </summary>
+        public static string PasswordsDontMatch {
+            get {
+                return ResourceManager.GetString("PasswordsDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your password is too weak; make sure that it has at least more than 7 characters!.
+        /// </summary>
+        public static string PasswordTooWeakErrorMessage {
+            get {
+                return ResourceManager.GetString("PasswordTooWeakErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t worry, you can change this later in the settings.
+        ///
+        ///Your username is used for sending messages.
+        ///
+        ///If you change your username, messages that were sent using your old username will NOT be updated retroactively!
+        ///
+        ///It is stored locally on a per-machine basis, meaning that you can have multiple usernames across devices (e.g. one for when you send from your phone or laptop, etc...)..
+        /// </summary>
+        public static string PleaseDefineUsernameDialogText {
+            get {
+                return ResourceManager.GetString("PleaseDefineUsernameDialogText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please define a username.
+        /// </summary>
+        public static string PleaseDefineUsernameDialogTitle {
+            get {
+                return ResourceManager.GetString("PleaseDefineUsernameDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Epistle - Select the file you want to send.
+        /// </summary>
+        public static string SelectTheFileYouWantToSend {
+            get {
+                return ResourceManager.GetString("SelectTheFileYouWantToSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ERROR: Your text message couldn&apos;t be uploaded to the Epistle Web API.
+        /// </summary>
+        public static string TextMessageCouldNotBeUploaded {
+            get {
+                return ResourceManager.GetString("TextMessageCouldNotBeUploaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Two-Factor Authentication failed!.
+        /// </summary>
+        public static string TwoFactorAuthFailed {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An unexpected and unknown error occurred whilst generating the RSA key pair..
+        /// </summary>
+        public static string UnexpectedErrorWhileGeneratingRSAKeyPair {
+            get {
+                return ResourceManager.GetString("UnexpectedErrorWhileGeneratingRSAKeyPair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user creation succeeded server-side but there was an unexpected error whilst handling the user creation&apos;s server response client-side..
+        /// </summary>
+        public static string UserCreationFailedClientSide {
+            get {
+                return ResourceManager.GetString("UserCreationFailedClientSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!.
+        /// </summary>
+        public static string UserCreationFailedServerSide {
+            get {
+                return ResourceManager.GetString("UserCreationFailedServerSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Username.
+        /// </summary>
+        public static string Username {
+            get {
+                return ResourceManager.GetString("Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set username.
+        /// </summary>
+        public static string UsernameDialogTitle {
+            get {
+                return ResourceManager.GetString("UsernameDialogTitle", resourceCulture);
             }
         }
     }

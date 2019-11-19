@@ -18,28 +18,27 @@
 
 using System;
 using System.IO;
-using System.Timers;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using GlitchedPolygons.ExtensionMethods;
+using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
-using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
 
 using Newtonsoft.Json;
 
 using Prism.Events;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 {
@@ -49,9 +48,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
+        private readonly ICompressionUtility gzip;
+        private readonly ILocalization localization;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
-        private readonly ICompressionUtility gzip;
         private readonly IAsymmetricCryptographyRSA crypto;
         #endregion
 
@@ -109,12 +109,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string pw = string.Empty;
         private string pw2 = string.Empty;
 
-        public CreateConvoViewModel(User user, ILogger logger, IEventAggregator eventAggregator, IConvoService convoService, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
+        public CreateConvoViewModel(User user, ILogger logger, ILocalization localization, IEventAggregator eventAggregator, IConvoService convoService, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
             this.gzip = gzip;
             this.logger = logger;
             this.crypto = crypto;
+            this.localization = localization;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
 
@@ -128,7 +129,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClosed(object commandParam)
         {
-            // nop
+            //nop
         }
 
         private void OnClickedCancel(object commandParam)
@@ -142,7 +143,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (totp.NullOrEmpty())
             {
-                ErrorMessage = "No 2FA token provided - please take security seriously and authenticate your request!";
+                ErrorMessage = localization["NoTwoFactorAuthTokenProvided"];
                 return;
             }
 
@@ -150,14 +151,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             if (pw != pw2)
             {
-                ErrorMessage = "The password does not match its confirmation; please make sure that you re-type your password correctly!";
+                ErrorMessage = localization["ConvoCreationPasswordsDontMatch"];
                 CanSubmit = true;
                 return;
             }
 
             if (pw.Length < 5)
             {
-                ErrorMessage = "Your password is too weak; make sure that it has at least >5 characters!";
+                ErrorMessage = localization["ConvoCreationPasswordTooWeak"];
                 CanSubmit = true;
                 return;
             }
@@ -200,7 +201,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     // provider instance and write it out to disk.
                     await convoProvider.Add(convo);
 
-                    // Raise the convo created event application-wide (the main view will subscribe to this to update its list).
+                    // Raise the convo created event application-wide 
+                    // (the main view will subscribe to this to update its list).
                     ExecUI(() =>
                     {
                         eventAggregator.GetEvent<ConvoCreationSucceededEvent>().Publish(id);
@@ -218,8 +220,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     // If convo creation failed for some reason, the returned
                     // id string is null and the user is notified accordingly.
                     CanSubmit = true;
-                    ErrorMessage = $"Convo \"{Name}\" couldn't be created. Perhaps due to unsuccessful Two-Factor Authentication: please double check the provided 2FA token and try again.";
-                    logger.LogError($"Convo \"{Name}\" couldn't be created. Probably 2FA token (\"{totp}\") wrong or expired.");
+                    ErrorMessage = string.Format(localization["ConvoCreationFailedServerSide"], Name);
+                    logger.LogError($"Convo \"{Name}\" couldn't be created. Probably 2FA token wrong or expired.");
                 }
             });
         }
