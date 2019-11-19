@@ -79,6 +79,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I already have an account.
+        /// </summary>
+        public static string AlreadyHaveAnAccount {
+            get {
+                return ResourceManager.GetString("AlreadyHaveAnAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string AudioLoadFailedErrorMessageText {
@@ -102,6 +111,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the Epistle server URL to connect to..
+        /// </summary>
+        public static string ChangeEpistleServerUrlToolTip {
+            get {
+                return ResourceManager.GetString("ChangeEpistleServerUrlToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Server.
+        /// </summary>
+        public static string ChangeServer {
+            get {
+                return ResourceManager.GetString("ChangeServer", resourceCulture);
             }
         }
         
@@ -269,6 +296,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Have a new device? Neat! Just log in using your User ID, Password and Two-Factor Authentication..
+        /// </summary>
+        public static string LoginButtonToolTip {
+            get {
+                return ResourceManager.GetString("LoginButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unexpected ERROR! Login succeeded server-side, but the returned response couldn&apos;t be handled properly (probably key decryption failure)..
         /// </summary>
         public static string LoginSucceededServerSideButResponseCouldNotBeHandledClientSide {
@@ -310,6 +346,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string OldPasswordWrongOrNewOnesDontMatch {
             get {
                 return ResourceManager.GetString("OldPasswordWrongOrNewOnesDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
             }
         }
         
@@ -374,6 +419,69 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter the Epistle server&apos;s user creation secret..
+        /// </summary>
+        public static string PleaseEnterEpistleServerUserCreationSecret {
+            get {
+                return ResourceManager.GetString("PleaseEnterEpistleServerUserCreationSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit.
+        /// </summary>
+        public static string Quit {
+            get {
+                return ResourceManager.GetString("Quit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancels the registration procedure and quits the application..
+        /// </summary>
+        public static string QuitRegistrationToolTip {
+            get {
+                return ResourceManager.GetString("QuitRegistrationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register now for a new account:.
+        /// </summary>
+        public static string RegisterForNewAccount {
+            get {
+                return ResourceManager.GetString("RegisterForNewAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends your desired login credentials to the Glitched Epistle server for registration..
+        /// </summary>
+        public static string RegisterToolTip {
+            get {
+                return ResourceManager.GetString("RegisterToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Retype your password.
+        /// </summary>
+        public static string RetypeYourPassword {
+            get {
+                return ResourceManager.GetString("RetypeYourPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Epistle - Select the file you want to send.
         /// </summary>
         public static string SelectTheFileYouWantToSend {
@@ -397,6 +505,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string TwoFactorAuthFailed {
             get {
                 return ResourceManager.GetString("TwoFactorAuthFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type your password again for safety&apos;s sake..
+        /// </summary>
+        public static string TypeYourPwAgainForSafetysSake {
+            get {
+                return ResourceManager.GetString("TypeYourPwAgainForSafetysSake", resourceCulture);
             }
         }
         
@@ -428,6 +545,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User creation secret.
+        /// </summary>
+        public static string UserCreationSecret {
+            get {
+                return ResourceManager.GetString("UserCreationSecret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the server&apos;s registration secret..
+        /// </summary>
+        public static string UserCreationSecretToolTip {
+            get {
+                return ResourceManager.GetString("UserCreationSecretToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {
@@ -442,6 +577,33 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string UsernameDialogTitle {
             get {
                 return ResourceManager.GetString("UsernameDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your username that will be displayed to other users. This is not the user id! The user id is the unique identifier that&apos;s assigned to you after registering, and does not change..
+        /// </summary>
+        public static string UsernameToolTip {
+            get {
+                return ResourceManager.GetString("UsernameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Glitched Epistle..
+        /// </summary>
+        public static string WelcomeToGlitchedEpistle {
+            get {
+                return ResourceManager.GetString("WelcomeToGlitchedEpistle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your desired login password..
+        /// </summary>
+        public static string YourDesiredLoginPassword {
+            get {
+                return ResourceManager.GetString("YourDesiredLoginPassword", resourceCulture);
             }
         }
     }

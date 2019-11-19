@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.UserCreationView"
@@ -30,7 +30,7 @@
 
     <StackPanel HorizontalAlignment="Center" MaxWidth="250">
 
-        <Label Content="Welcome to Glitched Epistle."
+        <Label Content="{x:Static p:Resources.WelcomeToGlitchedEpistle}"
                FontWeight="Bold"
                FontSize="16" />
 
@@ -42,25 +42,23 @@
                    Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
 
-        <Label Content="Register now for a new account:"
+        <Label Content="{x:Static p:Resources.RegisterForNewAccount}"
                FontSize="14" />
 
         <StackPanel IsEnabled="{Binding UIEnabled}">
 
-            <Label Content="Username"
-                   ToolTip="Your user ID." />
+            <Label Content="{x:Static p:Resources.Username}" />
 
             <TextBox Name="UsernameTextBox"
                      MinWidth="250"
-                     ToolTip="Your username that will be displayed to other users. This is not the user id! The user id is the unique identifier that's assigned to you after registering, and does not change."
+                     ToolTip="{x:Static p:Resources.UsernameToolTip}"
                      Text="{Binding Username}" />
 
-            <Label Content="Password"
-                   ToolTip="Your user password." />
+            <Label Content="{x:Static p:Resources.Password}" />
 
             <PasswordBox Name="PasswordBox1"
                          MinWidth="250"
-                         ToolTip="Your desired login password.">
+                         ToolTip="{x:Static p:Resources.YourDesiredLoginPassword}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
                         <i:InvokeCommandAction Command="{Binding PasswordChangedCommand1}"
@@ -69,12 +67,12 @@
                 </i:Interaction.Triggers>
             </PasswordBox>
 
-            <Label Content="Retype your password"
-                   ToolTip="Type your password again for safety's sake." />
+            <Label Content="{x:Static p:Resources.RetypeYourPassword}"
+                   ToolTip="" />
 
             <PasswordBox Name="PasswordBox2"
                          MinWidth="250"
-                         ToolTip="Type your password again for safety's sake.">
+                         ToolTip="{x:Static p:Resources.TypeYourPwAgainForSafetysSake}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PasswordChanged">
                         <i:InvokeCommandAction Command="{Binding PasswordChangedCommand2}"
@@ -84,45 +82,45 @@
             </PasswordBox>
 
             <StackPanel Visibility="{Binding UserCreationSecretFieldVis}">
-                <Label Content="User creation secret"
-                   ToolTip="Enter the server's registration secret." />
+                
+                <Label Content="{x:Static p:Resources.UserCreationSecret}"
+                       ToolTip="{x:Static p:Resources.UserCreationSecretToolTip}" /> 
 
                 <TextBox Name="UserCreationSecretTextBox"
-                     MinWidth="250"
-                     ToolTip="Please enter the Epistle server's user creation secret."
-                     Text="{Binding UserCreationSecret}" />
+                         MinWidth="250"
+                         ToolTip="{x:Static p:Resources.PleaseEnterEpistleServerUserCreationSecret}"
+                         Text="{Binding UserCreationSecret}" />
             </StackPanel>
-            
+
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
                         Margin="0,15,0,0">
 
                 <Button Width="117"
-                        Content="Quit"
+                        Content="{x:Static p:Resources.Quit}"
                         Command="{Binding QuitCommand}"
-                        ToolTip="Cancels the registration procedure and quits the application." />
+                        ToolTip="{x:Static p:Resources.QuitRegistrationToolTip}" /> 
 
                 <Button Width="117"
                         Name="RegisterButton"
                         Margin="15,0,0,0"
-                        Content="Register"
+                        Content="{x:Static p:Resources.Register}"
                         Command="{Binding RegisterCommand}"
-                        ToolTip="Sends your desired login credentials to the Glitched Epistle server for registration."
+                        ToolTip="{x:Static p:Resources.RegisterToolTip}"
                         IsEnabled="{Binding FormValid}" />
             </StackPanel>
 
             <Button Margin="0 15 0 0" 
-                    ToolTip="Change the Epistle server URL to connect to."
-                    Command="{Binding EditServerUrlCommand}">
-                Change Server
-            </Button>
+                    Command="{Binding EditServerUrlCommand}"
+                    Content="{x:Static p:Resources.ChangeServer}"
+                    ToolTip="{x:Static p:Resources.ChangeEpistleServerUrlToolTip}"/>
 
             <Button Width="250"
-                    HorizontalAlignment="Center"
-                    Content="I already have an account"
                     Margin="0,15,0,0"
+                    HorizontalAlignment="Center"
                     Command="{Binding LoginCommand}"
-                    ToolTip="Have a new device? Neat! Just log in using your User ID, Password and 2-Factor Authentication." />
+                    Content="{x:Static p:Resources.AlreadyHaveAnAccount}"
+                    ToolTip="{x:Static p:Resources.LoginButtonToolTip}" /> 
 
         </StackPanel>
     </StackPanel>
