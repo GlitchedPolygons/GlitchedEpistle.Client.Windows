@@ -158,10 +158,12 @@
     <comment>Click here to download the attachment to your computer.</comment>
   </data>
   <data name="AudioLoadFailedErrorMessageText" xml:space="preserve">
-    <value />
+    <value>The specified audio attachment cannot be played back.</value>
+    <comment>The specified audio attachment cannot be played back.</comment>
   </data>
   <data name="AudioLoadFailedErrorMessageTitle" xml:space="preserve">
-    <value />
+    <value>Audio playback failed</value>
+    <comment>Audio playback failed</comment>
   </data>
   <data name="BannedUsers" xml:space="preserve">
     <value>Banned users:</value>

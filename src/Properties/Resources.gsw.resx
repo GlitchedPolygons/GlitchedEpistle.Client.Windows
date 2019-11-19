@@ -159,9 +159,11 @@
   </data>
   <data name="AudioLoadFailedErrorMessageText" xml:space="preserve">
     <value />
+    <comment>The specified audio attachment cannot be played back.</comment>
   </data>
   <data name="AudioLoadFailedErrorMessageTitle" xml:space="preserve">
     <value />
+    <comment>Audio playback failed</comment>
   </data>
   <data name="BannedUsers" xml:space="preserve">
     <value>Banned users:</value>

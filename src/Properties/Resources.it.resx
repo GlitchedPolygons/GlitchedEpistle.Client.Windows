@@ -122,11 +122,11 @@
     <comment>About Glitched Epistle</comment>
   </data>
   <data name="Accept" xml:space="preserve">
-    <value>Accept</value>
+    <value>Accetta</value>
     <comment>Accept</comment>
   </data>
   <data name="AcceptUsernameButtonToolTip" xml:space="preserve">
-    <value>Accept the entered username.</value>
+    <value>Accetta il nome utente inserito.</value>
     <comment>Accept the entered username.</comment>
   </data>
   <data name="AdminOptions" xml:space="preserve">
@@ -158,10 +158,12 @@
     <comment>Click here to download the attachment to your computer.</comment>
   </data>
   <data name="AudioLoadFailedErrorMessageText" xml:space="preserve">
-    <value />
+    <value>Il messaggio vocale specificato non sembra essere di natura riproducibile.</value>
+    <comment>The specified audio attachment cannot be played back.</comment>
   </data>
   <data name="AudioLoadFailedErrorMessageTitle" xml:space="preserve">
-    <value />
+    <value>Emissione audio fallita</value>
+    <comment>Audio playback failed</comment>
   </data>
   <data name="BannedUsers" xml:space="preserve">
     <value>Banned users:</value>
@@ -172,7 +174,7 @@
     <comment>These are the user ids that have been permanently banned from this convo.</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Annulla</value>
     <comment>Cancel</comment>
   </data>
   <data name="CancelSettingsButtonToolTip" xml:space="preserve">
@@ -416,7 +418,7 @@
     <comment>Description</comment>
   </data>
   <data name="DownloadAttachment" xml:space="preserve">
-    <value>Download attachment</value>
+    <value>Scarica allegato</value>
     <comment>Download attachment</comment>
   </data>
   <data name="EditConvo" xml:space="preserve">
@@ -457,7 +459,7 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
     <comment>Enter your 2FA code for verification:</comment>
   </data>
   <data name="EpistleMessageAttachmentFileExtensionPickerDialog" xml:space="preserve">
-    <value>Epistle Message Attachment|*{0}</value>
+    <value>Allegato messaggio Epistle|*{0}</value>
     <comment>Epistle Message Attachment|*{0}</comment>
   </data>
   <data name="EpistleServerUnresponsive" xml:space="preserve">
@@ -473,7 +475,7 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
     <comment>The Glitched Epistle server to connect to.</comment>
   </data>
   <data name="ERROR" xml:space="preserve">
-    <value>ERROR</value>
+    <value>ERRORE</value>
     <comment>ERROR</comment>
   </data>
   <data name="ExpirationDate" xml:space="preserve">
@@ -925,7 +927,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Security</comment>
   </data>
   <data name="SelectTheFileYouWantToSend" xml:space="preserve">
-    <value>Epistle - Select the file you want to send</value>
+    <value>Epistle - Seleziona il file che desideri mandare</value>
     <comment>Epistle - Select the file you want to send</comment>
   </data>
   <data name="Settings" xml:space="preserve">
@@ -1005,7 +1007,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Two-Factor Authentication</comment>
   </data>
   <data name="TwoFactorAuthFailed" xml:space="preserve">
-    <value>Two-Factor Authentication failed!</value>
+    <value>Autentificazione a due fattori fallita!</value>
     <comment>Two-Factor Authentication failed!</comment>
   </data>
   <data name="TwoFactorAuthTokenToolTip" xml:space="preserve">
@@ -1077,11 +1079,11 @@ When you join a conversation, the chatroom appears here in this area. If the sid
 In the top right corner you have three buttons: restore window, settings and help.</comment>
   </data>
   <data name="Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Nome utente</value>
     <comment>Username</comment>
   </data>
   <data name="UsernameDialogTitle" xml:space="preserve">
-    <value>Set username</value>
+    <value>Definisci nome utente</value>
     <comment>Set username</comment>
   </data>
   <data name="UsernameToolTip" xml:space="preserve">
@@ -1123,7 +1125,7 @@ PLEASE read every warning carefully in the dialog menu!</comment>
     <comment>Verify</comment>
   </data>
   <data name="WelcomeToGlitchedEpistle" xml:space="preserve">
-    <value>Welcome to Glitched Epistle.</value>
+    <value>Benvenuto su Glitched Epistle.</value>
     <comment>Welcome to Glitched Epistle.</comment>
   </data>
   <data name="WhatIsEpistle" xml:space="preserve">

@@ -151,7 +151,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to The specified audio attachment cannot be played back..
         /// </summary>
         public static string AudioLoadFailedErrorMessageText {
             get {
@@ -160,7 +160,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Audio playback failed.
         /// </summary>
         public static string AudioLoadFailedErrorMessageTitle {
             get {
