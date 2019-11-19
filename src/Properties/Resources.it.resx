@@ -298,7 +298,7 @@
     <comment>Confirm your reset</comment>
   </data>
   <data name="ConnectionToTheSpecifiedEpistleServerFailed" xml:space="preserve">
-    <value>The connection to the specified Epistle server could not be established.</value>
+    <value>Tentativo di connessione al server specificato fallito.</value>
     <comment>The connection to the specified Epistle server could not be established.</comment>
   </data>
   <data name="ConvoCantBeRecoveredAfterDeletionWarning" xml:space="preserve">
@@ -354,11 +354,12 @@
     <comment>Copy user id to clipboard</comment>
   </data>
   <data name="CouldNotConnectToServerErrorMessageUserCreationViewModel" xml:space="preserve">
-    <value>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</value>
+    <value>Connessione col server di Epistle fallita. P.f. assicurarsi di avere una connessione internet stabile e funzionante, e che l'indirizzo del server sia corretto.</value>
     <comment>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</comment>
   </data>
   <data name="CouldNotJoinConvoPleaseDoubleCheckCredentials" xml:space="preserve">
-    <value>Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/</value>
+    <value>Connessione alla conversazione fallita. P.f. ricontrolla i dati d'accesso e riprova ancora.
+Se non è quello il problema allora potrebbe essere che la convo è semplicemente stata cancellata, ha raggiunto la sua data di scadenza oppure sei stato espulso da parte dell'amministratore.</value>
     <comment>Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/</comment>
   </data>
   <data name="CreateConvo" xml:space="preserve">
@@ -463,11 +464,11 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
     <comment>Epistle Message Attachment|*{0}</comment>
   </data>
   <data name="EpistleServerUnresponsive" xml:space="preserve">
-    <value>Epistle Server Unresponsive</value>
+    <value>Server Epistle non risponde</value>
     <comment>Epistle Server Unresponsive</comment>
   </data>
   <data name="EpistleServerUnresponsiveErrorMessage" xml:space="preserve">
-    <value>ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.</value>
+    <value>ERRORE: Il server di Epistle non risponde. Potrebbe essere sottoposto ad una manutenzione, p.f. riprovare più tardi.</value>
     <comment>ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.</comment>
   </data>
   <data name="EpistleUrlToolTip" xml:space="preserve">
@@ -495,11 +496,11 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
     <comment>Exports your 2FA emergency backup codes to a text file, which you need to keep safe and SECRET at all costs and away from third parties!</comment>
   </data>
   <data name="FileCouldNotBeUploaded" xml:space="preserve">
-    <value>ERROR: Your file couldn't be uploaded to the Epistle Web API</value>
+    <value>ERRORE: Non è stato possibile trasmettere il tuo messaggio al server di Epistle.</value>
     <comment>ERROR: Your file couldn't be uploaded to the Epistle Web API</comment>
   </data>
   <data name="FileCouldNotBeUploadedBecauseItExceedsMaxFileSizeLimit" xml:space="preserve">
-    <value>ERROR: Your file couldn't be uploaded to the Epistle Web API because it exceeds the maximum file size limit.</value>
+    <value>ERRORE: Il tuo messaggio non è stato trasmesso al server di Epistle perché supera il limite di grandezza</value>
     <comment>ERROR: Your file couldn't be uploaded to the Epistle Web API because it exceeds the maximum file size limit.</comment>
   </data>
   <data name="FullPath" xml:space="preserve">
@@ -567,12 +568,12 @@ Once you've done all this, you're ready to log in!</comment>
     <comment>Information</comment>
   </data>
   <data name="InvalidUserIdPasswordOr2FA" xml:space="preserve">
-    <value>ERROR: Invalid user id, password or two-factor authentication token.</value>
+    <value>ERRORE: ID utente, password e/o token di autentificazione a due fattori invalido.</value>
     <comment>ERROR: Invalid user id, password or two-factor authentication token.</comment>
   </data>
   <data name="InvalidUserIdPasswordOr2FA_Detailed" xml:space="preserve">
-    <value>Note that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!
-Please try again in 15 minutes.</value>
+    <value>Ricorda che se le tue credenziali d'accesso sono corrette e il login fallisce ciò nonostante, potrebbe essere che sei stato temporaneamente sospeso per motivi di sicurezza (troppi tentativi).
+P.f. riprova tra 15 minuti.</value>
     <comment>Note that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!
 Please try again in 15 minutes.</comment>
   </data>
@@ -669,7 +670,7 @@ As long as you have the convo's id and access password, you can join back in any
     <comment>Have a new device? Neat! Just log in using your User ID, Password and Two-Factor Authentication.</comment>
   </data>
   <data name="LoginSucceededServerSideButResponseCouldNotBeHandledClientSide" xml:space="preserve">
-    <value>Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).</value>
+    <value>ERRORE imprevisto! Il login è riuscito, tuttavia la risposta del server non sembra essere di natura interpretabile localmente (probabilmente un fallimento crittografico).</value>
     <comment>Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).</comment>
   </data>
   <data name="LoginToolTip" xml:space="preserve">
@@ -681,7 +682,7 @@ As long as you have the convo's id and access password, you can join back in any
     <comment>Click here to log out of your Glitched Epistle account.</comment>
   </data>
   <data name="MessageUploadFailed" xml:space="preserve">
-    <value>Message upload failed</value>
+    <value>Trasmissione messaggio fallita</value>
     <comment>Message upload failed</comment>
   </data>
   <data name="Name" xml:space="preserve">
@@ -719,7 +720,7 @@ Note: unless specifically banned, whoever has this password and your convo's id 
     <comment>Your new user password.</comment>
   </data>
   <data name="NoTwoFactorAuthTokenProvided" xml:space="preserve">
-    <value>No Two-Factor Authentication token provided. Please authenticate your request!</value>
+    <value>Token d'autentificazione a due fattori vuoto - p.f. autentifica la tua richiesta!</value>
     <comment>No Two-Factor Authentication token provided. Please authenticate your request!</comment>
   </data>
   <data name="Okay" xml:space="preserve">
@@ -727,7 +728,7 @@ Note: unless specifically banned, whoever has this password and your convo's id 
     <comment>Okay</comment>
   </data>
   <data name="OldPasswordWrongOrNewOnesDontMatch" xml:space="preserve">
-    <value>The old password is wrong or the new ones don't match.</value>
+    <value>La password attuale è invalida oppure le due nuove password inserite non coincidono.</value>
     <comment>The old password is wrong or the new ones don't match.</comment>
   </data>
   <data name="OpenConvo" xml:space="preserve">
@@ -755,7 +756,7 @@ Note: unless specifically banned, whoever has this password and your convo's id 
     <comment>Password</comment>
   </data>
   <data name="PasswordChangedSuccessfully" xml:space="preserve">
-    <value>Congrats! Your password has been changed successfully.</value>
+    <value>Cambiamento password riuscito.</value>
     <comment>Congrats! Your password has been changed successfully.</comment>
   </data>
   <data name="PasswordChangeRejectedServerSide" xml:space="preserve">
@@ -763,11 +764,11 @@ Note: unless specifically banned, whoever has this password and your convo's id 
     <comment>Password change request rejected server-side: perhaps invalid, expired or already used 2FA token?</comment>
   </data>
   <data name="PasswordsDontMatch" xml:space="preserve">
-    <value>The entered passwords don't match.</value>
+    <value>Le due password inserite non coincidono.</value>
     <comment>The entered passwords don't match.</comment>
   </data>
   <data name="PasswordTooWeakErrorMessage" xml:space="preserve">
-    <value>Your password is too weak; make sure that it has at least more than 7 characters!</value>
+    <value>La password inserita è troppo debole; dovrebbe contenere come minimo 8 caratteri!</value>
     <comment>Your password is too weak; make sure that it has at least more than 7 characters!</comment>
   </data>
   <data name="PlayAudioMessageButtonToolTip" xml:space="preserve">
@@ -979,7 +980,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Tests the connection to the entered Epistle server URL.</comment>
   </data>
   <data name="TextMessageCouldNotBeUploaded" xml:space="preserve">
-    <value>ERROR: Your text message couldn't be uploaded to the Epistle Web API</value>
+    <value>ERRORE: Non è stato possibile trasmettere il tuo messaggio al server di Epistle.</value>
     <comment>ERROR: Your text message couldn't be uploaded to the Epistle Web API</comment>
   </data>
   <data name="Theme" xml:space="preserve">
@@ -1023,7 +1024,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Type your password again for safety's sake.</comment>
   </data>
   <data name="UnexpectedErrorWhileGeneratingRSAKeyPair" xml:space="preserve">
-    <value>An unexpected and unknown error occurred whilst generating the RSA key pair.</value>
+    <value>Si è verificato un errore durante la generazione della chiave RSA 4096-bit.</value>
     <comment>An unexpected and unknown error occurred whilst generating the RSA key pair.</comment>
   </data>
   <data name="Upload" xml:space="preserve">
@@ -1031,11 +1032,11 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Upload</comment>
   </data>
   <data name="UserCreationFailedClientSide" xml:space="preserve">
-    <value>The user creation succeeded server-side but there was an unexpected error whilst handling the user creation's server response client-side.</value>
+    <value>La creazione dell'utente è avvenuta con successo sul server, ma purtroppo è fallita localmente.</value>
     <comment>The user creation succeeded server-side but there was an unexpected error whilst handling the user creation's server response client-side.</comment>
   </data>
   <data name="UserCreationFailedServerSide" xml:space="preserve">
-    <value>The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!</value>
+    <value>La creazione dell'utente è fallita: verificare che l'indirizzo e segreto del server sono validi.</value>
     <comment>The user creation process failed server-side. Please double check the server URL and make sure that the user creation secret is correct!</comment>
   </data>
   <data name="UserCreationSecret" xml:space="preserve">
