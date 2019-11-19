@@ -249,6 +249,9 @@
     <Compile Include="Views\UserControls\ConvosListView.xaml.cs">
       <DependentUpon>ConvosListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\LoadingIndicatorCircle.xaml.cs">
+      <DependentUpon>LoadingIndicatorCircle.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -360,6 +363,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\UserControls\ConvosListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\LoadingIndicatorCircle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

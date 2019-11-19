@@ -129,6 +129,14 @@
     <value>I already have an account</value>
     <comment>I already have an account</comment>
   </data>
+  <data name="Attachment" xml:space="preserve">
+    <value>Attachment:</value>
+    <comment>Attachment:</comment>
+  </data>
+  <data name="AttachmentToolTip" xml:space="preserve">
+    <value>Click here to download the attachment to your computer.</value>
+    <comment>Click here to download the attachment to your computer.</comment>
+  </data>
   <data name="AudioLoadFailedErrorMessageText" xml:space="preserve">
     <value />
   </data>
@@ -171,6 +179,10 @@
     <value>Copy convo id to clipboard</value>
     <comment>Copy convo id to clipboard</comment>
   </data>
+  <data name="CopyUserIdToClipboard" xml:space="preserve">
+    <value>Copy user id to clipboard</value>
+    <comment>Copy user id to clipboard</comment>
+  </data>
   <data name="CouldNotConnectToServerErrorMessageUserCreationViewModel" xml:space="preserve">
     <value>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</value>
     <comment>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</comment>
@@ -194,6 +206,10 @@
   <data name="EpistleServerUnresponsiveErrorMessage" xml:space="preserve">
     <value>ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.</value>
     <comment>ERROR: The Glitched Epistle server is unresponsive. It might be under maintenance, please try again later! Sorry.</comment>
+  </data>
+  <data name="EpistleUrlToolTip" xml:space="preserve">
+    <value>The Glitched Epistle server to connect to.</value>
+    <comment>The Glitched Epistle server to connect to.</comment>
   </data>
   <data name="ERROR" xml:space="preserve">
     <value>ERROR</value>
@@ -277,6 +293,18 @@ Please try again in 15 minutes.</comment>
     <value>Your password is too weak; make sure that it has at least more than 7 characters!</value>
     <comment>Your password is too weak; make sure that it has at least more than 7 characters!</comment>
   </data>
+  <data name="PlayAudioMessageButtonToolTip" xml:space="preserve">
+    <value>Click here to play back this audio message.</value>
+    <comment>Click here to play back this audio message.</comment>
+  </data>
+  <data name="PleaseConnectToServer" xml:space="preserve">
+    <value>Please connect to the Epistle server.</value>
+    <comment>Please connect to the Epistle server.</comment>
+  </data>
+  <data name="PleaseConnectToServerToolTip" xml:space="preserve">
+    <value>You can connect to the official Epistle server for free or to a custom server.</value>
+    <comment>You can connect to the official Epistle server for free or to a custom server.</comment>
+  </data>
   <data name="PleaseDefineUsernameDialogText" xml:space="preserve">
     <value>Don't worry, you can change this later in the settings.
 
@@ -337,6 +365,10 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
     <value>Retype your password</value>
     <comment>Retype your password</comment>
   </data>
+  <data name="SaveEpistleServerUrlToolTip" xml:space="preserve">
+    <value>Saves the Epistle server URL to the user preferences.</value>
+    <comment>Saves the Epistle server URL to the user preferences.</comment>
+  </data>
   <data name="ScrollToBottomOfChatToolTip" xml:space="preserve">
     <value>Scroll to the bottom of the chat and check out the newest messages.</value>
     <comment>Scroll to the bottom of the chat and check out the newest messages.</comment>
@@ -344,6 +376,22 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
   <data name="SelectTheFileYouWantToSend" xml:space="preserve">
     <value>Epistle - Select the file you want to send</value>
     <comment>Epistle - Select the file you want to send</comment>
+  </data>
+  <data name="StopAudioMessageButtonToolTip" xml:space="preserve">
+    <value>Click here to stop playing back this audio message.</value>
+    <comment>Click here to stop playing back this audio message.</comment>
+  </data>
+  <data name="TestingConnection" xml:space="preserve">
+    <value>Testing connection...</value>
+    <comment>Testing connection...</comment>
+  </data>
+  <data name="TestServerConnectionButton" xml:space="preserve">
+    <value>Test Connection</value>
+    <comment>Test Connection</comment>
+  </data>
+  <data name="TestServerConnectionToolTip" xml:space="preserve">
+    <value>Tests the connection to the entered Epistle server URL.</value>
+    <comment>Tests the connection to the entered Epistle server URL.</comment>
   </data>
   <data name="TextMessageCouldNotBeUploaded" xml:space="preserve">
     <value>ERROR: Your text message couldn't be uploaded to the Epistle Web API</value>

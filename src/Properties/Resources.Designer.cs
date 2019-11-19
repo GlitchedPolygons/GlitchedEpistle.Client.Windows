@@ -88,6 +88,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attachment:.
+        /// </summary>
+        public static string Attachment {
+            get {
+                return ResourceManager.GetString("Attachment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to download the attachment to your computer..
+        /// </summary>
+        public static string AttachmentToolTip {
+            get {
+                return ResourceManager.GetString("AttachmentToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
         public static string AudioLoadFailedErrorMessageText {
@@ -187,6 +205,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy user id to clipboard.
+        /// </summary>
+        public static string CopyUserIdToClipboard {
+            get {
+                return ResourceManager.GetString("CopyUserIdToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!.
         /// </summary>
         public static string CouldNotConnectToServerErrorMessageUserCreationViewModel {
@@ -237,6 +264,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string EpistleServerUnresponsiveErrorMessage {
             get {
                 return ResourceManager.GetString("EpistleServerUnresponsiveErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Glitched Epistle server to connect to..
+        /// </summary>
+        public static string EpistleUrlToolTip {
+            get {
+                return ResourceManager.GetString("EpistleUrlToolTip", resourceCulture);
             }
         }
         
@@ -422,6 +458,33 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here to play back this audio message..
+        /// </summary>
+        public static string PlayAudioMessageButtonToolTip {
+            get {
+                return ResourceManager.GetString("PlayAudioMessageButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please connect to the Epistle server..
+        /// </summary>
+        public static string PleaseConnectToServer {
+            get {
+                return ResourceManager.GetString("PleaseConnectToServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can connect to the official Epistle server for free or to a custom server..
+        /// </summary>
+        public static string PleaseConnectToServerToolTip {
+            get {
+                return ResourceManager.GetString("PleaseConnectToServerToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Don&apos;t worry, you can change this later in the settings.
         ///
         ///Your username is used for sending messages.
@@ -536,6 +599,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saves the Epistle server URL to the user preferences..
+        /// </summary>
+        public static string SaveEpistleServerUrlToolTip {
+            get {
+                return ResourceManager.GetString("SaveEpistleServerUrlToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Scroll to the bottom of the chat and check out the newest messages..
         /// </summary>
         public static string ScrollToBottomOfChatToolTip {
@@ -550,6 +622,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string SelectTheFileYouWantToSend {
             get {
                 return ResourceManager.GetString("SelectTheFileYouWantToSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to stop playing back this audio message..
+        /// </summary>
+        public static string StopAudioMessageButtonToolTip {
+            get {
+                return ResourceManager.GetString("StopAudioMessageButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Testing connection....
+        /// </summary>
+        public static string TestingConnection {
+            get {
+                return ResourceManager.GetString("TestingConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Test Connection.
+        /// </summary>
+        public static string TestServerConnectionButton {
+            get {
+                return ResourceManager.GetString("TestServerConnectionButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tests the connection to the entered Epistle server URL..
+        /// </summary>
+        public static string TestServerConnectionToolTip {
+            get {
+                return ResourceManager.GetString("TestServerConnectionToolTip", resourceCulture);
             }
         }
         

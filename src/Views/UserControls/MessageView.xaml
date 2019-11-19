@@ -97,7 +97,7 @@
                 <Button Width="15"
                         Height="15"
                         Margin="0"
-                        ToolTip="Copy user id to clipboard"
+                        ToolTip="{x:Static p:Resources.CopyUserIdToClipboard}"
                         Command="{Binding CopyUserIdToClipboardCommand}"
                         Style="{StaticResource CopyToClipboardButton}" />
 
@@ -109,15 +109,6 @@
                        Visibility="{Binding ClipboardTickVisibility}" />
             </StackPanel>
 
-            <!-- Separator wall -->
-            <!--
-                 <Rectangle Height="1"
-                 Opacity="0.47"
-                 Margin="2.5,3,2.5,3"
-                 HorizontalAlignment="Stretch"
-                 Stroke="{DynamicResource SeparatorColorBrush}" />
-            -->
-            
             <StackPanel Margin="0,-1,0,0">
                 
                 <!--{Binding Timestamp}-->
@@ -146,7 +137,7 @@
                             Style="{DynamicResource PlayAudioButton}"
                             Visibility="{Binding PlayButtonVisibility}"
                             Command="{Binding ClickedOnPlayAudioAttachmentCommand}"
-                            ToolTip="Click here to play back this audio message." />
+                            ToolTip="{x:Static p:Resources.PlayAudioMessageButtonToolTip}" />
 
                     <Button Grid.Column="0" 
                             Width="32"
@@ -158,7 +149,7 @@
                             Style="{DynamicResource PauseAudioButton}"
                             Visibility="{Binding PauseButtonVisibility}"
                             Command="{Binding ClickedOnPlayAudioAttachmentCommand}"
-                            ToolTip="Click here to stop playing back this audio message." />
+                            ToolTip="{x:Static p:Resources.StopAudioMessageButtonToolTip}" />
 
                     <Slider Grid.Column="1" 
                             Minimum="0.0"
@@ -221,7 +212,7 @@
                            HorizontalAlignment="Left"
                            Visibility="{Binding AttachmentButtonVisibility}">
 
-                    <Label Content="Attachment:"
+                    <Label Content="{x:Static p:Resources.Attachment}"
                            Margin="0"
                            Padding="0"
                            VerticalAlignment="Center" />
@@ -235,7 +226,7 @@
                             FontWeight="Bold"
                             HorizontalAlignment="Left"
                             HorizontalContentAlignment="Stretch"
-                            ToolTip="Click here to download the attachment to your computer."
+                            ToolTip="{x:Static p:Resources.AttachmentToolTip}"
                             Command="{Binding DownloadAttachmentCommand}" />
                 </WrapPanel>
 

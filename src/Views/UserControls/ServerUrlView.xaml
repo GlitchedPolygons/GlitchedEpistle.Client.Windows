@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.ServerUrlView"
@@ -28,7 +28,7 @@
     <StackPanel HorizontalAlignment="Center" 
                 MaxWidth="250">
 
-        <Label Content="Welcome to Glitched Epistle."
+        <Label Content="{x:Static p:Resources.WelcomeToGlitchedEpistle}"
                FontWeight="Bold"
                FontSize="16" />
 
@@ -40,14 +40,16 @@
                    Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
 
-        <Label Content="Please connect to the Epistle server."
-               ToolTip="You can connect to the official Epistle server for free or to a custom server."
-               FontSize="14" />
+        <Label FontSize="14"
+               Content="{x:Static p:Resources.PleaseConnectToServer}"
+               ToolTip="{x:Static p:Resources.PleaseConnectToServerToolTip}"/>
 
         <StackPanel Orientation="Horizontal" 
                     Margin="0 10 0 0">
+            
             <Label Content="Epistle Server URL"
-                   ToolTip="The Glitched Epistle server to connect to." />
+                   ToolTip="{x:Static p:Resources.EpistleUrlToolTip}" /> 
+            
             <Image Source="/Resources/Images/green-tick.png"
                    Width="15"
                    Height="15"
@@ -61,25 +63,34 @@
                  Text="{Binding ServerUrl, UpdateSourceTrigger=PropertyChanged}" />
 
         <StackPanel IsEnabled="{Binding UIEnabled}">
+
             <Button Margin="0 10 0 0" 
                     Name="TestConnectionButton"
                     Command="{Binding TestConnectionCommand}"
-                    ToolTip="Tests the connection to the entered Epistle server URL.">
-                Test Connection
-            </Button>
+                    Content="{x:Static p:Resources.TestServerConnectionButton}"
+                    ToolTip="{x:Static p:Resources.TestServerConnectionToolTip}"/>
+
             <Button Margin="0 10 0 0" 
                     Command="{Binding ConnectCommand}"
                     IsEnabled="{Binding ConnectionOk}"
-                    ToolTip="Saves the Epistle server URL to the user preferences.">
-                Accept
+                    ToolTip="{x:Static p:Resources.SaveEpistleServerUrlToolTip}">
+                    Accept
             </Button>
         </StackPanel>
 
-        <Label Foreground="DeepSkyBlue"  
-               Margin="0 5 0 0"
-               HorizontalAlignment="Center"
-               Visibility="{Binding TestingLabelVisibility}">
-            Testing connection...
-        </Label>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0 5 0 0"
+                    Visibility="{Binding TestingLabelVisibility}">
+            
+            <local:LoadingIndicatorCircle />
+            
+            <Label HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Content="{x:Static p:Resources.TestingConnection}"/>
+        </StackPanel>
+        
+        
     </StackPanel>
 </UserControl>
