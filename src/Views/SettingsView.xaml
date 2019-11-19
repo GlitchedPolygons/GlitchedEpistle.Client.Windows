@@ -27,7 +27,7 @@
         mc:Ignorable="d"
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
-        Title="Settings"
+        Title="{x:Static p:Resources.Settings}"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize" 
@@ -40,9 +40,9 @@
     </i:Interaction.Triggers>
 
     <StackPanel Margin="10">
-        <Label Content="Username"
+        <Label Content="{x:Static p:Resources.Username}"
                Padding="5,0,0,5"
-               ToolTip="Your display name. Note that by changing this, the messages you sent using the previous username won't update their sender label." />
+               ToolTip="{x:Static p:Resources.SettingsUsernameToolTip}" />
 
         <TextBox HorizontalAlignment="Left"
                  VerticalAlignment="Top"
@@ -55,20 +55,23 @@
                  GotKeyboardFocus="UsernameTextBox_SelectText"
                  PreviewMouseLeftButtonDown="UsernameTextBox_OnMouseDown" />
 
-        <Label Content="Theme" 
+        <Label Content="{x:Static p:Resources.Theme}" 
                Margin="0,8,0,0"
                Padding="3,0,0,5"/>
 
         <StackPanel Orientation="Horizontal">
+            
             <RadioButton Name="DarkThemeRadioButton" 
                          Content="Dark polygons" 
                          Command="{Binding ChangeThemeCommand}"
                          CommandParameter="{Binding ElementName=DarkThemeRadioButton, Path=Content}"/>
+            
             <RadioButton Content="Light polygons" 
                          Name="LightThemeRadioButton" 
                          Margin="3,0" 
                          Command="{Binding ChangeThemeCommand}"
                          CommandParameter="{Binding ElementName=LightThemeRadioButton, Path=Content}"/>
+            
             <RadioButton Content="OLED" 
                          Name="OLEDThemeRadioButton" 
                          Command="{Binding ChangeThemeCommand}"
@@ -84,21 +87,21 @@
                     Margin="0,0,0,0"
                     Style="{DynamicResource TrashButton}"
                     Command="{Binding DeleteButtonCommand}"
-                    ToolTip="Delete all of your Glitched Epistle application settings; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this." />
+                    ToolTip="{x:Static p:Resources.ResetButtonToolTip}" />
 
             <Button Margin="10,0,0,0"
-                    Content="Cancel"
+                    Content="{x:Static p:Resources.Cancel}"
                     Command="{Binding CancelButtonCommand}"
-                    ToolTip="Closes the window without saving the changes." />
+                    ToolTip="{x:Static p:Resources.CancelSettingsButtonToolTip}" /> 
 
             <Button Margin="10,0,0,0"
                     Content="Revert"
                     Command="{Binding RevertButtonCommand}"
-                    ToolTip="Resets all user settings back to their default values." />
+                    ToolTip="{x:Static p:Resources.RevertSettingsButtonToolTip}" />
 
             <Button Margin="10,0,0,0"
                     Content="OK"
-                    ToolTip="Accepts your changes and"
+                    ToolTip="{x:Static p:Resources.SettingsOkButtonToolTip}"
                     Click="OkButton_Click"/>
         </StackPanel>
     </StackPanel>

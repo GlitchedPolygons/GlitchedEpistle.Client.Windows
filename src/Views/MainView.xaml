@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.MainView"
@@ -89,7 +89,7 @@
                     <Button Width="15"
                             Height="15"
                             Margin="4,0,0,4"
-                            ToolTip="Copy user id to clipboard"
+                            ToolTip="{x:Static p:Resources.CopyUserIdToClipboard}"
                             Command="{Binding CopyUserIdToClipboardCommand}"
                             Style="{DynamicResource CopyToClipboardButton}" />
 
@@ -122,7 +122,7 @@
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource CreateConvoButton}"
                             Command="{Binding CreateConvoButtonCommand}"
-                            ToolTip="Create a new conversation." />
+                            ToolTip="{x:Static p:Resources.CreateNewConvo}" />
 
                     <Button Width="50"
                             Height="50" 
@@ -132,7 +132,7 @@
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource JoinConvoButton}"
                             Command="{Binding JoinConvoButtonCommand}"
-                            ToolTip="Click here to join an existing conversation." />
+                            ToolTip="{x:Static p:Resources.ClickHereToJoinAnExistingConvo}" />
 
                     <Button Width="50"
                             Height="50" 
@@ -142,7 +142,7 @@
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource ChangePasswordButton}"
                             Command="{Binding ChangePasswordButtonCommand}"
-                            ToolTip="Click here to change the password you use to access Glitched Epistle." />
+                            ToolTip="{x:Static p:Resources.ChangeUserPasswordButtonToolTip}" />
 
                     <Button Width="50"
                             Height="50" 
@@ -152,8 +152,9 @@
                             IsEnabled="{Binding UIEnabled}"
                             Style="{DynamicResource LogoutButton}"
                             Command="{Binding LogoutButtonCommand}"
-                            ToolTip="Click here to log out of your Glitched Epistle account." />
+                            ToolTip="{x:Static p:Resources.LogoutButtonToolTip}" />
                 </WrapPanel>
+                
                 <Label Foreground="Gray" 
                        FontStyle="Italic" 
                        Content="{Binding ServerUrl}"
@@ -212,7 +213,7 @@
                     Canvas.Right="5"
                     Style="{DynamicResource HelpButton}"
                     Command="{Binding HelpButtonCommand}"
-                    ToolTip="Open up the tutorial window." />
+                    ToolTip="{x:Static p:Resources.OpenHelpButtonToolTip}" />
 
             <!-- Settings Button -->
             <Button Width="25"
@@ -222,7 +223,7 @@
                     IsEnabled="{Binding UIEnabled}"
                     Style="{DynamicResource SettingsButton}"
                     Command="{Binding SettingsButtonCommand}"
-                    ToolTip="Open up the settings window." />
+                    ToolTip="{x:Static p:Resources.OpenSettingsButtonToolTip}" />
 
             <!-- Reset Window Button -->
             <Button Width="25"
@@ -231,7 +232,7 @@
                     Canvas.Right="65"
                     Command="{Binding ResetWindowButtonCommand}"
                     Style="{DynamicResource ResetMainWindowButton}"
-                    ToolTip="Reset the main window's size and layout."
+                    ToolTip="{x:Static p:Resources.ResetGuiLayoutButtonToolTip}"
                     Click="ResetWindowButton_Click" />
         </Canvas>
 
@@ -248,5 +249,7 @@
                         Margin="5,35,0,0" />
     </Grid>
 </Window>
+    
 <!-- Copyright (C) Raphael Beck | Glitched Polygons, 2019 -->
+    
 <!-- www.glitchedpolygons.com -->

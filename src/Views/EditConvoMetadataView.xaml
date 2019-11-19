@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.EditConvoMetadataView"
@@ -28,19 +28,29 @@
         xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
-        Title="Edit convo"
+        Title="{x:Static p:Resources.EditConvo}"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight" 
         MaxWidth="485"
         ResizeMode="NoResize">
+    
     <StackPanel Margin="10"
                 MinWidth="450"
                 IsEnabled="{Binding UIEnabled}">
-        <Label Content="{Binding Name}"
-               ContentStringFormat="Edit, leave or delete convo &quot;{0}&quot;"
+
+        <StackPanel Orientation="Horizontal">
+
+            <Label Content="{x:Static p:Resources.EditConvoTitle}"
                FontWeight="Bold"
                FontSize="16" />
+            
+            <Label Content="{Binding Name}"
+               FontWeight="Bold"
+               FontSize="16" />
+        </StackPanel>
+        
         <Separator />
+        
         <TextBlock Text="{Binding ErrorMessage}"
                    TextWrapping="Wrap"
                    MaxWidth="420"
@@ -48,6 +58,7 @@
                    HorizontalAlignment="Left"
                    Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
+        
         <TextBlock Text="{Binding SuccessMessage}"
                    TextWrapping="Wrap"
                    MaxWidth="420"
@@ -56,16 +67,19 @@
                    Foreground="{DynamicResource SuccessMessageColor}"
                    FontSize="14" />
 
-        <Expander Header="Request Authentication"
-                  Margin="0,0,0,0"
+        <Expander Header="{x:Static p:Resources.RequestAuthentication}"
                   Style="{DynamicResource Expander}"
+                  Margin="0,0,0,0"
                   IsExpanded="True">
+            
             <StackPanel>
-                <Label Content="Current Convo Password"
-                       ToolTip="Enter the current convo's password here." />
+                
+                <Label Content="{x:Static p:Resources.CurrentConvoPassword}"
+                       ToolTip="{x:Static p:Resources.CurrentConvoPasswordToolTip}" />
 
                 <PasswordBox Name="OldPassword"
                              Margin="5,0,0,0">
+                    
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PasswordChanged">
                             <i:InvokeCommandAction Command="{Binding OldPasswordChangedCommand}"
@@ -75,68 +89,71 @@
                 </PasswordBox>
 
 
-                <Label Content="2FA TOTP"
-                       ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)" />
+                <Label Content="{x:Static p:Resources.TwoFactorAuthentication}"
+                       ToolTip="{x:Static p:Resources.TwoFactorAuthTokenToolTip}" />
+                
                 <TextBox Name="TotpTextBox"
                          MaxLength="100"
                          Margin="5,0,0,0"
                          Text="{Binding Totp}"
-                         ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"/>
+                         ToolTip="{x:Static p:Resources.TwoFactorAuthTokenToolTip}"/>
             </StackPanel>
         </Expander>
 
-        <Expander Header="User Options"
+        <Expander Header="{x:Static p:Resources.UserOptions}"
                   IsExpanded="True"
                   IsEnabled="True"
                   Margin="0,10,0,0"
-                  ToolTip="Actions that a regular convo participant can perform.
-                  If you're the convo's admin, leaving server-side is disabled because you'd need to define a new convo admin first before abandoning (under the Admin Options->Participants tab)."
+                  ToolTip="{x:Static p:Resources.UserOptionsToolTip}"
                   Style="{DynamicResource Expander}">
             <StackPanel>
                 <Button Margin="0,10,0,0"
                         IsEnabled="{Binding CanLeave}"
                         Command="{Binding LeaveCommand}"
-                        ToolTip="This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side. 
-                        This action requires 2FA for confirmation."
-                        Content="Leave convo and delete local data on this device" />
+                        ToolTip="{x:Static p:Resources.LeaveConvoButtonToolTip}"
+                        Content="{x:Static p:Resources.LeaveConvoButton}" /> 
             </StackPanel>
         </Expander>
 
-        <Expander Header="Admin Options"
+        <Expander Header="{x:Static p:Resources.AdminOptions}"
                   Margin="0,10,0,0"
                   IsExpanded="false"
-                  ToolTip="Actions that only a convo admin can perform (like deleting the convo, modifying its metadata, password or participants)."
+                  ToolTip="{x:Static p:Resources.AdminOptionsToolTip}"
                   IsEnabled="{Binding IsAdmin}"
                   Style="{DynamicResource Expander}">
+            
             <StackPanel>
+                
                 <Expander Header="Metadata"
                           Margin="15,3,0,0" 
-                          ToolTip="Change the conversation's metadata by filling in this form."
+                          ToolTip="{x:Static p:Resources.ChangeConvoMetadataToolTip}"
                           Style="{DynamicResource Expander}">
+                    
                     <StackPanel>
-                        <Label Content="Name"
-                               ToolTip="Change the convo's title." />
-                        <TextBox MaxLength="25"
-                                 ToolTip="The new convo's title."
-                                 Text="{Binding Name}"
-                                  />
 
-                        <Label Content="Description"
-                               ToolTip="Describe what this conversation is about." />
+                        <Label Content="{x:Static p:Resources.Name}"
+                               ToolTip="{x:Static p:Resources.ChangeConvoTitle}" />
+                        
+                        <TextBox MaxLength="25"
+                                 ToolTip="{x:Static p:Resources.TheNewConvoTitle}"
+                                 Text="{Binding Name}"/>
+
+                        <Label Content="{x:Static p:Resources.Description}"
+                               ToolTip="{x:Static p:Resources.ConvoDescriptionToolTip}" />
 
                         <TextBox AcceptsReturn="True"
                                  MaxLength="100"
                                  Height="64"
                                  TextWrapping="Wrap"
                                  VerticalContentAlignment="Top"
-                                 ToolTip="Describe what this conversation is about."
+                                 ToolTip="{x:Static p:Resources.ConvoDescriptionToolTip}"
                                  Text="{Binding Description}" />
 
-                        <Label Content="Expiration Date"
-                               ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically irreversibly." />
+                        <Label Content="{x:Static p:Resources.ExpirationDate}"
+                               ToolTip="{x:Static p:Resources.ExpirationDateToolTip}" />
 
                         <DatePicker Name="DatePicker"
-                                    ToolTip="Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly."
+                                    ToolTip="{x:Static p:Resources.ExpirationDateToolTip}"
                                     DisplayDateStart="{Binding MinExpirationUTC}"
                                     SelectedDate="{Binding ExpirationUTC}"
                                     FirstDayOfWeek="Monday"
@@ -144,15 +161,20 @@
                     </StackPanel>
                 </Expander>
 
-                <Expander Header="Participants"
+                <Expander Header="{x:Static p:Resources.Participants}"
                           Margin="15,3,0,0" 
                           Style="{DynamicResource Expander}">
+                    
                     <StackPanel>
+                        
                         <Label Margin="0,4,0,0"
                                Content="{Binding UserId}"
                                ContentStringFormat="{}{0} (you)" />
+                        
                         <StackPanel Visibility="{Binding OtherParticipantsListVisibility}">
-                            <Label Content="Other participants:" />
+
+                            <Label Content="{x:Static p:Resources.OtherParticipants}" />
+                            
                             <ListBox Margin="0,-2,0,4"
                                      MaxHeight="150"
                                      Name="ParticipantsListBox"
@@ -180,12 +202,12 @@
                                                               IsEnabled="False"
                                                               IsHitTestVisible="False" />
                                                     <Separator />
-                                                    <MenuItem Header="Promote to admin" 
-                                                              ToolTip="Promotes this user to be the new convo's admin.&#x0a;Please be aware of the fact that by doing this you fully give up your rights as a convo admin,&#x0a;and that the new admin will have FULL control over the conversation."
+                                                    <MenuItem Header="{x:Static p:Resources.PromoteToAdmin}" 
+                                                              ToolTip="{x:Static p:Resources.PromoteToAdminToolTip}"
                                                               Command="{Binding PlacementTarget.Tag.MakeAdminCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                               CommandParameter="{Binding}" />
-                                                    <MenuItem Header="Kick and ban from convo" 
-                                                              ToolTip="Kicks the user from the convo and prevents him from joining back in by putting him on the convo's black list.&#x0a;Only use this when really needed (e.g. spam), as this action is intentionally irreversible!"
+                                                    <MenuItem Header="{x:Static p:Resources.KickAndBan}" 
+                                                              ToolTip="{x:Static p:Resources.KickAndBanToolTip}"
                                                               Command="{Binding PlacementTarget.Tag.KickAndBanUserCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                               CommandParameter="{Binding}" />
                                                 </ContextMenu>
@@ -195,7 +217,7 @@
                                             <Button Width="15"
                                                     Height="15"
                                                     Margin="0"
-                                                    ToolTip="Copy user id to clipboard"
+                                                    ToolTip="{x:Static p:Resources.CopyUserIdToClipboard}"
                                                     Command="{Binding DataContext.CopyUserIdToClipboardCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
                                                     CommandParameter="{Binding}"
                                                     Style="{DynamicResource CopyToClipboardButton}"/>
@@ -204,11 +226,14 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </StackPanel>
+                        
                         <StackPanel Visibility="{Binding BannedListVisibility}">
-                            <Label Content="Banned users:" />
+
+                            <Label Content="{x:Static p:Resources.BannedUsers}" />
+                            
                             <ListBox MaxHeight="150"
                                      Name="BannedUsersListBox"
-                                     ToolTip="These are the user ids that have been permanently banned from this convo."
+                                     ToolTip="{x:Static p:Resources.BannedUsersToolTip}"
                                      ItemsSource="{Binding Banned}"
                                      Style="{DynamicResource MessagesListBox}"
                                      VirtualizingStackPanel.ScrollUnit="Pixel"
@@ -229,7 +254,7 @@
                                             <Button Width="15"
                                                     Height="15"
                                                     Margin="0"
-                                                    ToolTip="Copy user id to clipboard"
+                                                    ToolTip="{x:Static p:Resources.CopyUserIdToClipboard}"
                                                     Command="{Binding DataContext.CopyUserIdToClipboardCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
                                                     CommandParameter="{Binding}"
                                                     Style="{DynamicResource CopyToClipboardButton}" />
@@ -241,14 +266,16 @@
                     </StackPanel>
                 </Expander>
 
-                <Expander Header="Security"
+                <Expander Header="{x:Static p:Resources.Security}"
                           Margin="15,3,0,0"
                           Style="{DynamicResource Expander}">
+                    
                     <StackPanel>
-                        <Label Content="New Convo Password"
-                               ToolTip="Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: unless specifically banned, whoever has this password and your convo's id can join!" />
-                        <PasswordBox Name="NewPassword"
-                                     >
+
+                        <Label Content="{x:Static p:Resources.NewConvoPassword}"
+                               ToolTip="{x:Static p:Resources.NewConvoPasswordToolTip}" />
+                        
+                        <PasswordBox Name="NewPassword">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PasswordChanged">
                                     <i:InvokeCommandAction Command="{Binding NewPasswordChangedCommand}"
@@ -257,8 +284,8 @@
                             </i:Interaction.Triggers>
                         </PasswordBox>
 
-                        <Label Content="Confirm New Password"
-                               ToolTip="Confirm your new convo password by re-entering it here." />
+                        <Label Content="{x:Static p:Resources.ConfirmNewConvoPassword}"
+                               ToolTip="{x:Static p:Resources.ConfirmNewConvoPasswordToolTip}" />
 
                         <PasswordBox Name="NewPassword2"
                                      >
@@ -275,17 +302,19 @@
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right"
                             Margin="0,10,0,0">
-                    <Button Content="Cancel"
+
+                    <Button Content="{x:Static p:Resources.Cancel}"
                             Command="{Binding CancelCommand}"
-                            ToolTip="Never mind, no changes will be made."
                             Margin="0,0,10,0" />
-                    <Button Content="Delete Convo"
+
+                    <Button Content="{x:Static p:Resources.DeleteConvo}"
                             Command="{Binding DeleteCommand}"
-                            ToolTip="The entire convo will be immediately deleted on the server without any chance of recovery."
+                            ToolTip="{x:Static p:Resources.DeleteConvoToolTip}"
                             Margin="0,0,10,0" />
-                    <Button Content="Submit"
+
+                    <Button Content="{x:Static p:Resources.Submit}"
+                            ToolTip="{x:Static p:Resources.SubmitConvoMetadataChangeRequestToolTip}"
                             IsEnabled="{Binding CanSubmit}"
-                            ToolTip="Submits the convo modification request to the Epistle backend."
                             Command="{Binding SubmitCommand}"
                             CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />
                 </StackPanel>
@@ -297,3 +326,4 @@
                     Command="{Binding CancelCommand}" />
     </Window.InputBindings>
 </Window>
+    

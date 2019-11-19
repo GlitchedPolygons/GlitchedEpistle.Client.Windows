@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmFileUploadView"
@@ -25,20 +25,26 @@
         xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         Background="{DynamicResource WindowBackgroundBrush}"
         ResizeMode="NoResize"
-        Title="Confirm drag 'n' drop action"
+        Title="{x:Static p:Resources.ConfirmFileUpload}"
         WindowStartupLocation="CenterScreen" 
         SizeToContent="WidthAndHeight">
+    
     <StackPanel Margin="10" 
                 MaxWidth="380">
-        <Label Content="Please confirm that you want to upload the following file:"/>
+
+        <Label Content="{x:Static p:Resources.ConfirmFileUploadText}"/>
+        
         <StackPanel Margin="30,15">
+            
             <TextBlock Name="FileNameLabel" 
                        TextWrapping="Wrap" 
                        Margin="5,0"
                        FontWeight="Bold"
                        Text="Picture.png"
                        Style="{DynamicResource TextBlock}"/>
-            <Label Content="Full path:"/>
+
+            <Label Content="{x:Static p:Resources.FullPath}"/>
+            
             <TextBlock TextWrapping="Wrap" 
                        Name="FilePathLabel"
                        FontSize="11" 
@@ -48,21 +54,22 @@
                        Text="C:\Pictures\Picture.png"
                        Style="{DynamicResource TextBlock}" />
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Right">
+
             <Button Margin="0,10,0,0"
-                    Click="CancelButton_Click">
-                Cancel
-            </Button>
+                    Click="CancelButton_Click"
+                    Content="{x:Static p:Resources.Cancel}"/>
+
             <Button Margin="10,10,0,0" 
                     Name="ExploreButton"
-                    Click="ExploreButton_Click">
-                Show in Explorer
-            </Button>
+                    Click="ExploreButton_Click"
+                    Content="{x:Static p:Resources.ShowInExplorer}"/>
+
             <Button Margin="10,10,0,0"
-                    Click="ConfirmButton_Click">
-                Upload
-            </Button>
+                    Click="ConfirmButton_Click"
+                    Content="{x:Static p:Resources.Upload}"/>
         </StackPanel>
     </StackPanel>
 </Window>

@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.GeneratingKeyView"
@@ -28,31 +28,36 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        Title="Generating Keys"
+        Title="{x:Static p:Resources.GeneratingKeys}"
         Width="600"
         Height="420">
+    
     <Grid>
         <Image Stretch="UniformToFill"
                gif:AnimationBehavior.AnimateInDesignMode="True"
                gif:AnimationBehavior.RepeatBehavior="Forever"
                gif:AnimationBehavior.SourceUri="../Resources/Images/animated-matrix-code.gif" />
+        
         <StackPanel VerticalAlignment="Center"
                     Background="Black">
+            
             <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="28"
                    Foreground="AliceBlue"
-                   Content="Generating 4096-bit RSA key pair..." />
+                   Content="{x:Static p:Resources.GeneratingKeyPairTitle}" />
+            
             <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="28"
                    Foreground="AliceBlue"
-                   Content="Please wait, and don't terminate Epistle!" />
+                   Content="{x:Static p:Resources.GeneratingKeyPairSubTitle1}" />
+            
             <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="14"
                    Foreground="AliceBlue"
-                   Content="Depending on your hardware, this might take up to a few minutes, so just relax!" />
+                   Content="{x:Static p:Resources.GeneratingKeyPairSubTitle2}" />
         </StackPanel>
     </Grid>
 </Window>

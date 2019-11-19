@@ -28,7 +28,7 @@
     <StackPanel HorizontalAlignment="Center"
                 MaxWidth="280">
 
-        <TextBlock Text="Please set up your 2FA authenticator app."
+        <TextBlock Text="{x:Static p:Resources.PleaseSetUp2FA}"
                    TextWrapping="Wrap"
                    TextAlignment="Center"
                    MaxWidth="250"
@@ -36,7 +36,7 @@
                    FontSize="16"
                    Style="{DynamicResource TextBlock}" />
 
-        <Label Content="(Google Authenticator is recommended)"
+        <Label Content="{x:Static p:Resources.GoogleAuthenticatorIsRecommended}"
                FontSize="11"
                HorizontalAlignment="Center" />
 
@@ -56,25 +56,24 @@
                HorizontalAlignment="Center"
                Source="{Binding QR}" />
 
-        <Label Content="2FA secret (please back this up somewhere safe)"
-               ToolTip="This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you'll need it if you happen to lose your 2FA device." />
+        <Label Content="{x:Static p:Resources.TotpSecretPleaseBackUpSomewhereSafe}"
+               ToolTip="{x:Static p:Resources.TotpSecretPleaseBackUpSomewhereSafeDetailed}" />
 
         <TextBox Name="SecretTextBox"
                  IsReadOnly="True"
-                 ToolTip="This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you'll need it if you happen to lose your 2FA device."
+                 ToolTip="{x:Static p:Resources.TotpSecretPleaseBackUpSomewhereSafeDetailed}"
                  MouseDoubleClick="SecretTextBox_SelectText"
                  GotKeyboardFocus="SecretTextBox_SelectText"
                  PreviewMouseLeftButtonDown="SecretTextBox_OnPreviewMouseLeftButtonDown"
                  Text="{Binding Secret}" />
 
-        <Label Content="Enter your 2FA code for verification:"
+        <Label Content="{x:Static p:Resources.EnterTotpForVerification}"
                FontSize="14" />
 
-        <Label Content="2FA TOTP"
-               ToolTip="Your user password." />
+        <Label Content="{x:Static p:Resources.TwoFactorAuthentication}" />
 
         <TextBox Name="TotpTextBox"
-                 ToolTip="Your 2-Factor authentication token (from Google Authenticator, Authy or a similar app)"
+                 ToolTip="{x:Static p:Resources.TwoFactorAuthTokenToolTip}"
                  Text="{Binding Totp}"
                  TextChanged="TotpTextBox_OnTextChanged" />
 
@@ -82,16 +81,15 @@
                     HorizontalAlignment="Right"
                     Margin="0,15,0,0">
 
-            <Button Content="Export Backup Codes"
-                    Command="{Binding ExportBackupCodesCommand}"
-                    ToolTip="Exports your 2FA emergency backup codes to a text file, which you need to keep safe and SECRET at all costs and away from third parties!" />
+            <Button Content="{x:Static p:Resources.ExportBackupCodes}"
+                    ToolTip="{x:Static p:Resources.ExportBackupCodesToolTip}" 
+                    Command="{Binding ExportBackupCodesCommand}"/>
 
             <Button MinWidth="96"
                     Margin="15,0,0,0"
-                    Content="Verify"
                     Name="VerifyButton"
+                    Content="{x:Static p:Resources.Verify}"
                     Command="{Binding VerifyCommand}"
-                    ToolTip="Verify your 2FA setup."
                     IsEnabled="False" />
         </StackPanel>
 

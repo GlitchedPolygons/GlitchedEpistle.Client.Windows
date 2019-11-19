@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmLeaveConvoView"
@@ -25,34 +25,38 @@
         mc:Ignorable="d"
         xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         Background="{DynamicResource WindowBackgroundBrush}"
-        Title="Leave convo"
+        Title="{x:Static p:Resources.LeaveConvo}"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize">
-    <StackPanel Margin="10" MaxWidth="425">
-        <Label Content="Are you sure that you want to leave this convo?"
+    
+    <StackPanel Margin="15" MaxWidth="425">
+
+        <Label Content="{x:Static p:Resources.LeaveConvoAreYouSure}"
                FontWeight="Bold"
                FontSize="16" />
-        <Separator Margin="0,0,0,10"/>
+        
+        <Separator Margin="0,7.5,0,10"/>
+
         <TextBlock Style="{DynamicResource TextBlock}" 
-                   TextWrapping="Wrap">
-            By leaving a convo (server-side action) you are no longer one of its participants.
-        </TextBlock>
+                   TextWrapping="Wrap" 
+                   Text="{x:Static p:Resources.LeaveConvoDescription}"/>
+
         <TextBlock Style="{DynamicResource TextBlock}" 
                    Margin="0,10,0,0"
-                   TextWrapping="Wrap">
-            Your local copy of the conversation's chatroom will be deleted. Unless you backed it up somewhere, that data will be gone.
-            As long as you have the convo's id and access password, you can join back in any time though.
-        </TextBlock>
+                   TextWrapping="Wrap"
+                   Text="{x:Static p:Resources.LeaveConvoLocalDataDeletionNotice}"/>
+
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0,10,0,0">
-            <Button Content="Cancel"
+
+            <Button Content="{x:Static p:Resources.Cancel}"
                     Click="CancelButton_OnClick"
                     Margin="0,0,10,0" />
-            <Button Content="Leave"
-                    Click="LeaveButton_OnClick"
-                    ToolTip="Submits the convo creation request to the Epistle backend."/>
+
+            <Button Content="{x:Static p:Resources.Leave}"
+                    Click="LeaveButton_OnClick"/>
         </StackPanel>
     </StackPanel>
 </Window>

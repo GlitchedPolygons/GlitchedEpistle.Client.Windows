@@ -143,3 +143,4 @@
                     Command="{Binding RegisterCommand}" />
     </UserControl.InputBindings>
 </UserControl>
+    

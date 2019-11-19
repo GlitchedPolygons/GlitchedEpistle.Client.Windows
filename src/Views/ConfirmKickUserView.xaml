@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <Window x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.ConfirmKickUserView"
@@ -25,40 +25,46 @@
         mc:Ignorable="d"
         xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         Background="{DynamicResource WindowBackgroundBrush}"
-        Title="Confirm kick"
+        Title="{x:Static p:Resources.ConfirmKick}"
         WindowStartupLocation="CenterScreen"
         SizeToContent="WidthAndHeight"
         ResizeMode="NoResize">
-    <StackPanel Margin="10" MaxWidth="425">
+    
+    <StackPanel Margin="15" MaxWidth="425">
+        
         <TextBlock Style="{DynamicResource TextBlock}" 
                    TextWrapping="Wrap" 
-                   Text="Are you sure that you want to kick the selected user out from this convo?"
-               FontWeight="Bold"
-               FontSize="16" />
-        <Separator Margin="0,0,0,10"/>
+                   Text="{x:Static p:Resources.ConfirmKickText}"
+                   FontWeight="Bold"
+                   FontSize="16" />
+        
+        <Separator Margin="0,10"/>
+
         <TextBlock Style="{DynamicResource TextBlock}" 
-                   TextWrapping="Wrap">
-            By kicking and banning a user from a convo you prevent him from being able to receive new messages from the convo as well as post new messages to it.
-        </TextBlock>
+                   TextWrapping="Wrap"
+                   Text="{x:Static p:Resources.ConfirmKickDescription}"/>
+
         <TextBlock Style="{DynamicResource TextBlock}" 
                    Margin="0,10,0,0"
-                   TextWrapping="Wrap">
-            WARNING: This action is irreversible!
-        </TextBlock>
+                   TextWrapping="Wrap" 
+                   Text="{x:Static p:Resources.ConfirmKickWarningIrreversible}"/>
+
         <TextBlock Style="{DynamicResource TextBlock}" 
                    Margin="0,0,0,0"
-                   TextWrapping="Wrap">
-            Banned users can never join back into a convo; a new conversation would need to be created!
-        </TextBlock>
+                   TextWrapping="Wrap"
+                   Text="{x:Static p:Resources.ConfirmKickWarningIrreversibleDesc}"/>
+
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0,10,0,0">
-            <Button Content="Cancel"
+
+            <Button Content="{x:Static p:Resources.Cancel}"
                     Click="CancelButton_OnClick"
                     Margin="0,0,10,0" />
-            <Button Content="Confirm"
+
+            <Button Content="{x:Static p:Resources.Confirm}"
                     Click="ConfirmButton_OnClick"
-                    ToolTip="Kicks and bans the user from the convo."/>
+                    ToolTip="{x:Static p:Resources.ConfirmKickAndBanUserToolTip}"/>
         </StackPanel>
     </StackPanel>
 </Window>

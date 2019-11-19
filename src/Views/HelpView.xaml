@@ -24,33 +24,39 @@
         mc:Ignorable="d"
         xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
         WindowStartupLocation="CenterScreen"
+        Title="{x:Static p:Resources.HelpWindowTitle}"
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/help-icon-white.png"
-        Title="Glitched Epistle - Help"
         Height="450"
         Width="600">
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="55" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
         <StackPanel Margin="10" Grid.Row="0">
-            <Label Content="About Glitched Epistle"
+
+            <Label Content="{x:Static p:Resources.AboutGlitchedEpistle}"
                    FontWeight="Bold"
                    FontSize="16" />
             <Separator />
         </StackPanel>
+        
         <ScrollViewer Grid.Row="1"
                       Margin="10,10,5,10"
                       VirtualizingStackPanel.ScrollUnit="Pixel"
                       VirtualizingStackPanel.IsVirtualizing="True"
                       HorizontalScrollBarVisibility="Disabled"
                       VerticalScrollBarVisibility="Visible">
+            
             <StackPanel>
                 <Expander Style="{DynamicResource Expander}"
                           MouseDown="OnChangeSubject" 
                           FontWeight="Bold"
-                          Header="First of all, what is Epistle?">
+                          Header="{x:Static p:Resources.WhatIsEpistle}">
+                    
                     <TextBlock Style="{DynamicResource TextBlock}"
                                Margin="24,10,10,10"
                                TextWrapping="Wrap" 
@@ -62,8 +68,10 @@ This way you can verify that the apps ACTUALLY encrypt your messages before they
 The Epistle server knows NOTHING about you, or what you send to whom. Because we believe it's everybody's right not to be monitored by advertising companies nor the government (or anybody else for that matter) when communicating to each other. &#x0a;When using free services always keep in mind: if you don't give those companies your money in exchange for a product, you ARE the product." />
                 </Expander>
 
-                <Expander Style="{DynamicResource Expander}" FontWeight="Bold"
-                          Header="Who is behind this project?">
+                <Expander Style="{DynamicResource Expander}" 
+                          FontWeight="Bold"
+                          Header="{x:Static p:Resources.WhoIsBehindThisProject}">
+                    
                     <TextBlock Style="{DynamicResource TextBlock}"
                                Margin="24,10,10,10"
                                TextWrapping="Wrap" 
@@ -74,7 +82,8 @@ Glitched Epistle was developed by Glitched Polygons, &#x0a; a tiny video game st
 
                 <Expander Style="{DynamicResource Expander}" 
                           FontWeight="Bold"
-                          Header="How do I get started?">
+                          Header="{x:Static p:Resources.HowToGetStarted}">
+                    
                     <TextBlock Style="{DynamicResource TextBlock}"
                                Margin="24,10,10,10"
                                TextWrapping="Wrap" 
@@ -89,7 +98,8 @@ Once you've done all this, you're ready to log in!" />
 
                 <Expander Style="{DynamicResource Expander}" 
                           FontWeight="Bold"
-                          Header="User interface overview">
+                          Header="{x:Static p:Resources.UserInterfaceOverview}">
+                    
                     <TextBlock Style="{DynamicResource TextBlock}"
                                Margin="24,10,10,10"
                                TextWrapping="Wrap" 
@@ -107,7 +117,8 @@ In the top right corner you have three buttons: restore window, settings and hel
 
                 <Expander Style="{DynamicResource Expander}" 
                           FontWeight="Bold"
-                          Header="Joining and creating convos">
+                          Header="{x:Static p:Resources.JoiningAndCreatingConvos}">
+                    
                     <TextBlock Style="{DynamicResource TextBlock}"
                                Margin="24,10,10,10"
                                TextWrapping="Wrap" 
@@ -123,7 +134,8 @@ If you want to join a convo from another Epistle user who gave you the convo id 
 
                 <Expander Style="{DynamicResource Expander}" 
                           FontWeight="Bold"
-                          Header="Editing convos">
+                          Header="{x:Static p:Resources.EditingConvos}">
+                    
                     <TextBlock Style="{DynamicResource TextBlock}"
                                Margin="24,10,10,10"
                                TextWrapping="Wrap" 
@@ -139,7 +151,8 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
                 
                 <Expander Style="{DynamicResource Expander}" 
                           FontWeight="Bold"
-                          Header="User settings">
+                          Header="{x:Static p:Resources.UserSettings}">
+                    
                     <TextBlock Style="{DynamicResource TextBlock}"
                                Margin="24,10,10,10"
                                TextWrapping="Wrap" 
@@ -151,8 +164,10 @@ The trash icon at the bottom of the settings menu is a button that allows you to
 PLEASE read every warning carefully in the dialog menu before you do something you might regret later!
 " />
                 </Expander>
+                
                 <Label Content="{Binding VersionNumber}" />
             </StackPanel>
         </ScrollViewer>
     </Grid>
 </Window>
+    

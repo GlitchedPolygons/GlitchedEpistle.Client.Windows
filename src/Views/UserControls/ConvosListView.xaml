@@ -23,7 +23,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
              mc:Ignorable="d">
-
+    
     <ListBox Name="ConvosListBox"
              ItemsSource="{Binding Convos}"
              Style="{DynamicResource ConvosListBox}"
@@ -56,10 +56,10 @@
                                       IsEnabled="False"
                                       IsHitTestVisible="False" />
                             <Separator />
-                            <MenuItem Header="Open Convo"
+                            <MenuItem Header="{x:Static p:Resources.OpenConvo}"
                                       Command="{Binding PlacementTarget.Tag.OpenConvoCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                       CommandParameter="{Binding}" />
-                            <MenuItem Header="Edit Convo"
+                            <MenuItem Header="{x:Static p:Resources.EditConvo}"
                                       Command="{Binding PlacementTarget.Tag.EditConvoCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                       CommandParameter="{Binding}" />
                             <MenuItem Header="{x:Static p:Resources.CopyConvoIdToClipboard}"
@@ -72,7 +72,7 @@
                             <Setter Property="Border.CornerRadius" Value="0,16,16,0"/>
                             <Style.Triggers>
                                 <DataTrigger Binding="{Binding IsExpired}" Value="true">
-                                    <Setter Property="ToolTip" Value="This convo is expired!" />
+                                    <Setter Property="ToolTip" Value="{x:Static p:Resources.ThisConvoIsExpired}" />
                                     <Setter Property="ContentStringFormat" Value="{}{0} (expired)" />
                                     <Setter Property="Foreground" Value="#FF8A8A8A" />
                                 </DataTrigger>
@@ -105,3 +105,4 @@
         </ListBox.ItemContainerStyle>
     </ListBox>
 </UserControl>
+    

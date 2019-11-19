@@ -61,6 +61,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About Glitched Epistle.
+        /// </summary>
+        public static string AboutGlitchedEpistle {
+            get {
+                return ResourceManager.GetString("AboutGlitchedEpistle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accept.
         /// </summary>
         public static string Accept {
@@ -79,11 +88,47 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Admin Options.
+        /// </summary>
+        public static string AdminOptions {
+            get {
+                return ResourceManager.GetString("AdminOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions that only a convo admin can perform (like deleting the convo, modifying its metadata, password or participants)..
+        /// </summary>
+        public static string AdminOptionsToolTip {
+            get {
+                return ResourceManager.GetString("AdminOptionsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to I already have an account.
         /// </summary>
         public static string AlreadyHaveAnAccount {
             get {
                 return ResourceManager.GetString("AlreadyHaveAnAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        public static string AreYouSure {
+            get {
+                return ResourceManager.GetString("AreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to delete this convo?.
+        /// </summary>
+        public static string AreYouSureYouWantToDeleteThisConvo {
+            get {
+                return ResourceManager.GetString("AreYouSureYouWantToDeleteThisConvo", resourceCulture);
             }
         }
         
@@ -124,11 +169,56 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Banned users:.
+        /// </summary>
+        public static string BannedUsers {
+            get {
+                return ResourceManager.GetString("BannedUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to These are the user ids that have been permanently banned from this convo..
+        /// </summary>
+        public static string BannedUsersToolTip {
+            get {
+                return ResourceManager.GetString("BannedUsersToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closes the window without saving the changes..
+        /// </summary>
+        public static string CancelSettingsButtonToolTip {
+            get {
+                return ResourceManager.GetString("CancelSettingsButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the conversation&apos;s metadata by filling in this form..
+        /// </summary>
+        public static string ChangeConvoMetadataToolTip {
+            get {
+                return ResourceManager.GetString("ChangeConvoMetadataToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change the convo&apos;s title..
+        /// </summary>
+        public static string ChangeConvoTitle {
+            get {
+                return ResourceManager.GetString("ChangeConvoTitle", resourceCulture);
             }
         }
         
@@ -142,11 +232,47 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public static string ChangePassword {
+            get {
+                return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change Server.
         /// </summary>
         public static string ChangeServer {
             get {
                 return ResourceManager.GetString("ChangeServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to change the password you use to access Glitched Epistle..
+        /// </summary>
+        public static string ChangeUserPasswordButtonToolTip {
+            get {
+                return ResourceManager.GetString("ChangeUserPasswordButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing your password is easy.
+        /// </summary>
+        public static string ChangingPasswordIsEasy {
+            get {
+                return ResourceManager.GetString("ChangingPasswordIsEasy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click here to join an existing conversation..
+        /// </summary>
+        public static string ClickHereToJoinAnExistingConvo {
+            get {
+                return ResourceManager.GetString("ClickHereToJoinAnExistingConvo", resourceCulture);
             }
         }
         
@@ -160,11 +286,209 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm convo admin change.
+        /// </summary>
+        public static string ConfirmConvoAdminChange {
+            get {
+                return ResourceManager.GetString("ConfirmConvoAdminChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By giving up your convo admin rights you lose the ability to modify the convo, kick users from it as well as deleting the convo server-side..
+        /// </summary>
+        public static string ConfirmConvoAdminChangeDescription {
+            get {
+                return ResourceManager.GetString("ConfirmConvoAdminChangeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promotes the selected convo participant to be the new convo&apos;s admin..
+        /// </summary>
+        public static string ConfirmConvoAdminChangeToolTip {
+            get {
+                return ResourceManager.GetString("ConfirmConvoAdminChangeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WARNING: This action is irreversible, unless the new convo admin re-elects you as admin!.
+        /// </summary>
+        public static string ConfirmConvoAdminChangeWarning {
+            get {
+                return ResourceManager.GetString("ConfirmConvoAdminChangeWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm convo deletion.
+        /// </summary>
+        public static string ConfirmConvoDeletion {
+            get {
+                return ResourceManager.GetString("ConfirmConvoDeletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string ConfirmConvoPassword {
+            get {
+                return ResourceManager.GetString("ConfirmConvoPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Deletion.
+        /// </summary>
+        public static string ConfirmDeletion {
+            get {
+                return ResourceManager.GetString("ConfirmDeletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm deletion &amp; quit.
+        /// </summary>
+        public static string ConfirmDeletionAndQuit {
+            get {
+                return ResourceManager.GetString("ConfirmDeletionAndQuit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm file upload.
+        /// </summary>
+        public static string ConfirmFileUpload {
+            get {
+                return ResourceManager.GetString("ConfirmFileUpload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm that you want to upload the following file:.
+        /// </summary>
+        public static string ConfirmFileUploadText {
+            get {
+                return ResourceManager.GetString("ConfirmFileUploadText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm kick.
+        /// </summary>
+        public static string ConfirmKick {
+            get {
+                return ResourceManager.GetString("ConfirmKick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kicks and bans the user from the convo..
+        /// </summary>
+        public static string ConfirmKickAndBanUserToolTip {
+            get {
+                return ResourceManager.GetString("ConfirmKickAndBanUserToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By kicking and banning a user from a convo you prevent him from being able to receive new messages from the convo as well as post new messages to it..
+        /// </summary>
+        public static string ConfirmKickDescription {
+            get {
+                return ResourceManager.GetString("ConfirmKickDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to kick the selected user out from this convo?.
+        /// </summary>
+        public static string ConfirmKickText {
+            get {
+                return ResourceManager.GetString("ConfirmKickText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WARNING: This action is irreversible!.
+        /// </summary>
+        public static string ConfirmKickWarningIrreversible {
+            get {
+                return ResourceManager.GetString("ConfirmKickWarningIrreversible", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Banned users can never join back into a convo; a new conversation would need to be created!.
+        /// </summary>
+        public static string ConfirmKickWarningIrreversibleDesc {
+            get {
+                return ResourceManager.GetString("ConfirmKickWarningIrreversibleDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm New Password.
+        /// </summary>
+        public static string ConfirmNewConvoPassword {
+            get {
+                return ResourceManager.GetString("ConfirmNewConvoPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm your new convo password by re-entering it here..
+        /// </summary>
+        public static string ConfirmNewConvoPasswordToolTip {
+            get {
+                return ResourceManager.GetString("ConfirmNewConvoPasswordToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm your reset.
+        /// </summary>
+        public static string ConfirmReset {
+            get {
+                return ResourceManager.GetString("ConfirmReset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The connection to the specified Epistle server could not be established..
         /// </summary>
         public static string ConnectionToTheSpecifiedEpistleServerFailed {
             get {
                 return ResourceManager.GetString("ConnectionToTheSpecifiedEpistleServerFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your convo can NOT be recovered in any way after this!.
+        /// </summary>
+        public static string ConvoCantBeRecoveredAfterDeletionWarning {
+            get {
+                return ResourceManager.GetString("ConvoCantBeRecoveredAfterDeletionWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never mind, no convo will be created..
+        /// </summary>
+        public static string ConvoCreationCancelToolTip {
+            get {
+                return ResourceManager.GetString("ConvoCreationCancelToolTip", resourceCulture);
             }
         }
         
@@ -192,6 +516,60 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string ConvoCreationPasswordTooWeak {
             get {
                 return ResourceManager.GetString("ConvoCreationPasswordTooWeak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Describe what this conversation is about..
+        /// </summary>
+        public static string ConvoDescriptionToolTip {
+            get {
+                return ResourceManager.GetString("ConvoDescriptionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convo ID.
+        /// </summary>
+        public static string ConvoId {
+            get {
+                return ResourceManager.GetString("ConvoId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The conversation&apos;s unique identifier..
+        /// </summary>
+        public static string ConvoIdToolTip {
+            get {
+                return ResourceManager.GetString("ConvoIdToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Give your convo a meaningful and unique name!.
+        /// </summary>
+        public static string ConvoNameToolTip {
+            get {
+                return ResourceManager.GetString("ConvoNameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convo Password.
+        /// </summary>
+        public static string ConvoPassword {
+            get {
+                return ResourceManager.GetString("ConvoPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protect your conversation by giving it a strong password that only you and your convo&apos;s participants should ever know. Note: who has this password and your convo&apos;s id can join!.
+        /// </summary>
+        public static string ConvoPasswordToolTip {
+            get {
+                return ResourceManager.GetString("ConvoPasswordToolTip", resourceCulture);
             }
         }
         
@@ -232,11 +610,173 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Convo.
+        /// </summary>
+        public static string CreateConvo {
+            get {
+                return ResourceManager.GetString("CreateConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new conversation.
+        /// </summary>
+        public static string CreateConvoTitle {
+            get {
+                return ResourceManager.GetString("CreateConvoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create a new conversation..
+        /// </summary>
+        public static string CreateNewConvo {
+            get {
+                return ResourceManager.GetString("CreateNewConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Convo Password.
+        /// </summary>
+        public static string CurrentConvoPassword {
+            get {
+                return ResourceManager.GetString("CurrentConvoPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter the current convo&apos;s password here..
+        /// </summary>
+        public static string CurrentConvoPasswordToolTip {
+            get {
+                return ResourceManager.GetString("CurrentConvoPasswordToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Password.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your currently active user password..
+        /// </summary>
+        public static string CurrentPasswordToolTip {
+            get {
+                return ResourceManager.GetString("CurrentPasswordToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Convo.
+        /// </summary>
+        public static string DeleteConvo {
+            get {
+                return ResourceManager.GetString("DeleteConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete convo locally.
+        /// </summary>
+        public static string DeleteConvoLocally {
+            get {
+                return ResourceManager.GetString("DeleteConvoLocally", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By deleting a convo (client-side action) you remain a participant of the convo but remove the convo&apos;s chat data from this machine..
+        /// </summary>
+        public static string DeleteConvoLocallyDescription {
+            get {
+                return ResourceManager.GetString("DeleteConvoLocallyDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As long as you have the convo&apos;s id and access password, you can sync back into the convo at any time. It&apos;ll just take a moment until the messages are downloaded and decrypted to your device..
+        /// </summary>
+        public static string DeleteConvoLocallyDescription2 {
+            get {
+                return ResourceManager.GetString("DeleteConvoLocallyDescription2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The entire convo will be immediately deleted on the server without any chance of recovery..
+        /// </summary>
+        public static string DeleteConvoToolTip {
+            get {
+                return ResourceManager.GetString("DeleteConvoToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download attachment.
         /// </summary>
         public static string DownloadAttachment {
             get {
                 return ResourceManager.GetString("DownloadAttachment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit Convo.
+        /// </summary>
+        public static string EditConvo {
+            get {
+                return ResourceManager.GetString("EditConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit, leave or delete convo.
+        /// </summary>
+        public static string EditConvoTitle {
+            get {
+                return ResourceManager.GetString("EditConvoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing convos.
+        /// </summary>
+        public static string EditingConvos {
+            get {
+                return ResourceManager.GetString("EditingConvos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your 2FA code for verification:.
+        /// </summary>
+        public static string EnterTotpForVerification {
+            get {
+                return ResourceManager.GetString("EnterTotpForVerification", resourceCulture);
             }
         }
         
@@ -286,6 +826,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expiration Date.
+        /// </summary>
+        public static string ExpirationDate {
+            get {
+                return ResourceManager.GetString("ExpirationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly..
+        /// </summary>
+        public static string ExpirationDateToolTip {
+            get {
+                return ResourceManager.GetString("ExpirationDateToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Export Backup Codes.
+        /// </summary>
+        public static string ExportBackupCodes {
+            get {
+                return ResourceManager.GetString("ExportBackupCodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exports your 2FA emergency backup codes to a text file, which you need to keep safe and SECRET at all costs and away from third parties!.
+        /// </summary>
+        public static string ExportBackupCodesToolTip {
+            get {
+                return ResourceManager.GetString("ExportBackupCodesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ERROR: Your file couldn&apos;t be uploaded to the Epistle Web API.
         /// </summary>
         public static string FileCouldNotBeUploaded {
@@ -304,6 +880,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full path:.
+        /// </summary>
+        public static string FullPath {
+            get {
+                return ResourceManager.GetString("FullPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please wait, and don&apos;t terminate Epistle!.
+        /// </summary>
+        public static string GeneratingKeyPairSubTitle1 {
+            get {
+                return ResourceManager.GetString("GeneratingKeyPairSubTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Depending on your hardware, this might take up to a few minutes, so just relax!.
+        /// </summary>
+        public static string GeneratingKeyPairSubTitle2 {
+            get {
+                return ResourceManager.GetString("GeneratingKeyPairSubTitle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generating 4096-bit RSA key pair....
+        /// </summary>
+        public static string GeneratingKeyPairTitle {
+            get {
+                return ResourceManager.GetString("GeneratingKeyPairTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generating 4096-bit RSA Keys....
         /// </summary>
         public static string GeneratingKeys {
@@ -318,6 +930,42 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string GlitchedEpistleAlreadyRunningErrorMessage {
             get {
                 return ResourceManager.GetString("GlitchedEpistleAlreadyRunningErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (Google Authenticator is recommended).
+        /// </summary>
+        public static string GoogleAuthenticatorIsRecommended {
+            get {
+                return ResourceManager.GetString("GoogleAuthenticatorIsRecommended", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Glitched Epistle - Help.
+        /// </summary>
+        public static string HelpWindowTitle {
+            get {
+                return ResourceManager.GetString("HelpWindowTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How do I get started?.
+        /// </summary>
+        public static string HowToGetStarted {
+            get {
+                return ResourceManager.GetString("HowToGetStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image Viewer.
+        /// </summary>
+        public static string ImageViewer {
+            get {
+                return ResourceManager.GetString("ImageViewer", resourceCulture);
             }
         }
         
@@ -346,6 +994,126 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string InvalidUserIdPasswordOr2FA_Detailed {
             get {
                 return ResourceManager.GetString("InvalidUserIdPasswordOr2FA_Detailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join.
+        /// </summary>
+        public static string Join {
+            get {
+                return ResourceManager.GetString("Join", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join Convo.
+        /// </summary>
+        public static string JoinConvo {
+            get {
+                return ResourceManager.GetString("JoinConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Join an Epistle conversation now by entering its ID and access password..
+        /// </summary>
+        public static string JoinConvoDescription {
+            get {
+                return ResourceManager.GetString("JoinConvoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Joining and creating convos.
+        /// </summary>
+        public static string JoiningAndCreatingConvos {
+            get {
+                return ResourceManager.GetString("JoiningAndCreatingConvos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kick and ban from convo.
+        /// </summary>
+        public static string KickAndBan {
+            get {
+                return ResourceManager.GetString("KickAndBan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kicks the user from the convo and prevents him from joining back in by putting him on the convo&apos;s black list.
+        ///Only use this when really needed (e.g. spam), as this action is intentionally irreversible!.
+        /// </summary>
+        public static string KickAndBanToolTip {
+            get {
+                return ResourceManager.GetString("KickAndBanToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave.
+        /// </summary>
+        public static string Leave {
+            get {
+                return ResourceManager.GetString("Leave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave convo.
+        /// </summary>
+        public static string LeaveConvo {
+            get {
+                return ResourceManager.GetString("LeaveConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to leave this convo?.
+        /// </summary>
+        public static string LeaveConvoAreYouSure {
+            get {
+                return ResourceManager.GetString("LeaveConvoAreYouSure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Leave convo and delete local data on this device.
+        /// </summary>
+        public static string LeaveConvoButton {
+            get {
+                return ResourceManager.GetString("LeaveConvoButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will both delete the convo&apos;s data locally on this device as well as remove you as a user from the conversation server-side.
+        ///This action requires 2FA for confirmation..
+        /// </summary>
+        public static string LeaveConvoButtonToolTip {
+            get {
+                return ResourceManager.GetString("LeaveConvoButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By leaving a convo (server-side action) you are no longer one of its participants..
+        /// </summary>
+        public static string LeaveConvoDescription {
+            get {
+                return ResourceManager.GetString("LeaveConvoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your local copy of the conversation&apos;s chatroom will be deleted. Unless you backed it up somewhere, that data will be gone.
+        ///As long as you have the convo&apos;s id and access password, you can join back in any time though..
+        /// </summary>
+        public static string LeaveConvoLocalDataDeletionNotice {
+            get {
+                return ResourceManager.GetString("LeaveConvoLocalDataDeletionNotice", resourceCulture);
             }
         }
         
@@ -395,11 +1163,93 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Click here to log out of your Glitched Epistle account..
+        /// </summary>
+        public static string LogoutButtonToolTip {
+            get {
+                return ResourceManager.GetString("LogoutButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Message upload failed.
         /// </summary>
         public static string MessageUploadFailed {
             get {
                 return ResourceManager.GetString("MessageUploadFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Convo Password.
+        /// </summary>
+        public static string NewConvoPassword {
+            get {
+                return ResourceManager.GetString("NewConvoPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Protect your conversation by giving it a strong password that only you and your convo&apos;s participants should ever know. 
+        ///Note: unless specifically banned, whoever has this password and your convo&apos;s id can join!.
+        /// </summary>
+        public static string NewConvoPasswordToolTip {
+            get {
+                return ResourceManager.GetString("NewConvoPasswordToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Never mind, you&apos;ll keep your old password..
+        /// </summary>
+        public static string NewPasswordCancelToolTip {
+            get {
+                return ResourceManager.GetString("NewPasswordCancelToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm your new password.
+        /// </summary>
+        public static string NewPasswordConfirmation {
+            get {
+                return ResourceManager.GetString("NewPasswordConfirmation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please re-enter your new user password for confirmation..
+        /// </summary>
+        public static string NewPasswordConfirmationToolTip {
+            get {
+                return ResourceManager.GetString("NewPasswordConfirmationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your new user password..
+        /// </summary>
+        public static string NewPasswordToolTip {
+            get {
+                return ResourceManager.GetString("NewPasswordToolTip", resourceCulture);
             }
         }
         
@@ -427,6 +1277,51 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string OldPasswordWrongOrNewOnesDontMatch {
             get {
                 return ResourceManager.GetString("OldPasswordWrongOrNewOnesDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Convo.
+        /// </summary>
+        public static string OpenConvo {
+            get {
+                return ResourceManager.GetString("OpenConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open up the tutorial window..
+        /// </summary>
+        public static string OpenHelpButtonToolTip {
+            get {
+                return ResourceManager.GetString("OpenHelpButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open up the settings window..
+        /// </summary>
+        public static string OpenSettingsButtonToolTip {
+            get {
+                return ResourceManager.GetString("OpenSettingsButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other participants:.
+        /// </summary>
+        public static string OtherParticipants {
+            get {
+                return ResourceManager.GetString("OtherParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Participants.
+        /// </summary>
+        public static string Participants {
+            get {
+                return ResourceManager.GetString("Participants", resourceCulture);
             }
         }
         
@@ -481,6 +1376,44 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string PlayAudioMessageButtonToolTip {
             get {
                 return ResourceManager.GetString("PlayAudioMessageButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm convo deletion request.
+        /// </summary>
+        public static string PleaseConfirmConvoDeletion {
+            get {
+                return ResourceManager.GetString("PleaseConfirmConvoDeletion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To confirm deletion, please enter &quot;DELETE!&quot; into the text box down below and confirm with one last click..
+        /// </summary>
+        public static string PleaseConfirmConvoDeletionInstructions {
+            get {
+                return ResourceManager.GetString("PleaseConfirmConvoDeletionInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to delete this convo irreversibly?
+        ///Nobody will be able to get or post any messages to it, it will be destroyed server-side for everybody!
+        ///Only local copies (encrypted) might persist on each participant&apos;s device..
+        /// </summary>
+        public static string PleaseConfirmConvoDeletionText {
+            get {
+                return ResourceManager.GetString("PleaseConfirmConvoDeletionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm the DELETION of your user data..
+        /// </summary>
+        public static string PleaseConfirmDeletionOfYourUserData {
+            get {
+                return ResourceManager.GetString("PleaseConfirmDeletionOfYourUserData", resourceCulture);
             }
         }
         
@@ -541,6 +1474,35 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string PleaseLogin {
             get {
                 return ResourceManager.GetString("PleaseLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please set up your 2FA authenticator app..
+        /// </summary>
+        public static string PleaseSetUp2FA {
+            get {
+                return ResourceManager.GetString("PleaseSetUp2FA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promote to admin.
+        /// </summary>
+        public static string PromoteToAdmin {
+            get {
+                return ResourceManager.GetString("PromoteToAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promotes this user to be the new convo&apos;s admin.
+        ///Please be aware of the fact that by doing this you fully give up your rights as a convo admin, 
+        ///and that the new admin will have FULL control over the conversation..
+        /// </summary>
+        public static string PromoteToAdminToolTip {
+            get {
+                return ResourceManager.GetString("PromoteToAdminToolTip", resourceCulture);
             }
         }
         
@@ -608,11 +1570,92 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request Authentication.
+        /// </summary>
+        public static string RequestAuthentication {
+            get {
+                return ResourceManager.GetString("RequestAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you want to do this? Please make sure to export a backup of your account first, just in case!.
+        /// </summary>
+        public static string ResetAreYouSureText {
+            get {
+                return ResourceManager.GetString("ResetAreYouSureText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unless you have a backup of your user account that you can import during the registration process, your data is lost!.
+        /// </summary>
+        public static string ResetAreYouSureWarning {
+            get {
+                return ResourceManager.GetString("ResetAreYouSureWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please note that after confirming the deletion, Epistle will be terminated automatically..
+        /// </summary>
+        public static string ResetAutoQuitNotice {
+            get {
+                return ResourceManager.GetString("ResetAutoQuitNotice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If you restart the program afterwards, your locally stored convos, messages and user settings will be gone and you will be prompted to create a new user account..
+        /// </summary>
+        public static string ResetAutoQuitNotice2 {
+            get {
+                return ResourceManager.GetString("ResetAutoQuitNotice2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The button you just clicked is for erasing all of your application&apos;s user data on this machine irreversibly..
+        /// </summary>
+        public static string ResetButtonDescription {
+            get {
+                return ResourceManager.GetString("ResetButtonDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete all of your Glitched Epistle application settings and data; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this..
+        /// </summary>
+        public static string ResetButtonToolTip {
+            get {
+                return ResourceManager.GetString("ResetButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset the main window&apos;s size and layout..
+        /// </summary>
+        public static string ResetGuiLayoutButtonToolTip {
+            get {
+                return ResourceManager.GetString("ResetGuiLayoutButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Retype your password.
         /// </summary>
         public static string RetypeYourPassword {
             get {
                 return ResourceManager.GetString("RetypeYourPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resets all user settings back to their default values..
+        /// </summary>
+        public static string RevertSettingsButtonToolTip {
+            get {
+                return ResourceManager.GetString("RevertSettingsButtonToolTip", resourceCulture);
             }
         }
         
@@ -635,6 +1678,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Security.
+        /// </summary>
+        public static string Security {
+            get {
+                return ResourceManager.GetString("Security", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Epistle - Select the file you want to send.
         /// </summary>
         public static string SelectTheFileYouWantToSend {
@@ -644,11 +1696,83 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        public static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accepts your changes and closes this window..
+        /// </summary>
+        public static string SettingsOkButtonToolTip {
+            get {
+                return ResourceManager.GetString("SettingsOkButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your display name. Note that by changing this, the messages you sent using the previous username won&apos;t have their sender label updated..
+        /// </summary>
+        public static string SettingsUsernameToolTip {
+            get {
+                return ResourceManager.GetString("SettingsUsernameToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in Explorer.
+        /// </summary>
+        public static string ShowInExplorer {
+            get {
+                return ResourceManager.GetString("ShowInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click here to stop playing back this audio message..
         /// </summary>
         public static string StopAudioMessageButtonToolTip {
             get {
                 return ResourceManager.GetString("StopAudioMessageButtonToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submits the convo creation request to the Epistle backend..
+        /// </summary>
+        public static string SubmitConvoCreationToolTip {
+            get {
+                return ResourceManager.GetString("SubmitConvoCreationToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submits the convo modification request to the Epistle backend..
+        /// </summary>
+        public static string SubmitConvoMetadataChangeRequestToolTip {
+            get {
+                return ResourceManager.GetString("SubmitConvoMetadataChangeRequestToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submits the password change request to the Epistle backend..
+        /// </summary>
+        public static string SubmitPasswordChangeToolTip {
+            get {
+                return ResourceManager.GetString("SubmitPasswordChangeToolTip", resourceCulture);
             }
         }
         
@@ -689,6 +1813,51 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The new convo&apos;s title..
+        /// </summary>
+        public static string TheNewConvoTitle {
+            get {
+                return ResourceManager.GetString("TheNewConvoTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This convo is expired!.
+        /// </summary>
+        public static string ThisConvoIsExpired {
+            get {
+                return ResourceManager.GetString("ThisConvoIsExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2FA secret (please back this up somewhere safe).
+        /// </summary>
+        public static string TotpSecretPleaseBackUpSomewhereSafe {
+            get {
+                return ResourceManager.GetString("TotpSecretPleaseBackUpSomewhereSafe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is the two-factor authentication secret that you can choose to manually enter into your authenticator app. Back it up somewhere safe, because you&apos;ll need it if you happen to lose your 2FA device..
+        /// </summary>
+        public static string TotpSecretPleaseBackUpSomewhereSafeDetailed {
+            get {
+                return ResourceManager.GetString("TotpSecretPleaseBackUpSomewhereSafeDetailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor Authentication.
         /// </summary>
         public static string TwoFactorAuthentication {
@@ -716,6 +1885,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Type DELETE! into the text box below to proceed....
+        /// </summary>
+        public static string TypeDeleteIntoTextBoxToProceed {
+            get {
+                return ResourceManager.GetString("TypeDeleteIntoTextBoxToProceed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Type your password again for safety&apos;s sake..
         /// </summary>
         public static string TypeYourPwAgainForSafetysSake {
@@ -730,6 +1908,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string UnexpectedErrorWhileGeneratingRSAKeyPair {
             get {
                 return ResourceManager.GetString("UnexpectedErrorWhileGeneratingRSAKeyPair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload.
+        /// </summary>
+        public static string Upload {
+            get {
+                return ResourceManager.GetString("Upload", resourceCulture);
             }
         }
         
@@ -779,6 +1966,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User interface overview.
+        /// </summary>
+        public static string UserInterfaceOverview {
+            get {
+                return ResourceManager.GetString("UserInterfaceOverview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {
@@ -806,11 +2002,66 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User Options.
+        /// </summary>
+        public static string UserOptions {
+            get {
+                return ResourceManager.GetString("UserOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions that a regular convo participant can perform.
+        ///If you&apos;re the convo&apos;s admin, leaving server-side is disabled because you&apos;d need to define a new convo admin first before abandoning (under the Admin Options-&gt;Participants tab)..
+        /// </summary>
+        public static string UserOptionsToolTip {
+            get {
+                return ResourceManager.GetString("UserOptionsToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User settings.
+        /// </summary>
+        public static string UserSettings {
+            get {
+                return ResourceManager.GetString("UserSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify.
+        /// </summary>
+        public static string Verify {
+            get {
+                return ResourceManager.GetString("Verify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to Glitched Epistle..
         /// </summary>
         public static string WelcomeToGlitchedEpistle {
             get {
                 return ResourceManager.GetString("WelcomeToGlitchedEpistle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First of all, what is Epistle?.
+        /// </summary>
+        public static string WhatIsEpistle {
+            get {
+                return ResourceManager.GetString("WhatIsEpistle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Who is behind this project?.
+        /// </summary>
+        public static string WhoIsBehindThisProject {
+            get {
+                return ResourceManager.GetString("WhoIsBehindThisProject", resourceCulture);
             }
         }
         
