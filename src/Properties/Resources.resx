@@ -431,6 +431,27 @@
     <value>Editing convos</value>
     <comment>Editing convos</comment>
   </data>
+  <data name="EditingConvosText" xml:space="preserve">
+    <value>If you're the admin of a convo (its creator), you can edit the metadata at any time.
+
+You can also ban annoying participants in the convo: just find out their unique anonymous user id and kick them from inside the edit convo dialog.
+
+To access the Edit Convo window, right-mouse click on the convo inside the list and select 'Edit Convo'.
+
+This settings menu gives you the option to leave the convo (or delete entirely for everybody, if you're the convo's admin).
+
+If you want to leave a convo, you can do so, but you need to authenticate your request by providing your two-factor authentication token. Also: if you're the convo admin, you need to elect a new admin first before leaving!
+</value>
+    <comment>If you're the admin of a convo (its creator), you can edit the metadata at any time.
+
+You can also ban annoying participants in the convo: just find out their unique anonymous user id and kick them from inside the edit convo dialog.
+
+To access the Edit Convo window, right-mouse click on the convo inside the list and select 'Edit Convo'.
+
+This settings menu gives you the option to leave the convo (or delete entirely for everybody, if you're the convo's admin).
+
+If you want to leave a convo, you can do so, but you need to authenticate your request by providing your two-factor authentication token. Also: if you're the convo admin, you need to elect a new admin first before leaving!</comment>
+  </data>
   <data name="EnterTotpForVerification" xml:space="preserve">
     <value>Enter your 2FA code for verification:</value>
     <comment>Enter your 2FA code for verification:</comment>
@@ -515,6 +536,26 @@
     <value>How do I get started?</value>
     <comment>How do I get started?</comment>
   </data>
+  <data name="HowToGetStartedText" xml:space="preserve">
+    <value>When you run Epistle for the first time after installing, you're prompted to register for an account.
+
+If you already have an account that's been exported using the Export Backup option inside the settings, click on Import.
+
+Otherwise fill in the form and apply for a new Epistle account. The program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code).
+
+Please make sure to create both a backup (offline on a paper is safest) of your emergency 2FA codes and the actual secret that's needed for generating the TOTPs!
+
+Once you've done all this, you're ready to log in!</value>
+    <comment>When you run Epistle for the first time after installing, you're prompted to register for an account.
+
+If you already have an account that's been exported using the Export Backup option inside the settings, click on Import.
+
+Otherwise fill in the form and apply for a new Epistle account. The program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code).
+
+Please make sure to create both a backup (offline on a paper is safest) of your emergency 2FA codes and the actual secret that's needed for generating the TOTPs!
+
+Once you've done all this, you're ready to log in!</comment>
+  </data>
   <data name="ImageViewer" xml:space="preserve">
     <value>Image Viewer</value>
     <comment>Image Viewer</comment>
@@ -548,6 +589,28 @@ Please try again in 15 minutes.</comment>
   <data name="JoiningAndCreatingConvos" xml:space="preserve">
     <value>Joining and creating convos</value>
     <comment>Joining and creating convos</comment>
+  </data>
+  <data name="JoiningAndCreatingConvosText" xml:space="preserve">
+    <value>You can create a new convo with the Create Convo button in the upper-left region of the Epistle main window.
+
+Every convo needs a title, a short description (e.g. what the convo is about) and an expiration date. Expired convos are irreversibly deleted server-side and can NOT be recovered. You can look at the backups you might have of them locally, but you can't post new messages to an expired convo.
+
+The freshly created convo appears in the list on the left. Click on it to open it (enter the password that you defined). Everybody can join the conversation if he or she has its password and unique id (which you can copy to the clipboard by clicking on the clipboard icon at the top of the active convo's view).
+
+Be careful to whom you give this password!
+
+If you want to join a convo from another Epistle user who gave you the convo id + password, you can click on Join Convo and enter the data there. 
+Note that the convo id textbox is programmed in a way that is best suited for pasting in an ID from the clipboard and immediately enter the password without making use of the tab key. So make sure to use the clipboard for this task!</value>
+    <comment>You can create a new convo with the Create Convo button in the upper-left region of the Epistle main window.
+
+Every convo needs a title, a short description (e.g. what the convo is about) and an expiration date. Expired convos are irreversibly deleted server-side and can NOT be recovered. You can look at the backups you might have of them locally, but you can't post new messages to an expired convo.
+
+The freshly created convo appears in the list on the left. Click on it to open it (enter the password that you defined). Everybody can join the conversation if he or she has its password and unique id (which you can copy to the clipboard by clicking on the clipboard icon at the top of the active convo's view).
+
+Be careful to whom you give this password!
+
+If you want to join a convo from another Epistle user who gave you the convo id + password, you can click on Join Convo and enter the data there. 
+Note that the convo id textbox is programmed in a way that is best suited for pasting in an ID from the clipboard and immediately enter the password without making use of the tab key. So make sure to use the clipboard for this task!</comment>
   </data>
   <data name="KickAndBan" xml:space="preserve">
     <value>Kick and ban from convo</value>
@@ -989,6 +1052,30 @@ and that the new admin will have FULL control over the conversation.</comment>
     <value>User interface overview</value>
     <comment>User interface overview</comment>
   </data>
+  <data name="UserInterfaceOverviewText" xml:space="preserve">
+    <value>In the top left corner you have information about your profile (user id, username, etc...)
+
+The buttons in this area do what they say, but some of them need two-factor authentication as an additional security step.
+
+In the lower-left quadrant of the UI you have the list of conversations that you have synced with this account.
+
+On the right hand side of the window you have your active convo.
+
+When you join a conversation, the chatroom appears here in this area. If the sidebar on the left disturbs you, you can collapse it with the arrow button at the top of it and enjoy maximum focus on the active convo.
+
+In the top right corner you have three buttons: restore window, settings and help.</value>
+    <comment>In the top left corner you have information about your profile (user id, username, etc...)
+
+The buttons in this area do what they say, but some of them need two-factor authentication as an additional security step.
+
+In the lower-left quadrant of the UI you have the list of conversations that you have synced with this account.
+
+On the right hand side of the window you have your active convo.
+
+When you join a conversation, the chatroom appears here in this area. If the sidebar on the left disturbs you, you can collapse it with the arrow button at the top of it and enjoy maximum focus on the active convo.
+
+In the top right corner you have three buttons: restore window, settings and help.</comment>
+  </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>
     <comment>Username</comment>
@@ -1015,6 +1102,22 @@ If you're the convo's admin, leaving server-side is disabled because you'd need 
     <value>User settings</value>
     <comment>User settings</comment>
   </data>
+  <data name="UserSettingsText" xml:space="preserve">
+    <value>The gear icon in the top right corner of the program's main window opens up the settings menu.
+
+In there, you can change your username (the one displayed next to your messages) as well as your favorite theme.
+
+The trash icon at the bottom of the settings menu is a button that allows you to instantly purge your entire Epistle account + convo data from your local machine.
+
+PLEASE read every warning carefully in the dialog menu!</value>
+    <comment>The gear icon in the top right corner of the program's main window opens up the settings menu.
+
+In there, you can change your username (the one displayed next to your messages) as well as your favorite theme.
+
+The trash icon at the bottom of the settings menu is a button that allows you to instantly purge your entire Epistle account + convo data from your local machine.
+
+PLEASE read every warning carefully in the dialog menu!</comment>
+  </data>
   <data name="Verify" xml:space="preserve">
     <value>Verify</value>
     <comment>Verify</comment>
@@ -1027,9 +1130,39 @@ If you're the convo's admin, leaving server-side is disabled because you'd need 
     <value>First of all, what is Epistle?</value>
     <comment>First of all, what is Epistle?</comment>
   </data>
+  <data name="WhatIsEpistleText" xml:space="preserve">
+    <value>It's a messaging app, just like WhatsApp is.
+
+Except that its client apps are 100% open source (licensed under GPL v3).
+
+This way you can verify that the apps ACTUALLY encrypt your messages before they're sent to the backend, and that they don't secretly submit any analytics, shady metadata or anything without you knowing it.
+
+The Epistle server knows NOTHING about you, or what you send to whom. Because we believe it's everybody's right not to be monitored by advertising companies nor the government (or anybody else for that matter) when communicating to each other.
+
+When using free services always keep in mind: if you don't give those companies your money in exchange for a product, you ARE the product.</value>
+    <comment>It's a messaging app, just like WhatsApp is.
+
+Except that its client apps are 100% open source (licensed under GPL v3).
+
+This way you can verify that the apps ACTUALLY encrypt your messages before they're sent to the backend, and that they don't secretly submit any analytics, shady metadata or anything without you knowing it.
+
+The Epistle server knows NOTHING about you, or what you send to whom. Because we believe it's everybody's right not to be monitored by advertising companies nor the government (or anybody else for that matter) when communicating to each other.
+
+When using free services always keep in mind: if you don't give those companies your money in exchange for a product, you ARE the product.</comment>
+  </data>
   <data name="WhoIsBehindThisProject" xml:space="preserve">
     <value>Who is behind this project?</value>
     <comment>Who is behind this project?</comment>
+  </data>
+  <data name="WhoIsBehindThisProjectText" xml:space="preserve">
+    <value>Glitched Epistle was developed by Glitched Polygons,
+a tiny video game studio located in Basel, Switzerland.
+
+You can find out more about Glitched Polygons on glitchedpolygons.com</value>
+    <comment>Glitched Epistle was developed by Glitched Polygons,
+a tiny video game studio located in Basel, Switzerland.
+
+You can find out more about Glitched Polygons on glitchedpolygons.com</comment>
   </data>
   <data name="YourDesiredLoginPassword" xml:space="preserve">
     <value>Your desired login password.</value>

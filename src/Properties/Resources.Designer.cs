@@ -772,6 +772,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If you&apos;re the admin of a convo (its creator), you can edit the metadata at any time.
+        ///
+        ///You can also ban annoying participants in the convo: just find out their unique anonymous user id and kick them from inside the edit convo dialog.
+        ///
+        ///To access the Edit Convo window, right-mouse click on the convo inside the list and select &apos;Edit Convo&apos;.
+        ///
+        ///This settings menu gives you the option to leave the convo (or delete entirely for everybody, if you&apos;re the convo&apos;s admin).
+        ///
+        ///If you want to leave a convo, you can d [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string EditingConvosText {
+            get {
+                return ResourceManager.GetString("EditingConvosText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter your 2FA code for verification:.
         /// </summary>
         public static string EnterTotpForVerification {
@@ -961,6 +978,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When you run Epistle for the first time after installing, you&apos;re prompted to register for an account.
+        ///
+        ///If you already have an account that&apos;s been exported using the Export Backup option inside the settings, click on Import.
+        ///
+        ///Otherwise fill in the form and apply for a new Epistle account. The program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string HowToGetStartedText {
+            get {
+                return ResourceManager.GetString("HowToGetStartedText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Image Viewer.
         /// </summary>
         public static string ImageViewer {
@@ -1030,6 +1060,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string JoiningAndCreatingConvos {
             get {
                 return ResourceManager.GetString("JoiningAndCreatingConvos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can create a new convo with the Create Convo button in the upper-left region of the Epistle main window.
+        ///
+        ///Every convo needs a title, a short description (e.g. what the convo is about) and an expiration date. Expired convos are irreversibly deleted server-side and can NOT be recovered. You can look at the backups you might have of them locally, but you can&apos;t post new messages to an expired convo.
+        ///
+        ///The freshly created convo appears in the list on the left. Click on it to open it (enter the password th [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string JoiningAndCreatingConvosText {
+            get {
+                return ResourceManager.GetString("JoiningAndCreatingConvosText", resourceCulture);
             }
         }
         
@@ -1975,6 +2018,23 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In the top left corner you have information about your profile (user id, username, etc...)
+        ///
+        ///The buttons in this area do what they say, but some of them need two-factor authentication as an additional security step.
+        ///
+        ///In the lower-left quadrant of the UI you have the list of conversations that you have synced with this account.
+        ///
+        ///On the right hand side of the window you have your active convo.
+        ///
+        ///When you join a conversation, the chatroom appears here in this area. If the sidebar on the left disturbs you [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string UserInterfaceOverviewText {
+            get {
+                return ResourceManager.GetString("UserInterfaceOverviewText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {
@@ -2030,6 +2090,21 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The gear icon in the top right corner of the program&apos;s main window opens up the settings menu.
+        ///
+        ///In there, you can change your username (the one displayed next to your messages) as well as your favorite theme.
+        ///
+        ///The trash icon at the bottom of the settings menu is a button that allows you to instantly purge your entire Epistle account + convo data from your local machine.
+        ///
+        ///PLEASE read every warning carefully in the dialog menu!.
+        /// </summary>
+        public static string UserSettingsText {
+            get {
+                return ResourceManager.GetString("UserSettingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Verify.
         /// </summary>
         public static string Verify {
@@ -2057,11 +2132,38 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It&apos;s a messaging app, just like WhatsApp is.
+        ///
+        ///Except that its client apps are 100% open source (licensed under GPL v3).
+        ///
+        ///This way you can verify that the apps ACTUALLY encrypt your messages before they&apos;re sent to the backend, and that they don&apos;t secretly submit any analytics, shady metadata or anything without you knowing it.
+        ///
+        ///The Epistle server knows NOTHING about you, or what you send to whom. Because we believe it&apos;s everybody&apos;s right not to be monitored by advertising companies nor the government ( [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string WhatIsEpistleText {
+            get {
+                return ResourceManager.GetString("WhatIsEpistleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Who is behind this project?.
         /// </summary>
         public static string WhoIsBehindThisProject {
             get {
                 return ResourceManager.GetString("WhoIsBehindThisProject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Glitched Epistle was developed by Glitched Polygons,
+        ///a tiny video game studio located in Basel, Switzerland.
+        ///
+        ///You can find out more about Glitched Polygons on glitchedpolygons.com.
+        /// </summary>
+        public static string WhoIsBehindThisProjectText {
+            get {
+                return ResourceManager.GetString("WhoIsBehindThisProjectText", resourceCulture);
             }
         }
         
