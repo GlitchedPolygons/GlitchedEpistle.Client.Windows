@@ -178,6 +178,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy convo id to clipboard.
+        /// </summary>
+        public static string CopyConvoIdToClipboard {
+            get {
+                return ResourceManager.GetString("CopyConvoIdToClipboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!.
         /// </summary>
         public static string CouldNotConnectToServerErrorMessageUserCreationViewModel {
@@ -296,6 +305,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load the previous messages that were sent to this convo..
+        /// </summary>
+        public static string LoadPreviousMessagesToolTip {
+            get {
+                return ResourceManager.GetString("LoadPreviousMessagesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Have a new device? Neat! Just log in using your User ID, Password and Two-Factor Authentication..
         /// </summary>
         public static string LoginButtonToolTip {
@@ -310,6 +328,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string LoginSucceededServerSideButResponseCouldNotBeHandledClientSide {
             get {
                 return ResourceManager.GetString("LoginSucceededServerSideButResponseCouldNotBeHandledClientSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends the login credentials to the Glitched Epistle server for authentication..
+        /// </summary>
+        public static string LoginToolTip {
+            get {
+                return ResourceManager.GetString("LoginToolTip", resourceCulture);
             }
         }
         
@@ -428,11 +455,29 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please login:.
+        /// </summary>
+        public static string PleaseLogin {
+            get {
+                return ResourceManager.GetString("PleaseLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quit.
         /// </summary>
         public static string Quit {
             get {
                 return ResourceManager.GetString("Quit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancels the login procedure and quits the application..
+        /// </summary>
+        public static string QuitLoginToolTip {
+            get {
+                return ResourceManager.GetString("QuitLoginToolTip", resourceCulture);
             }
         }
         
@@ -451,6 +496,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Don&apos;t have an account yet? No worries, click here and create one now!.
+        /// </summary>
+        public static string RegisterButtonToolTip {
+            get {
+                return ResourceManager.GetString("RegisterButtonToolTip", resourceCulture);
             }
         }
         
@@ -482,6 +536,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Scroll to the bottom of the chat and check out the newest messages..
+        /// </summary>
+        public static string ScrollToBottomOfChatToolTip {
+            get {
+                return ResourceManager.GetString("ScrollToBottomOfChatToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Epistle - Select the file you want to send.
         /// </summary>
         public static string SelectTheFileYouWantToSend {
@@ -500,11 +563,29 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Two-Factor Authentication.
+        /// </summary>
+        public static string TwoFactorAuthentication {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthentication", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Two-Factor Authentication failed!.
         /// </summary>
         public static string TwoFactorAuthFailed {
             get {
                 return ResourceManager.GetString("TwoFactorAuthFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your Two-Factor Authentication token (from Authy, Google Authenticator or from a similar app).
+        /// </summary>
+        public static string TwoFactorAuthTokenToolTip {
+            get {
+                return ResourceManager.GetString("TwoFactorAuthTokenToolTip", resourceCulture);
             }
         }
         
@@ -559,6 +640,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string UserCreationSecretToolTip {
             get {
                 return ResourceManager.GetString("UserCreationSecretToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User ID.
+        /// </summary>
+        public static string UserId {
+            get {
+                return ResourceManager.GetString("UserId", resourceCulture);
             }
         }
         

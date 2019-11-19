@@ -167,6 +167,10 @@
     <value>Your password is too weak; make sure that it has at least more than 5 characters!</value>
     <comment>Your password is too weak; make sure that it has at least more than 5 characters!</comment>
   </data>
+  <data name="CopyConvoIdToClipboard" xml:space="preserve">
+    <value>Copy convo id to clipboard</value>
+    <comment>Copy convo id to clipboard</comment>
+  </data>
   <data name="CouldNotConnectToServerErrorMessageUserCreationViewModel" xml:space="preserve">
     <value>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</value>
     <comment>Could not connect to the Epistle server. Please make sure to have a working, active internet connection and double check the server URL!</comment>
@@ -221,6 +225,10 @@ Please try again in 15 minutes.</value>
     <comment>Note that if your credentials are correct but login fails nonetheless, it might be that you're locked out due to too many failed attempts!
 Please try again in 15 minutes.</comment>
   </data>
+  <data name="LoadPreviousMessagesToolTip" xml:space="preserve">
+    <value>Load the previous messages that were sent to this convo.</value>
+    <comment>Load the previous messages that were sent to this convo.</comment>
+  </data>
   <data name="LoginButtonToolTip" xml:space="preserve">
     <value>Have a new device? Neat! Just log in using your User ID, Password and Two-Factor Authentication.</value>
     <comment>Have a new device? Neat! Just log in using your User ID, Password and Two-Factor Authentication.</comment>
@@ -228,6 +236,10 @@ Please try again in 15 minutes.</comment>
   <data name="LoginSucceededServerSideButResponseCouldNotBeHandledClientSide" xml:space="preserve">
     <value>Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).</value>
     <comment>Unexpected ERROR! Login succeeded server-side, but the returned response couldn't be handled properly (probably key decryption failure).</comment>
+  </data>
+  <data name="LoginToolTip" xml:space="preserve">
+    <value>Sends the login credentials to the Glitched Epistle server for authentication.</value>
+    <comment>Sends the login credentials to the Glitched Epistle server for authentication.</comment>
   </data>
   <data name="MessageUploadFailed" xml:space="preserve">
     <value>Message upload failed</value>
@@ -289,9 +301,17 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
     <value>Please enter the Epistle server's user creation secret.</value>
     <comment>Please enter the Epistle server's user creation secret.</comment>
   </data>
+  <data name="PleaseLogin" xml:space="preserve">
+    <value>Please login:</value>
+    <comment>Please login:</comment>
+  </data>
   <data name="Quit" xml:space="preserve">
     <value>Quit</value>
     <comment>Quit</comment>
+  </data>
+  <data name="QuitLoginToolTip" xml:space="preserve">
+    <value>Cancels the login procedure and quits the application.</value>
+    <comment>Cancels the login procedure and quits the application.</comment>
   </data>
   <data name="QuitRegistrationToolTip" xml:space="preserve">
     <value>Cancels the registration procedure and quits the application.</value>
@@ -300,6 +320,10 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
   <data name="Register" xml:space="preserve">
     <value>Register</value>
     <comment>Register</comment>
+  </data>
+  <data name="RegisterButtonToolTip" xml:space="preserve">
+    <value>Don't have an account yet? No worries, click here and create one now!</value>
+    <comment>Don't have an account yet? No worries, click here and create one now!</comment>
   </data>
   <data name="RegisterForNewAccount" xml:space="preserve">
     <value>Register now for a new account:</value>
@@ -313,6 +337,10 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
     <value>Retype your password</value>
     <comment>Retype your password</comment>
   </data>
+  <data name="ScrollToBottomOfChatToolTip" xml:space="preserve">
+    <value>Scroll to the bottom of the chat and check out the newest messages.</value>
+    <comment>Scroll to the bottom of the chat and check out the newest messages.</comment>
+  </data>
   <data name="SelectTheFileYouWantToSend" xml:space="preserve">
     <value>Epistle - Select the file you want to send</value>
     <comment>Epistle - Select the file you want to send</comment>
@@ -321,9 +349,17 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
     <value>ERROR: Your text message couldn't be uploaded to the Epistle Web API</value>
     <comment>ERROR: Your text message couldn't be uploaded to the Epistle Web API</comment>
   </data>
+  <data name="TwoFactorAuthentication" xml:space="preserve">
+    <value>Two-Factor Authentication</value>
+    <comment>Two-Factor Authentication</comment>
+  </data>
   <data name="TwoFactorAuthFailed" xml:space="preserve">
     <value>Two-Factor Authentication failed!</value>
     <comment>Two-Factor Authentication failed!</comment>
+  </data>
+  <data name="TwoFactorAuthTokenToolTip" xml:space="preserve">
+    <value>Your Two-Factor Authentication token (from Authy, Google Authenticator or from a similar app)</value>
+    <comment>Your Two-Factor Authentication token (from Authy, Google Authenticator or from a similar app)</comment>
   </data>
   <data name="TypeYourPwAgainForSafetysSake" xml:space="preserve">
     <value>Type your password again for safety's sake.</value>
@@ -348,6 +384,10 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
   <data name="UserCreationSecretToolTip" xml:space="preserve">
     <value>Enter the server's registration secret.</value>
     <comment>Enter the server's registration secret.</comment>
+  </data>
+  <data name="UserId" xml:space="preserve">
+    <value>User ID</value>
+    <comment>User ID</comment>
   </data>
   <data name="Username" xml:space="preserve">
     <value>Username</value>

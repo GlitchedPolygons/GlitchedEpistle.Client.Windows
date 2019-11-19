@@ -65,7 +65,7 @@
             <Button Width="15"
                     Height="15"
                     Margin="4,0,0,0"
-                    ToolTip="Copy convo id to clipboard"
+                    ToolTip="{x:Static p:Resources.CopyConvoIdToClipboard}"
                     Command="{Binding CopyConvoIdToClipboardCommand}"
                     Style="{StaticResource CopyToClipboardButton}" />
 
@@ -82,11 +82,12 @@
                     Margin="5,0,0,0"
                     Style="{DynamicResource ScrollToBottomButton}"
                     Command="{Binding LoadPreviousMessagesCommand}"
-                    ToolTip="Load the previous messages that were sent to this convo."
+                    ToolTip="{x:Static p:Resources.LoadPreviousMessagesToolTip}"
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Right"
                     RenderTransformOrigin="0.5,0.5"
-                    Name="LoadPreviousMessagesButton" Click="LoadPreviousMessagesButton_Click">
+                    Name="LoadPreviousMessagesButton" 
+                    Click="LoadPreviousMessagesButton_Click">
                 <Button.RenderTransform>
                     <ScaleTransform ScaleY="-1.0" ScaleX="1.0"/>
                 </Button.RenderTransform>
@@ -98,7 +99,7 @@
                     FontSize="20"
                     Margin="5,0,0,0"
                     Style="{DynamicResource ScrollToBottomButton}"
-                    ToolTip="Scroll to the bottom of the chat and check out the newest messages."
+                    ToolTip="{x:Static p:Resources.ScrollToBottomOfChatToolTip}"
                     VerticalAlignment="Top" 
                     HorizontalAlignment="Right"
                     Name="ScrollToBottomButton"

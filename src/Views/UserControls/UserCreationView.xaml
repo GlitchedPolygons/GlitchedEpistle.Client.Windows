@@ -28,7 +28,8 @@
              MinWidth="250" 
              MaxWidth="350">
 
-    <StackPanel HorizontalAlignment="Center" MaxWidth="250">
+    <StackPanel HorizontalAlignment="Center" 
+                MaxWidth="250">
 
         <Label Content="{x:Static p:Resources.WelcomeToGlitchedEpistle}"
                FontWeight="Bold"

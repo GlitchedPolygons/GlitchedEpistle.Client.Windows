@@ -1,19 +1,19 @@
 ﻿<!--
-    Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+     Glitched Epistle - Windows Client
+     Copyright (C) 2019 Raphael Beck
+     
+     This program is free software: you can redistribute it and/or modify
+     it under the terms of the GNU General Public License as published by
+     the Free Software Foundation, either version 3 of the License, or
+     (at your option) any later version.
+     
+     This program is distributed in the hope that it will be useful,
+     but WITHOUT ANY WARRANTY; without even the implied warranty of
+     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+     GNU General Public License for more details.
+     
+     You should have received a copy of the GNU General Public License
+     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 -->
 
 <UserControl x:Class="GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls.LoginView"
@@ -29,7 +29,7 @@
     <StackPanel HorizontalAlignment="Center" MaxWidth="250"
                 IsEnabled="{Binding UIEnabled}">
 
-        <Label Content="Welcome to Glitched Epistle."
+        <Label Content="{x:Static p:Resources.WelcomeToGlitchedEpistle}"
                FontWeight="Bold"
                FontSize="16" />
 
@@ -41,27 +41,17 @@
                    Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
 
-        <Label Content="Please login:"
+        <Label Content="{x:Static p:Resources.PleaseLogin}"
                FontSize="14" />
 
-<!--
-        <Label Content="Epistle Server URL"
-               ToolTip="The Glitched Epistle server to connect to." />
-
-        <TextBox MinWidth="250"
-                 Name="ServerUrlTextBox"
-                 Text="{Binding ServerUrl}" />
--->
-        <Label Content="User ID"
-               ToolTip="Your user ID." />
+        <Label Content="{x:Static p:Resources.UserId}" />
 
         <TextBox MinWidth="250"
                  Name="UserIdTextBox"
                  Text="{Binding UserId}"
                  TextChanged="UserIdTextBox_OnTextChanged" />
 
-        <Label Content="Password"
-               ToolTip="Your user password." />
+        <Label Content="{x:Static p:Resources.Password}" />
 
         <PasswordBox Name="PasswordBox"
                      MinWidth="250"
@@ -74,44 +64,42 @@
             </i:Interaction.Triggers>
         </PasswordBox>
 
-        <Label Content="2FA TOTP"
-               ToolTip="Your user password." />
+        <Label Content="{x:Static p:Resources.TwoFactorAuthentication}" />
 
         <TextBox MinWidth="250"
                  Name="TotpTextBox"
-                 ToolTip="Your 2-Factor authentication token (from Authy, Google Authenticator or from a similar app)"
+                 ToolTip="{x:Static p:Resources.TwoFactorAuthTokenToolTip}"
                  TextChanged="TotpTextBox_OnTextChanged" />
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Margin="0,15,0,0">
 
-            <Button Content="Quit"
+            <Button Content="{x:Static p:Resources.Quit}"
                     Width="117"
                     Command="{Binding QuitCommand}"
-                    ToolTip="Cancels the login procedure and thus quits the application." />
+                    ToolTip="{x:Static p:Resources.QuitLoginToolTip}" />
 
-            <Button Content="Register" 
+            <Button Content="{x:Static p:Resources.Register}" 
                     Width="117"
                     Margin="15,0,0,0"
                     Name="RegisterButton"
                     Command="{Binding RegisterCommand}" 
-                    ToolTip="Don't have an account yet? No worries, click here and create one now!"/>
+                    ToolTip="{x:Static p:Resources.RegisterButtonToolTip}"/> 
         </StackPanel>
 
         <Button Margin="0 15 0 0" 
-                ToolTip="Change the Epistle server URL to connect to."
-                Command="{Binding EditServerUrlCommand}">
-            Change Server
-        </Button>
+                ToolTip="{x:Static p:Resources.ChangeEpistleServerUrlToolTip}"
+                Command="{Binding EditServerUrlCommand}"
+                Content="{x:Static p:Resources.ChangeServer}"/>
 
         <Button Width="250" 
-                Margin="0,15,0,0"
                 Content="Login"
+                Margin="0,15,0,0"
                 Name="LoginButton"
                 Command="{Binding LoginCommand}"
                 CommandParameter="{Binding Text, ElementName=TotpTextBox }"
-                ToolTip="Sends the login credentials to the Glitched Epistle server for authentication."
+                ToolTip="{x:Static p:Resources.LoginToolTip}"
                 IsEnabled="False" />
     </StackPanel>
 

@@ -62,7 +62,7 @@
                             <MenuItem Header="Edit Convo"
                                       Command="{Binding PlacementTarget.Tag.EditConvoCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                       CommandParameter="{Binding}" />
-                            <MenuItem Header="Copy Convo ID to Clipboard"
+                            <MenuItem Header="{x:Static p:Resources.CopyConvoIdToClipboard}"
                                       Command="{Binding PlacementTarget.Tag.CopyConvoIdCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                       CommandParameter="{Binding}" />
                         </ContextMenu>
