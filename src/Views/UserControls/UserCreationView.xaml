@@ -124,6 +124,19 @@
                     ToolTip="{x:Static p:Resources.LoginButtonToolTip}" /> 
 
         </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0 11 0 0"
+                    Visibility="{Binding GeneratingKeysVisibility}">
+
+            <local:LoadingIndicatorCircle />
+
+            <Label HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Content="{x:Static p:Resources.GeneratingKeys}"/>
+        </StackPanel>
     </StackPanel>
     <UserControl.InputBindings>
         <KeyBinding Key="Enter"

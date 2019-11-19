@@ -61,7 +61,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public bool UIEnabled
         {
             get => uiEnabled;
-            private set => Set(ref uiEnabled, value);
+            private set
+            {
+                Set(ref uiEnabled, value);
+                GeneratingKeysVisibility = value ? Visibility.Hidden : Visibility.Visible;
+            }
         }
 
         public bool formValid;
@@ -91,6 +95,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             get => userCreationSecretFieldVis;
             set => Set(ref userCreationSecretFieldVis, value);
         }
+
+        private Visibility generatingKeysVisibility = Visibility.Hidden;
+        public Visibility GeneratingKeysVisibility { get => generatingKeysVisibility; set => Set(ref generatingKeysVisibility, value); }
         #endregion
 
         private volatile bool pendingAttempt;

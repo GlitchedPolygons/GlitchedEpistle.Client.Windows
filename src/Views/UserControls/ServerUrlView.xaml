@@ -25,7 +25,7 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties">
-    
+
     <StackPanel HorizontalAlignment="Center" 
                 MaxWidth="250">
 
@@ -47,10 +47,10 @@
 
         <StackPanel Orientation="Horizontal" 
                     Margin="0 10 0 0">
-            
+
             <Label Content="Epistle Server URL"
-                   ToolTip="{x:Static p:Resources.EpistleUrlToolTip}" /> 
-            
+                   ToolTip="{x:Static p:Resources.EpistleUrlToolTip}" />
+
             <Image Source="/Resources/Images/green-tick.png"
                    Width="15"
                    Height="15"
@@ -72,11 +72,10 @@
                     ToolTip="{x:Static p:Resources.TestServerConnectionToolTip}"/>
 
             <Button Margin="0 10 0 0" 
+                    Content="{x:Static p:Resources.Accept}"
                     Command="{Binding ConnectCommand}"
                     IsEnabled="{Binding ConnectionOk}"
-                    ToolTip="{x:Static p:Resources.SaveEpistleServerUrlToolTip}">
-                    Accept
-            </Button>
+                    ToolTip="{x:Static p:Resources.SaveEpistleServerUrlToolTip}"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -84,14 +83,12 @@
                     VerticalAlignment="Center"
                     Margin="0 5 0 0"
                     Visibility="{Binding TestingLabelVisibility}">
-            
+
             <local:LoadingIndicatorCircle />
-            
+
             <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    Content="{x:Static p:Resources.TestingConnection}"/>
         </StackPanel>
-        
-        
     </StackPanel>
 </UserControl>

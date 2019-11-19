@@ -55,7 +55,18 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public string UserId { get => userId; set => Set(ref userId, value); }
 
         private bool uiEnabled = true;
-        public bool UIEnabled { get => uiEnabled; set => Set(ref uiEnabled, value); }
+        public bool UIEnabled
+        {
+            get => uiEnabled;
+            set
+            {
+                Set(ref uiEnabled, value);
+                LoggingInVisibility = value ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+        private Visibility loggingInVisibility = Visibility.Hidden;
+        public Visibility LoggingInVisibility { get => loggingInVisibility; set => Set(ref loggingInVisibility, value); }
         #endregion
 
         private volatile string password;

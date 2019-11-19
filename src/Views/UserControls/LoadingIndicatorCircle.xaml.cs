@@ -78,7 +78,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls
 
             IsVisibleChanged += OnVisibleChanged;
 
-            animationTimer = new DispatcherTimer(DispatcherPriority.ContextIdle, Dispatcher)
+            animationTimer = new DispatcherTimer(DispatcherPriority.Render, Dispatcher)
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 75)
             };

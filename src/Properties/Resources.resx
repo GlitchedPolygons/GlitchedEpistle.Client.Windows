@@ -223,6 +223,10 @@
     <value>ERROR: Your file couldn't be uploaded to the Epistle Web API because it exceeds the maximum file size limit.</value>
     <comment>ERROR: Your file couldn't be uploaded to the Epistle Web API because it exceeds the maximum file size limit.</comment>
   </data>
+  <data name="GeneratingKeys" xml:space="preserve">
+    <value>Generating 4096-bit RSA Keys...</value>
+    <comment>Generating 4096-bit RSA Keys...</comment>
+  </data>
   <data name="GlitchedEpistleAlreadyRunningErrorMessage" xml:space="preserve">
     <value>There is already one instance of Glitched Epistle running!</value>
     <comment>There is already one instance of Glitched Epistle running!</comment>
@@ -244,6 +248,10 @@ Please try again in 15 minutes.</comment>
   <data name="LoadPreviousMessagesToolTip" xml:space="preserve">
     <value>Load the previous messages that were sent to this convo.</value>
     <comment>Load the previous messages that were sent to this convo.</comment>
+  </data>
+  <data name="LoggingIn" xml:space="preserve">
+    <value>Logging in...</value>
+    <comment>Logging in...</comment>
   </data>
   <data name="LoginButtonToolTip" xml:space="preserve">
     <value>Have a new device? Neat! Just log in using your User ID, Password and Two-Factor Authentication.</value>

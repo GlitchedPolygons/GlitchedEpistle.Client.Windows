@@ -101,6 +101,19 @@
                 CommandParameter="{Binding Text, ElementName=TotpTextBox }"
                 ToolTip="{x:Static p:Resources.LoginToolTip}"
                 IsEnabled="False" />
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="0 10 0 0"
+                    Visibility="{Binding LoggingInVisibility}">
+
+            <local:LoadingIndicatorCircle />
+
+            <Label HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   Content="{x:Static p:Resources.LoggingIn}"/>
+        </StackPanel>
     </StackPanel>
 
     <UserControl.InputBindings>

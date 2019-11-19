@@ -304,6 +304,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generating 4096-bit RSA Keys....
+        /// </summary>
+        public static string GeneratingKeys {
+            get {
+                return ResourceManager.GetString("GeneratingKeys", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is already one instance of Glitched Epistle running!.
         /// </summary>
         public static string GlitchedEpistleAlreadyRunningErrorMessage {
@@ -346,6 +355,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string LoadPreviousMessagesToolTip {
             get {
                 return ResourceManager.GetString("LoadPreviousMessagesToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logging in....
+        /// </summary>
+        public static string LoggingIn {
+            get {
+                return ResourceManager.GetString("LoggingIn", resourceCulture);
             }
         }
         
