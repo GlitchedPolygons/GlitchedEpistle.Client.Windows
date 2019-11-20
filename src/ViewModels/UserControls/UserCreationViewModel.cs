@@ -191,7 +191,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 switch (result.Item1)
                 {
                     case 0: // Success!
-                            // TODO: reload user settings before setting username!
                         userSettings.Username = Username;
                         logger?.LogMessage($"Created user {result.Item2.Id}.");
                         // Handle this event back in the main view model,
