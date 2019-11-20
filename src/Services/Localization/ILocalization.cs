@@ -31,7 +31,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization
         CultureInfo GetCurrentCultureInfo();
 
         /// <summary>
-        /// Sets the <see cref="CultureInfo"/> for this app.
+        /// Sets the <see cref="CultureInfo"/> for this app and restarts (if necessary).
         /// </summary>
         /// <param name="ci">The target <see cref="CultureInfo"/> to apply.</param>
         void SetCurrentCultureInfo(CultureInfo ci);

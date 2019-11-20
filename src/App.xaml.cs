@@ -86,16 +86,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
         private void App_OnStartup(object sender, StartupEventArgs e)
         {
-            mutex = new Mutex(true, $"GlitchedEpistle_{Version}", out bool newInstance);
-
-            if (!newInstance)
-            {
-                MessageBox.Show(Client.Windows.Properties.Resources.GlitchedEpistleAlreadyRunningErrorMessage);
-                Current.Shutdown();
-            }
-            
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
-            
+
             // Register transient types:
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, TextLogger>();
@@ -129,15 +121,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
 
             try
             {
-                Client.Windows.Properties.Resources.Culture = new CultureInfo(settings["Language", "en"]);
+                Client.Windows.Properties.Resources.Culture
+                    = Thread.CurrentThread.CurrentCulture
+                    = Thread.CurrentThread.CurrentUICulture
+                    = new CultureInfo(settings["Language", "en"]);
             }
-            catch { settings["Language"] = (Client.Windows.Properties.Resources.Culture = new CultureInfo("en")).Name; }
+            catch
+            {
+                settings["Language"] = (Client.Windows.Properties.Resources.Culture = Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = new CultureInfo("en")).Name;
+            }
+
+            mutex = new Mutex(true, $"GlitchedEpistle_{Version}", out bool newInstance);
+
+            if (!newInstance)
+            {
+                MessageBox.Show(Client.Windows.Properties.Resources.GlitchedEpistleAlreadyRunningErrorMessage);
+                Current.Shutdown();
+            }
 
             // Open the main app's window.
             var mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
-            Current.MainWindow = mainView;
-            Current.MainWindow?.Show();
+            (Current.MainWindow = mainView)?.Show();
 
             ChangeTheme(settings["Theme", Themes.DARK_THEME]);
         }

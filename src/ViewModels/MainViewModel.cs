@@ -236,12 +236,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Load up the settings on startup.
             UserId = Username = string.Empty;
             user.Id = appSettings.LastUserId;
-
-            try
-            {
-                localization.SetCurrentCultureInfo(new CultureInfo(appSettings["Language", "en"]));
-            }
-            catch { }
             
 
             Enum.TryParse(appSettings[nameof(WindowState), WindowState.Normal.ToString()], out WindowState loadedWindowState);

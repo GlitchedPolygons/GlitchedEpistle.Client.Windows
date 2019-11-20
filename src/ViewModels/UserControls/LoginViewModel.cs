@@ -30,6 +30,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using Prism.Events;
+using System.Diagnostics;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -37,7 +38,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         // Injections:
-        private readonly IAppSettings settings;
         private readonly ILoginService loginService;
         private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
@@ -76,7 +76,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (initialized && value)
                 {
                     localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("en"));
-                    settings["Language"] = "en";
                 }
             }
         }
@@ -91,7 +90,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (initialized && value)
                 {
                     localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("de"));
-                    settings["Language"] = "de";
                 }
             }
         }
@@ -106,7 +104,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (initialized && value)
                 {
                     localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("gsw"));
-                    settings["Language"] = "gsw";
                 }
             }
         }
@@ -121,7 +118,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 if (initialized && value)
                 {
                     localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("it"));
-                    settings["Language"] = "it";
                 }
             }
         }
@@ -136,7 +132,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         public LoginViewModel(IAppSettings settings, IEventAggregator eventAggregator, ILoginService loginService, ILocalization localization)
         {
-            this.settings = settings;
             this.loginService = loginService;
             this.localization = localization;
             this.eventAggregator = eventAggregator;

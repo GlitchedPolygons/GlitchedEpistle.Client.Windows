@@ -17,17 +17,25 @@
 */
 
 using System;
+using System.Windows;
 using System.Threading;
+using System.Diagnostics;
 using System.Globalization;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 
 using Resources = GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources;
-using System.Windows;
-using System.Windows.Markup;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization
 {
     public class Localization : ILocalization
     {
+        private readonly IAppSettings appSettings;
+
+        public Localization(IAppSettings appSettings)
+        {
+            this.appSettings = appSettings;
+        }
+
         /// <summary>
         /// Translates the specified <c>string</c> identifier into the target <see cref="CultureInfo"/>.
         /// </summary>
@@ -59,14 +67,19 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization
         }
 
         /// <summary>
-        /// Sets the <see cref="CultureInfo"/> for this app.
+        /// Sets the <see cref="CultureInfo"/> for this app and restarts automatically.
         /// </summary>
         /// <param name="ci">The target <see cref="CultureInfo"/> to apply.</param>
         public void SetCurrentCultureInfo(CultureInfo ci)
         {
-            Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = ci;
-            Resources.Culture = ci;
-            // Needs a System.Windows.Forms.Application.Restart(); in order to take effect.
+            Thread.CurrentThread.CurrentCulture
+                = Thread.CurrentThread.CurrentUICulture
+                = Resources.Culture = ci;
+
+            appSettings["Language"] = ci.Name;
+
+            Process.Start("Restart.bat");
+            Application.Current.Shutdown();
         }
 
         /// <summary>
