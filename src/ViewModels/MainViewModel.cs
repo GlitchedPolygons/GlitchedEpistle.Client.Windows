@@ -44,6 +44,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using Prism.Events;
 
@@ -72,6 +73,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private readonly IAppSettings appSettings;
         private readonly IUserSettings userSettings;
         private readonly IUserService userService;
+        private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
         private readonly IViewModelFactory viewModelFactory;
         private readonly IConvoPasswordProvider convoPasswordProvider;
@@ -139,7 +141,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private IRepository<Convo, string> convoProvider;
         private ulong? scheduledAuthRefresh, scheduledHideGreenTickIcon;
 
-        public MainViewModel(User user, IEventAggregator eventAggregator, IAppSettings appSettings, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IMethodQ methodQ, ILogger logger, IConvoPasswordProvider convoPasswordProvider, IServerConnectionTest connectionTest, IUserSettings userSettings)
+        public MainViewModel(User user, ILocalization localization, IEventAggregator eventAggregator, IAppSettings appSettings, IUserService userService, IWindowFactory windowFactory, IViewModelFactory viewModelFactory, IMethodQ methodQ, ILogger logger, IConvoPasswordProvider convoPasswordProvider, IServerConnectionTest connectionTest, IUserSettings userSettings)
         {
             this.user = user;
             this.logger = logger;
@@ -147,6 +149,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.appSettings = appSettings;
             this.userSettings = userSettings;
             this.userService = userService;
+            this.localization = localization;
             this.viewModelFactory = viewModelFactory;
             this.eventAggregator = eventAggregator;
             this.convoPasswordProvider = convoPasswordProvider;
@@ -233,6 +236,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             // Load up the settings on startup.
             UserId = Username = string.Empty;
             user.Id = appSettings.LastUserId;
+
+            try
+            {
+                localization.SetCurrentCultureInfo(new CultureInfo(appSettings["Language", "en"]));
+            }
+            catch { }
+            
 
             Enum.TryParse(appSettings[nameof(WindowState), WindowState.Normal.ToString()], out WindowState loadedWindowState);
             WindowState = loadedWindowState;

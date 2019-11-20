@@ -19,9 +19,10 @@
 #region
 using System;
 using System.IO;
-using System.Reflection;
-using System.Threading;
 using System.Windows;
+using System.Threading;
+using System.Reflection;
+using System.Globalization;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
@@ -124,13 +125,20 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IConvoPasswordProvider, ConvoPasswordProvider>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMessageFetcher, MessageFetcher>(new ContainerControlledLifetimeManager());
 
+            var settings = container.Resolve<IAppSettings>();
+
+            try
+            {
+                Client.Windows.Properties.Resources.Culture = new CultureInfo(settings["Language", "en"]);
+            }
+            catch { settings["Language"] = (Client.Windows.Properties.Resources.Culture = new CultureInfo("en")).Name; }
+
             // Open the main app's window.
             var mainView = container.Resolve<MainView>();
             mainView.DataContext = container.Resolve<MainViewModel>();
             Current.MainWindow = mainView;
             Current.MainWindow?.Show();
 
-            var settings = container.Resolve<IAppSettings>();
             ChangeTheme(settings["Theme", Themes.DARK_THEME]);
         }
 

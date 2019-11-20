@@ -37,6 +37,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     {
         #region Constants
         // Injections:
+        private readonly IAppSettings settings;
         private readonly ILoginService loginService;
         private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
@@ -72,6 +73,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set
             {
                 Set(ref englishChecked, value);
+                if (initialized && value)
+                {
+                    localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("en"));
+                    settings["Language"] = "en";
+                }
             }
         }
 
@@ -82,6 +88,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set
             {
                 Set(ref germanChecked, value);
+                if (initialized && value)
+                {
+                    localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("de"));
+                    settings["Language"] = "de";
+                }
             }
         }
 
@@ -92,6 +103,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set
             {
                 Set(ref swissGermanChecked, value);
+                if (initialized && value)
+                {
+                    localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("gsw"));
+                    settings["Language"] = "gsw";
+                }
             }
         }
 
@@ -102,6 +118,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set
             {
                 Set(ref italianChecked, value);
+                if (initialized && value)
+                {
+                    localization.SetCurrentCultureInfo(new System.Globalization.CultureInfo("it"));
+                    settings["Language"] = "it";
+                }
             }
         }
 
@@ -111,10 +132,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
         private volatile string password;
         private volatile int failedAttempts;
-        private volatile bool pendingAttempt;
+        private volatile bool pendingAttempt, initialized;
 
         public LoginViewModel(IAppSettings settings, IEventAggregator eventAggregator, ILoginService loginService, ILocalization localization)
         {
+            this.settings = settings;
             this.loginService = loginService;
             this.localization = localization;
             this.eventAggregator = eventAggregator;
@@ -151,6 +173,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 EnglishChecked = GermanChecked = SwissGermanChecked = ItalianChecked = false;
                 EnglishChecked = true;
             }
+
+            initialized = true;
         }
 
         private void OnClickedLogin(object commandParam)

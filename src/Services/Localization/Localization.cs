@@ -21,6 +21,8 @@ using System.Threading;
 using System.Globalization;
 
 using Resources = GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources;
+using System.Windows;
+using System.Windows.Markup;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization
 {
@@ -63,6 +65,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization
         public void SetCurrentCultureInfo(CultureInfo ci)
         {
             Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture = ci;
+            Resources.Culture = ci;
             // Needs a System.Windows.Forms.Application.Restart(); in order to take effect.
         }
 
