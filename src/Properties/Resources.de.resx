@@ -130,7 +130,7 @@
     <comment>Accept the entered username.</comment>
   </data>
   <data name="AdminOptions" xml:space="preserve">
-    <value>Admin Options</value>
+    <value>Optionen (Administrator)</value>
     <comment>Admin Options</comment>
   </data>
   <data name="AdminOptionsToolTip" xml:space="preserve">
@@ -178,7 +178,7 @@
     <comment>Cancel</comment>
   </data>
   <data name="CancelSettingsButtonToolTip" xml:space="preserve">
-    <value>Closes the window without saving the changes.</value>
+    <value>Schliesse das Fenster ohne zu speichern.</value>
     <comment>Closes the window without saving the changes.</comment>
   </data>
   <data name="ChangeConvoMetadataToolTip" xml:space="preserve">
@@ -202,7 +202,7 @@
     <comment>Change Server</comment>
   </data>
   <data name="ChangeUserPasswordButtonToolTip" xml:space="preserve">
-    <value>Click here to change the password you use to access Glitched Epistle.</value>
+    <value>Klicke hier, um dein Passwort zu ändern.</value>
     <comment>Click here to change the password you use to access Glitched Epistle.</comment>
   </data>
   <data name="ChangingPasswordIsEasy" xml:space="preserve">
@@ -210,7 +210,7 @@
     <comment>Changing your password is easy</comment>
   </data>
   <data name="ClickHereToJoinAnExistingConvo" xml:space="preserve">
-    <value>Click here to join an existing conversation.</value>
+    <value>Klicke hier, um einer bereits existierenden Unterhaltung beizutreten.</value>
     <comment>Click here to join an existing conversation.</comment>
   </data>
   <data name="CLIPBOARD" xml:space="preserve">
@@ -242,7 +242,7 @@
     <comment>Confirm convo deletion</comment>
   </data>
   <data name="ConfirmConvoPassword" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Passwort bestätigen</value>
     <comment>Confirm Password</comment>
   </data>
   <data name="ConfirmDeletion" xml:space="preserve">
@@ -250,7 +250,7 @@
     <comment>Confirm Deletion</comment>
   </data>
   <data name="ConfirmDeletionAndQuit" xml:space="preserve">
-    <value>Confirm deletion &amp; quit</value>
+    <value>Löschung bestätigen &amp; beenden</value>
     <comment>Confirm deletion &amp; quit</comment>
   </data>
   <data name="ConfirmFileUpload" xml:space="preserve">
@@ -306,7 +306,7 @@
     <comment>Your convo can NOT be recovered in any way after this!</comment>
   </data>
   <data name="ConvoCreationCancelToolTip" xml:space="preserve">
-    <value>Never mind, no convo will be created.</value>
+    <value>Unterhaltungserstellung abbrechen.</value>
     <comment>Never mind, no convo will be created.</comment>
   </data>
   <data name="ConvoCreationFailedServerSide" xml:space="preserve">
@@ -322,27 +322,28 @@
     <comment>Your password is too weak; make sure that it has at least more than 5 characters!</comment>
   </data>
   <data name="ConvoDescriptionToolTip" xml:space="preserve">
-    <value>Describe what this conversation is about.</value>
+    <value>Beschreibe worum es bei dieser Unterhaltung geht.</value>
     <comment>Describe what this conversation is about.</comment>
   </data>
   <data name="ConvoId" xml:space="preserve">
-    <value>Convo ID</value>
+    <value>Unterhaltungs-ID</value>
     <comment>Convo ID</comment>
   </data>
   <data name="ConvoIdToolTip" xml:space="preserve">
-    <value>The conversation's unique identifier.</value>
+    <value>Der "unique identifier" der Unterhaltung.</value>
     <comment>The conversation's unique identifier.</comment>
   </data>
   <data name="ConvoNameToolTip" xml:space="preserve">
-    <value>Give your convo a meaningful and unique name!</value>
+    <value>Gib deiner Unterhaltung einen geistreichen Titel.</value>
     <comment>Give your convo a meaningful and unique name!</comment>
   </data>
   <data name="ConvoPassword" xml:space="preserve">
-    <value>Convo Password</value>
+    <value>Passwort</value>
     <comment>Convo Password</comment>
   </data>
   <data name="ConvoPasswordToolTip" xml:space="preserve">
-    <value>Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!</value>
+    <value>Schütze deine Unterhaltung mit einem sicheren Zugriffspasswort, welches nur du und deine gewünschten Teilnehmer wissen sollten!
+Beachte: wer dieses Passwort und die Unterhaltungs-ID kennt, kann beitreten!</value>
     <comment>Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. Note: who has this password and your convo's id can join!</comment>
   </data>
   <data name="CopyConvoIdToClipboard" xml:space="preserve">
@@ -364,23 +365,23 @@ Falls das nicht das Problem ist, kann es sein, dass die Unterhaltung ihr Ablaufd
     <comment>Couldn't join convo. Please double check the credentials and try again. If that's not the problem, then the convo might have expired, deleted or you've been kicked out of it. Sorry :/</comment>
   </data>
   <data name="CreateConvo" xml:space="preserve">
-    <value>Create Convo</value>
+    <value>Unterhaltung erstellen</value>
     <comment>Create Convo</comment>
   </data>
   <data name="CreateConvoTitle" xml:space="preserve">
-    <value>Create a new conversation</value>
+    <value>Eine neue Unterhaltung erstellen.</value>
     <comment>Create a new conversation</comment>
   </data>
   <data name="CreateNewConvo" xml:space="preserve">
-    <value>Create a new conversation.</value>
+    <value>Eine neue Unterhaltung erstellen.</value>
     <comment>Create a new conversation.</comment>
   </data>
   <data name="CurrentConvoPassword" xml:space="preserve">
-    <value>Current Convo Password</value>
+    <value>Aktuelles Unterhaltungspasswort</value>
     <comment>Current Convo Password</comment>
   </data>
   <data name="CurrentConvoPasswordToolTip" xml:space="preserve">
-    <value>Enter the current convo's password here.</value>
+    <value>Gib das aktuelle Unterhaltungspasswort hier ein.</value>
     <comment>Enter the current convo's password here.</comment>
   </data>
   <data name="CurrentPassword" xml:space="preserve">
@@ -420,7 +421,7 @@ Falls das nicht das Problem ist, kann es sein, dass die Unterhaltung ihr Ablaufd
     <comment>The entire convo will be immediately deleted on the server without any chance of recovery.</comment>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>Beschreibung</value>
     <comment>Description</comment>
   </data>
   <data name="DownloadAttachment" xml:space="preserve">
@@ -428,11 +429,11 @@ Falls das nicht das Problem ist, kann es sein, dass die Unterhaltung ihr Ablaufd
     <comment>Download attachment</comment>
   </data>
   <data name="EditConvo" xml:space="preserve">
-    <value>Edit Convo</value>
+    <value>Unterhaltung ändern</value>
     <comment>Edit Convo</comment>
   </data>
   <data name="EditConvoTitle" xml:space="preserve">
-    <value>Edit, leave or delete convo</value>
+    <value>Unterhaltung bearbeiten, verlassen oder löschen.</value>
     <comment>Edit, leave or delete convo</comment>
   </data>
   <data name="EditingConvos" xml:space="preserve">
@@ -485,11 +486,11 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
     <comment>ERROR</comment>
   </data>
   <data name="ExpirationDate" xml:space="preserve">
-    <value>Expiration Date</value>
+    <value>Ablaufdatum</value>
     <comment>Expiration Date</comment>
   </data>
   <data name="ExpirationDateToolTip" xml:space="preserve">
-    <value>Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly.</value>
+    <value>Definiere wann genau die Unterhaltung (in UTC) automatisch vom Server gelöscht werden soll.</value>
     <comment>Define when the conversation will expire (in UTC). Expired convos are deleted on the server automatically and irreversibly.</comment>
   </data>
   <data name="ExportBackupCodes" xml:space="preserve">
@@ -513,15 +514,15 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
     <comment>Full path:</comment>
   </data>
   <data name="GeneratingKeyPairSubTitle1" xml:space="preserve">
-    <value>Please wait, and don't terminate Epistle!</value>
+    <value>Bitte warten, und Epistle nicht beenden!</value>
     <comment>Please wait, and don't terminate Epistle!</comment>
   </data>
   <data name="GeneratingKeyPairSubTitle2" xml:space="preserve">
-    <value>Depending on your hardware, this might take up to a few minutes, so just relax!</value>
+    <value>Je nach Hardware kann dies ein paar Minuten dauern.</value>
     <comment>Depending on your hardware, this might take up to a few minutes, so just relax!</comment>
   </data>
   <data name="GeneratingKeyPairTitle" xml:space="preserve">
-    <value>Generating 4096-bit RSA key pair...</value>
+    <value>Generiere 4096-bit RSA Schlüssel...</value>
     <comment>Generating 4096-bit RSA key pair...</comment>
   </data>
   <data name="GeneratingKeys" xml:space="preserve">
@@ -561,7 +562,7 @@ Please make sure to create both a backup (offline on a paper is safest) of your 
 Once you've done all this, you're ready to log in!</comment>
   </data>
   <data name="ImageViewer" xml:space="preserve">
-    <value>Image Viewer</value>
+    <value>Bildvorschau</value>
     <comment>Image Viewer</comment>
   </data>
   <data name="Information" xml:space="preserve">
@@ -579,15 +580,15 @@ Probiere es in dem Fall in 15 Minuten nochmal.</value>
 Please try again in 15 minutes.</comment>
   </data>
   <data name="Join" xml:space="preserve">
-    <value>Join</value>
+    <value>Beitreten</value>
     <comment>Join</comment>
   </data>
   <data name="JoinConvo" xml:space="preserve">
-    <value>Join Convo</value>
+    <value>Unterhaltung beitreten</value>
     <comment>Join Convo</comment>
   </data>
   <data name="JoinConvoDescription" xml:space="preserve">
-    <value>Join an Epistle conversation now by entering its ID and access password.</value>
+    <value>Trete einer Epistle Unterhaltung bei in dem du deren ID und Passwort eingibst.</value>
     <comment>Join an Epistle conversation now by entering its ID and access password.</comment>
   </data>
   <data name="JoiningAndCreatingConvos" xml:space="preserve">
@@ -627,15 +628,15 @@ Only use this when really needed (e.g. spam), as this action is intentionally ir
 Only use this when really needed (e.g. spam), as this action is intentionally irreversible!</comment>
   </data>
   <data name="Leave" xml:space="preserve">
-    <value>Leave</value>
+    <value>Verlassen</value>
     <comment>Leave</comment>
   </data>
   <data name="LeaveConvo" xml:space="preserve">
-    <value>Leave convo</value>
+    <value>Unterhaltung verlassen</value>
     <comment>Leave convo</comment>
   </data>
   <data name="LeaveConvoAreYouSure" xml:space="preserve">
-    <value>Are you sure that you want to leave this convo?</value>
+    <value>Bist du sicher, dass du die Unterhaltung verlassen möchtest?</value>
     <comment>Are you sure that you want to leave this convo?</comment>
   </data>
   <data name="LeaveConvoButton" xml:space="preserve">
@@ -649,12 +650,11 @@ This action requires 2FA for confirmation.</value>
 This action requires 2FA for confirmation.</comment>
   </data>
   <data name="LeaveConvoDescription" xml:space="preserve">
-    <value>By leaving a convo (server-side action) you are no longer one of its participants.</value>
+    <value>Durch Verlassen einer Unterhaltung wirst du nicht mehr deren Teilnehmer sein.</value>
     <comment>By leaving a convo (server-side action) you are no longer one of its participants.</comment>
   </data>
   <data name="LeaveConvoLocalDataDeletionNotice" xml:space="preserve">
-    <value>Your local copy of the conversation's chatroom will be deleted. Unless you backed it up somewhere, that data will be gone.
-As long as you have the convo's id and access password, you can join back in any time though.</value>
+    <value>Deine lokale Kopie der Unterhaltung wird von deinem PC gelöscht. Solange du die Unterhaltungs-ID und Passwort hast, kannst du allerdings jederzeit wieder beitreten (ausser, der Administrator hat zwischenzeitlich das Zugriffspasswort geändert).</value>
     <comment>Your local copy of the conversation's chatroom will be deleted. Unless you backed it up somewhere, that data will be gone.
 As long as you have the convo's id and access password, you can join back in any time though.</comment>
   </data>
@@ -683,7 +683,7 @@ As long as you have the convo's id and access password, you can join back in any
     <comment>Sends the login credentials to the Glitched Epistle server for authentication.</comment>
   </data>
   <data name="LogoutButtonToolTip" xml:space="preserve">
-    <value>Click here to log out of your Glitched Epistle account.</value>
+    <value>Klicke hier, um dich aus deinem Konto auszuloggen.</value>
     <comment>Click here to log out of your Glitched Epistle account.</comment>
   </data>
   <data name="MessageUploadFailed" xml:space="preserve">
@@ -737,15 +737,15 @@ Note: unless specifically banned, whoever has this password and your convo's id 
     <comment>The old password is wrong or the new ones don't match.</comment>
   </data>
   <data name="OpenConvo" xml:space="preserve">
-    <value>Open Convo</value>
+    <value>Unterhaltung beitreten</value>
     <comment>Open Convo</comment>
   </data>
   <data name="OpenHelpButtonToolTip" xml:space="preserve">
-    <value>Open up the tutorial window.</value>
+    <value>Öffne das Hilfe-Fenster.</value>
     <comment>Open up the tutorial window.</comment>
   </data>
   <data name="OpenSettingsButtonToolTip" xml:space="preserve">
-    <value>Open up the settings window.</value>
+    <value>Einstellungen.</value>
     <comment>Open up the settings window.</comment>
   </data>
   <data name="OtherParticipants" xml:space="preserve">
@@ -796,7 +796,7 @@ Nobody will be able to get or post any messages to it, it will be destroyed serv
 Only local copies (encrypted) might persist on each participant's device.</comment>
   </data>
   <data name="PleaseConfirmDeletionOfYourUserData" xml:space="preserve">
-    <value>Please confirm the DELETION of your user data.</value>
+    <value>Bitte bestätige die LÖSCHUNG deiner BEnutzerdaten.</value>
     <comment>Please confirm the DELETION of your user data.</comment>
   </data>
   <data name="PleaseConnectToServer" xml:space="preserve">
@@ -878,35 +878,35 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Sends your desired login credentials to the Glitched Epistle server for registration.</comment>
   </data>
   <data name="RequestAuthentication" xml:space="preserve">
-    <value>Request Authentication</value>
+    <value>Authentifizierung</value>
     <comment>Request Authentication</comment>
   </data>
   <data name="ResetAreYouSureText" xml:space="preserve">
-    <value>Are you sure that you want to do this? Please make sure to export a backup of your account first, just in case!</value>
+    <value>Bist du dir sicher, dass du das willst? Bitte speichere irgendwo ein Backup deines Kontos, nur im Fall!</value>
     <comment>Are you sure that you want to do this? Please make sure to export a backup of your account first, just in case!</comment>
   </data>
   <data name="ResetAreYouSureWarning" xml:space="preserve">
-    <value>Unless you have a backup of your user account that you can import during the registration process, your data is lost!</value>
+    <value>Wenn du kein Backup deiner Anmeldedaten sowie Konto-2FA Geheimnis, usw... hast, sind nach bestätigter Löschung alle deine Daten weg!</value>
     <comment>Unless you have a backup of your user account that you can import during the registration process, your data is lost!</comment>
   </data>
   <data name="ResetAutoQuitNotice" xml:space="preserve">
-    <value>Please note that after confirming the deletion, Epistle will be terminated automatically.</value>
+    <value>Bitte beachte, dass das Programm nach bestätigter Löschung automatisch beendet wird.</value>
     <comment>Please note that after confirming the deletion, Epistle will be terminated automatically.</comment>
   </data>
   <data name="ResetAutoQuitNotice2" xml:space="preserve">
-    <value>If you restart the program afterwards, your locally stored convos, messages and user settings will be gone and you will be prompted to create a new user account.</value>
+    <value>Wenn du danach Epistle wieder starten solltest, wird dein Konto weg sein und du wirst wieder mit leeren Feldern zum Login/Registrierung gebeten werden.</value>
     <comment>If you restart the program afterwards, your locally stored convos, messages and user settings will be gone and you will be prompted to create a new user account.</comment>
   </data>
   <data name="ResetButtonDescription" xml:space="preserve">
-    <value>The button you just clicked is for erasing all of your application's user data on this machine irreversibly.</value>
+    <value>Der Knopf den du gerade gedrückt hast, ist für die totale Zerstörung sämtlicher Epistle Daten auf deinem PC da.</value>
     <comment>The button you just clicked is for erasing all of your application's user data on this machine irreversibly.</comment>
   </data>
   <data name="ResetButtonToolTip" xml:space="preserve">
-    <value>Delete all of your Glitched Epistle application settings and data; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this.</value>
+    <value>Lösche alle deine Glitched Epistle Anwendungsdaten; dies entspricht einem sogenannten "hard reset", also versichere dich, dass du ein Backup deiner Kontodaten gemacht hast bevor du dies bestätigst.</value>
     <comment>Delete all of your Glitched Epistle application settings and data; this is equivalent to a hard-reset, so make sure to export a backup of your account before doing this.</comment>
   </data>
   <data name="ResetGuiLayoutButtonToolTip" xml:space="preserve">
-    <value>Reset the main window's size and layout.</value>
+    <value>Hauptfenster auf Originalgrösse zurücksetzen.</value>
     <comment>Reset the main window's size and layout.</comment>
   </data>
   <data name="RetypeYourPassword" xml:space="preserve">
@@ -918,7 +918,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Revert</comment>
   </data>
   <data name="RevertSettingsButtonToolTip" xml:space="preserve">
-    <value>Resets all user settings back to their default values.</value>
+    <value>Setze alles auf Werkseinstellungen zurück.</value>
     <comment>Resets all user settings back to their default values.</comment>
   </data>
   <data name="SaveEpistleServerUrlToolTip" xml:space="preserve">
@@ -938,15 +938,15 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Epistle - Select the file you want to send</comment>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Einstellungen</value>
     <comment>Settings</comment>
   </data>
   <data name="SettingsOkButtonToolTip" xml:space="preserve">
-    <value>Accepts your changes and closes this window.</value>
+    <value>Änderungen speichern und Fenster schliessen.</value>
     <comment>Accepts your changes and closes this window.</comment>
   </data>
   <data name="SettingsUsernameToolTip" xml:space="preserve">
-    <value>Your display name. Note that by changing this, the messages you sent using the previous username won't have their sender label updated.</value>
+    <value>Dein Benutzername. Bitte beachte, dass beim Ändern deines Benutzernamens vorherige Nachrichten die du verschickt hast nicht aktualisiert werden (diese werden deinen aktuellen Benutzernamen anzeigen).</value>
     <comment>Your display name. Note that by changing this, the messages you sent using the previous username won't have their sender label updated.</comment>
   </data>
   <data name="ShowInExplorer" xml:space="preserve">
@@ -962,7 +962,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Submit</comment>
   </data>
   <data name="SubmitConvoCreationToolTip" xml:space="preserve">
-    <value>Submits the convo creation request to the Epistle backend.</value>
+    <value>Übermittelt die Unterhaltungserstellungsanfrage an den Epistle Server.</value>
     <comment>Submits the convo creation request to the Epistle backend.</comment>
   </data>
   <data name="SubmitConvoMetadataChangeRequestToolTip" xml:space="preserve">
@@ -990,7 +990,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>ERROR: Your text message couldn't be uploaded to the Epistle Web API</comment>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Design</value>
     <comment>Theme</comment>
   </data>
   <data name="TheNewConvoTitle" xml:space="preserve">
@@ -998,7 +998,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>The new convo's title.</comment>
   </data>
   <data name="ThisConvoIsExpired" xml:space="preserve">
-    <value>This convo is expired!</value>
+    <value>Diese Unterhaltung ist abgelaufen!</value>
     <comment>This convo is expired!</comment>
   </data>
   <data name="TotpSecretPleaseBackUpSomewhereSafe" xml:space="preserve">
@@ -1022,7 +1022,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Your Two-Factor Authentication token (from Authy, Google Authenticator or from a similar app)</comment>
   </data>
   <data name="TypeDeleteIntoTextBoxToProceed" xml:space="preserve">
-    <value>Type DELETE! into the text box below to proceed...</value>
+    <value>Gib DELETE! unten in das Textfeld ein um fortzufahren...</value>
     <comment>Type DELETE! into the text box below to proceed...</comment>
   </data>
   <data name="TypeYourPwAgainForSafetysSake" xml:space="preserve">
@@ -1098,7 +1098,7 @@ In the top right corner you have three buttons: restore window, settings and hel
     <comment>Your username that will be displayed to other users. This is not the user id! The user id is the unique identifier that's assigned to you after registering, and does not change.</comment>
   </data>
   <data name="UserOptions" xml:space="preserve">
-    <value>User Options</value>
+    <value>Optionen (Teilnehmer)</value>
     <comment>User Options</comment>
   </data>
   <data name="UserOptionsToolTip" xml:space="preserve">
