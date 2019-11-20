@@ -908,6 +908,10 @@ and that the new admin will have FULL control over the conversation.</comment>
     <value>Retype your password</value>
     <comment>Retype your password</comment>
   </data>
+  <data name="Revert" xml:space="preserve">
+    <value>Zruggsetze</value>
+    <comment>Revert</comment>
+  </data>
   <data name="RevertSettingsButtonToolTip" xml:space="preserve">
     <value>Resets all user settings back to their default values.</value>
     <comment>Resets all user settings back to their default values.</comment>

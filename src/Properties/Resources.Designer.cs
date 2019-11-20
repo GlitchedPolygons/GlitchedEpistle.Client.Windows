@@ -1695,6 +1695,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Revert.
+        /// </summary>
+        public static string Revert {
+            get {
+                return ResourceManager.GetString("Revert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resets all user settings back to their default values..
         /// </summary>
         public static string RevertSettingsButtonToolTip {

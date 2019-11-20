@@ -350,7 +350,7 @@
     <comment>Copy convo id to clipboard</comment>
   </data>
   <data name="CopyUserIdToClipboard" xml:space="preserve">
-    <value>Copy id utente</value>
+    <value>Copia id utente</value>
     <comment>Copy user id to clipboard</comment>
   </data>
   <data name="CouldNotConnectToServerErrorMessageUserCreationViewModel" xml:space="preserve">
@@ -904,6 +904,10 @@ and that the new admin will have FULL control over the conversation.</comment>
   <data name="RetypeYourPassword" xml:space="preserve">
     <value>Conferma password</value>
     <comment>Retype your password</comment>
+  </data>
+  <data name="Revert" xml:space="preserve">
+    <value>Ripristina</value>
+    <comment>Revert</comment>
   </data>
   <data name="RevertSettingsButtonToolTip" xml:space="preserve">
     <value>Ripristina tutti i valori originali delle impostazioni.</value>
