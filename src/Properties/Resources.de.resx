@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutGlitchedEpistle" xml:space="preserve">
-    <value>About Glitched Epistle</value>
+    <value>Über Glitched Epistle</value>
     <comment>About Glitched Epistle</comment>
   </data>
   <data name="Accept" xml:space="preserve">
@@ -134,7 +134,7 @@
     <comment>Admin Options</comment>
   </data>
   <data name="AdminOptionsToolTip" xml:space="preserve">
-    <value>Actions that only a convo admin can perform (like deleting the convo, modifying its metadata, password or participants).</value>
+    <value>Sachen die nur ein Administrator unternehmen kann, wie z.B. die Unterhaltung löschen, deren Titel, Ablaufdatum, usw... bearbeiten oder Teilnehmer ausschliessen.</value>
     <comment>Actions that only a convo admin can perform (like deleting the convo, modifying its metadata, password or participants).</comment>
   </data>
   <data name="AlreadyHaveAnAccount" xml:space="preserve">
@@ -166,11 +166,11 @@
     <comment>Audio playback failed</comment>
   </data>
   <data name="BannedUsers" xml:space="preserve">
-    <value>Banned users:</value>
+    <value>Verbannte Benutzer:</value>
     <comment>Banned users:</comment>
   </data>
   <data name="BannedUsersToolTip" xml:space="preserve">
-    <value>These are the user ids that have been permanently banned from this convo.</value>
+    <value>Dies sind die Benutzer (deren IDs) die aus dieser Unterhaltung verbannt wurden.</value>
     <comment>These are the user ids that have been permanently banned from this convo.</comment>
   </data>
   <data name="Cancel" xml:space="preserve">
@@ -182,11 +182,11 @@
     <comment>Closes the window without saving the changes.</comment>
   </data>
   <data name="ChangeConvoMetadataToolTip" xml:space="preserve">
-    <value>Change the conversation's metadata by filling in this form.</value>
+    <value>Bearbeite die Unterhaltungs-Metadata indem du dieses Formular ausfüllst.</value>
     <comment>Change the conversation's metadata by filling in this form.</comment>
   </data>
   <data name="ChangeConvoTitle" xml:space="preserve">
-    <value>Change the convo's title.</value>
+    <value>Unterhaltungstitel ändern.</value>
     <comment>Change the convo's title.</comment>
   </data>
   <data name="ChangeEpistleServerUrlToolTip" xml:space="preserve">
@@ -286,11 +286,11 @@
     <comment>Banned users can never join back into a convo; a new conversation would need to be created!</comment>
   </data>
   <data name="ConfirmNewConvoPassword" xml:space="preserve">
-    <value>Confirm New Password</value>
+    <value>Neues Passwort bestätigen</value>
     <comment>Confirm New Password</comment>
   </data>
   <data name="ConfirmNewConvoPasswordToolTip" xml:space="preserve">
-    <value>Confirm your new convo password by re-entering it here.</value>
+    <value>Bestätige dein neues Unterhaltungspasswort durch erneutes Eingeben (um Tippfehler zu vermeiden).</value>
     <comment>Confirm your new convo password by re-entering it here.</comment>
   </data>
   <data name="ConfirmReset" xml:space="preserve">
@@ -401,7 +401,7 @@ Falls das nicht das Problem ist, kann es sein, dass die Unterhaltung ihr Ablaufd
     <comment>Delete</comment>
   </data>
   <data name="DeleteConvo" xml:space="preserve">
-    <value>Delete Convo</value>
+    <value>Unterhaltung löschen</value>
     <comment>Delete Convo</comment>
   </data>
   <data name="DeleteConvoLocally" xml:space="preserve">
@@ -417,7 +417,7 @@ Falls das nicht das Problem ist, kann es sein, dass die Unterhaltung ihr Ablaufd
     <comment>As long as you have the convo's id and access password, you can sync back into the convo at any time. It'll just take a moment until the messages are downloaded and decrypted to your device.</comment>
   </data>
   <data name="DeleteConvoToolTip" xml:space="preserve">
-    <value>The entire convo will be immediately deleted on the server without any chance of recovery.</value>
+    <value>Die gesamte Unterhaltung, inklusiv aller damit verbundenen Daten, sofort auf dem Server zerstören ohne Rückzugsmöglichkeit.</value>
     <comment>The entire convo will be immediately deleted on the server without any chance of recovery.</comment>
   </data>
   <data name="Description" xml:space="preserve">
@@ -437,7 +437,7 @@ Falls das nicht das Problem ist, kann es sein, dass die Unterhaltung ihr Ablaufd
     <comment>Edit, leave or delete convo</comment>
   </data>
   <data name="EditingConvos" xml:space="preserve">
-    <value>Editing convos</value>
+    <value>Unterhaltungen bearbeiten</value>
     <comment>Editing convos</comment>
   </data>
   <data name="EditingConvosText" xml:space="preserve">
@@ -538,11 +538,11 @@ If you want to leave a convo, you can do so, but you need to authenticate your r
     <comment>(Google Authenticator is recommended)</comment>
   </data>
   <data name="HelpWindowTitle" xml:space="preserve">
-    <value>Glitched Epistle - Help</value>
+    <value>Glitched Epistle - Hilfe</value>
     <comment>Glitched Epistle - Help</comment>
   </data>
   <data name="HowToGetStarted" xml:space="preserve">
-    <value>How do I get started?</value>
+    <value>Wie funktioniert die Bedienung?</value>
     <comment>How do I get started?</comment>
   </data>
   <data name="HowToGetStartedText" xml:space="preserve">
@@ -592,7 +592,7 @@ Please try again in 15 minutes.</comment>
     <comment>Join an Epistle conversation now by entering its ID and access password.</comment>
   </data>
   <data name="JoiningAndCreatingConvos" xml:space="preserve">
-    <value>Joining and creating convos</value>
+    <value>Unterhaltungen beitreten und erstellen</value>
     <comment>Joining and creating convos</comment>
   </data>
   <data name="JoiningAndCreatingConvosText" xml:space="preserve">
@@ -618,12 +618,12 @@ If you want to join a convo from another Epistle user who gave you the convo id 
 Note that the convo id textbox is programmed in a way that is best suited for pasting in an ID from the clipboard and immediately enter the password without making use of the tab key. So make sure to use the clipboard for this task!</comment>
   </data>
   <data name="KickAndBan" xml:space="preserve">
-    <value>Kick and ban from convo</value>
+    <value>Aus Unterhaltung verbannen</value>
     <comment>Kick and ban from convo</comment>
   </data>
   <data name="KickAndBanToolTip" xml:space="preserve">
-    <value>Kicks the user from the convo and prevents him from joining back in by putting him on the convo's black list.
-Only use this when really needed (e.g. spam), as this action is intentionally irreversible!</value>
+    <value>Verbannt den Benutzer aus der Unterhaltung und verhindert sein zukünftiges Beitreten.
+Diese Funktion bitte nur in extremen Notfällen benutzen (z.B. Spam), da dies nicht rückgängig gemacht werden kann.</value>
     <comment>Kicks the user from the convo and prevents him from joining back in by putting him on the convo's black list.
 Only use this when really needed (e.g. spam), as this action is intentionally irreversible!</comment>
   </data>
@@ -640,12 +640,12 @@ Only use this when really needed (e.g. spam), as this action is intentionally ir
     <comment>Are you sure that you want to leave this convo?</comment>
   </data>
   <data name="LeaveConvoButton" xml:space="preserve">
-    <value>Leave convo and delete local data on this device</value>
+    <value>Unterhaltung verlassen und lokale Daten löschen</value>
     <comment>Leave convo and delete local data on this device</comment>
   </data>
   <data name="LeaveConvoButtonToolTip" xml:space="preserve">
-    <value>This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side.
-This action requires 2FA for confirmation.</value>
+    <value>Dies bedarf einer Zwei-Faktor Authentifizierung zur Sicherheit.
+Es wird deine lokalen Unterhaltungsdaten löschen und dich von der Teilnehmerliste streichen.</value>
     <comment>This will both delete the convo's data locally on this device as well as remove you as a user from the conversation server-side.
 This action requires 2FA for confirmation.</comment>
   </data>
@@ -695,12 +695,12 @@ As long as you have the convo's id and access password, you can join back in any
     <comment>Name</comment>
   </data>
   <data name="NewConvoPassword" xml:space="preserve">
-    <value>New Convo Password</value>
+    <value>Neues Passwort</value>
     <comment>New Convo Password</comment>
   </data>
   <data name="NewConvoPasswordToolTip" xml:space="preserve">
-    <value>Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. 
-Note: unless specifically banned, whoever has this password and your convo's id can join!</value>
+    <value>Beschütze deine Unterhaltung indem du ein starkes Passwort festlegst, welches immer nur du und deine Teilnehmer wissen sollten.
+Beachte: ausser verbannte Benutzer kann jeder mit der Kombination ID + Passwort beitreten!</value>
     <comment>Protect your conversation by giving it a strong password that only you and your convo's participants should ever know. 
 Note: unless specifically banned, whoever has this password and your convo's id can join!</comment>
   </data>
@@ -749,11 +749,11 @@ Note: unless specifically banned, whoever has this password and your convo's id 
     <comment>Open up the settings window.</comment>
   </data>
   <data name="OtherParticipants" xml:space="preserve">
-    <value>Other participants:</value>
+    <value>Andere Teilnehmer:</value>
     <comment>Other participants:</comment>
   </data>
   <data name="Participants" xml:space="preserve">
-    <value>Participants</value>
+    <value>Teilnehmer</value>
     <comment>Participants</comment>
   </data>
   <data name="Password" xml:space="preserve">
@@ -838,13 +838,12 @@ It is stored locally on a per-machine basis, meaning that you can have multiple 
     <comment>Please set up your 2FA authenticator app.</comment>
   </data>
   <data name="PromoteToAdmin" xml:space="preserve">
-    <value>Promote to admin</value>
+    <value>Zum Administrator ernennen</value>
     <comment>Promote to admin</comment>
   </data>
   <data name="PromoteToAdminToolTip" xml:space="preserve">
-    <value>Promotes this user to be the new convo's admin.
-Please be aware of the fact that by doing this you fully give up your rights as a convo admin, 
-and that the new admin will have FULL control over the conversation.</value>
+    <value>Ernenne diesen Benutzer zum neuen Unterhaltungsadministrator.
+Bitte beachte, dass du hierdurch alle deine Admin-Rechte aufgibst. Der neue Administrator wird VOLLE Kontrolle über die Unterhaltung erlangen.</value>
     <comment>Promotes this user to be the new convo's admin.
 Please be aware of the fact that by doing this you fully give up your rights as a convo admin, 
 and that the new admin will have FULL control over the conversation.</comment>
@@ -930,7 +929,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Scroll to the bottom of the chat and check out the newest messages.</comment>
   </data>
   <data name="Security" xml:space="preserve">
-    <value>Security</value>
+    <value>Sicherheit</value>
     <comment>Security</comment>
   </data>
   <data name="SelectTheFileYouWantToSend" xml:space="preserve">
@@ -966,7 +965,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Submits the convo creation request to the Epistle backend.</comment>
   </data>
   <data name="SubmitConvoMetadataChangeRequestToolTip" xml:space="preserve">
-    <value>Submits the convo modification request to the Epistle backend.</value>
+    <value>Übermittelt das Änderungsformular an den Unterhaltungsserver.</value>
     <comment>Submits the convo modification request to the Epistle backend.</comment>
   </data>
   <data name="SubmitPasswordChangeToolTip" xml:space="preserve">
@@ -994,7 +993,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>Theme</comment>
   </data>
   <data name="TheNewConvoTitle" xml:space="preserve">
-    <value>The new convo's title.</value>
+    <value>Der neue Titel.</value>
     <comment>The new convo's title.</comment>
   </data>
   <data name="ThisConvoIsExpired" xml:space="preserve">
@@ -1058,7 +1057,7 @@ and that the new admin will have FULL control over the conversation.</comment>
     <comment>User ID</comment>
   </data>
   <data name="UserInterfaceOverview" xml:space="preserve">
-    <value>User interface overview</value>
+    <value>Benutzeroberfläche</value>
     <comment>User interface overview</comment>
   </data>
   <data name="UserInterfaceOverviewText" xml:space="preserve">
@@ -1102,13 +1101,13 @@ In the top right corner you have three buttons: restore window, settings and hel
     <comment>User Options</comment>
   </data>
   <data name="UserOptionsToolTip" xml:space="preserve">
-    <value>Actions that a regular convo participant can perform.
-If you're the convo's admin, leaving server-side is disabled because you'd need to define a new convo admin first before abandoning (under the Admin Options-&gt;Participants tab).</value>
+    <value>Sachen die alle Teilnehmer machen können.
+Wenn du der Administrator dieser Unterhaltung bist, ist "Unterhaltung verlassen" deaktiviert, da du zuerst einen neuen Administrator ernennen müsstest. Dies kannst du weiter unten in den Admin Optionen tun.</value>
     <comment>Actions that a regular convo participant can perform.
 If you're the convo's admin, leaving server-side is disabled because you'd need to define a new convo admin first before abandoning (under the Admin Options-&gt;Participants tab).</comment>
   </data>
   <data name="UserSettings" xml:space="preserve">
-    <value>User settings</value>
+    <value>Benutzereinstellungen</value>
     <comment>User settings</comment>
   </data>
   <data name="UserSettingsText" xml:space="preserve">
@@ -1136,7 +1135,7 @@ PLEASE read every warning carefully in the dialog menu!</comment>
     <comment>Welcome to Glitched Epistle.</comment>
   </data>
   <data name="WhatIsEpistle" xml:space="preserve">
-    <value>First of all, what is Epistle?</value>
+    <value>Was ist überhaupt Epistle?</value>
     <comment>First of all, what is Epistle?</comment>
   </data>
   <data name="WhatIsEpistleText" xml:space="preserve">
@@ -1160,7 +1159,7 @@ The Epistle server knows NOTHING about you, or what you send to whom. Because we
 When using free services always keep in mind: if you don't give those companies your money in exchange for a product, you ARE the product.</comment>
   </data>
   <data name="WhoIsBehindThisProject" xml:space="preserve">
-    <value>Who is behind this project?</value>
+    <value>Wer steckt hinter diesem Projekt?</value>
     <comment>Who is behind this project?</comment>
   </data>
   <data name="WhoIsBehindThisProjectText" xml:space="preserve">
