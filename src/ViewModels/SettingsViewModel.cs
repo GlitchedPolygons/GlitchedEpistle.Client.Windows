@@ -56,7 +56,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         #region Commands
         public ICommand ClosedCommand { get; }
-        public ICommand ChangeThemeCommand { get; }
         public ICommand DeleteButtonCommand { get; }
         public ICommand CancelButtonCommand { get; }
         public ICommand RevertButtonCommand { get; }
@@ -69,8 +68,51 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => username;
             set => Set(ref username, value);
         }
+
+        private bool darkChecked = true;
+        public bool DarkChecked
+        {
+            get => darkChecked;
+            set
+            {
+                Set(ref darkChecked, value);
+                if (initialized && value)
+                {
+                    ChangeTheme(Themes.DARK_THEME);
+                }
+            }
+        }
+
+        private bool lightChecked = false;
+        public bool LightChecked
+        {
+            get => lightChecked;
+            set
+            {
+                Set(ref lightChecked, value);
+                if (initialized && value)
+                {
+                    ChangeTheme(Themes.LIGHT_THEME);
+                }
+            }
+        }
+
+        private bool oledChecked = false;
+        public bool OledChecked
+        {
+            get => oledChecked;
+            set
+            {
+                Set(ref oledChecked, value);
+                if (initialized && value)
+                {
+                    ChangeTheme(Themes.OLED_THEME);
+                }
+            }
+        }
         #endregion
 
+        private bool initialized;
         private string oldTheme, newTheme, oldUsername;
 
         public SettingsViewModel(IAppSettings appSettings, IUserSettings userSettings, IEventAggregator eventAggregator, User user)
@@ -81,7 +123,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             this.eventAggregator = eventAggregator;
 
             ClosedCommand = new DelegateCommand(OnClosed);
-            ChangeThemeCommand = new DelegateCommand(OnChangedTheme);
             DeleteButtonCommand = new DelegateCommand(OnClickedDelete);
             CancelButtonCommand = new DelegateCommand(OnClickedCancel);
             RevertButtonCommand = new DelegateCommand(OnClickedRevert);
@@ -90,8 +131,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
             // Load up the current settings into the UI on load.
             Username = userSettings.Username;
-            oldTheme = newTheme = appSettings["Theme", Themes.DARK_THEME];
-            OnChangedTheme(oldTheme);
+
+            DarkChecked = LightChecked = OledChecked = false;
+
+            switch (oldTheme = newTheme = appSettings["Theme", Themes.DARK_THEME])
+            {
+                case Themes.DARK_THEME:
+                    DarkChecked = true;
+                    break;
+                case Themes.LIGHT_THEME:
+                    LightChecked = true;
+                    break;
+                case Themes.OLED_THEME:
+                    OledChecked = true;
+                    break;
+            }
+
+            ChangeTheme(oldTheme);
+
+            initialized = true;
         }
 
         private void OnClosed(object commandParam)
@@ -99,7 +157,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             if (cancelled)
             {
                 userSettings.Username = oldUsername;
-                OnChangedTheme(oldTheme);
+                ChangeTheme(oldTheme);
             }
             else
             {
@@ -116,18 +174,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private void OnClickedRevert(object commandParam)
         {
-            Username = user?.Id ?? "user";
-            OnChangedTheme(Themes.DARK_THEME);
+            ChangeTheme(Themes.DARK_THEME);
         }
 
-        private void OnChangedTheme(object commandParam)
+        private void ChangeTheme(string theme)
         {
-            string theme = commandParam as string;
-            if (theme.NullOrEmpty())
-            {
-                return;
-            }
-
             var app = Application.Current as App;
             if (app is null)
             {
