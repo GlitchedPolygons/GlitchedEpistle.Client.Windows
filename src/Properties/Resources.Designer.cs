@@ -673,6 +673,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dark polygons.
+        /// </summary>
+        public static string DarkPolygons {
+            get {
+                return ResourceManager.GetString("DarkPolygons", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -1158,6 +1167,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string LeaveConvoLocalDataDeletionNotice {
             get {
                 return ResourceManager.GetString("LeaveConvoLocalDataDeletionNotice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Light polygons.
+        /// </summary>
+        public static string LightPolygons {
+            get {
+                return ResourceManager.GetString("LightPolygons", resourceCulture);
             }
         }
         

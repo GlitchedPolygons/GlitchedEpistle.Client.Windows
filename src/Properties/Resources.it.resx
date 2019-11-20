@@ -390,6 +390,10 @@ Se non è quello il problema allora potrebbe essere che la convo è semplicement
     <value>La tua password d'accesso attuale.</value>
     <comment>Your currently active user password.</comment>
   </data>
+  <data name="DarkPolygons" xml:space="preserve">
+    <value>Poligoni scuri</value>
+    <comment>Dark polygons</comment>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Cancella</value>
     <comment>Delete</comment>
@@ -651,6 +655,10 @@ This action requires 2FA for confirmation.</comment>
     <value>La tua copia locale della convo verrà cancellata. A meno che tu non abbia fatto una sorta di backup, quei dati per te saranno spariti. Se la password della convo non cambia, puoi sempre riconnetterti con id + password in un qualsiasi momento più in là.</value>
     <comment>Your local copy of the conversation's chatroom will be deleted. Unless you backed it up somewhere, that data will be gone.
 As long as you have the convo's id and access password, you can join back in any time though.</comment>
+  </data>
+  <data name="LightPolygons" xml:space="preserve">
+    <value>Poligoni chiari</value>
+    <comment>Light polygons</comment>
   </data>
   <data name="LoadPreviousMessagesToolTip" xml:space="preserve">
     <value>Carica i messaggi che sono stati inviati precedentemente.</value>

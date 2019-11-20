@@ -389,6 +389,10 @@
     <value>Your currently active user password.</value>
     <comment>Your currently active user password.</comment>
   </data>
+  <data name="DarkPolygons" xml:space="preserve">
+    <value>Dark polygons</value>
+    <comment>Dark polygons</comment>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
     <comment>Delete</comment>
@@ -651,6 +655,10 @@ This action requires 2FA for confirmation.</comment>
 As long as you have the convo's id and access password, you can join back in any time though.</value>
     <comment>Your local copy of the conversation's chatroom will be deleted. Unless you backed it up somewhere, that data will be gone.
 As long as you have the convo's id and access password, you can join back in any time though.</comment>
+  </data>
+  <data name="LightPolygons" xml:space="preserve">
+    <value>Light polygons</value>
+    <comment>Light polygons</comment>
   </data>
   <data name="LoadPreviousMessagesToolTip" xml:space="preserve">
     <value>Load the previous messages that were sent to this convo.</value>
