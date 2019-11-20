@@ -442,6 +442,10 @@
     <Content Include="glitched-epistle-icon.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Images\flag-ch.png" />
+    <Resource Include="Resources\Images\flag-de.png" />
+    <Resource Include="Resources\Images\flag-en.png" />
+    <Resource Include="Resources\Images\flag-it.png" />
     <Resource Include="Resources\Images\pause-icon-selected.png" />
     <Resource Include="Resources\Images\play-icon-selected.png" />
     <Resource Include="Resources\Images\pause-icon-black.png" />

@@ -65,6 +65,46 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
         }
 
+        private bool englishChecked = true;
+        public bool EnglishChecked
+        {
+            get => englishChecked;
+            set
+            {
+                Set(ref englishChecked, value);
+            }
+        }
+
+        private bool germanChecked = false;
+        public bool GermanChecked
+        {
+            get => germanChecked;
+            set
+            {
+                Set(ref germanChecked, value);
+            }
+        }
+
+        private bool swissGermanChecked = false;
+        public bool SwissGermanChecked
+        {
+            get => swissGermanChecked;
+            set
+            {
+                Set(ref swissGermanChecked, value);
+            }
+        }
+
+        private bool italianChecked = false;
+        public bool ItalianChecked
+        {
+            get => italianChecked;
+            set
+            {
+                Set(ref italianChecked, value);
+            }
+        }
+
         private Visibility loggingInVisibility = Visibility.Hidden;
         public Visibility LoggingInVisibility { get => loggingInVisibility; set => Set(ref loggingInVisibility, value); }
         #endregion
@@ -89,6 +129,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             // Bind the password box to the password field.
             PasswordChangedCommand = new DelegateCommand(o => password = (o as PasswordBox)?.Password);
+
+            var currentCI = localization.GetCurrentCultureInfo().Name;
+            if (currentCI.Contains("de"))
+            {
+                EnglishChecked = GermanChecked = SwissGermanChecked = ItalianChecked = false;
+                GermanChecked = true;
+            }
+            else if (currentCI.Contains("gsw"))
+            {
+                EnglishChecked = GermanChecked = SwissGermanChecked = ItalianChecked = false;
+                SwissGermanChecked = true;
+            }
+            else if (currentCI.Contains("it"))
+            {
+                EnglishChecked = GermanChecked = SwissGermanChecked = ItalianChecked = false;
+                ItalianChecked = true;
+            }
+            else
+            {
+                EnglishChecked = GermanChecked = SwissGermanChecked = ItalianChecked = false;
+                EnglishChecked = true;
+            }
         }
 
         private void OnClickedLogin(object commandParam)

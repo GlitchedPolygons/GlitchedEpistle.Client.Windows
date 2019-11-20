@@ -102,6 +102,59 @@
                 ToolTip="{x:Static p:Resources.LoginToolTip}"
                 IsEnabled="False" />
 
+        <StackPanel Margin="0 15 0 0" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+            <RadioButton IsChecked="{Binding EnglishChecked}" 
+                         ToolTip="English"
+                         VerticalAlignment="Center" 
+                         VerticalContentAlignment="Center"/>
+
+            <Image Width="22" 
+                   Height="22"
+                   Margin="3 0 0 0"
+                   ToolTip="English"
+                   Source="/Resources/Images/flag-en.png"/>
+
+            <RadioButton Margin="16 0 0 0"  
+                         ToolTip="Deutsch"
+                         IsChecked="{Binding GermanChecked}" 
+                         VerticalAlignment="Center" 
+                         VerticalContentAlignment="Center"/>
+
+            <Image Width="22" 
+                   Height="22"
+                   Margin="3 0 0 0"
+                   ToolTip="Deutsch"
+                   Source="/Resources/Images/flag-de.png"/>
+
+            <RadioButton Margin="16 0 0 0"
+                         ToolTip="Schwiizerdütsch"
+                         IsChecked="{Binding SwissGermanChecked}" 
+                         VerticalAlignment="Center" 
+                         VerticalContentAlignment="Center"/>
+
+            <Image Width="22" 
+                   Height="22"
+                   Margin="3 0 0 0"
+                   ToolTip="Schwiizerdütsch"
+                   Source="/Resources/Images/flag-ch.png"/>
+
+            <RadioButton Margin="16 0 0 0"  
+                         ToolTip="Italiano"
+                         IsChecked="{Binding ItalianChecked}" 
+                         VerticalAlignment="Center" 
+                         VerticalContentAlignment="Center"/>
+
+            <Image Width="22" 
+                   Height="22"
+                   Margin="3 0 0 0"
+                   ToolTip="Italiano"
+                   Source="/Resources/Images/flag-it.png"/>
+        </StackPanel>
+        
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"

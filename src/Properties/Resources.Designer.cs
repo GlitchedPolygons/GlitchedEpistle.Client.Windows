@@ -980,9 +980,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         /// <summary>
         ///   Looks up a localized string similar to When you run Epistle for the first time after installing, you&apos;re prompted to register for an account.
         ///
-        ///If you already have an account that&apos;s been exported using the Export Backup option inside the settings, click on Import.
+        ///When registering, the program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code).
         ///
-        ///Otherwise fill in the form and apply for a new Epistle account. The program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code [rest of string was truncated]&quot;;.
+        ///Please make sure to create both a backup (offline on a paper is safest) of your emergency 2FA codes and the actual secret that&apos;s needed for generating the TOTPs!
+        ///        /// [rest of string was truncated]&quot;;.
         /// </summary>
         public static string HowToGetStartedText {
             get {

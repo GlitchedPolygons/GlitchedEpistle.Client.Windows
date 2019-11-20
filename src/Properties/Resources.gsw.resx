@@ -550,9 +550,7 @@ Please make sure to create both a backup (offline on a paper is safest) of your 
 Once you've done all this, you're ready to log in!</value>
     <comment>When you run Epistle for the first time after installing, you're prompted to register for an account.
 
-If you already have an account that's been exported using the Export Backup option inside the settings, click on Import.
-
-Otherwise fill in the form and apply for a new Epistle account. The program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code).
+When registering, the program will generate your RSA key pair (which might take a while depending on your hardware), submit your account creation request to the server and ultimately display your Two-Factor Authentication secret (QR Code).
 
 Please make sure to create both a backup (offline on a paper is safest) of your emergency 2FA codes and the actual secret that's needed for generating the TOTPs!
 
