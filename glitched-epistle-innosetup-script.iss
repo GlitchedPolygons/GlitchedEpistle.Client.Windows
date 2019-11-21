@@ -36,12 +36,27 @@ Name: "{commondesktop}\Glitched Epistle"; Filename: "{app}\Epistle.exe"; Tasks: 
 [Run]
 Filename: "{app}\Epistle.exe"; Description: "{cm:LaunchProgram,Glitched Epistle}"; Flags: nowait postinstall skipifsilent
 
+[Dirs]
+Name: "{app}\de"
+Name: "{app}\gsw"
+Name: "{app}\it"
+Name: "{app}\x64"
+Name: "{app}\x86"
+
 [Files]
+Source: "src\bin\Release\Microsoft.IdentityModel.Tokens.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\NAudio.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Plugin.SimpleAudioPlayer.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Plugin.SimpleAudioPlayer.Abstractions.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Plugin.SimpleAudioPlayer.WPF.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Plugin.SimpleAudioPlayer.WPF.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Prism.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Prism.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Prism.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Prism.Wpf.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Restart.bat"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\RestSharp.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\x64\SQLite.Interop.dll"; DestDir: "{app}\x64"; Flags: ignoreversion
-Source: "src\bin\Release\x86\SQLite.Interop.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
 Source: "src\bin\Release\System.Configuration.ConfigurationManager.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\System.Data.SQLite.EF6.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -89,12 +104,9 @@ Source: "src\bin\Release\GlitchedPolygons.Services.MethodQ.dll"; DestDir: "{app}
 Source: "src\bin\Release\Microsoft.Expression.Interactions.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Microsoft.IdentityModel.JsonWebTokens.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Microsoft.IdentityModel.Logging.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Microsoft.IdentityModel.Tokens.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Prism.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Prism.pdb"; DestDir: "{app}"; Flags: ignoreversion
-
-
-[Dirs]
-Name: "{app}\x64"
-Name: "{app}\x86"
+Source: "src\bin\Release\app.publish\Epistle.exe"; DestDir: "{app}\app.publish"; Flags: ignoreversion
+Source: "src\bin\Release\de\Epistle.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
+Source: "src\bin\Release\gsw\Epistle.resources.dll"; DestDir: "{app}\gsw"; Flags: ignoreversion
+Source: "src\bin\Release\it\Epistle.resources.dll"; DestDir: "{app}\it"; Flags: ignoreversion
+Source: "src\bin\Release\x64\SQLite.Interop.dll"; DestDir: "{app}\x64"; Flags: ignoreversion
+Source: "src\bin\Release\x86\SQLite.Interop.dll"; DestDir: "{app}\x86"; Flags: ignoreversion
