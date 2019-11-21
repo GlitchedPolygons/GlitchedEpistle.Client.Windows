@@ -37,13 +37,39 @@ Name: "{commondesktop}\Glitched Epistle"; Filename: "{app}\Epistle.exe"; Tasks: 
 Filename: "{app}\Epistle.exe"; Description: "{cm:LaunchProgram,Glitched Epistle}"; Flags: nowait postinstall skipifsilent
 
 [Dirs]
-Name: "{app}\de"
 Name: "{app}\gsw"
+Name: "{app}\de"
 Name: "{app}\it"
 Name: "{app}\x64"
 Name: "{app}\x86"
 
 [Files]
+Source: "src\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\BouncyCastle.Crypto.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\CommonServiceLocator.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Dapper.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\EntityFramework.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\EntityFramework.SqlServer.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Epistle.application"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Epistle.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Epistle.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Epistle.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Epistle.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Epistle.xml"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\glitched-epistle-icon.ico"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.ExtensionMethods.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.GlitchedEpistle.Client.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.RepositoryPattern.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.RepositoryPattern.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.Services.CompressionUtility.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.Services.Cryptography.Asymmetric.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.Services.Cryptography.Symmetric.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.Services.JwtService.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\GlitchedPolygons.Services.MethodQ.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Microsoft.Expression.Interactions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Microsoft.IdentityModel.JsonWebTokens.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Microsoft.IdentityModel.Logging.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Microsoft.IdentityModel.Tokens.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\NAudio.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -78,33 +104,6 @@ Source: "src\bin\Release\zxing.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\zxing.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\zxing.presentation.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\zxing.presentation.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\BouncyCastle.Crypto.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\CommonServiceLocator.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Dapper.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\EntityFramework.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\EntityFramework.SqlServer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Epistle.application"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Epistle.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Epistle.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Epistle.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Epistle.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Epistle.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\glitched-epistle-icon.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.ExtensionMethods.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.ExtensionMethods.RSAXmlPemStringConverter.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.GlitchedEpistle.Client.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.RepositoryPattern.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.RepositoryPattern.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.Services.CompressionUtility.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.Services.Cryptography.Asymmetric.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.Services.Cryptography.Symmetric.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.Services.JwtService.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\GlitchedPolygons.Services.MethodQ.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Microsoft.Expression.Interactions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Microsoft.IdentityModel.JsonWebTokens.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Microsoft.IdentityModel.Logging.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\app.publish\Epistle.exe"; DestDir: "{app}\app.publish"; Flags: ignoreversion
 Source: "src\bin\Release\de\Epistle.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
 Source: "src\bin\Release\gsw\Epistle.resources.dll"; DestDir: "{app}\gsw"; Flags: ignoreversion
 Source: "src\bin\Release\it\Epistle.resources.dll"; DestDir: "{app}\it"; Flags: ignoreversion

@@ -30,12 +30,20 @@ using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using Prism.Events;
+using System.IO;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
+using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
+    /// <summary>
+    /// ViewModel for a successful user creation's server response 
+    /// (to display the 2FA secret + backup codes to the user).
+    /// </summary>
     public class UserCreationViewModel : ViewModel
     {
         #region Constants
@@ -191,7 +199,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 switch (result.Item1)
                 {
                     case 0: // Success!
-                        userSettings.Username = Username;
+                        string filePath = Path.Combine(Paths.GetUserDirectory(result.Item2.Id), "Settings.json");
+                        File.WriteAllText(filePath, JsonConvert.SerializeObject(new { Username }));
                         logger?.LogMessage($"Created user {result.Item2.Id}.");
                         // Handle this event back in the main view model,
                         // since it's there where the backup codes + 2FA secret (QR) will be shown.
