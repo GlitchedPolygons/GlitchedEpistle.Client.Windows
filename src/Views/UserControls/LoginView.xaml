@@ -26,7 +26,8 @@
              xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
              mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Center" MaxWidth="250"
+    <StackPanel HorizontalAlignment="Center" 
+                MinWidth="250"
                 IsEnabled="{Binding UIEnabled}">
 
         <Label Content="{x:Static p:Resources.WelcomeToGlitchedEpistle}"

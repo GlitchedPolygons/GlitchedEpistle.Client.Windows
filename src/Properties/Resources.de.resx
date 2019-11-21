@@ -446,7 +446,7 @@ Falls das nicht das Problem ist, kann es sein, dass die Unterhaltung ihr Ablaufd
 Du kannst nervige Teilnehmer verbannen in dem du ihre Benutzer-ID ausfindig machst und auf der Teilnehmerliste im Unterhaltungs-Bearbeitungsfenster streichst.
 Auf dieses Fenster kannst du zugreifen in dem du mit der rechten Maustaste auf die Unterhaltung in der Liste klickst und das Bearbeitungsfenster öffnest.
 
-In diesem Menü kannst du verschieden Änderungen an der Unterhaltung vornehmen. Als Administrator kannst du Sachen wie Titel, Beschreibung, usw... bearbeiten. Dies bedarf natürlich an zusätzlicher Zwei-Faktor Authentifizierung. Wenn du ausserdem als Admin deine Unterhaltung verlassen möchtest, kannst du dies erst tun nachdem du einen neuen Administrator gewählt hast!</value>
+In diesem Menü kannst du verschiedene Änderungen an der Unterhaltung vornehmen. Als Administrator kannst du Sachen wie Titel, Beschreibung, usw... bearbeiten. Dies bedarf natürlich an zusätzlicher Zwei-Faktor Authentifizierung. Wenn du ausserdem als Admin deine Unterhaltung verlassen möchtest, kannst du dies erst tun nachdem du einen neuen Administrator gewählt hast!</value>
     <comment>If you're the admin of a convo (its creator), you can edit the metadata at any time.
 
 You can also ban annoying participants in the convo: just find out their unique anonymous user id and kick them from inside the edit convo dialog.
