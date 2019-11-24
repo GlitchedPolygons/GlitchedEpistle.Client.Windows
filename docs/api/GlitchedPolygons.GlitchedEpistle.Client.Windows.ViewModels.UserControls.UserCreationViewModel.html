@@ -73,7 +73,9 @@
   
   <h1 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel" class="text-break">Class UserCreationViewModel
   </h1>
-  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 summary"><p>ViewModel for a successful user creation's server response
+(to display the 2FA secret + backup codes to the user).</p>
+</div>
   <div class="markdown level0 conceptual"></div>
   <div class="inheritance">
     <h5>Inheritance</h5>
@@ -91,7 +93,19 @@
       <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_PropertyChanged">ViewModel.PropertyChanged</a>
     </div>
     <div>
-      <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_Set__1___0____0_System_String_">ViewModel.Set&lt;T&gt;(T, T, String)</a>
+      <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_ErrorMessageResetInterval">ViewModel.ErrorMessageResetInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_SuccessMessageResetInterval">ViewModel.SuccessMessageResetInterval</a>
+    </div>
+    <div>
+      <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_ErrorMessage">ViewModel.ErrorMessage</a>
+    </div>
+    <div>
+      <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_SuccessMessage">ViewModel.SuccessMessage</a>
+    </div>
+    <div>
+      <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_Set__1___0____0_System_String_System_Action_System_Boolean_">ViewModel.Set&lt;T&gt;(T, T, String, Action, Boolean)</a>
     </div>
     <div>
       <a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.ViewModel.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_ViewModel_ExecUI_System_Action_System_Windows_Threading_DispatcherPriority_">ViewModel.ExecUI(Action, DispatcherPriority)</a>
@@ -128,18 +142,18 @@
   </h3>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserSettings_IAppSettings_IEventAggregator_ILogger_IRegistrationService_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.%23ctor(IUserSettings%2CIAppSettings%2CIEventAggregator%2CILogger%2CIRegistrationService)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserSettings_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Localization_ILocalization_IAppSettings_IEventAggregator_ILogger_IRegistrationService_.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.%23ctor(IUserSettings%2CGlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization.ILocalization%2CIAppSettings%2CIEventAggregator%2CILogger%2CIRegistrationService)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L109">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L114">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor*"></a>
-  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserSettings_IAppSettings_IEventAggregator_ILogger_IRegistrationService_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,IAppSettings,IEventAggregator,ILogger,IRegistrationService)">UserCreationViewModel(IUserSettings, IAppSettings, IEventAggregator, ILogger, IRegistrationService)</h4>
+  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel__ctor_IUserSettings_GlitchedPolygons_GlitchedEpistle_Client_Windows_Services_Localization_ILocalization_IAppSettings_IEventAggregator_ILogger_IRegistrationService_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.#ctor(IUserSettings,GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization.ILocalization,IAppSettings,IEventAggregator,ILogger,IRegistrationService)">UserCreationViewModel(IUserSettings, ILocalization, IAppSettings, IEventAggregator, ILogger, IRegistrationService)</h4>
   <div class="markdown level1 summary"></div>
   <div class="markdown level1 conceptual"></div>
   <h5 class="decalaration">Declaration</h5>
   <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public UserCreationViewModel(IUserSettings userSettings, IAppSettings appSettings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)</code></pre>
+    <pre><code class="lang-csharp hljs">public UserCreationViewModel(IUserSettings userSettings, ILocalization localization, IAppSettings appSettings, IEventAggregator eventAggregator, ILogger logger, IRegistrationService registrationService)</code></pre>
   </div>
   <h5 class="parameters">Parameters</h5>
   <table class="table table-bordered table-striped table-condensed">
@@ -154,6 +168,11 @@
       <tr>
         <td><span class="xref">IUserSettings</span></td>
         <td><span class="parametername">userSettings</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization.ILocalization.html">ILocalization</a></td>
+        <td><span class="parametername">localization</span></td>
         <td></td>
       </tr>
       <tr>
@@ -185,7 +204,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_formValid.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.formValid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L70">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L79">View Source</a>
   </span>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_formValid" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.formValid">formValid</h4>
   <div class="markdown level1 summary"></div>
@@ -214,7 +233,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_uiEnabled.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.uiEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L63">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L68">View Source</a>
   </span>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_uiEnabled" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.uiEnabled">uiEnabled</h4>
   <div class="markdown level1 summary"></div>
@@ -245,7 +264,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_EditServerUrlCommand.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L54">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L59">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_EditServerUrlCommand_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_EditServerUrlCommand" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.EditServerUrlCommand">EditServerUrlCommand</h4>
@@ -272,40 +291,10 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_ErrorMessage.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.ErrorMessage%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
-  </span>
-  <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L99">View Source</a>
-  </span>
-  <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_ErrorMessage_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.ErrorMessage*"></a>
-  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_ErrorMessage" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.ErrorMessage">ErrorMessage</h4>
-  <div class="markdown level1 summary"></div>
-  <div class="markdown level1 conceptual"></div>
-  <h5 class="decalaration">Declaration</h5>
-  <div class="codewrapper">
-    <pre><code class="lang-csharp hljs">public string ErrorMessage { get; set; }</code></pre>
-  </div>
-  <h5 class="propertyValue">Property Value</h5>
-  <table class="table table-bordered table-striped table-condensed">
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><span class="xref">System.String</span></td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
-  <span class="small pull-right mobile-hide">
-    <span class="divider">|</span>
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_FormValid.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.FormValid%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L71">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L80">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_FormValid_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.FormValid*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_FormValid" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.FormValid">FormValid</h4>
@@ -332,10 +321,40 @@
   </table>
   <span class="small pull-right mobile-hide">
     <span class="divider">|</span>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_GeneratingKeysVisibility.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.GeneratingKeysVisibility%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L108">View Source</a>
+  </span>
+  <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_GeneratingKeysVisibility_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.GeneratingKeysVisibility*"></a>
+  <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_GeneratingKeysVisibility" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.GeneratingKeysVisibility">GeneratingKeysVisibility</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Visibility GeneratingKeysVisibility { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Visibility</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_LoginCommand.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.LoginCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L57">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L62">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_LoginCommand_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.LoginCommand*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_LoginCommand" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.LoginCommand">LoginCommand</h4>
@@ -365,7 +384,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_PasswordChangedCommand1.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.PasswordChangedCommand1%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L55">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L60">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_PasswordChangedCommand1_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.PasswordChangedCommand1*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_PasswordChangedCommand1" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.PasswordChangedCommand1">PasswordChangedCommand1</h4>
@@ -395,7 +414,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_PasswordChangedCommand2.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.PasswordChangedCommand2%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L56">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L61">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_PasswordChangedCommand2_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.PasswordChangedCommand2*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_PasswordChangedCommand2" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.PasswordChangedCommand2">PasswordChangedCommand2</h4>
@@ -425,7 +444,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_QuitCommand.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.QuitCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L59">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L64">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_QuitCommand_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.QuitCommand*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_QuitCommand" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.QuitCommand">QuitCommand</h4>
@@ -455,7 +474,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_RegisterCommand.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.RegisterCommand%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L58">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L63">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_RegisterCommand_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.RegisterCommand*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_RegisterCommand" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.RegisterCommand">RegisterCommand</h4>
@@ -485,7 +504,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UIEnabled.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UIEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L64">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L69">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UIEnabled_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UIEnabled*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UIEnabled" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UIEnabled">UIEnabled</h4>
@@ -515,7 +534,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecret.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L85">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L94">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecret_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecret" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecret">UserCreationSecret</h4>
@@ -545,7 +564,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecretFieldVis.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L92">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L101">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecretFieldVis_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_UserCreationSecretFieldVis" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.UserCreationSecretFieldVis">UserCreationSecretFieldVis</h4>
@@ -575,7 +594,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Username.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Username%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L78">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L87">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Username_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Username*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Username" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Username">Username</h4>
@@ -607,7 +626,7 @@
     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Finalize.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Finalize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
   </span>
   <span class="small pull-right mobile-hide">
-    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L156">View Source</a>
+    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L159">View Source</a>
   </span>
   <a id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Finalize_" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Finalize*"></a>
   <h4 id="GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel_Finalize" data-uid="GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel.Finalize">Finalize()</h4>
@@ -632,7 +651,7 @@
                     <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/new/master/apiSpec/new?filename=GlitchedPolygons_GlitchedEpistle_Client_Windows_ViewModels_UserControls_UserCreationViewModel.md&amp;value=---%0Auid%3A%20GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls.UserCreationViewModel%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
                   </li>
                   <li>
-                    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L40" class="contribution-link">View Source</a>
+                    <a href="https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/src/ViewModels/UserControls/UserCreationViewModel.cs/#L47" class="contribution-link">View Source</a>
                   </li>
                 </ul>
               </div>
