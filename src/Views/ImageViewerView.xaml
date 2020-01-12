@@ -36,10 +36,34 @@
     <Grid>
         
         <Grid.RowDefinitions>
+            <RowDefinition Height="42"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" 
+                    Orientation="Horizontal" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center">
+            <Button Width="36"
+                    Height="36"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    RenderTransformOrigin="0.5,0.5"
+                    Style="{DynamicResource ResetMainWindowButton}"
+                    ToolTip="{x:Static p:Resources.Rotate90degToolTip}"
+                    Click="Rotate90degButton_Click">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <RotateTransform Angle="90"/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+        </StackPanel>
         
-        <Border Grid.Row="0"
+        <Border Grid.Row="1"
                 Name="Border"
                 ClipToBounds="True">
             

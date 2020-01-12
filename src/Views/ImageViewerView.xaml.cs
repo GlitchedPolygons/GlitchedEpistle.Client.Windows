@@ -55,7 +55,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         {
             Point position = e.MouseDevice.GetPosition(Image);
             Matrix matrix = Image.RenderTransform.Value;
-
+            
             double scaleXY = e.Delta > 0.0d ? SCALE_FACTOR : 1.0d / SCALE_FACTOR;
 
             matrix.ScaleAtPrepend(scaleXY, scaleXY, position.X, position.Y);
@@ -96,6 +96,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
         private void Image_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Image.ReleaseMouseCapture();
+        }
+
+        private void Rotate90degButton_Click(object sender, RoutedEventArgs e)
+        {
+            Matrix matrix = Image.RenderTransform.Value;
+            matrix.Rotate(90);
+            Image.RenderTransform = new MatrixTransform(matrix);
         }
     }
 }

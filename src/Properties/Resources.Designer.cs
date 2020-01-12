@@ -1731,6 +1731,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotate 90°.
+        /// </summary>
+        public static string Rotate90degToolTip {
+            get {
+                return ResourceManager.GetString("Rotate90degToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saves the Epistle server URL to the user preferences..
         /// </summary>
         public static string SaveEpistleServerUrlToolTip {

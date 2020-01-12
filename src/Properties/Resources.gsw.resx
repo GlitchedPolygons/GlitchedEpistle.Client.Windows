@@ -907,6 +907,9 @@ das entspricht aneme sogenannte "hard reset", ouso versichere di, dass de es Bac
     <value>Setz aues uf Wärchsiistellige zrugg.</value>
     <comment>Resets all user settings back to their default values.</comment>
   </data>
+  <data name="Rotate90degToolTip" xml:space="preserve">
+    <value>Um 90° dreye.</value>
+  </data>
   <data name="SaveEpistleServerUrlToolTip" xml:space="preserve">
     <value>Spicheret d Server Adrässe id Benutzeriistellige.</value>
     <comment>Saves the Epistle server URL to the user preferences.</comment>

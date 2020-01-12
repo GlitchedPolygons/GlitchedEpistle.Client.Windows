@@ -922,6 +922,9 @@ and that the new admin will have FULL control over the conversation.</comment>
     <value>Resets all user settings back to their default values.</value>
     <comment>Resets all user settings back to their default values.</comment>
   </data>
+  <data name="Rotate90degToolTip" xml:space="preserve">
+    <value>Rotate 90°</value>
+  </data>
   <data name="SaveEpistleServerUrlToolTip" xml:space="preserve">
     <value>Saves the Epistle server URL to the user preferences.</value>
     <comment>Saves the Epistle server URL to the user preferences.</comment>
