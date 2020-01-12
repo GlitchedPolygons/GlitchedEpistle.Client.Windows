@@ -26,12 +26,13 @@ using System.Globalization;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Users;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.KeyExchange;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -91,6 +92,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             // Register transient types:
             container.RegisterType<JwtService>();
             container.RegisterType<ILogger, TextLogger>();
+            container.RegisterType<IKeyExchange, KeyExchange>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IConvoService, ConvoService>();
             container.RegisterType<ICompressionUtility, BrotliUtility>();
