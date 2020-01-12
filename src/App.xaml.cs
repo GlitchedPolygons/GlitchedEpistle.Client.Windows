@@ -1,6 +1,6 @@
 ﻿/*
     Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
+    Copyright (C) 2020 Raphael Beck
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -93,8 +93,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<ILogger, TextLogger>();
             container.RegisterType<IUserService, UserService>();
             container.RegisterType<IConvoService, ConvoService>();
-            container.RegisterType<ICompressionUtility, GZipUtility>();
-            container.RegisterType<ICompressionUtilityAsync, GZipUtilityAsync>();
+            container.RegisterType<ICompressionUtility, BrotliUtility>();
+            container.RegisterType<ICompressionUtilityAsync, BrotliUtilityAsync>();
             container.RegisterType<IAsymmetricKeygenRSA, AsymmetricKeygenRSA>();
             container.RegisterType<ISymmetricCryptography, SymmetricCryptography>();
             container.RegisterType<IAsymmetricCryptographyRSA, AsymmetricCryptographyRSA>();

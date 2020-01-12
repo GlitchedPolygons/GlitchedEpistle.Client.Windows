@@ -1,6 +1,6 @@
 ﻿/*
     Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
+    Copyright (C) 2020 Raphael Beck
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -48,11 +48,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         // Injections:
         private readonly User user;
         private readonly ILogger logger;
-        private readonly ICompressionUtility gzip;
         private readonly ILocalization localization;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
+        private readonly ICompressionUtility compressionUtility;
         #endregion
 
         private readonly IRepository<Convo, string> convoProvider;
@@ -109,10 +109,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         private string pw = string.Empty;
         private string pw2 = string.Empty;
 
-        public CreateConvoViewModel(User user, ILogger logger, ILocalization localization, IEventAggregator eventAggregator, IConvoService convoService, ICompressionUtility gzip, IAsymmetricCryptographyRSA crypto)
+        public CreateConvoViewModel(User user, ILogger logger, ILocalization localization, IEventAggregator eventAggregator, IConvoService convoService, ICompressionUtility compressionUtility, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
-            this.gzip = gzip;
+            this.compressionUtility = compressionUtility;
             this.logger = logger;
             this.crypto = crypto;
             this.localization = localization;
@@ -178,7 +178,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     UserId = user.Id,
                     Auth = user.Token.Item2,
-                    Body = gzip.Compress(JsonConvert.SerializeObject(convoCreationDto))
+                    Body = compressionUtility.Compress(JsonConvert.SerializeObject(convoCreationDto))
                 };
 
                 string id = await convoService.CreateConvo(body.Sign(crypto, user.PrivateKeyPem));

@@ -1,6 +1,6 @@
 ﻿/*
     Glitched Epistle - Windows Client
-    Copyright (C) 2019 Raphael Beck
+    Copyright (C) 2020 Raphael Beck
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -46,10 +46,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
     {
         #region Constants
         private readonly User user;
-        private readonly ICompressionUtility gzip;
         private readonly IConvoService convoService;
         private readonly IEventAggregator eventAggregator;
         private readonly IAsymmetricCryptographyRSA crypto;
+        private readonly ICompressionUtility compressionUtility;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
 
@@ -203,10 +203,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
 
         private string oldPw, newPw, newPw2;
 
-        public EditConvoMetadataViewModel(IConvoService convoService, User user, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto, ICompressionUtility gzip)
+        public EditConvoMetadataViewModel(IConvoService convoService, User user, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto, ICompressionUtility compressionUtility)
         {
             this.user = user;
-            this.gzip = gzip;
+            this.compressionUtility = compressionUtility;
             this.crypto = crypto;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
@@ -335,7 +335,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         {
                             UserId = user.Id,
                             Auth = user.Token.Item2,
-                            Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+                            Body = compressionUtility.Compress(JsonConvert.SerializeObject(dto))
                         };
 
                         bool success = await convoService.ChangeConvoMetadata(body.Sign(crypto, user.PrivateKeyPem));
@@ -404,7 +404,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         {
                             UserId = user.Id,
                             Auth = user.Token.Item2,
-                            Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+                            Body = compressionUtility.Compress(JsonConvert.SerializeObject(dto))
                         };
 
                         bool success = await convoService.KickUser(body.Sign(crypto, user.PrivateKeyPem));
@@ -550,7 +550,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     UserId = user.Id,
                     Auth = user.Token.Item2,
-                    Body = gzip.Compress(JsonConvert.SerializeObject(dto))
+                    Body = compressionUtility.Compress(JsonConvert.SerializeObject(dto))
                 };
 
                 bool successful = await convoService.ChangeConvoMetadata(body.Sign(crypto, user.PrivateKeyPem));
