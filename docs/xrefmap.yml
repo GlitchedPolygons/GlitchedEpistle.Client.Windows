@@ -2721,6 +2721,19 @@ references:
   isSpec: "True"
   fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.RevertSettingsButtonToolTip
   nameWithType: Resources.RevertSettingsButtonToolTip
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.Rotate90degToolTip
+  name: Rotate90degToolTip
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Properties_Resources_Rotate90degToolTip
+  commentId: P:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.Rotate90degToolTip
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.Rotate90degToolTip
+  nameWithType: Resources.Rotate90degToolTip
+- uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.Rotate90degToolTip*
+  name: Rotate90degToolTip
+  href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Properties_Resources_Rotate90degToolTip_
+  commentId: Overload:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.Rotate90degToolTip
+  isSpec: "True"
+  fullName: GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.Rotate90degToolTip
+  nameWithType: Resources.Rotate90degToolTip
 - uid: GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.SaveEpistleServerUrlToolTip
   name: SaveEpistleServerUrlToolTip
   href: api/GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties.Resources.html#GlitchedPolygons_GlitchedEpistle_Client_Windows_Properties_Resources_SaveEpistleServerUrlToolTip
