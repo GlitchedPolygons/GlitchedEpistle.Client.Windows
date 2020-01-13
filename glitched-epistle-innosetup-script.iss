@@ -7,8 +7,8 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{D704EC6D-7913-4796-88E1-A4BFAFB4DF2B}
 AppName=Glitched Epistle
-AppVersion=2020.1.0.0
-;AppVerName=Glitched Epistle 2020.1.0.0
+AppVersion=2020.2.0.0
+;AppVerName=Glitched Epistle 2020.2.0.0
 AppPublisher=Glitched Polygons
 AppPublisherURL=glitchedpolygons.com
 AppSupportURL=glitchedpolygons.com
@@ -17,7 +17,7 @@ DefaultDirName={pf}\Glitched Polygons\Glitched Epistle
 DefaultGroupName=Glitched Epistle
 LicenseFile=LICENSE
 OutputDir=bin
-OutputBaseFilename=glitched-epistle-2020.1.0.0
+OutputBaseFilename=glitched-epistle-2020.2.0.0
 SetupIconFile=src\glitched-epistle-icon.ico
 Compression=lzma
 ArchitecturesAllowed=x64
@@ -37,15 +37,47 @@ Name: "{commondesktop}\Glitched Epistle"; Filename: "{app}\Epistle.exe"; Tasks: 
 Filename: "{app}\Epistle.exe"; Description: "{cm:LaunchProgram,Glitched Epistle}"; Flags: nowait postinstall skipifsilent
 
 [Dirs]
-Name: "{app}\gsw"
 Name: "{app}\de"
+Name: "{app}\gsw"
 Name: "{app}\it"
 Name: "{app}\x64"
 Name: "{app}\x86"
 
 [Files]
+Source: "src\bin\Release\Prism.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Prism.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Prism.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Prism.Wpf.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Restart.bat"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\RestSharp.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Configuration.ConfigurationManager.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Data.SQLite.EF6.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Data.SQLite.Linq.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Drawing.Common.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.IdentityModel.Tokens.Jwt.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Security.AccessControl.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Security.Permissions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Security.Principal.Windows.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.ValueTuple.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\System.Windows.Interactivity.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Unity.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Unity.Abstractions.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Unity.Container.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\XamlAnimatedGif.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\zxing.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\zxing.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\zxing.presentation.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\zxing.presentation.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\BouncyCastle.Crypto.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\brolib_x64.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\brolib_x64.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\brolib_x86.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\brolib_x86.pdb"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\Brotli.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\CommonServiceLocator.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Dapper.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\EntityFramework.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -77,33 +109,6 @@ Source: "src\bin\Release\Plugin.SimpleAudioPlayer.Abstractions.dll"; DestDir: "{
 Source: "src\bin\Release\Plugin.SimpleAudioPlayer.Abstractions.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Plugin.SimpleAudioPlayer.WPF.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\Plugin.SimpleAudioPlayer.WPF.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Prism.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Prism.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Prism.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Prism.Wpf.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Restart.bat"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\RestSharp.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Configuration.ConfigurationManager.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Data.SQLite.EF6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Data.SQLite.Linq.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Drawing.Common.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.IdentityModel.Tokens.Jwt.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Security.AccessControl.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Security.Permissions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Security.Principal.Windows.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.ValueTuple.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\System.Windows.Interactivity.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Unity.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Unity.Abstractions.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\Unity.Container.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\XamlAnimatedGif.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\zxing.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\zxing.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\zxing.presentation.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\zxing.presentation.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\de\Epistle.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
 Source: "src\bin\Release\gsw\Epistle.resources.dll"; DestDir: "{app}\gsw"; Flags: ignoreversion
 Source: "src\bin\Release\it\Epistle.resources.dll"; DestDir: "{app}\it"; Flags: ignoreversion
