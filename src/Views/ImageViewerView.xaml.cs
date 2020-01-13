@@ -100,9 +100,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Views
 
         private void Rotate90degButton_Click(object sender, RoutedEventArgs e)
         {
-            Matrix matrix = Image.RenderTransform.Value;
+            Matrix matrix = Image.LayoutTransform.Value;
             matrix.Rotate(90);
-            Image.RenderTransform = new MatrixTransform(matrix);
+            Image.LayoutTransform = new MatrixTransform(matrix);
         }
     }
 }
