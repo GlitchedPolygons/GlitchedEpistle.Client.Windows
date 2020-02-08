@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d2b7244f37664803a7ab128374625a47)](https://app.codacy.com/manual/GlitchedPolygons/GlitchedEpistle.Client.Windows?utm_source=github.com&utm_medium=referral&utm_content=GlitchedPolygons/GlitchedEpistle.Client.Windows&utm_campaign=Badge_Grade_Settings)
 [![API](https://img.shields.io/badge/api-docs-informational.svg)](https://glitchedpolygons.github.io/GlitchedEpistle.Client.Windows)
 [![License Shield](https://img.shields.io/badge/license-GPLv3-brightgreen)](https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/blob/master/LICENSE)
 [![Download Latest Release](https://img.shields.io/badge/download-latest-brightgreen)](https://github.com/GlitchedPolygons/GlitchedEpistle.Client.Windows/releases)
