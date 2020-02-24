@@ -42,7 +42,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Factories;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 
 using GlitchedPolygons.Services.MethodQ;
-using GlitchedPolygons.Services.JwtService;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.Cryptography.Symmetric;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
@@ -90,7 +89,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             Directory.CreateDirectory(Paths.ROOT_DIRECTORY);
 
             // Register transient types:
-            container.RegisterType<JwtService>();
             container.RegisterType<ILogger, TextLogger>();
             container.RegisterType<IKeyExchange, KeyExchange>();
             container.RegisterType<IUserService, UserService>();

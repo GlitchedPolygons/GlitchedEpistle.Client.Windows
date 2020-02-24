@@ -1,36 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.156
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchedEpistle.Client.Windows", "src\GlitchedEpistle.Client.Windows.csproj", "{4B7E3355-6733-4B88-9360-4C8BC8974DF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchedEpistle.Client.Windows", "src\GlitchedEpistle.Client.Windows.csproj", "{1B86B526-38CC-4880-B1BE-40A87761A298}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchedEpistle.Client", "..\GlitchedEpistle.Client\src\GlitchedEpistle.Client.csproj", "{D7233566-6252-471E-822E-462089C117B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
-		Debug|x64 = Debug|x64
-		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
-		Release|x64 = Release|x64
-		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Debug|x64.ActiveCfg = Debug|x64
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Debug|x64.Build.0 = Debug|x64
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Debug|x86.Build.0 = Debug|Any CPU
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Release|x64.ActiveCfg = Release|x64
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Release|x64.Build.0 = Release|x64
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Release|x86.ActiveCfg = Release|Any CPU
-		{4B7E3355-6733-4B88-9360-4C8BC8974DF6}.Release|x86.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D86D8379-3BDD-4BF3-8A68-812DF815812C}
+		{1B86B526-38CC-4880-B1BE-40A87761A298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B86B526-38CC-4880-B1BE-40A87761A298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B86B526-38CC-4880-B1BE-40A87761A298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B86B526-38CC-4880-B1BE-40A87761A298}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7233566-6252-471E-822E-462089C117B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7233566-6252-471E-822E-462089C117B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7233566-6252-471E-822E-462089C117B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7233566-6252-471E-822E-462089C117B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

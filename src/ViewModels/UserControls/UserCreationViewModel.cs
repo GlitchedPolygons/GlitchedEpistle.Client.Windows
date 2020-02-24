@@ -194,7 +194,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                Tuple<int, UserCreationResponseDto> result = await registrationService.CreateUser(password1, UserCreationSecret);
+                var result = await registrationService.CreateUser(password1, UserCreationSecret);
 
                 switch (result.Item1)
                 {

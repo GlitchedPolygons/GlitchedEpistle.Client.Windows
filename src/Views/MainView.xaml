@@ -33,7 +33,7 @@
         SizeChanged="MainWindow_OnSizeChanged"
         WindowState="{Binding WindowState}"
         WindowStartupLocation="CenterScreen"
-        Icon="/Resources/Images/epistle-icon.png">
+        Icon="Resources/Images/epistle-icon.png">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closed">
