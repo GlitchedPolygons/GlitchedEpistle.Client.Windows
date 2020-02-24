@@ -93,7 +93,34 @@
       <EmbeddedResource Include="glitched-epistle-icon.ico">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
-      
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="GlitchedPolygons.Services.MethodQ" Version="1.0.4" />
+      <PackageReference Include="NAudio" Version="1.10.0" />
+      <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
+      <PackageReference Include="RestSharp" Version="106.10.1" />
+      <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+      <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+      <PackageReference Include="System.Security.Principal.Windows" Version="4.7.0" />
+      <PackageReference Include="Unity" Version="5.11.3" />
+      <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.4.0" />
+      <PackageReference Include="XamlAnimatedGif" Version="1.2.2" />
+      <PackageReference Include="ZXing.Net" Version="0.16.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\..\epistle\GlitchedEpistle.Client\src\GlitchedEpistle.Client.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Restart.bat">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
       <Resource Include="Resources\Images\animated-matrix-code.gif" />
       <Resource Include="Resources\Images\change-pw-icon-black.png" />
       <Resource Include="Resources\Images\change-pw-icon-selected.png" />
@@ -145,28 +172,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="GlitchedPolygons.Services.MethodQ" Version="1.0.4" />
-      <PackageReference Include="NAudio" Version="1.10.0" />
-      <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />
-      <PackageReference Include="RestSharp" Version="106.10.1" />
-      <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
-      <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
-      <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-      <PackageReference Include="System.Security.Principal.Windows" Version="4.7.0" />
-      <PackageReference Include="Unity" Version="5.11.3" />
-      <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.4.0" />
-      <PackageReference Include="XamlAnimatedGif" Version="1.2.2" />
-      <PackageReference Include="ZXing.Net" Version="0.16.5" />
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\..\..\epistle\GlitchedEpistle.Client\src\GlitchedEpistle.Client.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="Restart.bat">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>
