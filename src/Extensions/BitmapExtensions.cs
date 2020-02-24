@@ -64,7 +64,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Extensions
                     return CreateBitmapSourceFromBitmap(memoryStream);
                 }
             }
-            catch (Exception)
+            catch
             {
                 return null;
             }

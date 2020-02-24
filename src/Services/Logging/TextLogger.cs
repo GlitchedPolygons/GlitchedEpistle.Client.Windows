@@ -153,7 +153,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Logging
                     File.WriteAllText(path, Timestamp(msg) + log);
                 }
             }
-            catch (Exception) { }
+            catch { ; }
         }
     }
 }

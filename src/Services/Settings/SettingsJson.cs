@@ -19,12 +19,11 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Text.Json;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
-
-using Newtonsoft.Json;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
 {
@@ -48,6 +47,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
         /// <see cref="ILogger"/> for logging errors, messages and warnings.
         /// </summary>
         private readonly ILogger logger;
+
+        /// <summary>
+        /// How should the settings JSON be formatted?
+        /// </summary>
+        private static readonly JsonSerializerOptions JSON_SERIALIZER_OPTIONS = new JsonSerializerOptions { WriteIndented = true };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingsJson"/> class.
@@ -75,7 +79,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
                 {
                     try
                     {
-                        settings = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.Version } };
+                        settings = JsonSerializer.Deserialize<Dictionary<string, string>>(File.ReadAllText(FilePath)) ?? new Dictionary<string, string>(16) { { "Version", App.Version } };
                     }
                     catch (Exception e)
                     {
@@ -104,7 +108,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Settings
                     settings["Version"] = App.Version;
                     try
                     {
-                        File.WriteAllText(FilePath, JsonConvert.SerializeObject(settings, Formatting.Indented));
+                        File.WriteAllText(FilePath, JsonSerializer.Serialize(settings, JSON_SERIALIZER_OPTIONS));
                     }
                     catch (Exception e)
                     {

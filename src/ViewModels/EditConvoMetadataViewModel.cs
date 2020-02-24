@@ -23,6 +23,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.RepositoryPattern;
@@ -35,8 +36,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.Services.CompressionUtility;
 using GlitchedPolygons.Services.Cryptography.Asymmetric;
-
-using Newtonsoft.Json;
 
 using Prism.Events;
 
@@ -277,7 +276,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         UserId = user.Id,
                         Auth = user.Token.Item2,
-                        Body = JsonConvert.SerializeObject(dto)
+                        Body = JsonSerializer.Serialize(dto)
                     };
 
                     bool success = await convoService.LeaveConvo(body.Sign(crypto, user.PrivateKeyPem));
@@ -335,7 +334,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         {
                             UserId = user.Id,
                             Auth = user.Token.Item2,
-                            Body = compressionUtility.Compress(JsonConvert.SerializeObject(dto))
+                            Body = compressionUtility.Compress(JsonSerializer.Serialize(dto))
                         };
 
                         bool success = await convoService.ChangeConvoMetadata(body.Sign(crypto, user.PrivateKeyPem));
@@ -404,7 +403,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         {
                             UserId = user.Id,
                             Auth = user.Token.Item2,
-                            Body = compressionUtility.Compress(JsonConvert.SerializeObject(dto))
+                            Body = compressionUtility.Compress(JsonSerializer.Serialize(dto))
                         };
 
                         bool success = await convoService.KickUser(body.Sign(crypto, user.PrivateKeyPem));
@@ -462,7 +461,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     {
                         UserId = user.Id,
                         Auth = user.Token.Item2,
-                        Body = JsonConvert.SerializeObject(dto)
+                        Body = JsonSerializer.Serialize(dto)
                     };
 
                     bool success = await convoService.DeleteConvo(body.Sign(crypto, user.PrivateKeyPem));
@@ -550,7 +549,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     UserId = user.Id,
                     Auth = user.Token.Item2,
-                    Body = compressionUtility.Compress(JsonConvert.SerializeObject(dto))
+                    Body = compressionUtility.Compress(JsonSerializer.Serialize(dto))
                 };
 
                 bool successful = await convoService.ChangeConvoMetadata(body.Sign(crypto, user.PrivateKeyPem));
