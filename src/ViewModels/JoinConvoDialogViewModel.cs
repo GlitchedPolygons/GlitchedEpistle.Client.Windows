@@ -17,6 +17,7 @@
 */
 
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -28,8 +29,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
-
-using Newtonsoft.Json;
 
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
@@ -114,7 +113,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     UserId = user.Id,
                     Auth = user.Token.Item2,
-                    Body = JsonConvert.SerializeObject(dto)
+                    Body = JsonSerializer.Serialize(dto)
                 };
 
                 if (!await convoService.JoinConvo(body.Sign(crypto, user.PrivateKeyPem)))
