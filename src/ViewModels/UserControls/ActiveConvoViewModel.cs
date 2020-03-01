@@ -106,14 +106,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 // Convo expiration check 
                 // (adapt the title label accordingly).
-                DateTime? exp = ActiveConvo?.ExpirationUTC;
+                long? exp = ActiveConvo?.ExpirationUTC;
                 if (exp.HasValue)
                 {
-                    if (DateTime.UtcNow > exp.Value)
+                    if (DateTime.UtcNow.ToUnixTimeSeconds() > exp.Value)
                     {
                         value += " (EXPIRED)";
                     }
-                    else if ((exp.Value - DateTime.UtcNow).TotalDays < 3)
+                    else if ((exp.Value.FromUnixTimeSeconds() - DateTime.UtcNow).TotalDays < 3)
                     {
                         value += " (EXPIRES SOON)";
                     }
@@ -355,8 +355,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 Id = message.Id.ToString(),
                 SenderId = message.SenderId,
                 SenderName = message.SenderName,
-                TimestampDateTimeUTC = message.TimestampUTC,
-                Timestamp = message.TimestampUTC.ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
+                TimestampDateTimeUTC = message.TimestampUTC.FromUnixTimeSeconds(),
+                Timestamp = message.TimestampUTC.FromUnixTimeSeconds().ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
                 Text = json["text"]?.Value<string>(),
                 FileName = json["fileName"]?.Value<string>(),
                 IsOwn = message.SenderId.Equals(user.Id),
