@@ -89,6 +89,7 @@
         <DatePicker Name="DatePicker"
                     ToolTip="{x:Static p:Resources.ExpirationDateToolTip}"
                     DisplayDateStart="{Binding MinExpirationUTC}"
+                    DisplayDateEnd="{Binding MaxExpirationUTC}"
                     SelectedDate="{Binding ExpirationUTC}"
                     FirstDayOfWeek="Monday"
                     SelectedDateFormat="Long" />
