@@ -51,7 +51,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Audio
             set => throw new NotImplementedException();
         }
 
-        public bool IsPlaying => outputDevice != null ? outputDevice.PlaybackState == PlaybackState.Playing : false;
+        public bool IsPlaying => outputDevice != null && outputDevice.PlaybackState == PlaybackState.Playing;
 
         public bool Loop { get; set; }
 
