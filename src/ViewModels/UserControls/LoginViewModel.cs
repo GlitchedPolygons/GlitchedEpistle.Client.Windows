@@ -16,6 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
@@ -32,15 +33,24 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 using Prism.Events;
 using System.Diagnostics;
 
+using GlitchedPolygons.GlitchedEpistle.Client.Models;
+using GlitchedPolygons.GlitchedEpistle.Client.Models.DTOs;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.KeyExchange;
+using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.ServerHealth;
+
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
     public class LoginViewModel : ViewModel
     {
         #region Constants
         // Injections:
-        private readonly ILoginService loginService;
+        private readonly User user;
+        private readonly IKeyExchange keyExchange;
+        private readonly IAppSettings appSettings;
+        private readonly IUserService userService;
         private readonly ILocalization localization;
         private readonly IEventAggregator eventAggregator;
+        private readonly IServerConnectionTest connectionTest;
         #endregion
 
         #region Commands
@@ -130,10 +140,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private volatile int failedAttempts;
         private volatile bool pendingAttempt, initialized;
 
-        public LoginViewModel(IAppSettings settings, IEventAggregator eventAggregator, ILoginService loginService, ILocalization localization)
+        public LoginViewModel(IAppSettings settings, IEventAggregator eventAggregator, ILocalization localization, IUserService userService, IServerConnectionTest connectionTest, User user, IKeyExchange keyExchange, IAppSettings appSettings)
         {
-            this.loginService = loginService;
+            this.user = user;
+            this.userService = userService;
+            this.keyExchange = keyExchange;
+            this.appSettings = appSettings;
             this.localization = localization;
+            this.connectionTest = connectionTest;
             this.eventAggregator = eventAggregator;
 
             QuitCommand = new DelegateCommand(OnClickedQuit);
@@ -186,46 +200,77 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                int result = await loginService.Login(UserId, password, totp);
-
-                switch (result)
+                if (!await connectionTest.TestConnection().ConfigureAwait(false))
                 {
-                    case 0: // Login succeeded.
-                        failedAttempts = 0;
-                        ExecUI(() => eventAggregator.GetEvent<LoginSucceededEvent>().Publish());
-                        break;
-
-                    case 1: // Connection to server failed.
-                        ExecUI(() =>
+                    ExecUI(() =>
+                    {
+                        new InfoDialogView
                         {
-                            pendingAttempt = false;
-                            UIEnabled = true;
-                            new InfoDialogView
+                            DataContext = new InfoDialogViewModel
                             {
-                                DataContext = new InfoDialogViewModel()
-                                {
-                                    OkButtonText = "Okay :/",
-                                    Title = localization["EpistleServerUnresponsive"],
-                                    Text = localization["EpistleServerUnresponsiveErrorMessage"]
-                                }
-                            }.ShowDialog();
-                        });
-                        break;
+                                OkButtonText = "Okay :/",
+                                Title = localization["EpistleServerUnresponsive"],
+                                Text = localization["EpistleServerUnresponsiveErrorMessage"]
+                            }
+                        }.ShowDialog();
+                    });
+                    goto end;
+                }
+                
+                var request = new UserLoginRequestDto
+                {
+                    UserId = UserId,
+                    PasswordSHA512 = password.SHA512(),
+                    Totp = totp
+                };
+            
+                UserLoginSuccessResponseDto response = await userService.Login(request).ConfigureAwait(false);
 
-                    case 2: // Login failed server-side.
-                        ErrorMessage = localization["InvalidUserIdPasswordOr2FA"];
-                        if (++failedAttempts > 2)
-                        {
-                            ErrorMessage += "\n" + localization["InvalidUserIdPasswordOr2FA_Detailed"];
-                        }
-                        break;
-
-                    case 3: // Login failed client-side.
-                        failedAttempts++;
-                        ErrorMessage = localization["LoginSucceededServerSideButResponseCouldNotBeHandledClientSide"];
-                        break;
+                if (response is null || response.Auth.NullOrEmpty() || response.PrivateKey.NullOrEmpty())
+                {
+                    ErrorMessage = localization["InvalidUserIdPasswordOr2FA"];
+                    if (++failedAttempts > 2)
+                    {
+                        ErrorMessage += "\n" + localization["InvalidUserIdPasswordOr2FA_Detailed"];
+                    }
+                    goto end;
                 }
 
+                try
+                {
+                    user.Id = appSettings.LastUserId = userId;
+                    user.PublicKeyPem = await keyExchange.DecompressPublicKeyAsync(response.PublicKey).ConfigureAwait(false);
+                    user.PrivateKeyPem = await keyExchange.DecompressAndDecryptPrivateKeyAsync(response.PrivateKey, password).ConfigureAwait(false);
+                    user.Token = new Tuple<DateTime, string>(DateTime.UtcNow, response.Auth);
+
+                    if (response.Message.NotNullNotEmpty())
+                    {
+                        ExecUI(() =>
+                        {
+                            var dialog = new InfoDialogView
+                            {
+                                DataContext = new InfoDialogViewModel
+                                {
+                                    OkButtonText = localization["Dismiss"],
+                                    Title = localization["EpistleServerBroadcastMessage"],
+                                    Text = response.Message
+                                }, MinWidth = 250, MinHeight = 175
+                            };
+                            dialog.Show();
+                            dialog.Focus();
+                        });
+                    }
+                    
+                    failedAttempts = 0;
+                    ExecUI(() => eventAggregator.GetEvent<LoginSucceededEvent>().Publish());
+                }
+                catch
+                {
+                    failedAttempts++;
+                    ErrorMessage = localization["LoginSucceededServerSideButResponseCouldNotBeHandledClientSide"];
+                }
+
+                end:
                 pendingAttempt = false;
                 UIEnabled = true;
             });

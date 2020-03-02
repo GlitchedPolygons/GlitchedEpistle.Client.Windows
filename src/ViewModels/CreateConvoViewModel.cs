@@ -89,7 +89,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => minExpirationUTC;
             set => Set(ref minExpirationUTC, value);
         }
-
+        
+        private DateTime maxExpirationUTC = DateTime.UtcNow.AddDays(20);
+        public DateTime MaxExpirationUTC
+        {
+            get => maxExpirationUTC;
+            set => Set(ref maxExpirationUTC, value);
+        }
+        
         private DateTime expirationUTC = DateTime.UtcNow.AddDays(14);
         public DateTime ExpirationUTC
         {
@@ -111,12 +118,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public CreateConvoViewModel(User user, ILogger logger, ILocalization localization, IEventAggregator eventAggregator, IConvoService convoService, ICompressionUtility compressionUtility, IAsymmetricCryptographyRSA crypto)
         {
             this.user = user;
-            this.compressionUtility = compressionUtility;
             this.logger = logger;
             this.crypto = crypto;
             this.localization = localization;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
+            this.compressionUtility = compressionUtility;
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");
 
@@ -124,6 +131,12 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             CancelCommand = new DelegateCommand(OnClickedCancel);
             PasswordChangedCommand = new DelegateCommand(pwBox => pw = (pwBox as PasswordBox)?.Password);
             Password2ChangedCommand = new DelegateCommand(pwBox => pw2 = (pwBox as PasswordBox)?.Password);
+
+            Task.Run(async () =>
+            {
+                int maxDays = await convoService.GetMaximumConvoDurationDays().ConfigureAwait(false);
+                MaxExpirationUTC = maxDays > 0 ? DateTime.UtcNow.AddDays(maxDays) : DateTime.MaxValue;
+            });
         }
 
         private void OnClosed(object commandParam)

@@ -1181,4 +1181,44 @@ You can find out more about Glitched Polygons on glitchedpolygons.com</comment>
     <value>Your desired login password.</value>
     <comment>Your desired login password.</comment>
   </data>
+  <data name="EpistleServerBroadcastMessage" xml:space="preserve">
+    <value>Server Broadcast Message</value>
+    <comment>Server Broadcast Message</comment>
+  </data>
+  <data name="Dismiss" xml:space="preserve">
+    <value>Dismiss</value>
+    <comment>Dismiss</comment>
+  </data>
+  <data name="UserJoinedConvo" xml:space="preserve">
+    <value>The user {0} has joined the convo.</value>
+    <comment>User XYZ has joined the convo</comment>
+  </data>
+  <data name="UserLeftConvo" xml:space="preserve">
+    <value>The user {0} has left the convo.</value>
+    <comment>User XYZ has left the convo</comment>
+  </data>
+  <data name="UserWasKickedFromConvo" xml:space="preserve">
+    <value>The user {0} was banned from this convo.</value>
+    <comment>User XYZ was banned from the convo</comment>
+  </data>
+  <data name="ConvoAboutToExpire" xml:space="preserve">
+    <value>The convo is about to expire (will be wiped in less than 24h) - say what you have to say to everybody!</value>
+    <comment>The convo XYZ is about to expire (say what ya gotta say 'fore itz 2 late m8).</comment>
+  </data>
+  <data name="ConvoMetadataChanged" xml:space="preserve">
+    <value>The convo's metadata has been modified. Affected fields:</value>
+    <comment>The convo's metadata has been modified. Affected fields:</comment>
+  </data>
+  <data name="ConvoAdmin" xml:space="preserve">
+    <value>Admin</value>
+  </data>
+  <data name="ConvoDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="ConvoTitle" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="ConvoExpiration" xml:space="preserve">
+    <value>Expiration date</value>
+  </data>
 </root>

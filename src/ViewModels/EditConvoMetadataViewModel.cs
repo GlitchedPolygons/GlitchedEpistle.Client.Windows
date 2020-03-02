@@ -120,6 +120,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             get => minExpirationUTC;
             set => Set(ref minExpirationUTC, value);
         }
+        
+        private DateTime maxExpirationUTC = DateTime.UtcNow.AddDays(20);
+        public DateTime MaxExpirationUTC
+        {
+            get => maxExpirationUTC;
+            set => Set(ref maxExpirationUTC, value);
+        }
 
         private DateTime expirationUTC = DateTime.UtcNow.AddDays(14);
         public DateTime ExpirationUTC
@@ -173,6 +180,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Description = convo.Description;
                     ExpirationUTC = convo.ExpirationUTC.FromUnixTimeSeconds();
                     RefreshParticipantLists();
+                    if (Convo.CreatorId.Equals(user?.Id))
+                    {
+                        Task.Run(async () =>
+                        {
+                            int maxDays = await convoService.GetMaximumConvoDurationDays().ConfigureAwait(false);
+                            MaxExpirationUTC = maxDays > 0 ? DateTime.UtcNow.AddDays(maxDays) : DateTime.MaxValue;
+                        });   
+                    }
                 }
             }
         }
@@ -205,10 +220,10 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
         public EditConvoMetadataViewModel(IConvoService convoService, User user, IEventAggregator eventAggregator, IConvoPasswordProvider convoPasswordProvider, IAsymmetricCryptographyRSA crypto, ICompressionUtility compressionUtility)
         {
             this.user = user;
-            this.compressionUtility = compressionUtility;
             this.crypto = crypto;
             this.convoService = convoService;
             this.eventAggregator = eventAggregator;
+            this.compressionUtility = compressionUtility;
             this.convoPasswordProvider = convoPasswordProvider;
 
             convoProvider = new ConvoRepositorySQLite($"Data Source={Path.Combine(Paths.GetConvosDirectory(user.Id), "_metadata.db")};Version=3;");

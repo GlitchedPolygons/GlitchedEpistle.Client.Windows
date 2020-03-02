@@ -101,8 +101,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows
             container.RegisterType<IMessageCryptography, MessageCryptography>();
             container.RegisterType<IServerConnectionTest, ServerConnectionTest>();
             container.RegisterType<IMessageSender, MessageSender>();
-            container.RegisterType<ILoginService, LoginService>();
             container.RegisterType<IPasswordChanger, PasswordChanger>();
+            container.RegisterType<IProfilePictureChanger, ProfilePictureChanger>();
             container.RegisterType<IRegistrationService, RegistrationService>();
 
             // Register IoC singletons:

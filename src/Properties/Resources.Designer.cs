@@ -19,7 +19,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Resources {
@@ -475,6 +475,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The convo is about to expire (will be wiped in less than 24h) - say what you have to say to everybody!.
+        /// </summary>
+        public static string ConvoAboutToExpire {
+            get {
+                return ResourceManager.GetString("ConvoAboutToExpire", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Admin.
+        /// </summary>
+        public static string ConvoAdmin {
+            get {
+                return ResourceManager.GetString("ConvoAdmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your convo can NOT be recovered in any way after this!.
         /// </summary>
         public static string ConvoCantBeRecoveredAfterDeletionWarning {
@@ -520,11 +538,29 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string ConvoDescription {
+            get {
+                return ResourceManager.GetString("ConvoDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Describe what this conversation is about..
         /// </summary>
         public static string ConvoDescriptionToolTip {
             get {
                 return ResourceManager.GetString("ConvoDescriptionToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expiration date.
+        /// </summary>
+        public static string ConvoExpiration {
+            get {
+                return ResourceManager.GetString("ConvoExpiration", resourceCulture);
             }
         }
         
@@ -543,6 +579,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string ConvoIdToolTip {
             get {
                 return ResourceManager.GetString("ConvoIdToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The convo&apos;s metadata has been modified. Affected fields:.
+        /// </summary>
+        public static string ConvoMetadataChanged {
+            get {
+                return ResourceManager.GetString("ConvoMetadataChanged", resourceCulture);
             }
         }
         
@@ -570,6 +615,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string ConvoPasswordToolTip {
             get {
                 return ResourceManager.GetString("ConvoPasswordToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string ConvoTitle {
+            get {
+                return ResourceManager.GetString("ConvoTitle", resourceCulture);
             }
         }
         
@@ -745,6 +799,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dismiss.
+        /// </summary>
+        public static string Dismiss {
+            get {
+                return ResourceManager.GetString("Dismiss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download attachment.
         /// </summary>
         public static string DownloadAttachment {
@@ -812,6 +875,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string EpistleMessageAttachmentFileExtensionPickerDialog {
             get {
                 return ResourceManager.GetString("EpistleMessageAttachmentFileExtensionPickerDialog", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Broadcast Message.
+        /// </summary>
+        public static string EpistleServerBroadcastMessage {
+            get {
+                return ResourceManager.GetString("EpistleServerBroadcastMessage", resourceCulture);
             }
         }
         
@@ -2072,6 +2144,24 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user {0} has joined the convo..
+        /// </summary>
+        public static string UserJoinedConvo {
+            get {
+                return ResourceManager.GetString("UserJoinedConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user {0} has left the convo..
+        /// </summary>
+        public static string UserLeftConvo {
+            get {
+                return ResourceManager.GetString("UserLeftConvo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
         public static string Username {
@@ -2138,6 +2228,15 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties {
         public static string UserSettingsText {
             get {
                 return ResourceManager.GetString("UserSettingsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user {0} was banned from this convo..
+        /// </summary>
+        public static string UserWasKickedFromConvo {
+            get {
+                return ResourceManager.GetString("UserWasKickedFromConvo", resourceCulture);
             }
         }
         

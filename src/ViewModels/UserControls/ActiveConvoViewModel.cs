@@ -27,6 +27,8 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -60,6 +62,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
     /// It contains the view model for the currently active convo, meaning that it will
     /// take care of pulling the newest messages from the backend, adding them to the UI, etc...
     /// </summary>
+    [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
     public class ActiveConvoViewModel : ViewModel, IDisposable
     {
         #region Constants
@@ -221,8 +224,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             Task.Run(async () =>
             {
                 var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE);
-                var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.TimestampDateTimeUTC);
 
+                var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.Id);
+                
                 ExecUI(() =>
                 {
                     Messages.AddRange(decryptedMessages);
@@ -276,8 +280,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 while (!metadataUpdater.IsCancellationRequested)
                 {
-                    await PullConvoMetadata();
-                    Thread.Sleep(METADATA_PULL_FREQUENCY);
+                    await PullConvoMetadata().ConfigureAwait(false);
+                    await Task.Delay(METADATA_PULL_FREQUENCY).ConfigureAwait(false);
                 }
             }, metadataUpdater.Token);
         }
@@ -288,24 +292,26 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// Also truncates the view's message collection size when needed.
         /// </summary>
         /// <param name="messages">The messages that were fetched from the backend.</param>
-        private async void OnFetchedNewMessages(IEnumerable<Message> messages)
+        private void OnFetchedNewMessages(IEnumerable<Message> messages)
         {
             if (messages is null)
             {
                 return;
             }
-
+            
             // Add the pulled messages to the local sqlite db.
-            if (!await messageRepository.AddRange(messages.OrderBy(m => m?.TimestampUTC)))
+            messageRepository.AddRange(messages.OrderBy(m=>m.Id)).ContinueWith(async result=>
             {
-                logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {messages.First()?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
-                return;
-            }
-
+                if (await result == false)
+                {
+                    logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {messages.First()?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
+                }
+            });
+            
             // Decrypt and add the retrieved messages to the chatroom UI.
-            var decryptedMessages = DecryptMessages(messages).OrderBy(m => m?.TimestampDateTimeUTC).ToArray();
-
-            ExecUI(() =>
+            var decryptedMessages = DecryptMessages(messages).OrderBy(m => m.Id);
+            
+            ExecUI(delegate
             {
                 Messages.AddRange(decryptedMessages);
 
@@ -342,34 +348,103 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return null;
             }
 
-            string decryptedJson = crypto.DecryptMessage(message.Body, user.PrivateKeyPem);
-            JToken json = JToken.Parse(decryptedJson);
+            try
+            {
+                var messageViewModel = new MessageViewModel(methodQ)
+                {
+                    Id = message.Id.ToString(),
+                    SenderId = message.SenderId,
+                    SenderName = message.SenderName,
+                    TimestampDateTimeUTC = message.TimestampUTC.FromUnixTimeSeconds(),
+                    Timestamp = message.TimestampUTC.FromUnixTimeSeconds().ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
+                    IsOwn = message.SenderId.Equals(user.Id),
+                };
 
-            if (json == null)
+                if (message.IsFromServer())
+                {
+                    string[] split = message.Body.Split(':');
+                    if (split.Length != 3 || !int.TryParse(split[1], out int messageType))
+                    {
+                        logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessage)}: Broadcast message from the backend was submitted to the convo '{activeConvo.Id}' in an invalid format: was the server compromised?!");
+                        return null;
+                    }
+                    switch (messageType)
+                    {
+                        case 0:
+                            messageViewModel.Text = string.Format(localization["UserJoinedConvo"], split[2]);
+                            break;
+                        case 1:
+                            messageViewModel.Text = string.Format(localization["UserLeftConvo"], split[2]);
+                            break;
+                        case 2:
+                            messageViewModel.Text = string.Format(localization["UserWasKickedFromConvo"], split[2]);
+                            break;
+                        case 3:
+                            messageViewModel.Text = localization["ConvoAboutToExpire"];
+                            break;
+                        case 4:
+                            if (!int.TryParse(split[2], out int change))
+                            {
+                                logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessage)}: Broadcast message from the backend was submitted to the convo '{activeConvo.Id}' in an invalid format: was the server compromised?!");
+                                return null;
+                            }
+                            
+                            var sb = new StringBuilder(localization["ConvoMetadataChanged"]).Append(' ');
+
+                            if ((change & 1 << 0) > 0)
+                            {
+                                sb.Append(localization["ConvoAdmin"]).Append(", ");
+                            }
+                            if ((change & 1 << 1) > 0)
+                            {
+                                sb.Append(localization["ConvoTitle"]).Append(", ");
+                            }
+                            if ((change & 1 << 2) > 0)
+                            {
+                                sb.Append(localization["ConvoDescription"]).Append(", ");
+                            }
+                            if ((change & 1 << 3) > 0)
+                            {
+                                sb.Append(localization["ConvoExpiration"]).Append(", ");
+                            }
+                            if ((change & 1 << 4) > 0)
+                            {
+                                sb.Append(localization["ConvoPassword"]).Append(", ");
+                            }
+                            
+                            sb.Length -= 2;
+                            messageViewModel.Text = sb.ToString();
+                            break;
+                    }
+                    messageViewModel.FileName = null;
+                    messageViewModel.FileBytes = null;
+                }
+                else
+                {
+                    string decryptedJson = crypto.DecryptMessage(message.Body, user.PrivateKeyPem);
+                    JToken json = JToken.Parse(decryptedJson);
+
+                    if (json == null)
+                    {
+                        return null;
+                    }
+
+                    string fileBase64 = json["fileBase64"]?.Value<string>();
+                    byte[] fileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
+
+                    messageViewModel.FileBytes = fileBytes;
+                    messageViewModel.FileName = json["fileName"]?.Value<string>();
+                    messageViewModel.Text = json["text"]?.Value<string>();
+                }
+
+                return messageViewModel;
+            }
+            catch
             {
                 return null;
             }
-
-            var messageViewModel = new MessageViewModel(methodQ)
-            {
-                Id = message.Id.ToString(),
-                SenderId = message.SenderId,
-                SenderName = message.SenderName,
-                TimestampDateTimeUTC = message.TimestampUTC.FromUnixTimeSeconds(),
-                Timestamp = message.TimestampUTC.FromUnixTimeSeconds().ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
-                Text = json["text"]?.Value<string>(),
-                FileName = json["fileName"]?.Value<string>(),
-                IsOwn = message.SenderId.Equals(user.Id),
-            };
-
-            string fileBase64 = json["fileBase64"]?.Value<string>();
-            byte[] fileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
-
-            messageViewModel.FileBytes = fileBytes;
-
-            return messageViewModel;
         }
-
+        
         /// <summary>
         /// Decrypts multiple <see cref="Message"/>s. Does not guarantee correct order!
         /// </summary>
@@ -601,7 +676,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 return;
             }
 
-            bool success = await messageSender.PostFile(ActiveConvo, $"{DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")}.png", fileBytes);
+            bool success = await messageSender.PostFile(ActiveConvo, $"{DateTime.Now:yyyy-MM-dd-HH-mm-ss}.png", fileBytes);
             if (!success)
             {
                 new InfoDialogView
@@ -613,7 +688,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                         Text = localization["FileCouldNotBeUploaded"]
                     }
                 }.ShowDialog();
-                return;
             }
         }
 
@@ -638,16 +712,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
             Task.Run(async () =>
             {
-                var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE, MSG_COLLECTION_SIZE * ++pageIndex);
-                var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.TimestampDateTimeUTC);
+                var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE, MSG_COLLECTION_SIZE * ++pageIndex).ConfigureAwait(false);
+                var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.Id);
 
-                var newCollection = Messages.ToList();
-                newCollection.InsertRange(0, decryptedMessages);
+                var collection = Messages.ToList();
+                collection.InsertRange(0, decryptedMessages);
 
-                ExecUI(() =>
-                {
-                    Messages = new ObservableCollection<MessageViewModel>(newCollection);
-                });
+                var newCollection = new ObservableCollection<MessageViewModel>(collection);
+                ExecUI(() => Messages = newCollection);
             });
         }
 

@@ -1161,4 +1161,44 @@ Du kannst mehr über uns hier erfahren: glitchedpolygons.com</comment>
     <value>Dis gewünschte Login-Passwort.</value>
     <comment>Your desired login password.</comment>
   </data>
+  <data name="EpistleServerBroadcastMessage" xml:space="preserve">
+    <value>Naachricht vom Sörver</value>
+    <comment>Server Broadcast Message</comment>
+  </data>
+  <data name="Dismiss" xml:space="preserve">
+    <value>OK</value>
+    <comment>Dismiss</comment>
+  </data>
+  <data name="UserJoinedConvo" xml:space="preserve">
+    <value>Dr Benutzer {0} isch dr Ungerhautig biiträtte.</value>
+    <comment>User XYZ has joined the convo</comment>
+  </data>
+  <data name="UserLeftConvo" xml:space="preserve">
+    <value>Dr Benutzer {0} het d' Ungerhautig verlaa.</value>
+    <comment>User XYZ has left the convo</comment>
+  </data>
+  <data name="UserWasKickedFromConvo" xml:space="preserve">
+    <value>Dr Benutzer {0} isch vo dr Ungerhautig usegschmisse worde.</value>
+    <comment>User XYZ was banned from the convo</comment>
+  </data>
+  <data name="ConvoAboutToExpire" xml:space="preserve">
+    <value>D'Ungerhautig louft glii ab (wird i weniger als 24h zerstört) - säget was der nech z säge heyt!</value>
+    <comment>The convo XYZ is about to expire (say what ya gotta say 'fore itz 2 late m8).</comment>
+  </data>
+  <data name="ConvoMetadataChanged" xml:space="preserve">
+    <value>D'Ungerhautig isch veränderet worde. Betroffeni Eygeschafte:</value>
+    <comment>The convo's metadata has been modified. Affected fields:</comment>
+  </data>
+  <data name="ConvoAdmin" xml:space="preserve">
+    <value>Adminischtrator</value>
+  </data>
+  <data name="ConvoDescription" xml:space="preserve">
+    <value>Beschriibig</value>
+  </data>
+  <data name="ConvoTitle" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+  <data name="ConvoExpiration" xml:space="preserve">
+    <value>Abloufdatum</value>
+  </data>
 </root>
