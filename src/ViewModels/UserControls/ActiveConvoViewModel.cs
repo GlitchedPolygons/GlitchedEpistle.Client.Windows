@@ -223,9 +223,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             // Then, resume the user's ability to send messages once done.
             Task.Run(async () =>
             {
-                var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE);
+                var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE).ConfigureAwait(false);
 
-                var decryptedMessages = DecryptMessages(encryptedMessages).OrderBy(m => m.Id);
+                var decryptedMessages = DecryptMessages(encryptedMessages).Distinct().OrderBy(m => m.Timestamp).ThenBy(m => m.Id);
                 
                 ExecUI(() =>
                 {
@@ -300,7 +300,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
             
             // Add the pulled messages to the local sqlite db.
-            messageRepository.AddRange(messages.OrderBy(m=>m.Id)).ContinueWith(async result=>
+            messageRepository.AddRange(messages.OrderBy(m => m.TimestampUTC).ThenBy(m => m.Id)).ContinueWith(async result =>
             {
                 if (await result == false)
                 {
