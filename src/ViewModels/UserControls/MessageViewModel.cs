@@ -138,6 +138,13 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             set => Set(ref isOwn, value);
         }
 
+        private bool isFromServer;
+        public bool IsFromServer
+        {
+            get => isFromServer;
+            set => Set(ref isFromServer, value);
+        }
+
         public string FileSize => $"({FileBytes.GetFileSizeString()})";
 
         public BitmapImage Image { get; set; }
@@ -216,6 +223,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         public Visibility ImageVisibility => IsImage() ? Visibility.Visible : Visibility.Collapsed;
         public Visibility AudioVisibility => IsAudio() ? Visibility.Visible : Visibility.Collapsed;
         public Visibility AttachmentButtonVisibility => HasAttachment() ? Visibility.Visible : Visibility.Hidden;
+        public Visibility SenderIdVisibility => IsFromServer ? Visibility.Collapsed : Visibility.Visible;
+
+        public FontStyle FontStyle => IsFromServer ? FontStyles.Italic : FontStyles.Normal;
         #endregion
 
         public string Id { get; set; }

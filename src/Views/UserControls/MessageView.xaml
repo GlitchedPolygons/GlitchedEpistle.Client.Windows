@@ -44,6 +44,9 @@
                     <DataTrigger Binding="{Binding IsOwn}" Value="False">
                         <Setter Property="Grid.HorizontalAlignment" Value="Left" />
                     </DataTrigger>
+                    <DataTrigger Binding="{Binding IsFromServer}" Value="True">
+                        <Setter Property="Grid.HorizontalAlignment" Value="Center" />
+                    </DataTrigger>
                 </Style.Triggers>
             </Style>
         </Grid.Style>
@@ -78,18 +81,21 @@
                 <!--{Binding SenderName}-->
                 <Label Content="{Binding SenderName}"
                        FontSize="14"
-                       FontWeight="Bold" />
+                       FontWeight="Bold"
+                       FontStyle="{Binding FontStyle}" />
 
                 <!-- Separator wall -->
                 <Rectangle Width="1"
                            Opacity="0.47"
                            Margin="2.5,3,2.5,3"
                            VerticalAlignment="Stretch"
+                           Visibility="{Binding SenderIdVisibility}"
                            Stroke="{DynamicResource SeparatorColorBrush}" />
 
                 <!--{Binding SenderId}-->
                 <Label Content="{Binding SenderId}"
                        FontSize="14"
+                       Visibility="{Binding SenderIdVisibility}"
                        Margin="0,0,0,0"
                        FontStyle="Italic" />
 
@@ -97,6 +103,7 @@
                 <Button Width="15"
                         Height="15"
                         Margin="0"
+                        Visibility="{Binding SenderIdVisibility}"
                         ToolTip="{x:Static p:Resources.CopyUserIdToClipboard}"
                         Command="{Binding CopyUserIdToClipboardCommand}"
                         Style="{StaticResource CopyToClipboardButton}" />
@@ -115,6 +122,7 @@
                 <Label Margin="0"
                        Padding="4,2"
                        FontSize="12.333"
+                       FontStyle="{Binding FontStyle}"
                        Content="{Binding Timestamp}" />
 
                 <!-- Audio message -->
@@ -239,6 +247,7 @@
                          Margin="1,0,3,2"
                          TextWrapping="Wrap"
                          MaxLength="8192"
+                         FontStyle="{Binding FontStyle}"
                          MouseDoubleClick="TextBox_SelectText"
                          GotKeyboardFocus="TextBox_SelectText"
                          PreviewMouseLeftButtonDown="TextBox_OnMouseDown"

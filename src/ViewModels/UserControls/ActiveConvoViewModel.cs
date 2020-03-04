@@ -352,6 +352,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     Id = message.Id.ToString(),
                     SenderId = message.SenderId,
                     SenderName = message.SenderName,
+                    IsFromServer = message.IsFromServer(),
                     TimestampDateTimeUTC = message.TimestampUTC.FromUnixTimeSeconds(),
                     Timestamp = message.TimestampUTC.FromUnixTimeSeconds().ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
                     IsOwn = message.SenderId.Equals(user.Id),
