@@ -1,8 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchedEpistle.Client.Windows", "src\GlitchedEpistle.Client.Windows.csproj", "{1B86B526-38CC-4880-B1BE-40A87761A298}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchedEpistle.Client", "..\GlitchedEpistle.Client\src\GlitchedEpistle.Client.csproj", "{D7233566-6252-471E-822E-462089C117B7}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GlitchedEpistle.Client.Windows", "src\GlitchedEpistle.Client.Windows.csproj", "{1B86B526-38CC-4880-B1BE-40A87761A298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +15,11 @@ Global
 		{1B86B526-38CC-4880-B1BE-40A87761A298}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B86B526-38CC-4880-B1BE-40A87761A298}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B86B526-38CC-4880-B1BE-40A87761A298}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7233566-6252-471E-822E-462089C117B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7233566-6252-471E-822E-462089C117B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7233566-6252-471E-822E-462089C117B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7233566-6252-471E-822E-462089C117B7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A5376A3C-8AD1-4966-A101-9574D8E631D1}
 	EndGlobalSection
 EndGlobal

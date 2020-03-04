@@ -40,7 +40,6 @@ using GlitchedPolygons.Services.MethodQ;
 using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Settings;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
@@ -49,8 +48,6 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 
 using Microsoft.Win32;
-
-using Newtonsoft.Json.Linq;
 
 using Prism.Events;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
@@ -291,25 +288,25 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         /// Gets called when there were new messages in the <see cref="Convo"/> server-side.<para> </para>
         /// Also truncates the view's message collection size when needed.
         /// </summary>
-        /// <param name="messages">The messages that were fetched from the backend.</param>
-        private void OnFetchedNewMessages(IEnumerable<Message> messages)
+        /// <param name="fetchedMessages">The messages that were fetched from the backend.</param>
+        private void OnFetchedNewMessages(IEnumerable<Message> fetchedMessages)
         {
-            if (messages is null)
+            if (fetchedMessages is null)
             {
                 return;
             }
             
             // Add the pulled messages to the local sqlite db.
-            messageRepository.AddRange(messages.OrderBy(m => m.TimestampUTC).ThenBy(m => m.Id)).ContinueWith(async result =>
+            messageRepository.AddRange(fetchedMessages.OrderBy(m => m.TimestampUTC).ThenBy(m => m.Id)).ContinueWith(async result =>
             {
                 if (await result == false)
                 {
-                    logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {messages.First()?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
+                    logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {fetchedMessages.First()?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
                 }
             });
             
             // Decrypt and add the retrieved messages to the chatroom UI.
-            var decryptedMessages = DecryptMessages(messages).OrderBy(m => m.Id);
+            var decryptedMessages = DecryptMessages(fetchedMessages).OrderBy(m => m.Id);
             
             ExecUI(delegate
             {
@@ -421,20 +418,28 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    string decryptedJson = crypto.DecryptMessage(message.Body, user.PrivateKeyPem);
-                    JToken json = JToken.Parse(decryptedJson);
-
-                    if (json == null)
+                    string decryptedMessage = crypto.DecryptMessage(message.Body, user.PrivateKeyPem);
+                    
+                    if (decryptedMessage.StartsWith("TEXT="))
                     {
+                        messageViewModel.Text = decryptedMessage.Substring(5);
+                    }
+                    else if(decryptedMessage.StartsWith("FILE="))
+                    {
+                        int base64 = decryptedMessage.IndexOf("///BASE64=", StringComparison.Ordinal);
+                        if (base64 == -1)
+                        {
+                            logger?.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessage)}: Decryption succeeded but message has invalid format: a \"FILE=\" name was specified but then there was no \"///BASE64=\"  token with the actual file's content...");
+                            return null;
+                        }
+                        messageViewModel.FileName = decryptedMessage.Substring(5, base64 - 5);
+                        messageViewModel.FileBytes = Convert.FromBase64String(decryptedMessage.Substring(base64 + 10, decryptedMessage.Length - base64 - 10));
+                    }
+                    else
+                    {
+                        logger?.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessage)}: Decryption succeeded but message has invalid format!");
                         return null;
                     }
-
-                    string fileBase64 = json["fileBase64"]?.Value<string>();
-                    byte[] fileBytes = string.IsNullOrEmpty(fileBase64) ? null : Convert.FromBase64String(fileBase64);
-
-                    messageViewModel.FileBytes = fileBytes;
-                    messageViewModel.FileName = json["fileName"]?.Value<string>();
-                    messageViewModel.Text = json["text"]?.Value<string>();
                 }
 
                 return messageViewModel;
@@ -771,6 +776,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             if (convo != null)
             {
                 Name = convo.Name;
+                StopAutomaticPulling();
+                StartAutomaticPulling();
             }
         }
 
