@@ -182,7 +182,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     Totp = totp,
                     Name = Name,
                     Description = Description,
-                    ExpirationUTC = ExpirationUTC.ToUnixTimeSeconds(),
+                    ExpirationUTC = ExpirationUTC.ToUnixTimeMilliseconds(),
                     PasswordSHA512 = pw.SHA512()
                 };
 
@@ -203,8 +203,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                         Id = id,
                         Name = Name,
                         CreatorId = user.Id,
-                        CreationUTC = DateTime.UtcNow.ToUnixTimeSeconds(),
-                        ExpirationUTC = ExpirationUTC.ToUnixTimeSeconds(),
+                        CreationUTC = DateTime.UtcNow.ToUnixTimeMilliseconds(),
+                        ExpirationUTC = ExpirationUTC.ToUnixTimeMilliseconds(),
                         Description = Description,
                         Participants = new List<string> { user.Id }
                     };

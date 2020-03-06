@@ -109,11 +109,11 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 long? exp = ActiveConvo?.ExpirationUTC;
                 if (exp.HasValue)
                 {
-                    if (DateTime.UtcNow.ToUnixTimeSeconds() > exp.Value)
+                    if (DateTime.UtcNow.ToUnixTimeMilliseconds() > exp.Value)
                     {
                         value += " (EXPIRED)";
                     }
-                    else if ((exp.Value.FromUnixTimeSeconds() - DateTime.UtcNow).TotalDays < 3)
+                    else if ((exp.Value.FromUnixTimeMilliseconds() - DateTime.UtcNow).TotalDays < 3)
                     {
                         value += " (EXPIRES SOON)";
                     }
@@ -353,8 +353,8 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                     SenderId = message.SenderId,
                     SenderName = message.SenderName,
                     IsFromServer = message.IsFromServer(),
-                    TimestampDateTimeUTC = message.TimestampUTC.FromUnixTimeSeconds(),
-                    Timestamp = message.TimestampUTC.FromUnixTimeSeconds().ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
+                    TimestampDateTimeUTC = message.TimestampUTC.FromUnixTimeMilliseconds(),
+                    Timestamp = message.TimestampUTC.FromUnixTimeMilliseconds().ToLocalTime().ToString(MSG_TIMESTAMP_FORMAT),
                     IsOwn = message.SenderId.Equals(user.Id),
                 };
 

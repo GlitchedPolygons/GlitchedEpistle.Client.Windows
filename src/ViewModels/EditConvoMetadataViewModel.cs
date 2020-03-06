@@ -178,7 +178,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                 {
                     Name = convo.Name;
                     Description = convo.Description;
-                    ExpirationUTC = convo.ExpirationUTC.FromUnixTimeSeconds();
+                    ExpirationUTC = convo.ExpirationUTC.FromUnixTimeMilliseconds();
                     RefreshParticipantLists();
                     if (Convo.CreatorId.Equals(user?.Id))
                     {
@@ -550,9 +550,9 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
                     dto.Description = Description;
                 }
 
-                if (ExpirationUTC != Convo.ExpirationUTC.FromUnixTimeSeconds())
+                if (ExpirationUTC != Convo.ExpirationUTC.FromUnixTimeMilliseconds())
                 {
-                    dto.ExpirationUTC = ExpirationUTC.ToUnixTimeSeconds();
+                    dto.ExpirationUTC = ExpirationUTC.ToUnixTimeMilliseconds();
                 }
 
                 if (newPw.NotNullNotEmpty())
