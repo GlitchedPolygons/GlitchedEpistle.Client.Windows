@@ -71,12 +71,6 @@ Name: "{app}\runtimes\win-x86\native"
 Name: "{app}\runtimes\win-x86\native\netstandard2.0"
 
 [Files]
-Source: "src\bin\Release\netcoreapp3.1\BCrypt.Net-Next.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\netcoreapp3.1\BouncyCastle.Crypto.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\netcoreapp3.1\CommonServiceLocator.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\netcoreapp3.1\Dapper.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\netcoreapp3.1\Epistle.deps.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "src\bin\Release\netcoreapp3.1\Epistle.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\Epistle.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\Epistle.runtimeconfig.dev.json"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\Epistle.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
@@ -108,6 +102,12 @@ Source: "src\bin\Release\netcoreapp3.1\Unity.Abstractions.dll"; DestDir: "{app}"
 Source: "src\bin\Release\netcoreapp3.1\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\XamlAnimatedGif.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\zxing.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\netcoreapp3.1\BCrypt.Net-Next.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\netcoreapp3.1\BouncyCastle.Crypto.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\netcoreapp3.1\CommonServiceLocator.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\netcoreapp3.1\Dapper.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\netcoreapp3.1\Epistle.deps.json"; DestDir: "{app}"; Flags: ignoreversion
+Source: "src\bin\Release\netcoreapp3.1\Epistle.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\de\Epistle.resources.dll"; DestDir: "{app}\de"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\gsw\Epistle.resources.dll"; DestDir: "{app}\gsw"; Flags: ignoreversion
 Source: "src\bin\Release\netcoreapp3.1\it\Epistle.resources.dll"; DestDir: "{app}\it"; Flags: ignoreversion
