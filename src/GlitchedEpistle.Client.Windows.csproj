@@ -27,7 +27,7 @@
         <ApplicationIcon>glitched-epistle-icon.ico</ApplicationIcon>
         <IsPackable>false</IsPackable>
         <AssemblyName>Epistle</AssemblyName>
-        <Version>3.0.1</Version>
+        <Version>3.1.3</Version>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -98,7 +98,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client" Version="3.0.1" />
+      <PackageReference Include="GlitchedPolygons.GlitchedEpistle.Client" Version="3.1.3" />
       <PackageReference Include="GlitchedPolygons.Services.MethodQ" Version="1.0.4" />
       <PackageReference Include="NAudio" Version="1.10.0" />
       <PackageReference Include="Prism.Wpf" Version="7.2.0.1422" />

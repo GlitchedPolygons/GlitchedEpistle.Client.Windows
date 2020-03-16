@@ -35,13 +35,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 
+using GlitchedPolygons.RepositoryPattern;
 using GlitchedPolygons.ExtensionMethods;
 using GlitchedPolygons.Services.MethodQ;
-using GlitchedPolygons.RepositoryPattern;
+using GlitchedPolygons.Services.Cryptography.Symmetric;
+using GlitchedPolygons.Services.Cryptography.Asymmetric;
 using GlitchedPolygons.GlitchedEpistle.Client.Models;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Logging;
 using GlitchedPolygons.GlitchedEpistle.Client.Services.Web.Convos;
-using GlitchedPolygons.GlitchedEpistle.Client.Services.Cryptography.Messages;
+using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Views;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Commands;
 using GlitchedPolygons.GlitchedEpistle.Client.Windows.Constants;
@@ -50,7 +52,7 @@ using GlitchedPolygons.GlitchedEpistle.Client.Windows.PubSubEvents;
 using Microsoft.Win32;
 
 using Prism.Events;
-using GlitchedPolygons.GlitchedEpistle.Client.Windows.Services.Localization;
+using GlitchedPolygons.Services.CompressionUtility;
 
 namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControls
 {
@@ -71,12 +73,14 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
         private readonly User user;
         private readonly ILogger logger;
         private readonly IMethodQ methodQ;
+        private readonly ISymmetricCryptography aes;
+        private readonly IAsymmetricCryptographyRSA rsa;
         private readonly ILocalization localization;
         private readonly IConvoService convoService;
-        private readonly IMessageCryptography crypto;
         private readonly IMessageSender messageSender;
         private readonly IMessageFetcher messageFetcher;
         private readonly IEventAggregator eventAggregator;
+        private readonly ICompressionUtility compressionUtility;
         private readonly IRepository<Convo, string> convoProvider;
         private readonly IConvoPasswordProvider convoPasswordProvider;
         #endregion
@@ -164,18 +168,22 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             ILocalization localization,
             IConvoService convoService,
             IEventAggregator eventAggregator,
+            ISymmetricCryptography aes,
+            IAsymmetricCryptographyRSA rsa,
             IConvoPasswordProvider convoPasswordProvider,
-            IMessageCryptography crypto,
+            ICompressionUtility compressionUtility,
             IMessageSender messageSender,
             IMessageFetcher messageFetcher)
         {
             #region Injections
+            this.aes = aes;
+            this.rsa = rsa;
             this.user = user;
             this.logger = logger;
-            this.crypto = crypto;
             this.methodQ = methodQ;
             this.convoService = convoService;
             this.localization = localization;
+            this.compressionUtility = compressionUtility;
             this.convoPasswordProvider = convoPasswordProvider;
             this.eventAggregator = eventAggregator;
             this.messageSender = messageSender;
@@ -222,7 +230,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             {
                 var encryptedMessages = await messageRepository.GetLastMessages(MSG_COLLECTION_SIZE).ConfigureAwait(false);
 
-                var decryptedMessages = DecryptMessages(encryptedMessages).Distinct().OrderBy(m => m.Timestamp).ThenBy(m => m.Id);
+                var decryptedMessages = DecryptMessages(encryptedMessages).Where(m => m != null).Distinct().OrderBy(m => m.TimestampDateTimeUTC);
                 
                 ExecUI(() =>
                 {
@@ -297,16 +305,16 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
             }
             
             // Add the pulled messages to the local sqlite db.
-            messageRepository.AddRange(fetchedMessages.OrderBy(m => m.TimestampUTC).ThenBy(m => m.Id)).ContinueWith(async result =>
+            messageRepository.AddRange(fetchedMessages.OrderBy(m => m.TimestampUTC)).ContinueWith(async result =>
             {
                 if (await result == false)
                 {
                     logger.LogError($"{nameof(ActiveConvoViewModel)}::<<AutomaticPullCycle>>: ConvoId={ActiveConvo?.Id}  >> The retrieved messages (from message id {fetchedMessages.First()?.Id} onwards) could not be added to the local sqlite db on disk. Reason unknown...");
                 }
             });
-            
+
             // Decrypt and add the retrieved messages to the chatroom UI.
-            var decryptedMessages = DecryptMessages(fetchedMessages).OrderBy(m => m.Id);
+            var decryptedMessages = DecryptMessages(fetchedMessages).Where(m => m != null).Distinct().OrderBy(m => m.TimestampDateTimeUTC);
             
             ExecUI(delegate
             {
@@ -360,7 +368,7 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
 
                 if (message.IsFromServer())
                 {
-                    string[] split = message.Body.Split(':');
+                    string[] split = message.EncryptedBody.Split(':');
                     if (split.Length != 3 || !int.TryParse(split[1], out int messageType))
                     {
                         logger.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessage)}: Broadcast message from the backend was submitted to the convo '{activeConvo.Id}' in an invalid format: was the server compromised?!");
@@ -419,22 +427,50 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                 }
                 else
                 {
-                    string decryptedMessage = crypto.DecryptMessage(message.Body, user.PrivateKeyPem);
-                    
-                    if (decryptedMessage.StartsWith("TEXT="))
+                    if (message.EncryptedKey.NullOrEmpty())
                     {
-                        messageViewModel.Text = decryptedMessage.Substring(5);
+                        return null;
                     }
-                    else if(decryptedMessage.StartsWith("FILE="))
+
+                    byte[] decryptedKey = rsa.Decrypt(Convert.FromBase64String(message.EncryptedKey), user.PrivateKeyPem);
+
+                    var encryptedMessage = new EncryptionResult 
+                    { 
+                        Key = decryptedKey.Take(32).ToArray(), 
+                        IV = decryptedKey.Skip(32).ToArray(), 
+                        EncryptedData = Convert.FromBase64String(message.EncryptedBody) 
+                    };
+
+                    byte[] decryptedMessage = compressionUtility.Decompress(aes.Decrypt(encryptedMessage), CompressionSettings.Default);
+                    
+                    if (message.Type.StartsWith("TEXT="))
                     {
-                        int base64 = decryptedMessage.IndexOf("///BASE64=", StringComparison.Ordinal);
-                        if (base64 == -1)
+                        Encoding encoding;
+                        switch (message.Type.Substring(5))
                         {
-                            logger?.LogError($"{nameof(ActiveConvoViewModel)}::{nameof(DecryptMessage)}: Decryption succeeded but message has invalid format: a \"FILE=\" name was specified but then there was no \"///BASE64=\"  token with the actual file's content...");
-                            return null;
+                            default:
+                            case "UTF8":
+                                encoding = Encoding.UTF8;
+                                break;
+                            case "UTF7":
+                                encoding = Encoding.UTF7;
+                                break;
+                            case "UTF32":
+                                encoding = Encoding.UTF32;
+                                break;
+                            case "ASCII":
+                                encoding = Encoding.ASCII;
+                                break;
+                            case "Unicode":
+                                encoding = Encoding.Unicode;
+                                break;
                         }
-                        messageViewModel.FileName = decryptedMessage.Substring(5, base64 - 5);
-                        messageViewModel.FileBytes = Convert.FromBase64String(decryptedMessage.Substring(base64 + 10, decryptedMessage.Length - base64 - 10));
+                        messageViewModel.Text = encoding.GetString(decryptedMessage);
+                    }
+                    else if (message.Type.StartsWith("FILE="))
+                    {
+                        messageViewModel.FileName = message.Type.Substring(5);
+                        messageViewModel.FileBytes = decryptedMessage;
                     }
                     else
                     {
