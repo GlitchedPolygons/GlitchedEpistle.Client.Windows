@@ -24,11 +24,14 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
+        xmlns:interactivity="http://prismlibrary.com/"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+
         Background="{DynamicResource WindowBackgroundBrush}"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
         MaxWidth="355"
-        Title="{x:Static p:Resources.CreateConvo}" 
+        Title="{x:Static p:Resources.CreateConvo}"
         SizeToContent="WidthAndHeight">
 
     <i:Interaction.Triggers>
@@ -146,4 +149,3 @@
                     CommandParameter="{Binding ElementName=TotpTextBox, Path=Text}" />
     </Window.InputBindings>
 </Window>
-    

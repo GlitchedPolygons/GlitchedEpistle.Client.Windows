@@ -26,14 +26,17 @@
         xmlns:userControls="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
         mc:Ignorable="d"
         xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:interactivity="http://prismlibrary.com/"
+
         Background="{DynamicResource WindowBackgroundBrush}"
         Icon="/Resources/Images/settings-icon-white.png"
         Title="{x:Static p:Resources.EditConvo}"
         WindowStartupLocation="CenterScreen"
-        SizeToContent="WidthAndHeight" 
+        SizeToContent="WidthAndHeight"
         MaxWidth="485"
         ResizeMode="NoResize">
-    
+
     <StackPanel Margin="10"
                 MinWidth="450"
                 IsEnabled="{Binding UIEnabled}">
@@ -41,16 +44,16 @@
         <StackPanel Orientation="Horizontal">
 
             <Label Content="{x:Static p:Resources.EditConvoTitle}"
-               FontWeight="Bold"
-               FontSize="16" />
-            
+                   FontWeight="Bold"
+                   FontSize="16" />
+
             <Label Content="{Binding Name}"
-               FontWeight="Bold"
-               FontSize="16" />
+                   FontWeight="Bold"
+                   FontSize="16" />
         </StackPanel>
-        
+
         <Separator />
-        
+
         <TextBlock Text="{Binding ErrorMessage}"
                    TextWrapping="Wrap"
                    MaxWidth="420"
@@ -58,7 +61,7 @@
                    HorizontalAlignment="Left"
                    Foreground="{DynamicResource ErrorMessageColor}"
                    FontSize="14" />
-        
+
         <TextBlock Text="{Binding SuccessMessage}"
                    TextWrapping="Wrap"
                    MaxWidth="420"
@@ -71,15 +74,15 @@
                   Style="{DynamicResource Expander}"
                   Margin="0,0,0,0"
                   IsExpanded="True">
-            
+
             <StackPanel>
-                
+
                 <Label Content="{x:Static p:Resources.CurrentConvoPassword}"
                        ToolTip="{x:Static p:Resources.CurrentConvoPasswordToolTip}" />
 
                 <PasswordBox Name="OldPassword"
                              Margin="5,0,0,0">
-                    
+
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PasswordChanged">
                             <i:InvokeCommandAction Command="{Binding OldPasswordChangedCommand}"
@@ -91,12 +94,12 @@
 
                 <Label Content="{x:Static p:Resources.TwoFactorAuthentication}"
                        ToolTip="{x:Static p:Resources.TwoFactorAuthTokenToolTip}" />
-                
+
                 <TextBox Name="TotpTextBox"
                          MaxLength="100"
                          Margin="5,0,0,0"
                          Text="{Binding Totp}"
-                         ToolTip="{x:Static p:Resources.TwoFactorAuthTokenToolTip}"/>
+                         ToolTip="{x:Static p:Resources.TwoFactorAuthTokenToolTip}" />
             </StackPanel>
         </Expander>
 
@@ -111,7 +114,7 @@
                         IsEnabled="{Binding CanLeave}"
                         Command="{Binding LeaveCommand}"
                         ToolTip="{x:Static p:Resources.LeaveConvoButtonToolTip}"
-                        Content="{x:Static p:Resources.LeaveConvoButton}" /> 
+                        Content="{x:Static p:Resources.LeaveConvoButton}" />
             </StackPanel>
         </Expander>
 
@@ -121,22 +124,22 @@
                   ToolTip="{x:Static p:Resources.AdminOptionsToolTip}"
                   IsEnabled="{Binding IsAdmin}"
                   Style="{DynamicResource Expander}">
-            
+
             <StackPanel>
-                
+
                 <Expander Header="Metadata"
-                          Margin="15,3,0,0" 
+                          Margin="15,3,0,0"
                           ToolTip="{x:Static p:Resources.ChangeConvoMetadataToolTip}"
                           Style="{DynamicResource Expander}">
-                    
+
                     <StackPanel>
 
                         <Label Content="{x:Static p:Resources.Name}"
                                ToolTip="{x:Static p:Resources.ChangeConvoTitle}" />
-                        
+
                         <TextBox MaxLength="25"
                                  ToolTip="{x:Static p:Resources.TheNewConvoTitle}"
-                                 Text="{Binding Name}"/>
+                                 Text="{Binding Name}" />
 
                         <Label Content="{x:Static p:Resources.Description}"
                                ToolTip="{x:Static p:Resources.ConvoDescriptionToolTip}" />
@@ -163,19 +166,19 @@
                 </Expander>
 
                 <Expander Header="{x:Static p:Resources.Participants}"
-                          Margin="15,3,0,0" 
+                          Margin="15,3,0,0"
                           Style="{DynamicResource Expander}">
-                    
+
                     <StackPanel>
-                        
+
                         <Label Margin="0,4,0,0"
                                Content="{Binding UserId}"
                                ContentStringFormat="{}{0} (you)" />
-                        
+
                         <StackPanel Visibility="{Binding OtherParticipantsListVisibility}">
 
                             <Label Content="{x:Static p:Resources.OtherParticipants}" />
-                            
+
                             <ListBox Margin="0,-2,0,4"
                                      MaxHeight="150"
                                      Name="ParticipantsListBox"
@@ -194,7 +197,7 @@
                                 </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" 
+                                        <StackPanel Orientation="Horizontal"
                                                     Tag="{Binding DataContext, RelativeSource={RelativeSource AncestorType=ItemsControl}}">
                                             <StackPanel.ContextMenu>
                                                 <ContextMenu>
@@ -203,11 +206,11 @@
                                                               IsEnabled="False"
                                                               IsHitTestVisible="False" />
                                                     <Separator />
-                                                    <MenuItem Header="{x:Static p:Resources.PromoteToAdmin}" 
+                                                    <MenuItem Header="{x:Static p:Resources.PromoteToAdmin}"
                                                               ToolTip="{x:Static p:Resources.PromoteToAdminToolTip}"
                                                               Command="{Binding PlacementTarget.Tag.MakeAdminCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                               CommandParameter="{Binding}" />
-                                                    <MenuItem Header="{x:Static p:Resources.KickAndBan}" 
+                                                    <MenuItem Header="{x:Static p:Resources.KickAndBan}"
                                                               ToolTip="{x:Static p:Resources.KickAndBanToolTip}"
                                                               Command="{Binding PlacementTarget.Tag.KickAndBanUserCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
                                                               CommandParameter="{Binding}" />
@@ -221,17 +224,17 @@
                                                     ToolTip="{x:Static p:Resources.CopyUserIdToClipboard}"
                                                     Command="{Binding DataContext.CopyUserIdToClipboardCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ItemsControl}}}"
                                                     CommandParameter="{Binding}"
-                                                    Style="{DynamicResource CopyToClipboardButton}"/>
+                                                    Style="{DynamicResource CopyToClipboardButton}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </StackPanel>
-                        
+
                         <StackPanel Visibility="{Binding BannedListVisibility}">
 
                             <Label Content="{x:Static p:Resources.BannedUsers}" />
-                            
+
                             <ListBox MaxHeight="150"
                                      Name="BannedUsersListBox"
                                      ToolTip="{x:Static p:Resources.BannedUsersToolTip}"
@@ -270,12 +273,12 @@
                 <Expander Header="{x:Static p:Resources.Security}"
                           Margin="15,3,0,0"
                           Style="{DynamicResource Expander}">
-                    
+
                     <StackPanel>
 
                         <Label Content="{x:Static p:Resources.NewConvoPassword}"
                                ToolTip="{x:Static p:Resources.NewConvoPasswordToolTip}" />
-                        
+
                         <PasswordBox Name="NewPassword">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PasswordChanged">
@@ -288,8 +291,7 @@
                         <Label Content="{x:Static p:Resources.ConfirmNewConvoPassword}"
                                ToolTip="{x:Static p:Resources.ConfirmNewConvoPasswordToolTip}" />
 
-                        <PasswordBox Name="NewPassword2"
-                                     >
+                        <PasswordBox Name="NewPassword2">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PasswordChanged">
                                     <i:InvokeCommandAction Command="{Binding NewPassword2ChangedCommand}"
@@ -327,4 +329,3 @@
                     Command="{Binding CancelCommand}" />
     </Window.InputBindings>
 </Window>
-    

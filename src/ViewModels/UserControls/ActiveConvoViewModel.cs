@@ -452,9 +452,6 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels.UserControl
                             case "UTF8":
                                 encoding = Encoding.UTF8;
                                 break;
-                            case "UTF7":
-                                encoding = Encoding.UTF7;
-                                break;
                             case "UTF32":
                                 encoding = Encoding.UTF32;
                                 break;

@@ -25,10 +25,13 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d"
              xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
-             MinWidth="250" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:interactivity="http://prismlibrary.com/"
+
+             MinWidth="250"
              MaxWidth="350">
 
-    <StackPanel HorizontalAlignment="Center" 
+    <StackPanel HorizontalAlignment="Center"
                 MaxWidth="250">
 
         <Label Content="{x:Static p:Resources.WelcomeToGlitchedEpistle}"
@@ -83,9 +86,9 @@
             </PasswordBox>
 
             <StackPanel Visibility="{Binding UserCreationSecretFieldVis}">
-                
+
                 <Label Content="{x:Static p:Resources.UserCreationSecret}"
-                       ToolTip="{x:Static p:Resources.UserCreationSecretToolTip}" /> 
+                       ToolTip="{x:Static p:Resources.UserCreationSecretToolTip}" />
 
                 <TextBox Name="UserCreationSecretTextBox"
                          MinWidth="250"
@@ -100,7 +103,7 @@
                 <Button Width="117"
                         Content="{x:Static p:Resources.Quit}"
                         Command="{Binding QuitCommand}"
-                        ToolTip="{x:Static p:Resources.QuitRegistrationToolTip}" /> 
+                        ToolTip="{x:Static p:Resources.QuitRegistrationToolTip}" />
 
                 <Button Width="117"
                         Name="RegisterButton"
@@ -111,17 +114,17 @@
                         IsEnabled="{Binding FormValid}" />
             </StackPanel>
 
-            <Button Margin="0 15 0 0" 
+            <Button Margin="0 15 0 0"
                     Command="{Binding EditServerUrlCommand}"
                     Content="{x:Static p:Resources.ChangeServer}"
-                    ToolTip="{x:Static p:Resources.ChangeEpistleServerUrlToolTip}"/>
+                    ToolTip="{x:Static p:Resources.ChangeEpistleServerUrlToolTip}" />
 
             <Button Width="250"
                     Margin="0,15,0,0"
                     HorizontalAlignment="Center"
                     Command="{Binding LoginCommand}"
                     Content="{x:Static p:Resources.AlreadyHaveAnAccount}"
-                    ToolTip="{x:Static p:Resources.LoginButtonToolTip}" /> 
+                    ToolTip="{x:Static p:Resources.LoginButtonToolTip}" />
 
         </StackPanel>
 
@@ -135,7 +138,7 @@
 
             <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Content="{x:Static p:Resources.GeneratingKeys}"/>
+                   Content="{x:Static p:Resources.GeneratingKeys}" />
         </StackPanel>
     </StackPanel>
     <UserControl.InputBindings>
@@ -143,4 +146,3 @@
                     Command="{Binding RegisterCommand}" />
     </UserControl.InputBindings>
 </UserControl>
-    

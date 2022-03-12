@@ -24,9 +24,12 @@
              xmlns:local="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Views.UserControls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:p="clr-namespace:GlitchedPolygons.GlitchedEpistle.Client.Windows.Properties"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:interactivity="http://prismlibrary.com/"
+
              mc:Ignorable="d">
 
-    <StackPanel HorizontalAlignment="Center" 
+    <StackPanel HorizontalAlignment="Center"
                 MinWidth="250"
                 IsEnabled="{Binding UIEnabled}">
 
@@ -81,20 +84,20 @@
                     Command="{Binding QuitCommand}"
                     ToolTip="{x:Static p:Resources.QuitLoginToolTip}" />
 
-            <Button Content="{x:Static p:Resources.Register}" 
+            <Button Content="{x:Static p:Resources.Register}"
                     Width="117"
                     Margin="15,0,0,0"
                     Name="RegisterButton"
-                    Command="{Binding RegisterCommand}" 
-                    ToolTip="{x:Static p:Resources.RegisterButtonToolTip}"/> 
+                    Command="{Binding RegisterCommand}"
+                    ToolTip="{x:Static p:Resources.RegisterButtonToolTip}" />
         </StackPanel>
 
-        <Button Margin="0 15 0 0" 
+        <Button Margin="0 15 0 0"
                 ToolTip="{x:Static p:Resources.ChangeEpistleServerUrlToolTip}"
                 Command="{Binding EditServerUrlCommand}"
-                Content="{x:Static p:Resources.ChangeServer}"/>
+                Content="{x:Static p:Resources.ChangeServer}" />
 
-        <Button Width="250" 
+        <Button Width="250"
                 Content="Login"
                 Margin="0,15,0,0"
                 Name="LoginButton"
@@ -103,59 +106,59 @@
                 ToolTip="{x:Static p:Resources.LoginToolTip}"
                 IsEnabled="False" />
 
-        <StackPanel Margin="0 15 0 0" 
+        <StackPanel Margin="0 15 0 0"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
 
-            <RadioButton IsChecked="{Binding EnglishChecked}" 
+            <RadioButton IsChecked="{Binding EnglishChecked}"
                          ToolTip="English"
-                         VerticalAlignment="Center" 
-                         VerticalContentAlignment="Center"/>
+                         VerticalAlignment="Center"
+                         VerticalContentAlignment="Center" />
 
-            <Image Width="22" 
+            <Image Width="22"
                    Height="22"
                    Margin="3 0 0 0"
                    ToolTip="English"
-                   Source="/Resources/Images/flag-en.png"/>
+                   Source="/Resources/Images/flag-en.png" />
 
-            <RadioButton Margin="16 0 0 0"  
+            <RadioButton Margin="16 0 0 0"
                          ToolTip="Deutsch"
-                         IsChecked="{Binding GermanChecked}" 
-                         VerticalAlignment="Center" 
-                         VerticalContentAlignment="Center"/>
+                         IsChecked="{Binding GermanChecked}"
+                         VerticalAlignment="Center"
+                         VerticalContentAlignment="Center" />
 
-            <Image Width="22" 
+            <Image Width="22"
                    Height="22"
                    Margin="3 0 0 0"
                    ToolTip="Deutsch"
-                   Source="/Resources/Images/flag-de.png"/>
+                   Source="/Resources/Images/flag-de.png" />
 
             <RadioButton Margin="16 0 0 0"
                          ToolTip="Schwiizerdütsch"
-                         IsChecked="{Binding SwissGermanChecked}" 
-                         VerticalAlignment="Center" 
-                         VerticalContentAlignment="Center"/>
+                         IsChecked="{Binding SwissGermanChecked}"
+                         VerticalAlignment="Center"
+                         VerticalContentAlignment="Center" />
 
-            <Image Width="22" 
+            <Image Width="22"
                    Height="22"
                    Margin="3 0 0 0"
                    ToolTip="Schwiizerdütsch"
-                   Source="/Resources/Images/flag-ch.png"/>
+                   Source="/Resources/Images/flag-ch.png" />
 
-            <RadioButton Margin="16 0 0 0"  
+            <RadioButton Margin="16 0 0 0"
                          ToolTip="Italiano"
-                         IsChecked="{Binding ItalianChecked}" 
-                         VerticalAlignment="Center" 
-                         VerticalContentAlignment="Center"/>
+                         IsChecked="{Binding ItalianChecked}"
+                         VerticalAlignment="Center"
+                         VerticalContentAlignment="Center" />
 
-            <Image Width="22" 
+            <Image Width="22"
                    Height="22"
                    Margin="3 0 0 0"
                    ToolTip="Italiano"
-                   Source="/Resources/Images/flag-it.png"/>
+                   Source="/Resources/Images/flag-it.png" />
         </StackPanel>
-        
+
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -166,7 +169,7 @@
 
             <Label HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Content="{x:Static p:Resources.LoggingIn}"/>
+                   Content="{x:Static p:Resources.LoggingIn}" />
         </StackPanel>
     </StackPanel>
 

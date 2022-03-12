@@ -374,7 +374,17 @@ namespace GlitchedPolygons.GlitchedEpistle.Client.Windows.ViewModels
             UserId = user.Id = userCreationResponseDto.Id;
 
             // Create QR code containing the Authy/Google Auth setup link and open the RegistrationSuccessfulView.
-            IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap> { Format = BarcodeFormat.QR_CODE, Renderer = new WriteableBitmapRenderer(), Options = new EncodingOptions { Height = 200, Width = 200, Margin = 0 } };
+            IBarcodeWriter<WriteableBitmap> qrWriter = new BarcodeWriter<WriteableBitmap>
+            {
+                Format = BarcodeFormat.QR_CODE, 
+                Renderer = new WriteableBitmapRenderer(), 
+                Options = new EncodingOptions
+                {
+                    Height = 200, 
+                    Width = 200, 
+                    Margin = 0
+                }
+            };
 
             var viewModel = viewModelFactory.Create<UserCreationSuccessfulViewModel>();
             viewModel.Secret = userCreationResponseDto.TotpSecret;
